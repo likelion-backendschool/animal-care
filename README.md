@@ -1,78 +1,54 @@
-# 프로젝트명
-> 간략한 프로젝트 소개 문구를 작성합니다.
+# Animal-Care
+> 비대면 진찰이 가능한 사이트
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
+이제 병원에 가지 않아도 진찰 받을 수 있습니다.
+영상과 채팅, 약 배송까지 해결해 드립니다.
 
-한 두 문단으로 프로젝트 소개 글을 작성합니다.
+## ✨기술 스택
 
-![](../header.png)
+| SpringBoot | MariaDB | Docker | webRTC |
+|:----------:|:-------:|:------:|:------:|
+|    svg     |   svg   |    svg    |   svg     |
 
-## 설치 방법
+## ✨GIT 규칙
 
-OS X & 리눅스:
+### Branch 전략
 
-```sh
-npm install my-crazy-module --save
-```
+1. 브랜치 명
+   - main - 배포 사용할 예정 X
+   - dev - 기능 구현 완료 된 코드
+   - feature/login/doolysmile - 2명에서 한 기능 개발 할 경우
+   - feature/login - 1명이서 개발할 경우 
+2. 일단은 feat 브랜치 삭제 하지 말기 
+3. feature 브랜치에서 => dev 브랜치로 PR날리기 => 코멘트 남기고 및 merge 승인 => 수정할 수정 후 merge 날리기 
+4. PR 이름 규칙 -> 양식은 논의
 
-윈도우:
+### 커밋 전략
+1. 커밋 명명 법
+   - feat : 새로운 기능 추가
+   - fix : 버그 수정
+   - docs : 문서 수정(readMe.md)
+   - style : 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우, 주석 처리 등등
+   - refactor : 코드 리펙토링
+   - test : 테스트 코드, 리펙토링 테스트 코드 추가
+   - chore : 빌드 업무 수정, 패키지 매니저 수정
+2. 이슈
+   - issue에 있는 사항이면 (#1) 붙이기
 
-```sh
-edit autoexec.bat
-```
+## ✨구현 기능
 
-## 사용 예제
+### 기능 1
 
-스크린 샷과 코드 예제를 통해 사용 방법을 자세히 설명합니다.
+### 기능 2
 
-_더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
+### 기능 3
 
-## 개발 환경 설정
+### 기능 4
 
-모든 개발 의존성 설치 방법과 자동 테스트 슈트 실행 방법을 운영체제 별로 작성합니다.
 
-```sh
-make install
-npm test
-```
+## ✨업데이트 내역
 
-## 업데이트 내역
-
-* 0.2.1
-    * 수정: 문서 업데이트 (모듈 코드 동일)
-* 0.2.0
-    * 수정: `setDefaultXYZ()` 메서드 제거
-    * 추가: `init()` 메서드 추가
-* 0.1.1
-    * 버그 수정: `baz()` 메서드 호출 시 부팅되지 않는 현상 (@컨트리뷰터 감사합니다!)
-* 0.1.0
-    * 첫 출시
-    * 수정: `foo()` 메서드 네이밍을 `bar()`로 수정
 * 0.0.1
     * 작업 진행 중
 
-## 정보
 
-이름 – [@트위터 주소](https://twitter.com/dbader_org) – 이메일주소@example.com
-
-XYZ 라이센스를 준수하며 ``LICENSE``에서 자세한 정보를 확인할 수 있습니다.
-
-[https://github.com/yourname/github-link](https://github.com/dbader/)
-
-## 기여 방법
-
-1. (<https://github.com/yourname/yourproject/fork>)을 포크합니다.
-2. (`git checkout -b feature/fooBar`) 명령어로 새 브랜치를 만드세요.
-3. (`git commit -am 'Add some fooBar'`) 명령어로 커밋하세요.
-4. (`git push origin feature/fooBar`) 명령어로 브랜치에 푸시하세요. 
-5. 풀리퀘스트를 보내주세요.
-
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
