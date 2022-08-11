@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.doctorQna.repository;
 
 import com.codelion.animalcare.domain.BaseTimeEntity;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -32,6 +33,14 @@ public class Question extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // 이 클래스가 One, Many는 Answer
     private List<Answer> answerList;
+
+    @Builder
+    public Question(String title, String content, int view, List<Answer> answerList) {
+        this.title = title;
+        this.content = content;
+        this.view = view;
+        this.answerList = answerList;
+    }
     /*
     추후에 like entity 따로 만들어서 구성
     @Column
