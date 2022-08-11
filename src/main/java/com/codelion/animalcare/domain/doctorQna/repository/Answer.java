@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.doctorQna.repository;
 
+import com.codelion.animalcare.domain.BaseTimeEntity;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import javax.persistence.ManyToOne;
 
 @NoArgsConstructor
 @Entity
-public class Answer {
+public class Answer extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
