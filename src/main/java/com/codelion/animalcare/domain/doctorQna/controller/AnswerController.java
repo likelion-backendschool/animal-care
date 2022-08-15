@@ -17,9 +17,10 @@ public class AnswerController {
 
 
     //답변 작성
-    @PostMapping("/usr/doctor-qna/{id}/answers/write")
-    public Long save(@PathVariable Long id, @RequestBody AnswerSaveRequestDto answerSaveRequestDto){
+    @PostMapping("/usr/doctor-qna/{questionId}/answers/write")
+    public Long save(@PathVariable Long questionId, @RequestBody AnswerSaveRequestDto answerSaveRequestDto){
 
-        return answerService.save(id, answerSaveRequestDto);
+        return answerService.save(questionId, answerSaveRequestDto);
     }
+
 }

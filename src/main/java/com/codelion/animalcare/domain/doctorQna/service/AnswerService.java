@@ -16,8 +16,8 @@ public class AnswerService {
     private final QuestionRepository questionRepository;
 
     @Transactional
-    public Long save(Long id, AnswerSaveRequestDto answerSaveRequestDto){
-        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
+    public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto){
+        Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
         answerSaveRequestDto.setQuestion(question);
         return answerRepository.save(answerSaveRequestDto.toEntity()).getAnswerId();
     }
