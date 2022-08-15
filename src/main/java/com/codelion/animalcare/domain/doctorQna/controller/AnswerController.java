@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.doctorQna.controller;
 
 
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerSaveRequestDto;
+import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorQna.service.AnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,4 +24,10 @@ public class AnswerController {
         return answerService.save(questionId, answerSaveRequestDto);
     }
 
+    //답변 수정
+    @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
+    public Long modify(@PathVariable Long questionId, @PathVariable Long answerId, @RequestBody AnswerUpdateRequestDto answerUpdateRequestDto){
+
+        return answerService.update(questionId, answerId, answerUpdateRequestDto);
+    }
 }
