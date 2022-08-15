@@ -41,6 +41,11 @@ public class Answer extends BaseTimeEntity {
         this.question = question;
     }
 
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
+
     /*
     추후에 like entity 따로 만들어서 구성
     @Column

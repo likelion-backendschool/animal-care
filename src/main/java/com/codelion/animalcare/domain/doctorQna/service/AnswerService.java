@@ -19,7 +19,7 @@ public class AnswerService {
     public Long save(Long id, AnswerSaveRequestDto answerSaveRequestDto){
         Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
 
-
         return answerRepository.save(answerSaveRequestDto.toEntity()).getAnswerId();
     }
+
 }

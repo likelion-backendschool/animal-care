@@ -43,7 +43,7 @@ public class QuestionService {
 
     @Transactional(readOnly = true)
     public List<QuestionListResponseDto> findAllDesc() {
-        return questionRepository.findAllByOrderByIdDesc().stream()
+        return questionRepository.findAllDesc().stream()
                 .map(QuestionListResponseDto::new)
                 .collect(Collectors.toList());
     }
