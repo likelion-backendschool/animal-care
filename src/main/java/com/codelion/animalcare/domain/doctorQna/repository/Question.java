@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -33,7 +34,7 @@ public class Question extends BaseTimeEntity {
     private int view;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> answerList;
+    private List<Answer> answerList = new ArrayList<>();
 
     @Builder
     public Question(String title, String content, int view, List<Answer> answerList) {
@@ -46,6 +47,10 @@ public class Question extends BaseTimeEntity {
     public void update(String title, String content){
         this.title = title;
         this.content = content;
+    }
+    public void addAnswer(Answer answer) {
+        answer.setQuestion(this);
+        getAnswerList().add(answer);
     }
 
 

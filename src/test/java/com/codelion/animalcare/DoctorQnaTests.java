@@ -4,23 +4,22 @@ import com.codelion.animalcare.domain.doctorQna.repository.Answer;
 import com.codelion.animalcare.domain.doctorQna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorQna.repository.Question;
 import com.codelion.animalcare.domain.doctorQna.repository.QuestionRepository;
-import com.codelion.animalcare.domain.doctorQna.service.AnswerService;
-import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest
 public class DoctorQnaTests {
 
@@ -99,7 +98,9 @@ public class DoctorQnaTests {
                 .content(content2)
                 .build());
 
-        Question question = questionRepository.findById(Long.valueOf(2)).get();
+
+        Optional<Question> oq = this.questionRepository.findById(2L);
+        Question question = oq.get();
 
         assertThat(question.getTitle()).isEqualTo(title2);
         assertThat(question.getContent()).isEqualTo(content2);
@@ -128,6 +129,7 @@ public class DoctorQnaTests {
 
     @Test
     @Transactional
+    @Rollback(false)
     void Answer_등록된다(){
         String title = "test title";
         String content = "test content";
@@ -149,10 +151,10 @@ public class DoctorQnaTests {
                 .question(question)
                 .build());
 
-        List<Answer> answerList = answerRepository.findAll();
+        question.addAnswer(answerRepository.findById(1L).get());
+        List<Answer> answerList = question.getAnswerList();
 
         System.out.println(answerList.size());
-
 
 
 
