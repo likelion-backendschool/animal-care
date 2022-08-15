@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.doctorQna.repository;
 
 import com.codelion.animalcare.domain.BaseTimeEntity;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
 
-
+@Getter
 @NoArgsConstructor
 @Entity
 public class Question extends BaseTimeEntity {
@@ -31,7 +32,7 @@ public class Question extends BaseTimeEntity {
     @Column(columnDefinition = "Integer default 0", nullable = false)
     private int view;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // 이 클래스가 One, Many는 Answer
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
 
     @Builder
