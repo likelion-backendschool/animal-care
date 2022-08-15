@@ -45,6 +45,30 @@ public class DoctorQnaTests {
 
     }
 
+    @Test
+    public void Questions_수정된다() {
+        String title = "test title";
+        String content = "test content";
+
+        questionRepository.save(Question.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        List<Question> questionsList = questionRepository.findAll();
+
+        Question question = questionsList.get(0);
+
+        String title2 = "test title2";
+        String content2 = "test content2";
+
+        question.update(title2, content2);
+
+        assertThat(question.getTitle()).isEqualTo(title2);
+        assertThat(question.getContent()).isEqualTo(content2);
+
+    }
+
 
 
 
