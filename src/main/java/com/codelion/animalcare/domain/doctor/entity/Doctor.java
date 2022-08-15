@@ -39,6 +39,9 @@ public class Doctor extends BaseEntity {
     @Column()
     private LocalDateTime deletedAt;
 
+    @Column()
+    private int genderId;
+
     @Builder
     private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt) {
         super(id, createdAt);

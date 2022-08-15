@@ -35,6 +35,9 @@ public class Member extends BaseEntity {
     @Column()
     private LocalDateTime deletedAt;
 
+    @Column()
+    private int genderId;
+
     @Builder
     private Member(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String address, String phoneNum, LocalDateTime deletedAt) {
         super(id, createdAt);
