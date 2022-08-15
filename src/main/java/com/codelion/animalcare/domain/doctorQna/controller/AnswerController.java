@@ -5,6 +5,7 @@ import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerSav
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorQna.service.AnswerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +30,11 @@ public class AnswerController {
     public Long modify(@PathVariable Long questionId, @PathVariable Long answerId, @RequestBody AnswerUpdateRequestDto answerUpdateRequestDto){
 
         return answerService.update(questionId, answerId, answerUpdateRequestDto);
+    }
+
+    //답변 삭제
+    @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/delete")
+    public void delete(@PathVariable Long questionId, @PathVariable Long answerId) {
+        answerService.delete(questionId, answerId);
     }
 }

@@ -34,4 +34,13 @@ public class AnswerService {
 
         return answerId;
     }
+
+    @Transactional
+    public void delete(Long questionId, Long answerId) {
+        Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
+
+        Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
+
+        answerRepository.delete(answer);
+    }
 }
