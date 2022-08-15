@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.doctor.entity;
 
 import com.codelion.animalcare.common.entity.BaseEntity;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -42,8 +45,12 @@ public class Doctor extends BaseEntity {
     @Column()
     private int genderId;
 
+    @ManyToOne
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital;
+
     @Builder
-    private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt, int genderId) {
+    private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt, int genderId, Hospital hospital) {
         super(id, createdAt);
         this.loginEmail = loginEmail;
         this.loginPwd = loginPwd;
@@ -54,5 +61,6 @@ public class Doctor extends BaseEntity {
         this.introduce = introduce;
         this.deletedAt = deletedAt;
         this.genderId = genderId;
+        this.hospital = hospital;
     }
 }
