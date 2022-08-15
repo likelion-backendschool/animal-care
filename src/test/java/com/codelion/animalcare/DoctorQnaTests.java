@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,6 +68,26 @@ public class DoctorQnaTests {
         assertThat(question.getTitle()).isEqualTo(title2);
         assertThat(question.getContent()).isEqualTo(content2);
 
+    }
+
+    @Test
+    void BaseTimeEntity_등록된다() {
+        LocalDateTime now = LocalDateTime.of(2022,8,15,0,0,0);
+        questionRepository.save(Question.builder()
+                .title("title")
+                .content("content")
+                .build());
+
+        // when
+        List<Question> postsList = questionRepository.findAll();
+
+        // then
+        Question question = postsList.get(0);
+
+        System.out.println(">>>>>>>>>> createDate=" + question.getCreatedDate()+", modifiedDate=" + question.getModifiedDate());
+
+        assertThat(question.getCreatedDate()).isAfter(now);
+        assertThat(question.getModifiedDate()).isAfter(now);
     }
 
 
