@@ -39,7 +39,7 @@ public class Member extends BaseEntity {
     private int genderId;
 
     @Builder
-    private Member(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String address, String phoneNum, LocalDateTime deletedAt) {
+    private Member(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String address, String phoneNum, LocalDateTime deletedAt, int genderId) {
         super(id, createdAt);
         this.loginEmail = loginEmail;
         this.loginPwd = loginPwd;
@@ -48,5 +48,6 @@ public class Member extends BaseEntity {
         this.address = address;
         this.phoneNum = phoneNum;
         this.deletedAt = deletedAt;
+        this.genderId = genderId;
     }
 }

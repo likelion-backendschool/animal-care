@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.medical_appointment.entity;
+package com.codelion.animalcare.domain.medical_record.entity;
 
 import com.codelion.animalcare.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
@@ -15,20 +15,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MedicalAppointment extends BaseEntity {
+public class MedicalRecord extends BaseEntity{
 
-    @Column(nullable = false, length = 45)
-    private String diagnosisName;
+    @Column(nullable = false, length = 30)
+    private String title;
 
     @Column(columnDefinition = "TEXT",nullable = false)
     private String content;
 
+    @Column(nullable = false, length = 20)
+    private String cost;
+
     @Column(nullable = false, length = 45)
-    private String status;
+    private String diagnosisName;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
@@ -43,11 +45,12 @@ public class MedicalAppointment extends BaseEntity {
     private Animal animal;
 
     @Builder
-    private MedicalAppointment(Long id, LocalDateTime createdAt, String diagnosisName, String content, String status, Doctor doctor, Member member, Animal animal) {
+    private MedicalRecord(Long id, LocalDateTime createdAt, String title, String content, String cost, String diagnosisName, Doctor doctor, Member member, Animal animal) {
         super(id, createdAt);
-        this.diagnosisName = diagnosisName;
+        this.title = title;
         this.content = content;
-        this.status = status;
+        this.cost = cost;
+        this.diagnosisName = diagnosisName;
         this.doctor = doctor;
         this.member = member;
         this.animal = animal;
