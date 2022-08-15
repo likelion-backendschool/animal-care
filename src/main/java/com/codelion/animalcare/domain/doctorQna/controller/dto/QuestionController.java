@@ -19,12 +19,12 @@ import java.util.List;
 public class QuestionController {
 
     private final QuestionService questionService;
-
+    //게시글 등록
     @PostMapping("/usr/doctor-qna/write")
     public Long save(@RequestBody QuestionSaveRequestDto questionSaveRequestDto) {
         return questionService.save(questionSaveRequestDto);
     }
-
+    //게시글 수정
     @PostMapping("/usr/doctor-qna/{id}/modify")
     public Long update(@PathVariable Long id, @RequestBody QuestionUpdateRequestDto questionUpdateRequestDto){
         return questionService.update(id, questionUpdateRequestDto);
