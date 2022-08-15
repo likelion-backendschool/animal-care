@@ -5,6 +5,7 @@ import com.codelion.animalcare.domain.doctorQna.repository.Question;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -12,6 +13,7 @@ public class AnswerSaveRequestDto {
 
     private String title;
     private String content;
+    @Setter
     private Question question;
 
     @Builder

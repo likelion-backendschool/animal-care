@@ -47,6 +47,8 @@ public class Question extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
+
+
     /*
     추후에 like entity 따로 만들어서 구성
     @Column

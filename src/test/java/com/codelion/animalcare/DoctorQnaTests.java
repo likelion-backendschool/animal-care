@@ -1,15 +1,21 @@
 package com.codelion.animalcare;
 
+import com.codelion.animalcare.domain.doctorQna.repository.Answer;
+import com.codelion.animalcare.domain.doctorQna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorQna.repository.Question;
 import com.codelion.animalcare.domain.doctorQna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.doctorQna.service.AnswerService;
+import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,9 +28,14 @@ public class DoctorQnaTests {
     @Autowired
     private QuestionRepository questionRepository;
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
+
     @AfterEach
     public void tearDown() {
         questionRepository.deleteAll();
+        answerRepository.deleteAll();
     }
 
     @Test
@@ -115,6 +126,39 @@ public class DoctorQnaTests {
         assertThat(question.getModifiedDate()).isAfter(now);
     }
 
+    @Test
+    @Transactional
+    void Answer_등록된다(){
+        String title = "test title";
+        String content = "test content";
+
+        questionRepository.save(Question.builder()
+                .title(title)
+                .content(content)
+                .answerList(new ArrayList<>())
+                .build());
+
+        Question question = questionRepository.findById(Long.valueOf(1)).get();
+
+        String title2 = "답변입니다.";
+        String content2 = "답변이 되었나요?";
+
+        answerRepository.save(Answer.builder()
+                .title(title2)
+                .content(content2)
+                .question(question)
+                .build());
+
+        List<Answer> answerList = answerRepository.findAll();
+
+        System.out.println(answerList.size());
+
+
+
+
+
+
+    }
 
 
 
