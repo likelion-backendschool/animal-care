@@ -47,4 +47,11 @@ public class QuestionService {
                 .map(QuestionListResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void delete(Long id) {
+        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+
+        questionRepository.delete(question);
+    }
 }
