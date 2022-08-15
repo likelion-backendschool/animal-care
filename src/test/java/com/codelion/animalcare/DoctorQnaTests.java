@@ -71,6 +71,31 @@ public class DoctorQnaTests {
     }
 
     @Test
+    void findById_작동() {
+        String title = "test title";
+        String content = "test content";
+
+        questionRepository.save(Question.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        String title2 = "test title2";
+        String content2 = "test content2";
+
+        questionRepository.save(Question.builder()
+                .title(title2)
+                .content(content2)
+                .build());
+
+        Question question = questionRepository.findById(Long.valueOf(2)).get();
+
+        assertThat(question.getTitle()).isEqualTo(title2);
+        assertThat(question.getContent()).isEqualTo(content2);
+
+    }
+
+    @Test
     void BaseTimeEntity_등록된다() {
         LocalDateTime now = LocalDateTime.of(2022,8,15,0,0,0);
         questionRepository.save(Question.builder()
