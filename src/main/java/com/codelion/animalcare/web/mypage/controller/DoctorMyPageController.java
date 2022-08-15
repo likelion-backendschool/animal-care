@@ -1,4 +1,4 @@
-package com.codelion.animalcare.web.mypage.dto.controller;
+package com.codelion.animalcare.web.mypage.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
