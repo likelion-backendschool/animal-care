@@ -2,8 +2,10 @@ package com.codelion.animalcare.domain.doctorQna.controller.dto;
 
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionUpdateRequestDto;
+import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,5 +26,12 @@ public class QuestionController {
     public Long update(@PathVariable Long id, @RequestBody QuestionUpdateRequestDto questionUpdateRequestDto){
         return questionService.update(id, questionUpdateRequestDto);
     }
+
+    //개별 조회
+    @GetMapping("/usr/doctor-qna/{id}")
+    public QuestionResponseDto findById(@PathVariable Long id){
+        return questionService.findById(id);
+    }
+
 
 }
