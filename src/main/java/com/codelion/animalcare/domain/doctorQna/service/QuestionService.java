@@ -2,12 +2,16 @@ package com.codelion.animalcare.domain.doctorQna.service;
 
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionUpdateRequestDto;
+import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionListResponseDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorQna.repository.Question;
 import com.codelion.animalcare.domain.doctorQna.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -28,7 +32,7 @@ public class QuestionService {
 
         return id;
     }
-
+    @Transactional(readOnly = true)
     public QuestionResponseDto findById(Long id){
         Question entity = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. 글 번호=" + id));
 
@@ -36,4 +40,11 @@ public class QuestionService {
 
     }
 
+
+    @Transactional(readOnly = true)
+    public List<QuestionListResponseDto> findAllDesc() {
+        return questionRepository.findAllByOrderByIdDesc().stream()
+                .map(QuestionListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }
