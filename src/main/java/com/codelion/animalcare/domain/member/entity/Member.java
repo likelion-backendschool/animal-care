@@ -5,9 +5,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,7 +26,8 @@ public class Member extends BaseEntity {
     private String name;
 
     @Column()
-    private LocalDateTime birthday;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date birthday;
 
     @Column(nullable = false, length = 70)
     private String address;
@@ -39,7 +42,7 @@ public class Member extends BaseEntity {
     private int genderId;
 
     @Builder
-    private Member(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String address, String phoneNum, LocalDateTime deletedAt, int genderId) {
+    private Member(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, Date birthday, String address, String phoneNum, LocalDateTime deletedAt, int genderId) {
         super(id, createdAt);
         this.loginEmail = loginEmail;
         this.loginPwd = loginPwd;

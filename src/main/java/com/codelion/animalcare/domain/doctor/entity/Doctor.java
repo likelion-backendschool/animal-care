@@ -6,11 +6,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -28,7 +30,8 @@ public class Doctor extends BaseEntity {
     private String name;
 
     @Column()
-    private LocalDateTime birthday;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date birthday;
 
     @Column(nullable = false, length = 30)
     private String major;
@@ -50,7 +53,7 @@ public class Doctor extends BaseEntity {
     private Hospital hospital;
 
     @Builder
-    private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt, int genderId, Hospital hospital) {
+    private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, Date birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt, int genderId, Hospital hospital) {
         super(id, createdAt);
         this.loginEmail = loginEmail;
         this.loginPwd = loginPwd;

@@ -1,13 +1,18 @@
 package com.codelion.animalcare.web.mypage.controller;
 
+import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import com.codelion.animalcare.domain.doctor.service.DoctorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/usr/my-page/doctor")
+@RequiredArgsConstructor
 public class DoctorMyPageController {
+    private final DoctorService doctorService;
+
 
     @GetMapping()
     public String loadDoctorMyPage(){
@@ -25,8 +30,35 @@ public class DoctorMyPageController {
         return "myPage/doctor/patient-manage";
     }
 
+    // 내 정보
     @GetMapping("/{doctorId}/info")
-    public String loadDoctorMyPageInfo(){
+    public String loadDoctorMyPageInfo(Model model, @PathVariable long doctorId){
+        Doctor doctor = doctorService.findById(doctorId)
+                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+        model.addAttribute("doctor",doctor);
         return "myPage/doctor/info";
+    }
+
+    // 내 정보 수정 페이지
+    @GetMapping("/{doctorId}/info/modify")
+    public String loadDoctorMyPageInfoModify(Model model, @PathVariable long doctorId){
+        Doctor doctor = doctorService.findById(doctorId)
+                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+        model.addAttribute("doctor",doctor);
+        return "myPage/doctor/info-modify";
+    }
+
+    // 내 정보 수정 요청
+    @PostMapping("/{doctorId}/info/doModify")
+    public String updateDoctorMyPageInfo(
+            Model model, @PathVariable long doctorId,  Doctor body
+    ){
+        // 존재 하는지 체크
+        doctorService.findById(doctorId)
+            .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+
+        // TODO  수정
+
+        return "redirect:/usr/my-page/doctor/{doctorId}/info";
     }
 }

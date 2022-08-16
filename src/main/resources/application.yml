@@ -10,3 +10,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true

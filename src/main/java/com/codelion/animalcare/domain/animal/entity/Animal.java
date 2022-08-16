@@ -6,11 +6,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,8 +22,9 @@ public class Animal extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(nullable = false)
-    private LocalDateTime birthday;
+    @Column()
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date birthday;
 
     @Column(nullable = false, length = 100)
     private String registrationNum;
@@ -40,7 +43,7 @@ public class Animal extends BaseEntity {
     private Member member;
 
     @Builder
-    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registrationNum, String health_status, LocalDateTime deletedAt, int genderId, Member member) {
+    private Animal(Long id, LocalDateTime createdAt, String name, Date birthday, String registrationNum, String health_status, LocalDateTime deletedAt, int genderId, Member member) {
         super(id, createdAt);
         this.name = name;
         this.birthday = birthday;

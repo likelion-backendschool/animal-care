@@ -1,0 +1,83 @@
+<div>
+    <a th:href="@{|/usr/my-page/doctor/${doctor.getId()}/info|}"
+       th:text="돌아가기"></a>
+</div>
+<div>
+    <form th:action="@{|/usr/my-page/doctor/${doctor.getId()}/info/doModify|}" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성일시</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>이메일</th>
+                <td>
+                    <input type="text" name="loginEmail"
+                           th:value="${doctor.getLoginEmail()}" />
+                </td>
+            </tr>
+            <tr>
+                <th>비밀번호</th>
+                <td>
+                    <input type="password" name="loginPwd"/>
+                </td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td>
+                    <input type="text" name="name"
+                           th:value="${doctor.getName()}" />
+                </td>
+            </tr>
+            <tr>
+                <th>생년월일</th>
+                <td>
+                    <input type="date" name="birthday"
+                           th:value="${doctor.getBirthday()}" />
+                </td>
+            </tr>
+            <tr>
+                <th>전공</th>
+                <td>
+                    <input type="text" name="major"
+                           th:value="${doctor.getMajor()}" />
+                </td>
+            </tr>
+            <tr>
+                <th>핸드폰 번호</th>
+                <td>
+                    <input type="text" name="phoneNum"
+                           th:value="${doctor.getPhoneNum()}" />
+                </td>
+            </tr>
+            <tr>
+                <th>자기 소개</th>
+                <td>
+            <textarea name="introduce" id="" cols="30" rows="10"
+                      th:text="${doctor.getIntroduce()}">
+            </textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>성별</th>
+                <td>
+                    <input type="text" name="genderId"
+                           th:value="${doctor.getGenderId()()}" />
+                </td>
+            </tr>
+            <tr>
+                <th>가입 기간</th>
+                <td th:text="${#temporals.format(doctor.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            <tr>
+                <th>수정 기간</th>
+                <td th:text="${#temporals.format(doctor.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="submit" value="수정 완료">
+    </form>
+</div>
