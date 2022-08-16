@@ -4,6 +4,8 @@ import com.codelion.animalcare.domain.doctorQna.repository.Answer;
 import com.codelion.animalcare.domain.doctorQna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorQna.repository.Question;
 import com.codelion.animalcare.domain.doctorQna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.doctorQna.service.AnswerService;
+import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest
@@ -30,6 +34,12 @@ public class DoctorQnaTests {
     @Autowired
     private AnswerRepository answerRepository;
 
+    @Autowired
+    private AnswerService answerService;
+
+    @Autowired
+    private QuestionService questionService;
+
 
     @AfterEach
     public void tearDown() {
@@ -38,7 +48,7 @@ public class DoctorQnaTests {
     }
 
     @Test
-    public void Questions_등록된다() {
+    public void Question_등록된다() {
 
         String title = "test title";
         String content = "test content";
@@ -57,7 +67,7 @@ public class DoctorQnaTests {
     }
 
     @Test
-    public void Questions_수정된다() {
+    public void Question_수정된다() {
         String title = "test title";
         String content = "test content";
 
@@ -196,6 +206,41 @@ public class DoctorQnaTests {
         assertEquals("답변이 수정되었나요?", answer.getContent());
     }
 
+    @Test
+    public void Question_삭제된다() {
+
+        String title = "test title";
+        String content = "test content";
+
+        questionRepository.save(Question.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        Optional<Question> question = questionRepository.findById(1L);
+
+        assertTrue(question.isPresent());
+
+        if(question.isPresent()){
+            System.out.println("데이터 존재 : "+ question.get().getTitle());
+        }else{
+            System.out.println("데이터 없음");
+        }
+
+        question.ifPresent(selectQuestion->{
+            questionService.delete(selectQuestion.getQuestionId());
+        });
+
+        Optional<Question> deleteQuestion = questionRepository.findById(1L);
+
+        assertFalse(deleteQuestion.isPresent());
+
+        if(deleteQuestion.isPresent()){
+            System.out.println("데이터 존재 : "+deleteQuestion.get());
+        }else{
+            System.out.println("데이터 없음");
+        }
+    }
 
 
 
