@@ -33,6 +33,7 @@ public class UpdateDoctorMyPageInfo {
                     .phoneNum(phoneNum)
                     .introduce(introduce)
                     .genderId(genderId)
+                    .createdAt(doctor.getCreatedAt())
                     .build();
         }
     }

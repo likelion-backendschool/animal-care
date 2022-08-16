@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.hospital.entity;
 
 import com.codelion.animalcare.common.entity.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,13 @@ public class Hospital extends BaseEntity {
 
     @Column()
     private LocalDateTime deletedAt;
+
+    @Builder
+    private Hospital(Long id, LocalDateTime createdAt, String name, String address, String openingHours, LocalDateTime deletedAt) {
+        super(id, createdAt);
+        this.name = name;
+        this.address = address;
+        this.openingHours = openingHours;
+        this.deletedAt = deletedAt;
+    }
 }
