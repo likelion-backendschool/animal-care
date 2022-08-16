@@ -15,4 +15,8 @@ public class DoctorService {
     public Optional<Doctor> findById(long id) {
         return doctorRepository.findById(id);
     }
+
+    public Doctor save(Doctor doctor) {
+        return doctorRepository.save(doctor);
+    }
 }

@@ -3,7 +3,9 @@
        th:text="돌아가기"></a>
 </div>
 <div>
-    <form th:action="@{|/usr/my-page/doctor/${doctor.getId()}/info/doModify|}" method="post">
+    <form th:action="@{|/usr/my-page/doctor/${doctor.getId()}/info/doModify|}"
+          th:object="${doctor}"
+          method="post">
         <table>
             <thead>
             <tr>
@@ -22,41 +24,41 @@
             <tr>
                 <th>비밀번호</th>
                 <td>
-                    <input type="password" name="loginPwd"/>
+                    <input type="password" th:name="loginPwd" disabled/>
                 </td>
             </tr>
             <tr>
                 <th>이름</th>
                 <td>
-                    <input type="text" name="name"
+                    <input type="text" th:name="name"
                            th:value="${doctor.getName()}" />
                 </td>
             </tr>
             <tr>
                 <th>생년월일</th>
                 <td>
-                    <input type="date" name="birthday"
+                    <input type="date" th:name="birthday"
                            th:value="${doctor.getBirthday()}" />
                 </td>
             </tr>
             <tr>
                 <th>전공</th>
                 <td>
-                    <input type="text" name="major"
+                    <input type="text" th:name="major"
                            th:value="${doctor.getMajor()}" />
                 </td>
             </tr>
             <tr>
                 <th>핸드폰 번호</th>
                 <td>
-                    <input type="text" name="phoneNum"
+                    <input type="text" th:name="phoneNum"
                            th:value="${doctor.getPhoneNum()}" />
                 </td>
             </tr>
             <tr>
                 <th>자기 소개</th>
                 <td>
-            <textarea name="introduce" id="" cols="30" rows="10"
+            <textarea th:name="introduce" id="" cols="30" rows="10"
                       th:text="${doctor.getIntroduce()}">
             </textarea>
                 </td>
@@ -64,8 +66,8 @@
             <tr>
                 <th>성별</th>
                 <td>
-                    <input type="text" name="genderId"
-                           th:value="${doctor.getGenderId()()}" />
+                    <input type="text" th:name="genderId"
+                           th:value="${doctor.getGenderId()}" />
                 </td>
             </tr>
             <tr>
