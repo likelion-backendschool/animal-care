@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BaseEntity {
+public abstract  class BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hospital extends BaseEntity {
     @Column(nullable = false, length = 20)
-    private String loginEmail;
+    private String name;
 
     @Column(nullable = false, length = 70)
     private String address;
