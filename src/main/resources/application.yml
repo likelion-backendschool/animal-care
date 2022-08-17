@@ -1,18 +1,17 @@
 spring:
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/animal_care?serverTimezone=UTC
-    username: root
-    password: skqldi12
+    url: jdbc:mysql://animal_care:3306/animal_care?serverTimezone=UTC
+    username: animalcare
+    password: animalcare123
   sql:
     init:
       encoding: UTF-8
   jpa:
-    show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
+    properties:
+      hibernate:
+        format_sql: true # 실행되는 query를 보여줌
 
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: true
+logging.level:
+  org.hibernate.SQL: debug
