@@ -109,12 +109,12 @@ public class DoctorMyPageController {
     }
 
     // 내 정보 수정 요청
-    @PostMapping("{doctorId}/info/doModify")
+    @PostMapping("{doctorId}/info/modify")
     public String updateDoctorMyPageInfo(
-            Model model,
+            UpdateDoctorMyPageInfo.RequestDto body,
             @PathVariable long doctorId,
-            @RequestBody  UpdateDoctorMyPageInfo.RequestDto body
-    ){
+            Model model
+            ){
         // 존재 하는지 체크
         Doctor beforeDoctor = doctorService.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));

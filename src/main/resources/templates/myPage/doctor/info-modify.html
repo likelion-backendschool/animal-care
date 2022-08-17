@@ -1,10 +1,10 @@
+
 <div>
     <a th:href="@{|/usr/my-page/doctor/${doctor.getId()}/info|}"
        th:text="돌아가기"></a>
 </div>
 <div>
-    <form th:action="@{|/usr/my-page/doctor/${doctor.getId()}/info/doModify|}"
-          th:object="${doctor}"
+    <form th:action="@{|/usr/my-page/doctor/${doctor.getId()}/info/modify|}"
           method="post">
         <table>
             <thead>
@@ -17,7 +17,7 @@
             <tr>
                 <th>이메일</th>
                 <td>
-                    <input type="text" name="loginEmail"
+                    <input type="text" th:name="loginEmail"
                            th:value="${doctor.getLoginEmail()}" />
                 </td>
             </tr>

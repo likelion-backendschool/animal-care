@@ -2,11 +2,13 @@ package com.codelion.animalcare.web.mypage.dto;
 
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Date;
 
 public class UpdateDoctorMyPageInfo {
     @Getter
+    @Setter
     public static class RequestDto{
         private String loginEmail;
 
