@@ -15,4 +15,8 @@ public class HospitalService {
     public Optional<Hospital> findById(long id) {
         return hospitalRepository.findById(id);
     }
+
+    public void save(Hospital hospital) {
+        hospitalRepository.save(hospital);
+    }
 }

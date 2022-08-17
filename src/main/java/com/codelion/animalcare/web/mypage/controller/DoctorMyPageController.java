@@ -8,6 +8,8 @@ import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointm
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
 import com.codelion.animalcare.domain.medical_record.entity.MedicalRecord;
 import com.codelion.animalcare.domain.medical_record.service.MedicalRecordService;
+import com.codelion.animalcare.web.mypage.dto.LoadDoctorMyPageHospitalInfoManage;
+import com.codelion.animalcare.web.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.web.mypage.dto.UpdateDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.web.mypage.dto.UpdateDoctorMyPageInfo;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DoctorMyPageController {
     private final DoctorService doctorService;
+    private final HospitalService hospitalService;
     private final MedicalAppointmentService medicalAppointmentService;
     private final MedicalRecordService medicalRecordService;
 
@@ -39,7 +42,11 @@ public class DoctorMyPageController {
 
         Hospital hospital = doctor.getHospital();
 
-        model.addAttribute("hospital", hospital);
+        // Entity => dto
+        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalForm = new LoadDoctorMyPageHospitalInfoManage.ResponseDto(hospital);
+
+        model.addAttribute("hospitalForm", hospitalForm);
+
         return "myPage/doctor/hospital-info-manage";
     }
 
@@ -51,39 +58,70 @@ public class DoctorMyPageController {
 
         Hospital hospital = doctor.getHospital();
 
-        model.addAttribute("hospital", hospital);
+        // Entity => dto
+        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalForm = new LoadDoctorMyPageHospitalInfoManage.ResponseDto(hospital);
+
+        model.addAttribute("hospitalForm", hospitalForm);
+
         return "myPage/doctor/hospital-info-manage-modify";
     }
 
     // 병원 소개 수정 요청
-    @PostMapping("{doctorId}/hospital-info-manage/doModify")
+    @PostMapping("{doctorId}/hospital-info-manage/modify")
     public String updateDoctorMyPageHospitalInfoManage(
             Model model,
             @PathVariable long doctorId,
             @RequestBody UpdateDoctorMyPageHospitalInfoManage.RequestDto body
     ){
+        // doctor check
         Doctor doctor = doctorService.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
 
-        Hospital hospital = doctor.getHospital();
+        // hospital check
+        Hospital beforeHospital = doctor.getHospital();
 
-        model.addAttribute("hospital", hospital);
-        return "myPage/doctor/hospital-info-manage-modify";
+        if(beforeHospital == null) throw new RuntimeException(doctorId + "don't have hospital information.");
+
+        // DTO => Entity
+        Hospital afterHospital = body.toEntity(beforeHospital);
+
+        hospitalService.save(afterHospital);
+
+        return "redirect:/usr/my-page/doctor/{doctorId}/hospital-info-manage";
     }
 
-    // 환자 관리
-    @GetMapping("{doctorId}/patient-manage")
-    public String loadDoctorMyPagePatientManage(Model model, @PathVariable long doctorId){
+    // 환자 예약 관리
+    @GetMapping("{doctorId}/patient-manage/medical-appointments")
+    public String loadDoctorMyPagePatientManageMedicalAppointment(
+            Model model,
+            @PathVariable long doctorId,
+            @RequestParam(value = "page", defaultValue = "0") int page
+    ){
         List<MedicalAppointment> medicalAppointments = medicalAppointmentService.findByDoctorId(doctorId);
-        List<MedicalRecord> medicalRecords = medicalRecordService.findByDoctorId(doctorId);
-
+        // TODO dto 사용
         model.addAttribute("medicalAppointments",medicalAppointments);
-        model.addAttribute("medicalRecords",medicalRecords);
 
-        return "myPage/doctor/patient-manage";
+        return "myPage/doctor/patient-manage/medical-appointments";
     }
 
     //TODO 예약 환자 거절
+
+    // 환자 진료서 관리
+    @GetMapping("{doctorId}/patient-manage/medical-records")
+    public String loadDoctorMyPagePatientManageMedicalRecord(
+            Model model,
+            @PathVariable long doctorId,
+            @RequestParam(value = "page", defaultValue = "0") int page
+    ){
+
+        List<MedicalRecord> medicalRecords = medicalRecordService.findByDoctorId(doctorId);
+        // TODO dto 사용
+        model.addAttribute("medicalRecords",medicalRecords);
+
+        return "myPage/doctor/patient-manage/medical-records";
+    }
+
+
 
 
     // 내 정보
@@ -92,7 +130,10 @@ public class DoctorMyPageController {
         Doctor doctor = doctorService.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
 
-        model.addAttribute("doctor",doctor);
+        // entity => dto
+        LoadDoctorMyPageInfo.ResponseDto doctorForm = new LoadDoctorMyPageInfo.ResponseDto(doctor);
+
+        model.addAttribute("doctor",doctorForm);
 
         return "myPage/doctor/info";
     }
@@ -103,26 +144,48 @@ public class DoctorMyPageController {
         Doctor doctor = doctorService.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
 
-        model.addAttribute("doctor", doctor);
+        // entity => dto
+        LoadDoctorMyPageInfo.ResponseDto doctorForm = new LoadDoctorMyPageInfo.ResponseDto(doctor);
+
+        model.addAttribute("doctor", doctorForm);
 
         return "myPage/doctor/info-modify";
     }
 
-    // 내 정보 수정 요청
+
+    // 내 정보 수정 요청(비밀번호 제외)
     @PostMapping("{doctorId}/info/modify")
     public String updateDoctorMyPageInfo(
             UpdateDoctorMyPageInfo.RequestDto body,
             @PathVariable long doctorId,
             Model model
-            ){
+    ){
         // 존재 하는지 체크
         Doctor beforeDoctor = doctorService.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
 
         // dto => entity
         Doctor afterDoctor = body.toEntity(beforeDoctor);
+
         doctorService.save(afterDoctor);
 
         return "redirect:/usr/my-page/doctor/{doctorId}/info";
     }
+
+    // 비밀번호 수정.
+    @PostMapping("{doctorId}/info/modify/password")
+    public void updateDoctorMyPageInfoPassword(
+            String loginPwd,
+            @PathVariable long doctorId,
+            Model model
+    ){
+        // doctor check
+        Doctor doctor = doctorService.findById(doctorId)
+                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+
+        doctor.updateLoginPwd(loginPwd);
+
+        doctorService.save(doctor);
+    }
+
 }

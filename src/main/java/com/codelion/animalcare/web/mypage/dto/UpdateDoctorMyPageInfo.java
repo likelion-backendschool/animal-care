@@ -23,7 +23,6 @@ public class UpdateDoctorMyPageInfo {
         private String introduce;
 
         private int genderId;
-
         public Doctor toEntity(Doctor doctor){
             return Doctor.builder()
                     .id(doctor.getId())

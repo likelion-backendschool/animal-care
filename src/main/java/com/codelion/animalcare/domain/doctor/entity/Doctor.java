@@ -52,6 +52,10 @@ public class Doctor extends BaseEntity {
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
+    public void updateLoginPwd(String newLoginPwd){
+        loginPwd = newLoginPwd;
+    }
+
     @Builder
     private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, Date birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt, int genderId, Hospital hospital) {
         super(id, createdAt);
