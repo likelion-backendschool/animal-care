@@ -1,9 +1,13 @@
 spring:
   datasource:
-#    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/community?serverTimezone=UTC
-#    username: root
-#    password: rlaclgns5628
+    url: jdbc:mysql://localhost:3306/animal_care
+    username: root
+    password: 12345678
     driver: com.mysql.cj.jdbc.Driver
   sql:
     init:
       encoding: UTF-8
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
