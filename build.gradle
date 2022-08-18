@@ -30,12 +30,12 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.9'
 
-	//thymeleaf
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	//thymeleaf(add feature/DoctorMyPage)
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
-	// hot swap
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 }
 
 tasks.named('test') {
