@@ -34,8 +34,8 @@ public class CommentDto {
 
         public CommentResponseDto(Comment comment) {
             this.id = comment.getId();
-            this.createdDate = comment.getCreatedDate();
-            this.updatedDate = comment.getUpdatedDate();
+            this.createdDate = comment.getCreatedAt();
+            this.updatedDate = comment.getUpdatedAt();
             this.content = comment.getContent();
             this.likes = comment.getLikes();
             this.postId = comment.getPost().getId();
@@ -49,7 +49,7 @@ public class CommentDto {
         public Comment toEntity(Comment oldComment) {
             return Comment.builder()
                     .id(oldComment.getId())
-                    .createdDate(oldComment.getCreatedDate())
+                    .createdDate(oldComment.getCreatedAt())
                     .content(content)
                     .likes(oldComment.getLikes())
                     .build();

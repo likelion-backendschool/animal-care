@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.doctorQna.repository;
 
-import com.codelion.animalcare.domain.BaseTimeEntity;
+import com.codelion.animalcare.common.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +18,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Question extends BaseTimeEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionId;
+public class Question extends BaseEntity {
 
     @Column(length = 40, nullable = false)
     private String title;

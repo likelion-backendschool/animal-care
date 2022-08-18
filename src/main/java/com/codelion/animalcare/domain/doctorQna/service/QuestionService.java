@@ -21,7 +21,7 @@ public class QuestionService {
 
     @Transactional
     public Long save(QuestionSaveRequestDto questionSaveRequestDto) {
-        return questionRepository.save(questionSaveRequestDto.toEntity()).getQuestionId();
+        return questionRepository.save(questionSaveRequestDto.toEntity()).getId();
     }
 
     @Transactional

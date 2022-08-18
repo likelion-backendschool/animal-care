@@ -18,7 +18,7 @@ public class QuestionResponseDto {
     //private String member
 
     public QuestionResponseDto(Question entity){
-        this.id = entity.getQuestionId();
+        this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.view = entity.getView();
