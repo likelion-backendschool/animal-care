@@ -1,4 +1,4 @@
-package com.codelion.animalcare.web.mypage.dto;
+package com.codelion.animalcare.domain.doctor.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import lombok.Getter;

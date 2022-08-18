@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.post.entity;
 
-import com.codelion.animalcare.common.entity.BaseEntity;
+import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Column;

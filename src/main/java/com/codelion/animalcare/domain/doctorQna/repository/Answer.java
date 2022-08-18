@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.doctorQna.repository;
 
-import com.codelion.animalcare.domain.BaseTimeEntity;
+import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,20 +10,14 @@ import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Getter
 @NoArgsConstructor
 @Entity
-public class Answer extends BaseTimeEntity {
+public class Answer extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long answerId;
 
     @Column(length = 40, nullable = false)
     private String title;
