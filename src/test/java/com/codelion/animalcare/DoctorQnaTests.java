@@ -131,10 +131,10 @@ public class DoctorQnaTests {
         // then
         Question question = postsList.get(0);
 
-        System.out.println(">>>>>>>>>> createDate=" + question.getCreatedDate()+", modifiedDate=" + question.getModifiedDate());
+        System.out.println(">>>>>>>>>> createDate=" + question.getCreatedAt()+", modifiedDate=" + question.getUpdatedAt());
 
-        assertThat(question.getCreatedDate()).isAfter(now);
-        assertThat(question.getModifiedDate()).isAfter(now);
+        assertThat(question.getCreatedAt()).isAfter(now);
+        assertThat(question.getUpdatedAt()).isAfter(now);
     }
 
     @Test
@@ -228,7 +228,7 @@ public class DoctorQnaTests {
         }
 
         question.ifPresent(selectQuestion->{
-            questionService.delete(selectQuestion.getQuestionId());
+            questionService.delete(selectQuestion.getId());
         });
 
         Optional<Question> deleteQuestion = questionRepository.findById(1L);
