@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.post;
+package com.codelion.animalcare.domain.post.controller;
 
 import com.codelion.animalcare.domain.post.dto.PostDto.ModifyPostRequestDto;
 import com.codelion.animalcare.domain.post.dto.PostDto.PostRequestDto;

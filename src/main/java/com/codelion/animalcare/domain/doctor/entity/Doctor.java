@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.doctor.entity;
 
-import com.codelion.animalcare.common.entity.BaseEntity;
+import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity

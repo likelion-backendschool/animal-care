@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.animal.entity;
 
-import com.codelion.animalcare.common.entity.BaseEntity;
+import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.hospital.entity;
 
-import com.codelion.animalcare.common.entity.BaseEntity;
+import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.codelion.animalcare.common.entity;
+package com.codelion.animalcare.global.common.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
