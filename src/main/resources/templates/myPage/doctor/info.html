@@ -1,0 +1,57 @@
+<div>
+    <a th:href="@{|/usr/my-page/doctor/${doctor.getId()}/info/modify|}"
+       th:text="수정"></a>
+</div>
+<div>
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>작성일시</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>이메일</th>
+        <td th:text="${doctor.getLoginEmail()}"></td>
+    </tr>
+    <tr>
+        <th>비밀번호</th>
+        <td>
+            <button onclick="">비밀번호 변경</button></td>
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td th:text="${doctor.getName()}"></td>
+    </tr>
+    <tr>
+        <th>생년월일</th>
+        <td th:text="${doctor.getBirthday()}"></td>
+    </tr>
+    <tr>
+        <th>전공</th>
+        <td th:text="${doctor.getMajor()}"></td>
+    </tr>
+    <tr>
+        <th>핸드폰 번호</th>
+        <td th:text="${doctor.getPhoneNum()}"></td>
+    </tr>
+    <tr>
+        <th>자기 소개</th>
+        <td th:text="${doctor.getIntroduce()}"></td>
+    </tr>
+    <tr>
+        <th>성별</th>
+        <td th:text="${doctor.getGenderId()}"></td>
+    </tr>
+    <tr>
+        <th>가입 기간</th>
+        <td th:text="${#temporals.format(doctor.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    <tr>
+        <th>수정 기간</th>
+        <td th:text="${#temporals.format(doctor.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
