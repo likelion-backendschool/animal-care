@@ -13,7 +13,7 @@ public class LoadDoctorMyPageInfo {
 
         private String name;
 
-        private Date birthday;
+        private LocalDateTime birthday;
 
         private String major;
 

@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.medical_record.entity;
+package com.codelion.animalcare.domain.diagnosis.entity;
 
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MedicalRecord extends BaseEntity{
+public class Diagnosis extends BaseEntity{
 
     @Column(nullable = false, length = 30)
     private String title;
@@ -45,7 +45,7 @@ public class MedicalRecord extends BaseEntity{
     private Animal animal;
 
     @Builder
-    private MedicalRecord(Long id, LocalDateTime createdAt, String title, String content, String cost, String diagnosisName, Doctor doctor, Member member, Animal animal) {
+    private Diagnosis(Long id, LocalDateTime createdAt, String title, String content, String cost, String diagnosisName, Doctor doctor, Member member, Animal animal) {
         super(id, createdAt);
         this.title = title;
         this.content = content;

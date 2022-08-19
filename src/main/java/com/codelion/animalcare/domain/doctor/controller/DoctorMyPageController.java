@@ -1,13 +1,13 @@
 package com.codelion.animalcare.domain.doctor.controller;
 
+import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
+import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.service.DoctorService;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
-import com.codelion.animalcare.domain.medical_record.entity.MedicalRecord;
-import com.codelion.animalcare.domain.medical_record.service.MedicalRecordService;
 import com.codelion.animalcare.domain.doctor.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.doctor.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageHospitalInfoManage;
@@ -26,7 +26,7 @@ public class DoctorMyPageController {
     private final DoctorService doctorService;
     private final HospitalService hospitalService;
     private final MedicalAppointmentService medicalAppointmentService;
-    private final MedicalRecordService medicalRecordService;
+    private final DiagnosisService diagnosisService;
 
 
     @GetMapping()
@@ -114,9 +114,9 @@ public class DoctorMyPageController {
             @RequestParam(value = "page", defaultValue = "0") int page
     ){
 
-        List<MedicalRecord> medicalRecords = medicalRecordService.findByDoctorId(doctorId);
+        List<Diagnosis> diagnoses = diagnosisService.findByDoctorId(doctorId);
         // TODO dto 사용
-        model.addAttribute("medicalRecords",medicalRecords);
+        model.addAttribute("diagnoses",diagnoses);
 
         return "myPage/doctor/patient-manage/medical-records";
     }

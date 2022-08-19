@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class UpdateDoctorMyPageInfo {
     @Getter
@@ -14,7 +15,7 @@ public class UpdateDoctorMyPageInfo {
 
         private String name;
 
-        private Date birthday;
+        private LocalDateTime birthday;
 
         private String major;
 
