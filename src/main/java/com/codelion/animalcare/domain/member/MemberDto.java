@@ -24,8 +24,8 @@ public class MemberDto {
     @Temporal(TemporalType.DATE)
     private LocalDateTime birthday;
 
-    @Embedded
-    private Address address;
+   /* @Embedded
+    private Address address;*/
 
     private String phone_num;
 

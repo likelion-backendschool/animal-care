@@ -41,6 +41,11 @@ public class QuestionService {
 
     }
 
+    @Transactional
+    public List<Question> findAll() {
+        return questionRepository.findAll();
+    }
+
 
     @Transactional(readOnly = true)
     public List<QuestionListResponseDto> findAllDesc() {

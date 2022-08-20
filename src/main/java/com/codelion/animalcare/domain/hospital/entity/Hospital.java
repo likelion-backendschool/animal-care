@@ -2,7 +2,7 @@ package com.codelion.animalcare.domain.hospital.entity;
 
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
-import com.codelion.animalcare.domain.member.Address;
+/*import com.codelion.animalcare.domain.member.Address;*/
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -22,9 +22,9 @@ public class Hospital extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(nullable = false, length = 70)
+    /*@Column(nullable = false, length = 70)
     @Embedded
-    private Address address;
+    private Address address;*/
 
     @Column(nullable = false, length = 20)
     private String phoneNum;
@@ -36,10 +36,10 @@ public class Hospital extends BaseEntity {
     private LocalDateTime deletedAt;
 
     @Builder
-    private Hospital(Long id, LocalDateTime createdAt, String name, Address address, String phoneNum, String openingHours, LocalDateTime deletedAt) {
+    private Hospital(Long id, LocalDateTime createdAt, String name/* Address address*/, String phoneNum, String openingHours, LocalDateTime deletedAt) {
         super(id, createdAt);
         this.name = name;
-        this.address = address;
+        /*this.address = address;*/
         this.phoneNum = phoneNum;
         this.openingHours = openingHours;
         this.deletedAt = deletedAt;

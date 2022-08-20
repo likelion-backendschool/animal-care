@@ -4,6 +4,7 @@ import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionS
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionListResponseDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionResponseDto;
+import com.codelion.animalcare.domain.doctorQna.repository.Question;
 import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -51,8 +52,8 @@ public class QuestionController {
     //전체 조회
     @GetMapping("/usr/doctor-qna")
     public String findAllDesc(Model model) {
-        List<QuestionListResponseDto> answerList = questionService.findAllDesc();
-        model.addAttribute("answerlist", answerList);
+        List<Question> questionList = questionService.findAll();
+        model.addAttribute("questionlist", questionList);
 
         return "/doctorqna/doctorQnaList";
     }

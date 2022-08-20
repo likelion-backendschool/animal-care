@@ -1,5 +1,6 @@
 package com.codelion.animalcare;
 
+import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionListResponseDto;
 import com.codelion.animalcare.domain.doctorQna.repository.Answer;
 import com.codelion.animalcare.domain.doctorQna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorQna.repository.Question;
@@ -41,11 +42,37 @@ public class DoctorQnaTests {
     private QuestionService questionService;
 
 
-    @AfterEach
+/*    @AfterEach
     public void tearDown() {
         questionRepository.deleteAll();
         answerRepository.deleteAll();
+    }*/
+
+    @Test
+    public void tearUp() {
+        String title = "test title";
+        String content = "test content";
+
+        questionRepository.save(Question.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        String title2 = "test title2";
+        String content2 = "test content2";
+
+        questionRepository.save(Question.builder()
+                .title(title2)
+                .content(content2)
+                .build());
+
+        List<Question> questionList = questionService.findAll();
+        for(var x : questionList) {
+            System.out.println(x.getTitle());
+        }
+
     }
+
 
     @Test
     public void Question_등록된다() {
