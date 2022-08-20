@@ -25,7 +25,6 @@ public class AnswerSaveRequestDto {
 
     public Answer toEntity() {
         return Answer.builder()
-                .title(title)
                 .content(content)
                 .question(question)
                 .build();

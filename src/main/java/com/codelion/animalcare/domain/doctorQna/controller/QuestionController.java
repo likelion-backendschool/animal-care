@@ -6,24 +6,34 @@ import com.codelion.animalcare.domain.doctorQna.controller.dto.response.Question
 import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class QuestionController {
 
     private final QuestionService questionService;
     //게시글 등록
     @PostMapping("/usr/doctor-qna/write")
-    public Long save(@RequestBody QuestionSaveRequestDto questionSaveRequestDto) {
-        return questionService.save(questionSaveRequestDto);
+    public String save(Model model, @Valid QuestionSaveRequestDto questionSaveRequestDto, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "";
+        }
+
+        questionService.save(questionSaveRequestDto);
+        return "redirect:/doctorqna/doctorQnaList";
     }
+
     //게시글 수정
     @PostMapping("/usr/doctor-qna/{id}/modify")
     public Long update(@PathVariable Long id, @RequestBody QuestionUpdateRequestDto questionUpdateRequestDto){
@@ -37,8 +47,11 @@ public class QuestionController {
     }
     //전체 조회
     @GetMapping("/usr/doctor-qna")
-    public List<QuestionListResponseDto> findAllDesc() {
-        return questionService.findAllDesc();
+    public String findAllDesc(Model model) {
+        List<QuestionListResponseDto> answerList = questionService.findAllDesc();
+        model.addAttribute("answerlist", answerList);
+
+        return "/doctorqna/doctorQnaList";
     }
 
     //게시글 삭제
