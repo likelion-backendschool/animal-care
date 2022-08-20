@@ -59,8 +59,9 @@ public class QuestionController {
 
     //게시글 삭제
     @GetMapping("/usr/doctor-qna/{id}/delete")
-    public void delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id){
         questionService.delete(id);
+        return "redirect:/doctorqna/doctorQnaList";
     }
 
 }
