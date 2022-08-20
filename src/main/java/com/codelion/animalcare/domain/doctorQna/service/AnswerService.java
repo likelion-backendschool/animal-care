@@ -30,7 +30,7 @@ public class AnswerService {
 
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
 
-        answer.update(answerUpdateRequestDto.getTitle(), answerUpdateRequestDto.getContent());
+        answer.update(answerUpdateRequestDto.getContent());
 
         return answerId;
     }

@@ -152,11 +152,9 @@ public class DoctorQnaTests {
 
         Question question = questionRepository.findById(Long.valueOf(1)).get();
 
-        String title2 = "답변입니다.";
         String content2 = "답변이 되었나요?";
 
         answerRepository.save(Answer.builder()
-                .title(title2)
                 .content(content2)
                 .question(question)
                 .build());
@@ -187,7 +185,6 @@ public class DoctorQnaTests {
         String content2 = "답변이 되었나요?";
 
         answerRepository.save(Answer.builder()
-                .title(title2)
                 .content(content2)
                 .question(question)
                 .build());
@@ -196,13 +193,12 @@ public class DoctorQnaTests {
 
         question.addAnswer(answerRepository.findById(1L).get());
 
-        answer.update("답변이 수정되었습니다.", "답변이 수정되었나요?");
+        answer.update("답변이 수정되었습니다.");
 
         List<Answer> answerList = question.getAnswerList();
 
         answer = answerList.get(0);
-        System.out.println("%s , %s".formatted(answer.getTitle(), answer.getContent()));
-        assertEquals("답변이 수정되었습니다.", answer.getTitle());
+        System.out.println("%s , %s".formatted(answer.getContent()));
         assertEquals("답변이 수정되었나요?", answer.getContent());
     }
 
