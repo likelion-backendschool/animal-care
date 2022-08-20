@@ -65,11 +65,7 @@ public class DoctorQnaTests {
                 .title(title2)
                 .content(content2)
                 .build());
-
-        List<Question> questionList = questionService.findAll();
-        for(var x : questionList) {
-            System.out.println(x.getTitle());
-        }
+        
 
     }
 
