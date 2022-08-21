@@ -18,4 +18,9 @@ public class MyPageHomeController {
         return "myPage";
     }
 
+    @GetMapping("/usr/mypage/doctor")
+    public String loadDoctorMyPage(){
+        return "myPage/doctor/index";
+    }
+
 }

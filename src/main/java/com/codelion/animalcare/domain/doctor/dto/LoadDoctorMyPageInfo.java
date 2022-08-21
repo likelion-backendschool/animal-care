@@ -1,11 +1,13 @@
 package com.codelion.animalcare.domain.doctor.dto;
 
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import lombok.Getter;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class LoadDoctorMyPageInfo {
+    @Getter
     public static class ResponseDto{
         private int id;
 
