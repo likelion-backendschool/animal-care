@@ -11,6 +11,7 @@ public class UpdateDoctorMyPageInfo {
     @Getter
     @Setter
     public static class RequestDto{
+        private Long id;
         private String loginEmail;
 
         private String name;

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class LoadDoctorMyPageInfo {
     @Getter
     public static class ResponseDto{
-        private int id;
+        private Long id;
 
         private String loginEmail;
 
@@ -30,7 +30,7 @@ public class LoadDoctorMyPageInfo {
         private LocalDateTime updatedAt;
 
         public ResponseDto(Doctor doctor) {
-            this.id = doctor.getGenderId();
+            this.id = doctor.getId();
             this.loginEmail = doctor.getLoginEmail();
             this.name = doctor.getName();
             this.birthday = doctor.getBirthday();

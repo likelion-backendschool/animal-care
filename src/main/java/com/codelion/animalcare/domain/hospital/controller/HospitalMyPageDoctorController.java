@@ -21,8 +21,7 @@ public class HospitalMyPageDoctorController {
     // 병원 소개
     @GetMapping()
     public String loadDoctorMyPageHospitalInfoManage(Model model, @PathVariable long doctorId){
-        Doctor doctor = doctorService.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+        Doctor doctor = doctorService.findById(doctorId);
 
         Hospital hospital = doctor.getHospital();
 
@@ -37,8 +36,7 @@ public class HospitalMyPageDoctorController {
     // 병원 소개 수정 페이지
     @GetMapping("modify")
     public String loadDoctorMyPageHospitalInfoManageModify(Model model, @PathVariable long doctorId){
-        Doctor doctor = doctorService.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+        Doctor doctor = doctorService.findById(doctorId);
 
         Hospital hospital = doctor.getHospital();
 
@@ -58,8 +56,7 @@ public class HospitalMyPageDoctorController {
             @RequestBody UpdateDoctorMyPageHospitalInfoManage.RequestDto body
     ){
         // doctor check
-        Doctor doctor = doctorService.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+        Doctor doctor = doctorService.findById(doctorId);
 
         // hospital check
         Hospital beforeHospital = doctor.getHospital();

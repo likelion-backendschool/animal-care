@@ -2,7 +2,6 @@ package com.codelion.animalcare.domain.doctor.controller;
 
 import com.codelion.animalcare.domain.doctor.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageInfo;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,13 +20,9 @@ public class DoctorMyPageInfoController {
     // 내 정보
     @GetMapping()
     public String loadDoctorMyPageInfo(Model model, @PathVariable long doctorId){
-        Doctor doctor = doctorService.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+        LoadDoctorMyPageInfo.ResponseDto doctorForm = doctorService.findById(doctorId);
 
-        // entity => dto
-        LoadDoctorMyPageInfo.ResponseDto doctorForm = new LoadDoctorMyPageInfo.ResponseDto(doctor);
-
-        model.addAttribute("doctor",doctorForm);
+        model.addAttribute("doctor", doctorForm);
 
         return "myPage/doctor/info";
     }
@@ -35,11 +30,7 @@ public class DoctorMyPageInfoController {
     // 내 정보 수정 페이지
     @GetMapping("modify")
     public String loadDoctorMyPageInfoModify(Model model, @PathVariable long doctorId){
-        Doctor doctor = doctorService.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
-
-        // entity => dto
-        LoadDoctorMyPageInfo.ResponseDto doctorForm = new LoadDoctorMyPageInfo.ResponseDto(doctor);
+        LoadDoctorMyPageInfo.ResponseDto doctorForm = doctorService.findById(doctorId);
 
         model.addAttribute("doctor", doctorForm);
 
@@ -50,36 +41,24 @@ public class DoctorMyPageInfoController {
     // 내 정보 수정 요청(비밀번호 제외)
     @PostMapping("modify")
     public String updateDoctorMyPageInfo(
-            UpdateDoctorMyPageInfo.RequestDto body,
-            @PathVariable long doctorId,
-            Model model
+            UpdateDoctorMyPageInfo.RequestDto doctorDto,
+            @PathVariable long doctorId
     ){
-        // 존재 하는지 체크
-        Doctor beforeDoctor = doctorService.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+        doctorDto.setId(doctorId);
 
-        // dto => entity
-        Doctor afterDoctor = body.toEntity(beforeDoctor);
+        doctorService.update(doctorDto);
 
-        doctorService.save(afterDoctor);
-
-        return "redirect:/usr/my-page/doctor/{doctorId}/info";
+        return "redirect:/usr/mypage/doctor/{doctorId}/info";
     }
 
     // 비밀번호 수정.
-    @PostMapping("{doctorId}/info/modify/password")
-    public void updateDoctorMyPageInfoPassword(
+    @PostMapping("modify/password")
+    public String updateDoctorMyPageInfoPassword(
             String loginPwd,
-            @PathVariable long doctorId,
-            Model model
+            @PathVariable long doctorId
     ){
-        // doctor check
-        Doctor doctor = doctorService.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException(doctorId + "can't found."));
+        doctorService.updatePassword(loginPwd, doctorId);
 
-        doctor.updateLoginPwd(loginPwd);
-
-        doctorService.save(doctor);
+        return "redirect:/usr/mypage/doctor/{doctorId}/info";
     }
-
 }
