@@ -16,7 +16,6 @@ public class QuestionResponseDto {
 
     private LocalDateTime createdAt;
     private int view;
-
     private List<Answer> answerList;
     //private String member
 
@@ -26,6 +25,6 @@ public class QuestionResponseDto {
         this.content = entity.getContent();
         this.view = entity.getView();
         this.createdAt = entity.getCreatedAt();
-        this.answerList = getAnswerList();
+        this.answerList = entity.getAnswerList();
     }
 }

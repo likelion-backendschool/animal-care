@@ -8,17 +8,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class AnswerSaveRequestDto {
 
-    private String title;
     private String content;
     @Setter
     private Question question;
 
     @Builder
-    public AnswerSaveRequestDto(String title, String content, Question question){
-        this.title = title;
+    public AnswerSaveRequestDto(String content, Question question){
         this.content = content;
         this.question = question;
     }

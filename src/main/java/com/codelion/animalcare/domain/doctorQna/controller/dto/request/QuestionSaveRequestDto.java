@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,6 +17,7 @@ import java.util.List;
 public class QuestionSaveRequestDto {
     private String title;
     private String content;
+
 
     @Builder
     public QuestionSaveRequestDto(String title, String content) {

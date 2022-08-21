@@ -30,11 +30,10 @@ public class Question extends BaseEntity {
     private List<Answer> answerList = new ArrayList<>();
 
     @Builder
-    public Question(String title, String content, int view, List<Answer> answerList) {
+    public Question(String title, String content, int view) {
         this.title = title;
         this.content = content;
         this.view = view;
-        this.answerList = answerList;
     }
 
     public void update(String title, String content){
@@ -44,6 +43,10 @@ public class Question extends BaseEntity {
     public void addAnswer(Answer answer) {
         answer.setQuestion(this);
         getAnswerList().add(answer);
+
+        for(var x : getAnswerList()) {
+            System.out.println(x.getContent());
+        }
     }
 
 

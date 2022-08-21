@@ -268,6 +268,12 @@ public class DoctorQnaTests {
 
         questionService.save(questionSaveRequestDto);
 
+        Question question = questionRepository.findById(1L).orElseThrow();
+
+        List<Answer> answerList = question.getAnswerList();
+
+        System.out.println(answerList.size());
+
 
 
 

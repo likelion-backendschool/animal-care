@@ -5,14 +5,14 @@ import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerSav
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorQna.service.AnswerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class AnswerController {
 
     private final AnswerService answerService;
@@ -20,9 +20,9 @@ public class AnswerController {
 
     //답변 작성
     @PostMapping("/usr/doctor-qna/{questionId}/answers/write")
-    public Long save(@PathVariable Long questionId, @RequestBody AnswerSaveRequestDto answerSaveRequestDto){
-
-        return answerService.save(questionId, answerSaveRequestDto);
+    public String save(@PathVariable Long questionId, AnswerSaveRequestDto answerSaveRequestDto){
+        answerService.save(questionId, answerSaveRequestDto);
+        return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
     //답변 수정

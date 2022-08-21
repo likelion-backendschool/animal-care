@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.css}">
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"/>
 
@@ -6,7 +7,14 @@
 <div th:text="|내용 : ${question.content}|"></div>
 <div th:text="|날짜 ${#temporals.format(question.createdAt, 'yy.MM.dd HH:mm')}|"></div>
 
-<form th:action="@{|/answer/create/${question.id}|}" method="post">
+<h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+<div>
+    <ul>
+        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+    </ul>
+</div>
+
+<form th:action="@{|/usr/doctor-qna/${question.id}/answers/write|}" method="post">
     <textarea name="content" rows="15"></textarea>
     <button type="submit">답변등록</button>
 </form>

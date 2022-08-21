@@ -2,8 +2,9 @@ package com.codelion.animalcare.domain.doctorQna.controller;
 
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionListResponseDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionResponseDto;
+import com.codelion.animalcare.domain.doctorQna.repository.Answer;
+import com.codelion.animalcare.domain.doctorQna.repository.Question;
 import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 //TODO 질문 수정, 삭제 기능은 로그인 기능 구현 되면 연동해서 구현하기
 @RequiredArgsConstructor
@@ -45,6 +48,8 @@ public class QuestionController {
     @GetMapping("/usr/doctor-qna/{id}")
     public String findById(Model model, @PathVariable Long id){
         model.addAttribute("question", questionService.findById(id));
+        List<Answer> answerList = questionService.findById(id).getAnswerList();
+
 
         return "doctorqna/doctorQnaDetail";
     }
@@ -56,7 +61,7 @@ public class QuestionController {
         return "/doctorqna/doctorQnaList";
     }
 
-    //게시글 삭제
+    //게시글 삭제 TODO : 로그인 기능 구현 후에
     @GetMapping("/usr/doctor-qna/{id}/delete")
     public String delete(@PathVariable Long id){
         questionService.delete(id);
