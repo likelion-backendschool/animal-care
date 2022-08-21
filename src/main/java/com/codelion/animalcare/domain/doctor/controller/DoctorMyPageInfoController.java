@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.doctor.controller;
 
 import com.codelion.animalcare.domain.doctor.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageInfo;
+import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageInfoPassword;
 import com.codelion.animalcare.domain.doctor.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class DoctorMyPageInfoController {
         return "myPage/doctor/info";
     }
 
+    // // TODO 생일입력 안받아짐.
     // 내 정보 수정 페이지
     @GetMapping("modify")
     public String loadDoctorMyPageInfoModify(Model model, @PathVariable long doctorId){
@@ -51,13 +53,22 @@ public class DoctorMyPageInfoController {
         return "redirect:/usr/mypage/doctor/{doctorId}/info";
     }
 
+    @GetMapping("modify/password")
+    public String loadDoctorMyPageInfoPassword(Model model, @PathVariable Long doctorId){
+        LoadDoctorMyPageInfo.ResponseDto doctorForm = doctorService.findById(doctorId);
+
+        model.addAttribute("doctor", doctorForm);
+        model.addAttribute("password", new UpdateDoctorMyPageInfoPassword.RequestDto());
+        return "myPage/doctor/info-modify-password";
+    }
+
     // 비밀번호 수정.
     @PostMapping("modify/password")
     public String updateDoctorMyPageInfoPassword(
-            String loginPwd,
+            UpdateDoctorMyPageInfoPassword.RequestDto requestDto,
             @PathVariable long doctorId
     ){
-        doctorService.updatePassword(loginPwd, doctorId);
+        doctorService.updatePassword(requestDto, doctorId);
 
         return "redirect:/usr/mypage/doctor/{doctorId}/info";
     }

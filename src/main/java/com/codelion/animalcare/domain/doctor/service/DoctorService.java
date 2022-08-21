@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.doctor.service;
 
 import com.codelion.animalcare.domain.doctor.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageInfo;
+import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageInfoPassword;
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class DoctorService {
-
-
     private final DoctorRepository doctorRepository;
 
+    @Transactional(readOnly = true)
     public LoadDoctorMyPageInfo.ResponseDto findById(long id) {
         Doctor doctor = findDoctorById(id);
 
@@ -32,24 +31,35 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-
     public void update(UpdateDoctorMyPageInfo.RequestDto doctorDto) {
         // doctor check
         Doctor beforeDoctor = findDoctorById(doctorDto.getId());
 
         // dto => entity
         Doctor newDoctor = doctorDto.toEntity(beforeDoctor);
+        System.out.println(newDoctor);
 
         doctorRepository.save(newDoctor);
     }
 
 
     // 의사 비밀번호 변경
-    public void updatePassword(String loginPwd, long doctorId) {
+    public void updatePassword(UpdateDoctorMyPageInfoPassword.RequestDto requestDto, Long doctorId) {
         // doctor check
         Doctor doctor = findDoctorById(doctorId);
 
-        doctor.updateLoginPwd(loginPwd);
+        //TODO 비밀번호 불일치 알람뜨게 하기
+
+        // 비밀번호 확인
+        if(!doctor.getLoginPwd().equals(requestDto.getBeforePassword())){
+            throw new RuntimeException("기존 비밀번호가 일치하지 않습니다.");
+        }
+        // 비밀번호 체크
+        if(!requestDto.getNewPassword().equals(requestDto.getNewPasswordConfirm())){
+            throw new RuntimeException("기존 비밀번호가 일치하지 않습니다.");
+        }
+
+        doctor.updateLoginPwd(requestDto.getNewPassword());
 
         doctorRepository.save(doctor);
     }

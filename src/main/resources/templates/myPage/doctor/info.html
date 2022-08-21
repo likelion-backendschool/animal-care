@@ -1,5 +1,5 @@
 <div>
-    <a th:href="@{|/usr/my-page/doctor/${doctor.getId()}/info/modify|}"
+    <a th:href="@{|/usr/mypage/doctor/${doctor.getId()}/info/modify|}"
        th:text="수정"></a>
 </div>
 <div>
@@ -18,7 +18,12 @@
     <tr>
         <th>비밀번호</th>
         <td>
-            <button onclick="">비밀번호 변경</button></td>
+            <button >
+                <a th:href="@{|/usr/mypage/doctor/${doctor.getId()}/info/modify/password|}"
+                        th:text="수정">비밀번호 변경
+                </a>
+            </button>
+        </td>
     </tr>
     <tr>
         <th>이름</th>

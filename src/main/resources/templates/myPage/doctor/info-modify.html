@@ -1,10 +1,9 @@
-
 <div>
-    <a th:href="@{|/usr/my-page/doctor/${doctor.getId()}/info|}"
+    <a th:href="@{|/usr/mypage/doctor/${doctor.getId()}/info|}"
        th:text="돌아가기"></a>
 </div>
 <div>
-    <form th:action="@{|/usr/my-page/doctor/${doctor.getId()}/info/modify|}"
+    <form th:action="@{|/usr/mypage/doctor/${doctor.getId()}/info/modify|}"
           method="post">
         <table>
             <thead>

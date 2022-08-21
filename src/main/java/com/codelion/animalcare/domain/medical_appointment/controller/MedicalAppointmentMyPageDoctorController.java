@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/usr/mypage/doctor")
+@RequestMapping("/usr/mypage/doctor/{doctorId}/member-manage/medical-appointments")
 @RequiredArgsConstructor
 public class MedicalAppointmentMyPageDoctorController {
     private final MedicalAppointmentService medicalAppointmentService;
 
     // 환자 예약 관리
-    @GetMapping("{doctorId}/member-manage/medical-appointments")
+    @GetMapping("")
     public String loadMyPageDoctorDiagnosis(
             Model model,
             @PathVariable long doctorId,
