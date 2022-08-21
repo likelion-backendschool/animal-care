@@ -2,5 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"/>
 
-<h1>제목</h1>
-<div>내용</div>
+<h1 th:text="|제목 : ${question.title}|"></h1>
+<div th:text="|내용 : ${question.content}|"></div>
+<div th:text="|날짜 ${#temporals.format(question.createdAt, 'yy.MM.dd HH:mm')}|"></div>
+
+<form th:action="@{|/answer/create/${question.id}|}" method="post">
+    <textarea name="content" rows="15"></textarea>
+    <button type="submit">답변등록</button>
+</form>
