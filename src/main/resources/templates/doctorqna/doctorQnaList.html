@@ -14,7 +14,7 @@
         <tr th:each="questionListResponseDto, loop : ${questionlist}">
             <td th:text="${loop.count}"></td>
             <td>
-                <a th:href="@{|/doctorqna/doctorQnaDetail/${questionListResponseDto.id}|}" th:text="${questionListResponseDto.title}"></a>
+                <a th:href="@{|doctor-qna/${questionListResponseDto.id}|}" th:text="${questionListResponseDto.title}"></a>
             </td>
             <td th:text="${#temporals.format(questionListResponseDto.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
 

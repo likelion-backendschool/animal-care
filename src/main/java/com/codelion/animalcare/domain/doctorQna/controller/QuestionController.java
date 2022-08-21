@@ -43,8 +43,7 @@ public class QuestionController {
     //개별 조회
     @GetMapping("/usr/doctor-qna/{id}")
     public String findById(Model model, @PathVariable Long id){
-        QuestionResponseDto question = questionService.findById(id);
-        model.addAttribute("question", question);
+        model.addAttribute("question", questionService.findById(id));
 
         return "doctorqna/doctorQnaDetail";
     }
