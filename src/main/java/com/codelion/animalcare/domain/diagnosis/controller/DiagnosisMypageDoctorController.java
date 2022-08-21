@@ -19,7 +19,7 @@ public class DiagnosisMypageDoctorController {
     private final DiagnosisService diagnosisService;
     // 환자 진료서 관리
     @GetMapping()
-    public String loadDoctorMyPagePatientManageMedicalRecord(
+    public String loadMyPageDoctorDiagnosis(
             Model model,
             @PathVariable long doctorId,
             @RequestParam(value = "page", defaultValue = "0") int page

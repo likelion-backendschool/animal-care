@@ -20,7 +20,7 @@ public class MedicalAppointmentMyPageDoctorController {
 
     // 환자 예약 관리
     @GetMapping("{doctorId}/member-manage/medical-appointments")
-    public String loadDoctorMyPagePatientManageMedicalAppointment(
+    public String loadMyPageDoctorDiagnosis(
             Model model,
             @PathVariable long doctorId,
             @RequestParam(value = "page", defaultValue = "0") int page

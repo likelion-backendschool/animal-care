@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctor.dto;
+package com.codelion.animalcare.domain.hospital.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.member.Address;

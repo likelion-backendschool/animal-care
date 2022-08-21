@@ -1,7 +1,7 @@
 package com.codelion.animalcare.domain.hospital.controller;
 
-import com.codelion.animalcare.domain.doctor.dto.LoadDoctorMyPageHospitalInfoManage;
-import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageHospitalInfoManage;
+import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
+import com.codelion.animalcare.domain.hospital.dto.UpdateDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.service.DoctorService;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
