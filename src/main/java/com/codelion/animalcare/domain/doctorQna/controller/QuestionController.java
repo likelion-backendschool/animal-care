@@ -8,33 +8,34 @@ import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
-import java.util.List;
-
+//TODO 질문 수정, 삭제 기능은 로그인 기능 구현 되면 연동해서 구현하기
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {
 
     private final QuestionService questionService;
-    //게시글 등록
-    @PostMapping("/usr/doctor-qna/write")
-    public String save(Model model, @Valid QuestionSaveRequestDto questionSaveRequestDto, BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()) {
-            return "";
-        }
-
-        questionService.save(questionSaveRequestDto);
-        return "redirect:/doctorqna/doctorQnaList";
+    //게시글 등록 화면
+    @GetMapping("/usr/doctor-qna/write")
+    public String saveForm(QuestionSaveRequestDto questionSaveRequestDto){
+        return "doctorqna/doctorQnaQuestionForm";
     }
 
-    //게시글 수정
+    //게시글 등록 TODO : VAILD 추가 , 로그인 기능 구현 후 작성자 표시
+    @PostMapping("/usr/doctor-qna/write")
+    public String save(QuestionSaveRequestDto questionSaveRequestDto) {
+
+        questionService.save(questionSaveRequestDto);
+
+        return "redirect:/usr/doctor-qna";
+    }
+
+    //게시글 수정 TODO : 로그인 기능 구현 후에
     @PostMapping("/usr/doctor-qna/{id}/modify")
     public Long update(@PathVariable Long id, @RequestBody QuestionUpdateRequestDto questionUpdateRequestDto){
         return questionService.update(id, questionUpdateRequestDto);
@@ -59,7 +60,7 @@ public class QuestionController {
     @GetMapping("/usr/doctor-qna/{id}/delete")
     public String delete(@PathVariable Long id){
         questionService.delete(id);
-        return "redirect:/doctorqna/doctorQnaList";
+        return "redirect:/usr/doctor-qna";
     }
 
 }

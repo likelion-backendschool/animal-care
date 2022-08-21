@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.css}">
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"/>
 
@@ -21,6 +22,8 @@
         </tr>
         </tbody>
     </table>
+
+    <a th:href="@{/usr/doctor-qna/write}" class="btn btn-primary">질문 등록하기</a>
 
 </div>
 </html>

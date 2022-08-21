@@ -1,5 +1,6 @@
 package com.codelion.animalcare;
 
+import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionListResponseDto;
 import com.codelion.animalcare.domain.doctorQna.repository.Answer;
 import com.codelion.animalcare.domain.doctorQna.repository.AnswerRepository;
@@ -259,6 +260,17 @@ public class DoctorQnaTests {
         }else{
             System.out.println("데이터 없음");
         }
+    }
+
+    @Test
+    public void test_1() {
+        QuestionSaveRequestDto questionSaveRequestDto = new QuestionSaveRequestDto("title", "content");
+
+        questionService.save(questionSaveRequestDto);
+
+
+
+
     }
 
 
