@@ -20,7 +20,7 @@
 ---
 0. Pull Requests
     + Private 레포지토리에서는 branch 규칙을 적용할려면 업그레이드를 해야함
-    + 문서 작성의 경우 3명이상 확인 후 main ← doc 로 PR 날린 거 merge시키기(3번째 사람)
+    + 문서 작성의 경우 전부 확인 후 main ← doc 로 PR 날린 거 merge시키기( 사람)
     + commit 규칙 
     + 소문자로 하기
     + PR 보내는 법에 대해서 이야기
