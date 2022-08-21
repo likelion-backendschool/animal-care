@@ -9,6 +9,7 @@ import javax.persistence.Embedded;
 public class LoadDoctorMyPageHospitalInfoManage {
     @Getter
     public static class ResponseDto{
+        private Long id;
         private String name;
 
         @Embedded
@@ -17,6 +18,7 @@ public class LoadDoctorMyPageHospitalInfoManage {
         private String openingHours;
 
         public ResponseDto(Hospital hospital) {
+            this.id = hospital.getId();
             this.name = hospital.getName();
             this.address = hospital.getAddress();
             this.openingHours = hospital.getOpeningHours();

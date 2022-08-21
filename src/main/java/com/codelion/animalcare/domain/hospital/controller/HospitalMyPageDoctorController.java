@@ -21,12 +21,7 @@ public class HospitalMyPageDoctorController {
     // 병원 소개
     @GetMapping()
     public String loadDoctorMyPageHospitalInfoManage(Model model, @PathVariable long doctorId){
-        Doctor doctor = doctorService.findById(doctorId);
-
-        Hospital hospital = doctor.getHospital();
-
-        // Entity => dto
-        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalForm = new LoadDoctorMyPageHospitalInfoManage.ResponseDto(hospital);
+        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalForm = hospitalService.findByDoctorId(doctorId);
 
         model.addAttribute("hospitalForm", hospitalForm);
 
@@ -36,12 +31,7 @@ public class HospitalMyPageDoctorController {
     // 병원 소개 수정 페이지
     @GetMapping("modify")
     public String loadDoctorMyPageHospitalInfoManageModify(Model model, @PathVariable long doctorId){
-        Doctor doctor = doctorService.findById(doctorId);
-
-        Hospital hospital = doctor.getHospital();
-
-        // Entity => dto
-        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalForm = new LoadDoctorMyPageHospitalInfoManage.ResponseDto(hospital);
+        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalForm = hospitalService.findByDoctorId(doctorId);
 
         model.addAttribute("hospitalForm", hospitalForm);
 
@@ -51,22 +41,10 @@ public class HospitalMyPageDoctorController {
     // 병원 소개 수정 요청
     @PostMapping("modify")
     public String updateDoctorMyPageHospitalInfoManage(
-            Model model,
             @PathVariable long doctorId,
-            @RequestBody UpdateDoctorMyPageHospitalInfoManage.RequestDto body
+            @RequestBody UpdateDoctorMyPageHospitalInfoManage.RequestDto hospitalDto
     ){
-        // doctor check
-        Doctor doctor = doctorService.findById(doctorId);
-
-        // hospital check
-        Hospital beforeHospital = doctor.getHospital();
-
-        if(beforeHospital == null) throw new RuntimeException(doctorId + "don't have hospital information.");
-
-        // DTO => Entity
-        Hospital afterHospital = body.toEntity(beforeHospital);
-
-        hospitalService.save(afterHospital);
+        hospitalService.update(hospitalDto);
 
         return "redirect:/usr/my-page/doctor/{doctorId}/hospital-info-manage";
     }

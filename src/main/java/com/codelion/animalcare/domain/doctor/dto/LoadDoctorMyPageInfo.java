@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.doctor.dto;
 
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import lombok.Getter;
 
 import java.sql.Date;
@@ -28,6 +29,7 @@ public class LoadDoctorMyPageInfo {
         private LocalDateTime createdAt;
 
         private LocalDateTime updatedAt;
+        private Hospital hospital;
 
         public ResponseDto(Doctor doctor) {
             this.id = doctor.getId();
@@ -40,6 +42,7 @@ public class LoadDoctorMyPageInfo {
             this.genderId = doctor.getGenderId();
             this.createdAt = doctor.getCreatedAt();
             this.updatedAt = doctor.getUpdatedAt();
+            this.hospital = doctor.getHospital();
         }
     }
 }

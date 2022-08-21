@@ -13,6 +13,7 @@ public class UpdateDoctorMyPageHospitalInfoManage {
     @Getter
     @Setter
     public static class RequestDto{
+        private Long id;
         private String name;
 
         @Embedded
@@ -22,7 +23,7 @@ public class UpdateDoctorMyPageHospitalInfoManage {
 
         public Hospital toEntity(Hospital hospital){
             return Hospital.builder()
-                    .id(hospital.getId())
+                    .id(id)
                     .name(name)
                     .address(address)
                     .openingHours(openingHours)
