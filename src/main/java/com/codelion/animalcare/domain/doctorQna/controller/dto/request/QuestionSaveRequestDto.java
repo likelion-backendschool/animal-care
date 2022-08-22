@@ -1,6 +1,5 @@
 package com.codelion.animalcare.domain.doctorQna.controller.dto.request;
 
-import com.codelion.animalcare.domain.doctorQna.repository.Answer;
 import com.codelion.animalcare.domain.doctorQna.repository.Question;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,8 +8,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

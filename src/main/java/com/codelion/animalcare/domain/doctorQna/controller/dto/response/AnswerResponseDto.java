@@ -10,13 +10,9 @@ import java.time.LocalDateTime;
 public class AnswerResponseDto {
 
     private Long id;
-
     private String content;
-
     private Question question;
-
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 
     public AnswerResponseDto(Answer entity) {
