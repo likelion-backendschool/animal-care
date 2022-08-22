@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,17 +69,15 @@ public class QuestionController {
 
     @GetMapping("/usr/doctor-qna/{id}/modify")
     public String update(Model model, @PathVariable Long id, QuestionUpdateRequestDto questionUpdateRequestDto){
-        QuestionResponseDto questionResponseDto = questionService.findById(id);
 
-        model.addAttribute("question", questionResponseDto);
-
-        return "/doctorqna/doctorQnaModifyForm";
+        model.addAttribute("question", questionService.findById(id));
+        return "/doctorqna/doctorQnaQuestionModifyForm";
     }
     @PostMapping("/usr/doctor-qna/{id}/modify")
     public String update(@PathVariable Long id, @Valid QuestionUpdateRequestDto questionUpdateRequestDto, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()) {
-            return "/doctorqna/doctorQnaModifyForm";
+            return "/doctorqna/doctorQnaQuestionModifyForm";
         }
 
         questionService.update(id, questionUpdateRequestDto);

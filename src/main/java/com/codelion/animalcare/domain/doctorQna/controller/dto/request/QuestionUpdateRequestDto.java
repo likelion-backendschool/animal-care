@@ -3,11 +3,13 @@ package com.codelion.animalcare.domain.doctorQna.controller.dto.request;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class QuestionUpdateRequestDto {
     @NotBlank(message = "제목은 필수 항목 입니다.")
