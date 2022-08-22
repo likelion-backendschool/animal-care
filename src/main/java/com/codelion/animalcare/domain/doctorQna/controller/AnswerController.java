@@ -38,7 +38,7 @@ public class AnswerController {
 
     //TODO : 아래 기능들은 로그인 후 구현?
     @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
-    public Long modify(@PathVariable Long questionId, @PathVariable Long answerId, @RequestBody AnswerUpdateRequestDto answerUpdateRequestDto){
+    public Long modify(@PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto){
 
         return answerService.update(questionId, answerId, answerUpdateRequestDto);
     }
