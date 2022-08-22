@@ -45,6 +45,7 @@ public class Doctor extends BaseEntity {
     @Column()
     private int genderId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
