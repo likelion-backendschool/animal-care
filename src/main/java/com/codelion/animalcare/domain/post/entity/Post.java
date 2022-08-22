@@ -1,11 +1,14 @@
 package com.codelion.animalcare.domain.post.entity;
 
-import com.codelion.animalcare.common.entity.BaseEntity;
+import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import com.codelion.animalcare.domain.member.entity.Member;
+import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @Entity
 @Getter
@@ -23,13 +26,13 @@ public class Post extends BaseEntity {
     @Column
     private int views;
 
-//    @ManyToOne
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-//    @ManyToOne
-//    @JoinColumn(name = "doctor_id")
-//    private Doctor doctor;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     @OrderBy("id asc")

@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.post.entity;
 
-import com.codelion.animalcare.common.entity.BaseEntity;
+import com.codelion.animalcare.domain.member.entity.Member;
+import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -23,9 +24,9 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "post_id")
     private Post post;
 
-//    @ManyToOne
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder
     private Comment(Long id, LocalDateTime createdDate, String content, int likes, Post post) {

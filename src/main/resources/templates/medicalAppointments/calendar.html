@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<style>
+  .fieldError {
+    border-color: #bd2130;
+  }
+</style>
+
+
+<script th:inline ="javascript">
+  /*<![CDATA[*/ /*]]>*/
+  let today = new Date();
+
+  function buildCalendar(){
+    let row = null
+    let cnt = 0;
+    let calendarTable = document.getElementById("calendar");
+    let calendarTableTitle = document.getElementById("calendarTitle");
+    calendarTableTitle.innerHTML = today.getFullYear()+". "+(today.getMonth()+1)+"";
+
+    let firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    let lastDate = new Date(today.getFullYear(), today.getMonth()+1, 0);
+
+    while(calendarTable.rows.length > 2){
+      calendarTable.deleteRow(calendarTable.rows.length -1);
+    }
+
+    let i, cell;
+    row = calendarTable.insertRow();
+    for(i = 0; i < firstDate.getDay(); i++){
+      cell = row.insertCell();
+      cnt += 1;
+    }
+
+    row = calendarTable.insertRow();
+
+    for(i = 1; i <= lastDate.getDate(); i++){
+      cell = row.insertCell();
+      cnt += 1;
+
+      cell.setAttribute('id', i);
+      cell.innerHTML = i;
+      cell.align = "center";
+
+      cell.onclick = function(){
+        clickedYear = today.getFullYear();
+        clickedMonth = ( 1 + today.getMonth() );
+        clickedDate = this.getAttribute('id');
+
+        clickedDate = clickedDate >= 10 ? clickedDate : '0' + clickedDate;
+        clickedMonth = clickedMonth >= 10 ? clickedMonth : '0' + clickedMonth;
+        clickedYMD = clickedYear + "-" + clickedMonth + "-" + clickedDate;
+
+        opener.document.getElementById("date").value = clickedYMD;
+        self.close();
+      }
+
+      if (cnt % 7 == 1) {
+        cell.innerHTML = "<font color=#F79DC2>" + i + "</font>";
+      }
+
+      if (cnt % 7 == 0){
+        cell.innerHTML = "<font color=skyblue>" + i + "</font>";
+        row = calendar.insertRow();
+      }
+    }
+
+    if(cnt % 7 != 0){
+      for(i = 0; i < 7 - (cnt % 7); i++){
+        cell = row.insertCell();
+      }
+    }
+  }
+
+  function prevCalendar(){
+    today = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
+    buildCalendar();
+  }
+
+  function nextCalendar(){
+    today = new Date(today.getFullYear(), today.getMonth()+1, today.getDate());
+    buildCalendar();
+  }
+
+  /*]]>*/
+</script>
+
+<body>
+
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+  <table id="calendar" th:align="center">
+    <tr>
+      <td th:align="center"><label onclick="prevCalendar()">  </label></td>
+      <td colspan="5" th:align="center" id="calendarTitle">yyyy m</td>
+      <td th:align="center"><label onclick="nextCalendar()">  </label></td>
+    </tr>
+    <tr>
+      <td th:align="center"><font color ="#F79DC2">sun</font></td>
+      <td th:align="center">mon</td>
+      <td th:align="center">tue</td>
+      <td th:align="center">wed</td>
+      <td th:align="center">thu</td>
+      <td th:align="center">fri</td>
+      <td th:align="center"><font color ="skyblue">sat</font></td>
+    </tr>
+    <script type="text/javascript">buildCalendar();</script>
+  </table>
+
+
+  <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+
+</body>
+
+
+</html>

@@ -41,8 +41,8 @@ public class PostDto {
             this.content = post.getContent();
             this.likes = post.getLikes();
             this.views = post.getViews();
-            this.createdDate = post.getCreatedDate();
-            this.updatedDate = post.getUpdatedDate();
+            this.createdDate = post.getCreatedAt();
+            this.updatedDate = post.getUpdatedAt();
             this.comments = post.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
         }
     }
@@ -55,7 +55,7 @@ public class PostDto {
         public Post toEntity(Post oldPost) {
             return Post.builder()
                     .id(oldPost.getId())
-                    .createdDate(oldPost.getCreatedDate())
+                    .createdDate(oldPost.getCreatedAt())
                     .title(title)
                     .content(content)
                     .likes(oldPost.getLikes())
