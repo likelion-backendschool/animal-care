@@ -1,6 +1,6 @@
-package com.codelion.animalcare.domain.doctorQna.controller.dto.response;
+package com.codelion.animalcare.domain.doctorqna.dto.response;
 
-import com.codelion.animalcare.domain.doctorQna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

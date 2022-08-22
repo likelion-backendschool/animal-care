@@ -1,9 +1,9 @@
-package com.codelion.animalcare.domain.doctorQna.controller;
+package com.codelion.animalcare.domain.doctorqna.controller;
 
-import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerSaveRequestDto;
-import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionSaveRequestDto;
-import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
+import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
+import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
+import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

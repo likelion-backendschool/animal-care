@@ -1,13 +1,12 @@
 package com.codelion.animalcare;
 
-import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionSaveRequestDto;
-import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionListResponseDto;
-import com.codelion.animalcare.domain.doctorQna.repository.Answer;
-import com.codelion.animalcare.domain.doctorQna.repository.AnswerRepository;
-import com.codelion.animalcare.domain.doctorQna.repository.Question;
-import com.codelion.animalcare.domain.doctorQna.repository.QuestionRepository;
-import com.codelion.animalcare.domain.doctorQna.service.AnswerService;
-import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
+import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
+import com.codelion.animalcare.domain.doctorqna.repository.Answer;
+import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
+import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.doctorqna.service.AnswerService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

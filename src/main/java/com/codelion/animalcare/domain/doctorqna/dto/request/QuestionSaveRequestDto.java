@@ -1,6 +1,6 @@
-package com.codelion.animalcare.domain.doctorQna.controller.dto.request;
+package com.codelion.animalcare.domain.doctorqna.dto.request;
 
-import com.codelion.animalcare.domain.doctorQna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctorQna.repository;
+package com.codelion.animalcare.domain.doctorqna.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

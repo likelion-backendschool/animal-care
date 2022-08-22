@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctorQna.repository;
+package com.codelion.animalcare.domain.doctorqna.repository;
 
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.Builder;
