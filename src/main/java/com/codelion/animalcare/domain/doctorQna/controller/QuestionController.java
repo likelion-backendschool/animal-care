@@ -65,10 +65,18 @@ public class QuestionController {
     }
 
     //게시글 수정 TODO : 로그인 기능 구현 후에
-    @PostMapping("/usr/doctor-qna/{id}/modify")
-    public Long update(@PathVariable Long id, @RequestBody QuestionUpdateRequestDto questionUpdateRequestDto){
-        return questionService.update(id, questionUpdateRequestDto);
+
+    @GetMapping("/usr/doctor-qna/{id}/modify")
+    public String update(@PathVariable Long id, QuestionUpdateRequestDto questionUpdateRequestDto){
+
+        return "questionService.update(id, questionUpdateRequestDto)";
     }
+    @PostMapping("/usr/doctor-qna/{id}/modify")
+    public String update(@PathVariable Long id, @Valid QuestionUpdateRequestDto questionUpdateRequestDto, BindingResult bindingResult){
+
+        return "questionService.update(id, questionUpdateRequestDto)";
+    }
+
     //게시글 삭제 TODO : 로그인 기능 구현 후에
     @GetMapping("/usr/doctor-qna/{id}/delete")
     public String delete(@PathVariable Long id){
