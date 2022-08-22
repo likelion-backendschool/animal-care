@@ -100,6 +100,24 @@ public class MedicalAppointmentController {
         return "medicalAppointments/medicalAppointmentList";
     }
 
+
+
+
+//    @GetMapping("/usr/mypage/member/medical-appoint/medical-appointment-info")
+//    public String medicalAppointmentListUseDtoPage(Model model)
+//    {
+//
+//        List<MedicalAppointment> medicalAppointments = medicalAppointmentService.findMedicalAppointmentsV2();
+//
+//        List<SimpleMedicalAppointmentDto> simpleMedicalAppointmentDtos = medicalAppointments.stream()
+//                .map(o -> new SimpleMedicalAppointmentDto(o))
+//                .collect(Collectors.toList());
+//
+//        model.addAttribute("simpleMedicalAppointmentDtos", simpleMedicalAppointmentDtos);
+//
+//        return "medicalAppointments/medicalAppointmentList";
+//    }
+
     @Getter
     static class SimpleMedicalAppointmentDto {
 

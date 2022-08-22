@@ -13,6 +13,7 @@ import com.codelion.animalcare.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -40,8 +41,14 @@ public class MedicalAppointmentService {
 
     public List<MedicalAppointment> findMedicalAppointments() {
 
-        return medicalAppointmentRepository.findAllByMemberAndAnimalAndHospitalAndDoctor();
+        return medicalAppointmentRepository.findAllWithMemberAnimalHospitalDoctor();
     }
+
+//    public List<MedicalAppointment> findMedicalAppointmentsV2(
+//            @RequestParam(value = "offset", defaultValue = "0") int offset,
+//            @RequestParam(value = "limit", defaultValue = "100") int limit) {
+//        return medicalAppointmentRepository.findAllWithMemberAnimalHospital(offset, limit);
+//    }
 
 
     /**
@@ -75,4 +82,6 @@ public class MedicalAppointmentService {
         //에약 취소
         medicalAppointment.cancel();
     }
+
+
 }
