@@ -45,7 +45,8 @@ public class AnswerController {
 
     //답변 삭제
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/delete")
-    public void delete(@PathVariable Long questionId, @PathVariable Long answerId) {
+    public String delete(@PathVariable Long questionId, @PathVariable Long answerId) {
         answerService.delete(questionId, answerId);
+        return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 }

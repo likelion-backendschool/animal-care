@@ -67,14 +67,23 @@ public class QuestionController {
     //게시글 수정 TODO : 로그인 기능 구현 후에
 
     @GetMapping("/usr/doctor-qna/{id}/modify")
-    public String update(@PathVariable Long id, QuestionUpdateRequestDto questionUpdateRequestDto){
+    public String update(Model model, @PathVariable Long id, QuestionUpdateRequestDto questionUpdateRequestDto){
+        QuestionResponseDto questionResponseDto = questionService.findById(id);
 
-        return "questionService.update(id, questionUpdateRequestDto)";
+        model.addAttribute("question", questionResponseDto);
+
+        return "/doctorqna/doctorQnaModifyForm";
     }
     @PostMapping("/usr/doctor-qna/{id}/modify")
     public String update(@PathVariable Long id, @Valid QuestionUpdateRequestDto questionUpdateRequestDto, BindingResult bindingResult){
 
-        return "questionService.update(id, questionUpdateRequestDto)";
+        if(bindingResult.hasErrors()) {
+            return "/doctorqna/doctorQnaModifyForm";
+        }
+
+        questionService.update(id, questionUpdateRequestDto);
+
+        return "redirect:/usr/doctor-qna/%d".formatted(id);
     }
 
     //게시글 삭제 TODO : 로그인 기능 구현 후에

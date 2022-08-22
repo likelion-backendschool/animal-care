@@ -1,0 +1,20 @@
+<html layout:decorate="~{doctorqna/doctorQnaLayout}">
+
+<div layout:fragment="content" class="container my-3">
+
+    <h5 class="my-3 border-bottom pb-2">질문수정</h5>
+    <form th:action="@{/usr/doctor-qna/${question.id}/modify}" th:object="${questionUpdateRequestDto}" method="post">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" th:field="*{title}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="저장하기" class="btn btn-primary my-2">
+    </form>
+</html>

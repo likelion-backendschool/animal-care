@@ -33,7 +33,7 @@
         <div class="my-3">
             <a th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/modify|}" class="btn btn-sm btn-outline-secondary"
                th:text="수정"></a>
-            <a href="javascript:void(0);" th:data-uri="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/delete|}"
+            <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/delete|}"
                class="delete btn btn-sm btn-outline-secondary"
                th:text="삭제"></a>
         </div>
