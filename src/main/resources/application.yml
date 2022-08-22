@@ -18,3 +18,10 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+  
+  # 타임리프 실시간 반영
+  devtools:
+    livereload:
+      enabled: true
+    thymeleaf:
+      cache: false

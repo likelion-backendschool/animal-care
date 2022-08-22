@@ -14,7 +14,8 @@ public class QuestionListResponseDto {
     private LocalDateTime createdAt;
     private int view;
 
-    //private String member
+    /*TODO : private String member
+             private Integer like */
 
     public QuestionListResponseDto(Question entity) {
         this.id = entity.getId();

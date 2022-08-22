@@ -25,7 +25,7 @@ public class AnswerController {
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
-    //답변 수정
+    //TODO : 아래 기능들은 로그인 후 구현?
     @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public Long modify(@PathVariable Long questionId, @PathVariable Long answerId, @RequestBody AnswerUpdateRequestDto answerUpdateRequestDto){
 

@@ -30,7 +30,7 @@ public class QuestionController {
     //게시글 등록 화면
     @GetMapping("/usr/doctor-qna/write")
     public String saveForm(QuestionSaveRequestDto questionSaveRequestDto){
-        return "doctorqna/doctorQnaQuestionForm";
+        return "/doctorqna/doctorQnaQuestionForm";
     }
 
     //게시글 등록 TODO : VAILD 추가 , 로그인 기능 구현 후 작성자 표시
@@ -42,12 +42,6 @@ public class QuestionController {
         return "redirect:/usr/doctor-qna";
     }
 
-    //게시글 수정 TODO : 로그인 기능 구현 후에
-    @PostMapping("/usr/doctor-qna/{id}/modify")
-    public Long update(@PathVariable Long id, @RequestBody QuestionUpdateRequestDto questionUpdateRequestDto){
-        return questionService.update(id, questionUpdateRequestDto);
-    }
-
     //개별 조회
     @GetMapping("/usr/doctor-qna/{id}")
     public String findById(Model model, @PathVariable Long id){
@@ -55,7 +49,7 @@ public class QuestionController {
         List<Answer> answerList = questionService.findById(id).getAnswerList();
 
 
-        return "doctorqna/doctorQnaDetail";
+        return "/doctorqna/doctorQnaDetail";
     }
     //전체 조회
     @GetMapping("/usr/doctor-qna")
@@ -65,6 +59,11 @@ public class QuestionController {
         return "/doctorqna/doctorQnaList";
     }
 
+    //게시글 수정 TODO : 로그인 기능 구현 후에
+    @PostMapping("/usr/doctor-qna/{id}/modify")
+    public Long update(@PathVariable Long id, @RequestBody QuestionUpdateRequestDto questionUpdateRequestDto){
+        return questionService.update(id, questionUpdateRequestDto);
+    }
     //게시글 삭제 TODO : 로그인 기능 구현 후에
     @GetMapping("/usr/doctor-qna/{id}/delete")
     public String delete(@PathVariable Long id){

@@ -44,16 +44,13 @@ public class Question extends BaseEntity {
         answer.setQuestion(this);
         getAnswerList().add(answer);
 
-        for(var x : getAnswerList()) {
-            System.out.println(x.getContent());
-        }
     }
 
 
     /*
     추후에 like entity 따로 만들어서 구성
     @Column
-    private int like;
+    private Integer like;
 
     Forienkey(animal_breed_id), (patient_id) 추후에 구성
     */
