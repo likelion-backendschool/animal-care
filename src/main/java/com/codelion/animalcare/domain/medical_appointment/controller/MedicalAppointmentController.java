@@ -13,6 +13,7 @@ import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppoint
 import com.codelion.animalcare.domain.member.entity.Member;
 import com.codelion.animalcare.domain.member.service.MemberService;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -99,7 +100,7 @@ public class MedicalAppointmentController {
         return "medicalAppointments/medicalAppointmentList";
     }
 
-    @Data
+    @Getter
     static class SimpleMedicalAppointmentDto {
 
         private Long medicalAppointmentId;
