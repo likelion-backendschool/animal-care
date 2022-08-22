@@ -1,20 +1,31 @@
-<!DOCTYPE HTML>
-<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.css}">
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header"/>
+<html layout:decorate="~{doctorqna/doctorQnaLayout}">
+<div layout:fragment="content" class="container my-3">
 
-<h1 th:text="|제목 : ${question.title}|"></h1>
-<div th:text="|내용 : ${question.content}|"></div>
-<div th:text="|날짜 ${#temporals.format(question.createdAt, 'yy.MM.dd HH:mm')}|"></div>
+    <h2 class="border-bottom py-2" th:text="${question.title}"></h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;" th:text="${question.content}"></div>
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div th:text="|등록일 ${#temporals.format(question.createdAt, 'yy.MM.dd HH:mm')}|"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <h5 class="border-bottom my-3 py-2" th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
 
-<h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
-<div>
-    <ul>
-        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
-    </ul>
+
+<div class="card my-3" th:each="answer : ${question.answerList}">
+    <div class="card-body">
+        <div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
+    </div>
 </div>
 
-<form th:action="@{|/usr/doctor-qna/${question.id}/answers/write|}" method="post">
-    <textarea name="content" rows="15"></textarea>
-    <button type="submit">답변등록</button>
+
+<form th:action="@{|/usr/doctor-qna/${question.id}/answers/write|}" method="post" class = "my-3">
+    <textarea name="content" class="form-control" rows="10"></textarea>
+    <input type="submit" value="답변등록" class="btn btn-primary my-2">
 </form>
+</div>
+</html>
+

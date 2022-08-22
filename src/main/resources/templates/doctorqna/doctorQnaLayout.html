@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+  <!-- sbb CSS -->
+  <link rel="stylesheet" type="text/css" th:href="@{doctorqna/style.css}">
+  <title>Animal Care</title>
+</head>
+<body style="min-height:100vh;" class="d-flex flex-column">
+
+<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+<main class="flex-grow-1">
+  <th:block layout:fragment="content"></th:block>
+</main>
+<!-- 기본 템플릿 안에 삽입될 내용 End -->
+
+<footer class="bg-info text-light">
+  <div class="container py-3 d-flex justify-content-center">
+    Copyright all rights reserved
+  </div>
+</footer>
+</body>
+</html>

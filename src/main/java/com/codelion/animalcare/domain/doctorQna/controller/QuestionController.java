@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-//TODO 질문 수정, 삭제 기능은 로그인 기능 구현 되면 연동해서 구현하기
+// 질문 등록, 목록에 표현, 답변 갯수 표시, 답변 등록, 답변 표시 완료
+/* TODO : 로그인 연계 기능들(질문 삭제, 수정, 답변 삭제, 수정) , VALID 기능으로 폼에 입력 제한 걸기, 조회수 구현하기, 해시태그로 게시물 표시하기
+    프론트 부트스트랩 적용, 질문 답변 작성자 표시기능, 질문 답변 좋아요 기능
+*/
+
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {

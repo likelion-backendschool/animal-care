@@ -1,7 +1,6 @@
-<!DOCTYPE HTML>
-<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.css}">
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header"/>
+<html layout:decorate="~{doctorqna/doctorQnaLayout}">
+
+<div layout:fragment="content" class="container my-3">
 
 <h5 class="my-3 border-bottom pb-2">질문등록</h5>
 <form th:action="@{/usr/doctor-qna/write}" th:object="${questionSaveRequestDto}" method="post">

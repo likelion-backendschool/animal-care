@@ -43,11 +43,11 @@ public class DoctorQnaTests {
     private QuestionService questionService;
 
 
-/*    @AfterEach
+    @AfterEach
     public void tearDown() {
         questionRepository.deleteAll();
         answerRepository.deleteAll();
-    }*/
+    }
 
     @Test
     public void tearUp() {
@@ -171,7 +171,6 @@ public class DoctorQnaTests {
         questionRepository.save(Question.builder()
                 .title(title)
                 .content(content)
-                .answerList(new ArrayList<>())
                 .build());
 
         Question question = questionRepository.findById(Long.valueOf(1)).get();
@@ -200,7 +199,6 @@ public class DoctorQnaTests {
         questionRepository.save(Question.builder()
                 .title(title)
                 .content(content)
-                .answerList(new ArrayList<>())
                 .build());
 
         Question question = questionRepository.findById(Long.valueOf(1)).get();
