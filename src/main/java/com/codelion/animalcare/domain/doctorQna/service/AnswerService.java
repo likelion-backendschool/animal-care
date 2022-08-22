@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.doctorQna.service;
 
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerUpdateRequestDto;
+import com.codelion.animalcare.domain.doctorQna.controller.dto.response.AnswerResponseDto;
 import com.codelion.animalcare.domain.doctorQna.repository.Answer;
 import com.codelion.animalcare.domain.doctorQna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorQna.repository.Question;
@@ -43,5 +44,12 @@ public class AnswerService {
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
 
         answerRepository.delete(answer);
+    }
+
+    @Transactional(readOnly = true)
+    public AnswerResponseDto findById(Long id){
+        Answer entity = answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. 글 번호=" + id));
+
+        return new AnswerResponseDto(entity);
     }
 }

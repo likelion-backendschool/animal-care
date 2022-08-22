@@ -37,10 +37,23 @@ public class AnswerController {
     }
 
     //TODO : 아래 기능들은 로그인 후 구현?
-    @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
-    public Long modify(@PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto){
 
-        return answerService.update(questionId, answerId, answerUpdateRequestDto);
+    @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
+    public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto){
+
+        model.addAttribute("answer", answerService.findById(answerId));
+
+        return "/doctorqna/doctorQnaAnswerModifyForm";
+    }
+
+    @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
+    public String modify(@PathVariable Long questionId, @PathVariable Long answerId, @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()) {
+            return "/doctorqna/doctorQnaAnswerModifyForm";
+        }
+        answerService.update(questionId, answerId, answerUpdateRequestDto);
+        return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
     //답변 삭제
