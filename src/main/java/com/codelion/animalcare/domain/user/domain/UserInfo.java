@@ -1,5 +1,6 @@
-package com.codelion.animalcare.user.domain;
+package com.codelion.animalcare.domain.user.domain;
 
+import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,12 +17,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-public class UserInfo implements UserDetails {
-
-    @Id
-    @Column(name = "code")
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long code;
+public class UserInfo extends BaseEntity implements UserDetails {
 
     @Column(name = "email", unique = true)
     private String email;
@@ -30,7 +26,7 @@ public class UserInfo implements UserDetails {
     private String password;
 
     @Column(name = "auth")
-    private String auth;
+    private String auth;    // 권한(admin, user, doctor)
 
     @Builder
     public UserInfo(String email, String password, String auth) {
