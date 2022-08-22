@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class QuestionSaveRequestDto {
+
+    @NotBlank(message = "제목은 필수 입력 사항입니다.")
+    @Size(max = 200)
     private String title;
+    @NotBlank(message = "내용은 필수 입력 사항입니다.")
     private String content;
 
 

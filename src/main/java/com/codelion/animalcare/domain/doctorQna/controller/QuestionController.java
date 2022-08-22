@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.doctorQna.controller;
 
+import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorQna.controller.dto.response.QuestionResponseDto;
@@ -9,11 +10,13 @@ import com.codelion.animalcare.domain.doctorQna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 // 질문 등록, 목록에 표현, 답변 갯수 표시, 답변 등록, 답변 표시 완료
@@ -35,7 +38,11 @@ public class QuestionController {
 
     //게시글 등록 TODO : VAILD 추가 , 로그인 기능 구현 후 작성자 표시
     @PostMapping("/usr/doctor-qna/write")
-    public String save(QuestionSaveRequestDto questionSaveRequestDto) {
+    public String save(@Valid QuestionSaveRequestDto questionSaveRequestDto, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "/doctorqna/doctorQnaQuestionForm";
+        }
 
         questionService.save(questionSaveRequestDto);
 
@@ -44,10 +51,8 @@ public class QuestionController {
 
     //개별 조회
     @GetMapping("/usr/doctor-qna/{id}")
-    public String findById(Model model, @PathVariable Long id){
+    public String findById(Model model, @PathVariable Long id, AnswerSaveRequestDto answerSaveRequestDto){
         model.addAttribute("question", questionService.findById(id));
-        List<Answer> answerList = questionService.findById(id).getAnswerList();
-
 
         return "/doctorqna/doctorQnaDetail";
     }

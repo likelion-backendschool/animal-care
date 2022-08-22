@@ -4,6 +4,9 @@
 
 <h5 class="my-3 border-bottom pb-2">질문등록</h5>
 <form th:action="@{/usr/doctor-qna/write}" th:object="${questionSaveRequestDto}" method="post">
+    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+        <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+    </div>
     <div class="mb-3">
         <label for="title" class="form-label">제목</label>
         <input type="text" th:field="*{title}" class="form-control">
