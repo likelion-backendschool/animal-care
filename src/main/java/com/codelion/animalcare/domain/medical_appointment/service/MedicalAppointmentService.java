@@ -48,10 +48,10 @@ public class MedicalAppointmentService {
     public Long medicalAppointment(Long memberId, Long animalId, long hospitalId, Long doctorId) {
 
         //엔티티 조회
-        Member member = memberRepository.getReferenceById(memberId);
-        Animal animal = animalRepository.getReferenceById(animalId);
-        Hospital hospital = hospitalRepository.getReferenceById(hospitalId);
-        Doctor doctor = doctorRepository.getReferenceById(doctorId);
+        Member member = memberRepository.findById(memberId).get();
+        Animal animal = animalRepository.findById(animalId).get();
+        Hospital hospital = hospitalRepository.findById(hospitalId).get();
+        Doctor doctor = doctorRepository.findById(doctorId).get();
 
         //예약 생성
         MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointment(member, animal, hospital, doctor);
@@ -68,7 +68,7 @@ public class MedicalAppointmentService {
     @Transactional
     public void cancelMedicalAppointment(Long medicalAppointmentId) {
         //예약 엔티티 조회
-        MedicalAppointment medicalAppointment = medicalAppointmentRepository.getReferenceById(medicalAppointmentId);
+        MedicalAppointment medicalAppointment = medicalAppointmentRepository.findById(medicalAppointmentId).get();
         //에약 취소
         medicalAppointment.cancel();
     }
