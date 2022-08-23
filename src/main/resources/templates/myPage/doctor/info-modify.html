@@ -1,10 +1,13 @@
 <div>
-    <a th:href="@{|/usr/mypage/doctor/${doctor.getId()}/info|}"
+    <a th:href="@{|/usr/mypage/doctor/${doctorId}/info|}"
        th:text="돌아가기"></a>
 </div>
 <div>
-    <form th:action="@{|/usr/mypage/doctor/${doctor.getId()}/info/modify|}"
-          method="post">
+    <form th:action="@{|/usr/mypage/doctor/${doctorId}/info/modify|}"
+          th:object="${requestDto}" method="post">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </div>
         <table>
             <thead>
             <tr>
@@ -17,7 +20,7 @@
                 <th>이메일</th>
                 <td>
                     <input type="text" th:name="loginEmail"
-                           th:value="${doctor.getLoginEmail()}" />
+                           th:field="*{loginEmail}" />
                 </td>
             </tr>
             <tr>
@@ -30,52 +33,48 @@
                 <th>이름</th>
                 <td>
                     <input type="text" th:name="name"
-                           th:value="${doctor.getName()}" />
+                           th:field="*{name}" />
                 </td>
             </tr>
             <tr>
                 <th>생년월일</th>
                 <td>
                     <input type="date" th:name="birthday"
-                           th:value="${doctor.getBirthday()}" />
+                           th:field="*{birthday}" />
                 </td>
             </tr>
             <tr>
                 <th>전공</th>
                 <td>
                     <input type="text" th:name="major"
-                           th:value="${doctor.getMajor()}" />
+                           th:field="*{major}" />
                 </td>
             </tr>
             <tr>
                 <th>핸드폰 번호</th>
                 <td>
                     <input type="text" th:name="phoneNum"
-                           th:value="${doctor.getPhoneNum()}" />
+                           th:field="*{phoneNum}" />
                 </td>
             </tr>
             <tr>
                 <th>자기 소개</th>
                 <td>
             <textarea th:name="introduce" id="" cols="30" rows="10"
-                      th:text="${doctor.getIntroduce()}">
+                      th:field="*{introduce}">
             </textarea>
                 </td>
             </tr>
             <tr>
                 <th>성별</th>
                 <td>
-                    <input type="text" th:name="genderId"
-                           th:value="${doctor.getGenderId()}" />
+                    <label>
+                        여: <input type="radio" th:field="*{genderId}" th:value="0">
+                    </label>
+                    <label>
+                        남: <input type="radio" th:field="*{genderId}" th:value="1">
+                    </label>
                 </td>
-            </tr>
-            <tr>
-                <th>가입 기간</th>
-                <td th:text="${#temporals.format(doctor.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
-            </tr>
-            <tr>
-                <th>수정 기간</th>
-                <td th:text="${#temporals.format(doctor.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
             </tbody>
         </table>

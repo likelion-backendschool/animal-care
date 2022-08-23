@@ -2,13 +2,17 @@ package com.codelion.animalcare.domain.doctor.dto;
 
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class LoadDoctorMyPageInfo {
     @Getter
+    @Setter
+    @AllArgsConstructor
     public static class ResponseDto{
         private Long id;
 
@@ -24,7 +28,7 @@ public class LoadDoctorMyPageInfo {
 
         private String introduce;
 
-        private int genderId;
+        private Integer genderId;
 
         private LocalDateTime createdAt;
 

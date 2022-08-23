@@ -47,7 +47,7 @@
     </tr>
     <tr>
         <th>성별</th>
-        <td th:text="${doctor.getGenderId()}"></td>
+        <td th:text="${doctor.getGenderId() == 0 ? '여' : '남'}"></td>
     </tr>
     <tr>
         <th>가입 기간</th>

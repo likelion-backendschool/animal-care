@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.hospital.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.member.Address;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 public class UpdateDoctorMyPageHospitalInfoManage {
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class RequestDto{
         private Long id;
         private String name;
