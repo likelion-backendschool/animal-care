@@ -1,19 +1,17 @@
 package com.codelion.animalcare.domain.animal.entity;
 
+import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.member.entity.Member;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,7 +22,7 @@ public class Animal extends BaseEntity {
 
     @Column()
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private Date birthday;
+    private LocalDateTime birthday;
 
     @Column(nullable = false, length = 100)
     private String registrationNum;
@@ -43,7 +41,7 @@ public class Animal extends BaseEntity {
     private Member member;
 
     @Builder
-    private Animal(Long id, LocalDateTime createdAt, String name, Date birthday, String registrationNum, String health_status, LocalDateTime deletedAt, int genderId, Member member) {
+    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registrationNum, String health_status, LocalDateTime deletedAt, int genderId, Member member) {
         super(id, createdAt);
         this.name = name;
         this.birthday = birthday;
@@ -53,4 +51,11 @@ public class Animal extends BaseEntity {
         this.genderId = genderId;
         this.member = member;
     }
+
+
+    // Animal : MedicalAppointment = 1: n;
+    @JsonIgnore
+    @OneToMany(mappedBy = "animal")
+    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
+
 }
