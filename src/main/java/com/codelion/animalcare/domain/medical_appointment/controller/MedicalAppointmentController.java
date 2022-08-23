@@ -89,8 +89,8 @@ public class MedicalAppointmentController {
 
         List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
 
-        List<SimpleMedicalAppointmentDto> simpleMedicalAppointmentDtos = medicalAppointments.stream()
-                .map(o -> new SimpleMedicalAppointmentDto(o))
+        List<MedicalAppointmentDto> simpleMedicalAppointmentDtos = medicalAppointments.stream()
+                .map(o -> new MedicalAppointmentDto(o))
                 .collect(Collectors.toList());
 
         model.addAttribute("simpleMedicalAppointmentDtos", simpleMedicalAppointmentDtos);
@@ -102,7 +102,7 @@ public class MedicalAppointmentController {
 
 
     @Getter
-    static class SimpleMedicalAppointmentDto {
+    static class MedicalAppointmentDto {
 
         private Long medicalAppointmentId;
         private String memberName;
@@ -114,7 +114,7 @@ public class MedicalAppointmentController {
         private MedicalAppointmentStatus medicalAppointmentStatus;
 
 
-        public SimpleMedicalAppointmentDto(MedicalAppointment medicalAppointment) {
+        public MedicalAppointmentDto(MedicalAppointment medicalAppointment) {
             medicalAppointmentId = medicalAppointment.getId();
             memberName = medicalAppointment.getMember().getName();
             animalName = medicalAppointment.getAnimal().getName();
