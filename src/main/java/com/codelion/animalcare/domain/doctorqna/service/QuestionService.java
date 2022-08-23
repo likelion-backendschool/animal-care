@@ -27,7 +27,7 @@ public class QuestionService {
 
     @Transactional
     public Long update(Long id, QuestionUpdateRequestDto questionUpdateRequestDto){
-        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시물이 존재하지 않습니다. 글 번호=" + id));
+        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
 
         question.update(questionUpdateRequestDto.getTitle(), questionUpdateRequestDto.getContent());
 
@@ -35,7 +35,7 @@ public class QuestionService {
     }
     @Transactional(readOnly = true)
     public QuestionResponseDto findById(Long id){
-        Question entity = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. 글 번호=" + id));
+        Question entity = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
 
         return new QuestionResponseDto(entity);
 
@@ -50,7 +50,7 @@ public class QuestionService {
 
     @Transactional
     public void delete(Long id) {
-        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
 
         questionRepository.delete(question);
     }

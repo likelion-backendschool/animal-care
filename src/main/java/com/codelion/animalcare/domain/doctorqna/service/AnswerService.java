@@ -48,7 +48,7 @@ public class AnswerService {
 
     @Transactional(readOnly = true)
     public AnswerResponseDto findById(Long id){
-        Answer entity = answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. 글 번호=" + id));
+        Answer entity = answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
 
         return new AnswerResponseDto(entity);
     }
