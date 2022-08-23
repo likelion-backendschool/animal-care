@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.user.domain;
+package com.codelion.animalcare.domain.user.entity;
 
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
@@ -17,16 +17,18 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
+@DiscriminatorColumn
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class UserInfo extends BaseEntity implements UserDetails {
 
     @Column(name = "email", unique = true)
-    private String email;
+    protected String email;
 
     @Column(name = "password")
-    private String password;
+    protected String password;
 
     @Column(name = "auth")
-    private String auth;    // 권한(admin, user, doctor)
+    protected String auth;    // 권한(admin, user, doctor)
 
     @Builder
     public UserInfo(String email, String password, String auth) {
@@ -34,6 +36,8 @@ public class UserInfo extends BaseEntity implements UserDetails {
         this.password = password;
         this.auth = auth;
     }
+
+
 
     // 사용자의 권한을 콜렉션 형태로 반환
     // 단, 클래스 자료형은 GrantedAuthority를 구현해야함

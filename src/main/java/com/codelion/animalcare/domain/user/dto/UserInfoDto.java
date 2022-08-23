@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.user.domain;
+package com.codelion.animalcare.domain.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;

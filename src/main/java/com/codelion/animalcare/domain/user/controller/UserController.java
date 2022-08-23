@@ -1,12 +1,10 @@
 package com.codelion.animalcare.domain.user.controller;
 
 
-import com.codelion.animalcare.domain.user.domain.UserInfo;
-import com.codelion.animalcare.domain.user.domain.UserInfoDto;
+import com.codelion.animalcare.domain.user.dto.UserInfoDto;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -34,6 +32,13 @@ public class UserController {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/login";
     }
+
+//    @GetMapping("test")
+//    public void test(){
+//        UserInfo userInfo = userService.findPatientAndDoctor();
+//        System.out.println(userInfo.getId());
+//    }
+//    @PostMapping()
 
 //    @GetMapping("test")
 //    public String test( ){

@@ -1,8 +1,14 @@
 package com.codelion.animalcare.domain.user.service;
 
 
-import com.codelion.animalcare.domain.user.domain.UserInfo;
-import com.codelion.animalcare.domain.user.domain.UserInfoDto;
+import com.codelion.animalcare.domain.user.entity.Admin;
+import com.codelion.animalcare.domain.user.entity.DoctorLogin;
+import com.codelion.animalcare.domain.user.entity.Patient;
+import com.codelion.animalcare.domain.user.dto.UserInfoDto;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
+import com.codelion.animalcare.domain.user.repository.AdminRepository;
+import com.codelion.animalcare.domain.user.repository.DoctorLoginRepository;
+import com.codelion.animalcare.domain.user.repository.PatientRepository;
 import com.codelion.animalcare.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +22,10 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PatientRepository patientRepository;
+    private final AdminRepository adminRepository;
+
+    private final DoctorLoginRepository doctorLoginRepository;
 
     /**
      * Spring Security 필수 메소드 구현
@@ -40,9 +50,30 @@ public class UserService implements UserDetailsService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         infoDto.setPassword(encoder.encode(infoDto.getPassword()));
 
-        return userRepository.save(UserInfo.builder()
+        if(infoDto.getAuth().contains("ROLE_ADMIN")){
+            return adminRepository.save(Admin.adminBuilder()
+                    .email(infoDto.getEmail())
+                    .auth(infoDto.getAuth())
+                    .password(infoDto.getPassword()).build()).getId();
+        }
+
+        if(infoDto.getAuth().contains("ROLE_DOCTOR")){
+            return doctorLoginRepository.save(DoctorLogin.doctorLoginBuilder()
+                    .email(infoDto.getEmail())
+                    .auth(infoDto.getAuth())
+                    .password(infoDto.getPassword()).build()).getId();
+        }
+
+        return patientRepository.save(Patient.patientBuilder()
                 .email(infoDto.getEmail())
                 .auth(infoDto.getAuth())
-                .password(infoDto.getPassword()).build()).getId();
+                .password(infoDto.getPassword())
+                .animal("tempAnimal").build()).getId();
     }
+
+//    public UserInfo findPatientAndDoctor(){
+//        String tmp = "Patient";
+//        return userRepository.findByDtype(tmp);
+//    }
+
 }
