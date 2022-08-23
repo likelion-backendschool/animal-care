@@ -21,7 +21,7 @@ public class UpdateDoctorMyPageInfo {
         @NotEmpty(message = "이름을 작성하여야 합니다.")
         private String name;
         @NotNull(message = "생년월일을 작성햐여야 합니다.")
-        private LocalDateTime birthday;
+        private Date birthday;
         @NotEmpty(message = "전공을 작성하여야 합니다.")
         private String major;
         @NotEmpty(message = "핸드폰 번호를 작성하여야 합니다.")

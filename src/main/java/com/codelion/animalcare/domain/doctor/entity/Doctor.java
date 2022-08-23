@@ -1,17 +1,19 @@
 package com.codelion.animalcare.domain.doctor.entity;
 
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
-import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import com.codelion.animalcare.global.common.entity.BaseEntity;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -28,7 +30,7 @@ public class Doctor extends BaseEntity {
 
     @Column()
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDateTime birthday;
+    private Date birthday;
 
     @Column(nullable = false, length = 30)
     private String major;
@@ -54,7 +56,7 @@ public class Doctor extends BaseEntity {
     }
 
     @Builder
-    private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt, int genderId, Hospital hospital) {
+    private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, Date birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt, int genderId, Hospital hospital) {
         super(id, createdAt);
         this.loginEmail = loginEmail;
         this.loginPwd = loginPwd;
