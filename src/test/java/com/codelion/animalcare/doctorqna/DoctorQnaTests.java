@@ -7,7 +7,6 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateReques
 import com.codelion.animalcare.domain.doctorqna.dto.response.AnswerResponseDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionListResponseDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
-import com.codelion.animalcare.domain.doctorqna.repository.Answer;
 import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.doctorqna.service.AnswerService;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;

@@ -11,6 +11,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("SELECT q FROM Question q ORDER BY q.id DESC")
     List<Question> findAllDesc();
 
+
     //test용 코드
     @Transactional
     @Modifying

@@ -52,6 +52,6 @@ public class Question extends BaseEntity {
     @Column
     private Integer like;
 
-    Forienkey(animal_breed_id), (patient_id) 추후에 구성
+    Forienkey(animal_breed_id), (member_id) 추후에 구성
     */
 }
