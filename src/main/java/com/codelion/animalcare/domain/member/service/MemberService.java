@@ -39,14 +39,14 @@ public class MemberService {
     }
 
     public Member findOne(Long memberId) {
-        return memberRepository.getReferenceById(memberId);
+        return memberRepository.findById(memberId).get();
     }
 
 
 //    @setter 막혀있음
 //    @Transactional
 //    public void update(long id, String name) {
-//        Member member = memberRepository.getReferenceById(id);
+//        Member member = memberRepository.findById(id).get();
 //        member.setName(name);
 //    }
 

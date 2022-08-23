@@ -9,10 +9,10 @@ import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
 import com.codelion.animalcare.domain.member.entity.Member;
 import com.codelion.animalcare.domain.member.service.MemberService;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MedicalAppointmentController {
 
+    private final MedicalAppointmentQueryService medicalAppointmentQueryService;
     private final MedicalAppointmentService medicalAppointmentService;
     private final MemberService memberService;
     private final AnimalService animalService;
@@ -45,9 +46,6 @@ public class MedicalAppointmentController {
         List<Member> members = memberService.findMembers();
         List<Animal> animals = animalService.findAnimals();
         List<Hospital> hospitals = hospitalService.findHospitals();
-
-//        List<Doctor> doctors = hospitalService.findDoctors(hospitals.id);
-
         List<Doctor> doctors = doctorService.findDoctors();
 
         model.addAttribute("members", members);
@@ -89,7 +87,7 @@ public class MedicalAppointmentController {
     @GetMapping("/usr/mypage/member/medical-appoint/medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model) {
 
-        List<MedicalAppointment> medicalAppointments = medicalAppointmentService.findMedicalAppointments();
+        List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
 
         List<SimpleMedicalAppointmentDto> simpleMedicalAppointmentDtos = medicalAppointments.stream()
                 .map(o -> new SimpleMedicalAppointmentDto(o))
@@ -102,21 +100,6 @@ public class MedicalAppointmentController {
 
 
 
-
-//    @GetMapping("/usr/mypage/member/medical-appoint/medical-appointment-info")
-//    public String medicalAppointmentListUseDtoPage(Model model)
-//    {
-//
-//        List<MedicalAppointment> medicalAppointments = medicalAppointmentService.findMedicalAppointmentsV2();
-//
-//        List<SimpleMedicalAppointmentDto> simpleMedicalAppointmentDtos = medicalAppointments.stream()
-//                .map(o -> new SimpleMedicalAppointmentDto(o))
-//                .collect(Collectors.toList());
-//
-//        model.addAttribute("simpleMedicalAppointmentDtos", simpleMedicalAppointmentDtos);
-//
-//        return "medicalAppointments/medicalAppointmentList";
-//    }
 
     @Getter
     static class SimpleMedicalAppointmentDto {

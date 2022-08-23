@@ -18,6 +18,4 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
     List<MedicalAppointment> findAllWithMemberAnimalHospitalDoctor();
 
 
-//    @Query("select ma from MedicalAppointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.hospital h")
-//    List<MedicalAppointment> findAllWithMemberAnimalHospital(int offset, int limit);
 }

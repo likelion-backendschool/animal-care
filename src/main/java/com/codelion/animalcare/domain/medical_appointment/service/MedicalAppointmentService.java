@@ -39,16 +39,6 @@ public class MedicalAppointmentService {
 //        return medicalAppointmentRepository.findAllByString(medicalAppointmentSearch);
 //    }
 
-    public List<MedicalAppointment> findMedicalAppointments() {
-
-        return medicalAppointmentRepository.findAllWithMemberAnimalHospitalDoctor();
-    }
-
-//    public List<MedicalAppointment> findMedicalAppointmentsV2(
-//            @RequestParam(value = "offset", defaultValue = "0") int offset,
-//            @RequestParam(value = "limit", defaultValue = "100") int limit) {
-//        return medicalAppointmentRepository.findAllWithMemberAnimalHospital(offset, limit);
-//    }
 
 
     /**

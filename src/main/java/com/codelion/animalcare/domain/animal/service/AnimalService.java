@@ -2,11 +2,13 @@ package com.codelion.animalcare.domain.animal.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
+import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,8 +34,8 @@ public class AnimalService {
         }
     }
 
-    public Animal findOne(Long animalId) {
-        return animalRepository.getReferenceById(animalId);
+    public Optional<Animal> findById(Long id) {
+        return animalRepository.findById(id);
     }
 
 
