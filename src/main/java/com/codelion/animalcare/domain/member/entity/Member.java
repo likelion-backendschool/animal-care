@@ -34,9 +34,9 @@ public class Member extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime birthday;
 
-    @Column(nullable = false, length = 70)
-    @Embedded
-    private Address address;
+//    @Column(nullable = false, length = 70)
+//    @Embedded
+//    private Address address;
 
     @Column(nullable = false, length = 20)
     private String phoneNum;
@@ -54,7 +54,7 @@ public class Member extends BaseEntity {
         this.loginPwd = loginPwd;
         this.name = name;
         this.birthday = birthday;
-        this.address = address;
+//        this.address = address;
         this.phoneNum = phoneNum;
         this.deletedAt = deletedAt;
         this.genderId = genderId;

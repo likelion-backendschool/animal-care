@@ -3,11 +3,18 @@ package com.codelion.animalcare.domain.post.controller;
 import com.codelion.animalcare.domain.post.dto.PostDto.ModifyPostRequestDto;
 import com.codelion.animalcare.domain.post.dto.PostDto.PostRequestDto;
 import com.codelion.animalcare.domain.post.dto.PostDto.PostResponseDto;
+import com.codelion.animalcare.domain.post.entity.Post;
 import com.codelion.animalcare.domain.post.service.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/usr/posts")
 public class PostController {
     private PostService postService;
@@ -16,12 +23,19 @@ public class PostController {
         this.postService = postService;
     }
 
-//    @GetMapping("/")
-//    public String index(Model model, @PageableDefault(sort ="created_date", direction = Sort.Direction.DESC) Pageable pageable) {
-//        model.addAttribute("posts", postService.listPost(pageable));
-//
-//        return "index";
-//    }
+    // 커뮤니티 게시글 리스트
+    @GetMapping("/list")
+    public String list(Model model, @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Post> postList = postService.listPost(pageable);
+
+        model.addAttribute("postList", postList);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", postList.hasNext());
+        model.addAttribute("hasPrev", postList.hasPrevious());
+
+        return "community/list";
+    }
 
     // 게시글 상세 조회
     @GetMapping("/{id}")

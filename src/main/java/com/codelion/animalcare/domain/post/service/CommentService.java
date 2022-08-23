@@ -41,10 +41,17 @@ public class CommentService {
     @Transactional
     public Long modifyComment(Long id, ModifyCommentRequestDto modifyCommentRequestDto) {
         Optional<Comment> oldComment = commentRepository.findById(id);
+        Optional<Post> post = postRepository.findById(id);
+
+        if(!post.isPresent()) {
+            throw new PostNotFoundException(String.format("Post ID:%s is not found", id));
+        }
 
         if(!oldComment.isPresent()) {
             throw new CommentNotFoundException(String.format("Comment ID:%s is not found", id));
         }
+        modifyCommentRequestDto.setPost(post.get());
+
         return commentRepository.save(modifyCommentRequestDto.toEntity(oldComment.get())).getId();
     }
 

@@ -27,8 +27,8 @@ public class PostDto {
     @Getter
     public static class PostResponseDto {
         private Long id;
-        private LocalDateTime createdDate;
-        private LocalDateTime updatedDate;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
         private String title;
         private String content;
         private int likes;
@@ -41,8 +41,8 @@ public class PostDto {
             this.content = post.getContent();
             this.likes = post.getLikes();
             this.views = post.getViews();
-            this.createdDate = post.getCreatedAt();
-            this.updatedDate = post.getUpdatedAt();
+            this.createdAt = post.getCreatedAt();
+            this.updatedAt = post.getUpdatedAt();
             this.comments = post.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
         }
     }
@@ -55,7 +55,7 @@ public class PostDto {
         public Post toEntity(Post oldPost) {
             return Post.builder()
                     .id(oldPost.getId())
-                    .createdDate(oldPost.getCreatedAt())
+                    .createdAt(oldPost.getCreatedAt())
                     .title(title)
                     .content(content)
                     .likes(oldPost.getLikes())

@@ -6,6 +6,9 @@ import com.codelion.animalcare.domain.post.dto.PostDto.PostResponseDto;
 import com.codelion.animalcare.domain.post.entity.Post;
 import com.codelion.animalcare.domain.post.exception.PostNotFoundException;
 import com.codelion.animalcare.domain.post.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,10 +22,10 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-//    @Transactional
-//    public Page<Post> listPost(Pageable pageable) {
-//
-//    }
+    @Transactional
+    public Page<Post> listPost(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
 
     @Transactional
     public PostResponseDto findPostById(Long id) {

@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -25,11 +27,11 @@ public class Post extends BaseEntity {
     @Column
     private int views;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
@@ -38,8 +40,8 @@ public class Post extends BaseEntity {
     private List<Comment> comments;
 
     @Builder
-    private Post(Long id, LocalDateTime createdDate, String title, String content, int likes, int views, List<Comment> comments) {
-        super(id, createdDate);
+    private Post(Long id, LocalDateTime createdAt, String title, String content, int likes, int views, List<Comment> comments) {
+        super(id, createdAt);
         this.title = title;
         this.content = content;
         this.likes = likes;
