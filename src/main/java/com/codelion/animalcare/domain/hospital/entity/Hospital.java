@@ -37,7 +37,10 @@ public class Hospital extends BaseEntity {
     @Column()
     private LocalDateTime deletedAt;
 
-
+    // Hospital : Doctor = 1: n;
+    @JsonIgnore
+    @OneToMany(mappedBy = "hospital")
+    private List<Doctor> doctors = new ArrayList<>();
 
     @Builder
     private Hospital(Long id, LocalDateTime createdAt, String name, Address address, String phoneNum, String openingHours, LocalDateTime deletedAt) {
@@ -56,10 +59,7 @@ public class Hospital extends BaseEntity {
 //    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
 //
 //
-//    // Hospital : Doctor = 1: n;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "hospital")
-//    private List<Doctor> doctors = new ArrayList<>();
+
 
 
 }

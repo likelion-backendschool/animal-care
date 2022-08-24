@@ -28,6 +28,7 @@ public class HospitalMyPageDoctorController {
         model.addAttribute("hospital", hospitalDto);
         model.addAttribute("OpeningHours", hospitalDto.makeOpeningHoursToObject());
 
+        System.out.println(hospitalDto.getDoctorList());
         return "myPage/doctor/hospital-info-manage";
     }
 

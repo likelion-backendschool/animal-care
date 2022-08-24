@@ -1,11 +1,13 @@
 package com.codelion.animalcare.domain.hospital.dto;
 
+import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.util.OpeningHour;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class LoadDoctorMyPageHospitalInfoManage {
     @Getter
@@ -24,6 +26,8 @@ public class LoadDoctorMyPageHospitalInfoManage {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
+        private List<Doctor> doctorList;
+
         public ResponseDto(Hospital hospital) {
             super(hospital.getOpeningHours());
             this.id = hospital.getId();
@@ -35,6 +39,7 @@ public class LoadDoctorMyPageHospitalInfoManage {
             this.openingHours = hospital.getOpeningHours();
             this.createdAt = hospital.getCreatedAt();
             this.updatedAt = hospital.getUpdatedAt();
+            this.doctorList = hospital.getDoctors();
         }
         public OpeningHour makeOpeningHoursToObject(){
             return new OpeningHour(openingHours);
