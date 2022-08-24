@@ -1,6 +1,6 @@
 <html>
 <nav>
-    <a href="/usr/mypage/doctor/${doctorId}/hospital-info-manage">뒤로</a>
+    <a href="/usr/mypage/doctor">뒤로</a>
 
 </nav>
 <h2>병원 정보</h2>
@@ -112,12 +112,12 @@
                <td th:text="${doctor.getPhoneNum()}"></td>
            </tr>
            <tr>
-               <th>자기 소개</th>
-               <td th:text="${doctor.getIntroduce()}"></td>
-           </tr>
-           <tr>
                <th>성별</th>
                <td th:text="${doctor.getGenderId() == 0 ? '여' : '남'}"></td>
+           </tr>
+           <tr>
+               <th>자기 소개</th>
+               <td th:text="${doctor.getIntroduce()}"></td>
            </tr>
 
            </tbody>
