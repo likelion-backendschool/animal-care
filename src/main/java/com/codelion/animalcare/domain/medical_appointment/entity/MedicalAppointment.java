@@ -46,7 +46,6 @@ public class MedicalAppointment extends BaseEntity {
     @JoinColumn(name = "animal_id")
     private Animal animal;
 
-
     // 수정: hospital 추가함
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "hospital_id")
@@ -113,6 +112,5 @@ public class MedicalAppointment extends BaseEntity {
     public void cancel() {
         this.setMedicalAppointmentStatus(MedicalAppointmentStatus.CANCEL);
     }
-
 
 }

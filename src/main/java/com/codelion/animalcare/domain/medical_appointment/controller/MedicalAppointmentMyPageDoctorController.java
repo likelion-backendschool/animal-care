@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.medical_appointment.controller;
 
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.medical_appointment.dto.LoadMyPageDoctorMedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,14 +20,15 @@ public class MedicalAppointmentMyPageDoctorController {
 
     // 환자 예약 관리
     @GetMapping()
-    public String loadMyPageDoctorDiagnosis(
+    public String loadMyPageDoctorMedicalAppointment(
             Model model,
             @PathVariable long doctorId,
             @RequestParam(value = "page", defaultValue = "0") int page
     ){
-        List<MedicalAppointment> medicalAppointments = medicalAppointmentService.findByDoctorId(doctorId);
+        List<LoadMyPageDoctorMedicalAppointment.ResponseDto> medicalAppointments
+                = medicalAppointmentService.findAllByDoctorId(doctorId);
         // TODO dto 사용
-        model.addAttribute("medicalAppointments",medicalAppointments);
+        model.addAttribute("medicalAppointments", medicalAppointments);
 
         return "myPage/doctor/member-manage";
     }

@@ -1,11 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-my page doctor patient manage
-<a href="http://localhost:8080/usr/my-page/doctor">뒤로</a>
-</body>
-</html>
+
+<nav>
+    <a href="/usr/mypage/doctor/${doctorId}/hospital-info-manage">뒤로</a>
+</nav>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>고객 이름</th>
+                <th>동물 이름</th>
+                <th>날짜</th>
+                <th>상태</th>
+                <th>상태 변경</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="medicalAppointment, i : ${medicalAppointments}">
+                <td th:text="${medicalAppointment.member.name}"></td>
+                <td th:text="${medicalAppointment.animal.name}"></td>
+                <td th:text="${#temporals.format(medicalAppointment.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${medicalAppointment.medicalAppointmentStatus}"></td>
+                <td>
+                    <input type="button" value="거절하기">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

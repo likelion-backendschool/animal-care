@@ -6,6 +6,7 @@ import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.repository.DoctorRepository;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
+import com.codelion.animalcare.domain.medical_appointment.dto.LoadMyPageDoctorMedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepository;
 import com.codelion.animalcare.domain.member.entity.Member;
@@ -29,8 +30,13 @@ public class MedicalAppointmentService {
     private final HospitalRepository hospitalRepository;
 
 
-    public List<MedicalAppointment> findByDoctorId(long id) {
-        return medicalAppointmentRepository.findByDoctorId(id);
+    public List<LoadMyPageDoctorMedicalAppointment.ResponseDto> findAllByDoctorId(long doctorId) {
+        List<MedicalAppointment> medicalAppointmentList = medicalAppointmentRepository.findAllByDoctorId(doctorId);
+
+        List< LoadMyPageDoctorMedicalAppointment.ResponseDto> result =medicalAppointmentList.stream()
+                .map(item -> new LoadMyPageDoctorMedicalAppointment.ResponseDto(item)).toList();
+
+        return result;
     }
 
 //    public List<MedicalAppointment> findMedicalAppointmentsOld(MedicalAppointmentSearch medicalAppointmentSearch) {
