@@ -1,11 +1,12 @@
-package com.codelion.animalcare.domain.doctorQna.service;
+package com.codelion.animalcare.domain.doctorqna.service;
 
-import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerSaveRequestDto;
-import com.codelion.animalcare.domain.doctorQna.controller.dto.request.AnswerUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorQna.repository.Answer;
-import com.codelion.animalcare.domain.doctorQna.repository.AnswerRepository;
-import com.codelion.animalcare.domain.doctorQna.repository.Question;
-import com.codelion.animalcare.domain.doctorQna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
+import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
+import com.codelion.animalcare.domain.doctorqna.dto.response.AnswerResponseDto;
+import com.codelion.animalcare.domain.doctorqna.repository.Answer;
+import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
+import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ public class AnswerService {
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto){
         Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
         answerSaveRequestDto.setQuestion(question);
+        question.addAnswer(answerSaveRequestDto.toEntity());
         return answerRepository.save(answerSaveRequestDto.toEntity()).getId();
     }
 
@@ -30,7 +32,7 @@ public class AnswerService {
 
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
 
-        answer.update(answerUpdateRequestDto.getTitle(), answerUpdateRequestDto.getContent());
+        answer.update(answerUpdateRequestDto.getContent());
 
         return answerId;
     }
@@ -42,5 +44,12 @@ public class AnswerService {
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
 
         answerRepository.delete(answer);
+    }
+
+    @Transactional(readOnly = true)
+    public AnswerResponseDto findById(Long id){
+        Answer entity = answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
+
+        return new AnswerResponseDto(entity);
     }
 }

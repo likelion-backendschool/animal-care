@@ -1,7 +1,7 @@
 package com.codelion.animalcare.domain.doctor.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
-import com.codelion.animalcare.domain.member.Address;
+/*import com.codelion.animalcare.domain.member.Address;*/
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +15,8 @@ public class UpdateDoctorMyPageHospitalInfoManage {
     public static class RequestDto{
         private String name;
 
-        @Embedded
-        private Address address;
+        /*@Embedded
+        private Address address;*/
 
         private String openingHours;
 
@@ -24,7 +24,7 @@ public class UpdateDoctorMyPageHospitalInfoManage {
             return Hospital.builder()
                     .id(hospital.getId())
                     .name(name)
-                    .address(address)
+                    /*.address(address)*/
                     .openingHours(openingHours)
                     .createdAt(hospital.getCreatedAt())
                     .build();

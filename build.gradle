@@ -36,6 +36,10 @@ dependencies {
 	// thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	//spring validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	//Junit
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.0'
 }
 
 tasks.named('test') {

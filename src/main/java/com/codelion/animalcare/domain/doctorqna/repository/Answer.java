@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctorQna.repository;
+package com.codelion.animalcare.domain.doctorqna.repository;
 
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.Builder;
@@ -19,9 +19,6 @@ import javax.persistence.ManyToOne;
 public class Answer extends BaseEntity {
 
 
-    @Column(length = 40, nullable = false)
-    private String title;
-
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
@@ -31,14 +28,12 @@ public class Answer extends BaseEntity {
     private Question question;
 
     @Builder
-    public Answer(String title, String content, Question question) {
-        this.title = title;
+    public Answer(String content, Question question) {
         this.content = content;
         this.question = question;
     }
 
-    public void update(String title, String content){
-        this.title = title;
+    public void update(String content){
         this.content = content;
     }
 

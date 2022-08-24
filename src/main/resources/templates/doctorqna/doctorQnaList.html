@@ -1,0 +1,31 @@
+<html layout:decorate="~{doctorqna/doctorQnaLayout}">
+
+<div layout:fragment="content" class="container my-3">
+<body>
+<table class = "table">
+        <thead class = "table-dark">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="questionListResponseDto, loop : ${questionlist}">
+            <td th:text="${loop.count}"></td>
+            <td>
+                <a th:href="@{|doctor-qna/${questionListResponseDto.id}|}" th:text="${questionListResponseDto.title}"></a>
+            </td>
+            <td><a th:text="${questionListResponseDto.view}"></a></td>
+            <td th:text="${#temporals.format(questionListResponseDto.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/usr/doctor-qna/write}" class="btn btn-primary">질문 등록하기</a>
+</body>
+</div>
+
+</html>
