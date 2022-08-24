@@ -89,6 +89,7 @@ public class MedicalAppointmentController {
 
         List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
 
+
         List<MedicalAppointmentDto> simpleMedicalAppointmentDtos = medicalAppointments.stream()
                 .map(o -> new MedicalAppointmentDto(o))
                 .collect(Collectors.toList());
@@ -133,17 +134,11 @@ public class MedicalAppointmentController {
         return "redirect:/usr/mypage/member/medical-appoint/medical-appointment-info";
     }
 
+
     // 마이페이지 회원 예약정보 수정
 //    @GetMapping("/usr/mypage/member/medical-appoint/medical-appointment-info/{medicalAppointmentId}/edit")
 //    public String updateMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId, Model model) {
-//        Book item = (Book) itemService.findOne(medicalAppointmentId);
-//
-//        BookForm form = new BookForm();
-//        form.setId(item.getId());
-//        form.setName(item.getName());
-//
-//        model.addAttribute("form", form);
-//        return "items/updateItemForm";
+//        return "redirect:/usr/mypage/member/medical-appoint/medical-appointment-info";
 //    }
 //
 //    @PostMapping("/usr/mypage/member/medical-appoint/medical-appointment-info/{medicalAppointmentId}/edit")
@@ -151,6 +146,6 @@ public class MedicalAppointmentController {
 //
 //        medicalAppointmentService.updateMedicalAppointment(medicalAppointmentId, date);
 //
-//        return "redirect:/items";
+//        return "redirect:/usr/mypage/member/medical-appoint/medical-appointment-info";
 //    }
 }

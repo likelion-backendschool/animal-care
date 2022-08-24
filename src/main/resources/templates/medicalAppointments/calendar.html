@@ -1,118 +1,175 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header"/>
-<style>
-  .fieldError {
-    border-color: #bd2130;
-  }
-</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
+<!--    달력을 위한 링크1-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<!--    달력을 위한 링크2 아이콘 쓰기 위해 fontawesome 가져옴-->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
 
-<script th:inline ="javascript">
-  /*<![CDATA[*/ /*]]>*/
-  let today = new Date();
-
-  function buildCalendar(){
-    let row = null
-    let cnt = 0;
-    let calendarTable = document.getElementById("calendar");
-    let calendarTableTitle = document.getElementById("calendarTitle");
-    calendarTableTitle.innerHTML = today.getFullYear()+". "+(today.getMonth()+1)+"";
-
-    let firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
-    let lastDate = new Date(today.getFullYear(), today.getMonth()+1, 0);
-
-    while(calendarTable.rows.length > 2){
-      calendarTable.deleteRow(calendarTable.rows.length -1);
-    }
-
-    let i, cell;
-    row = calendarTable.insertRow();
-    for(i = 0; i < firstDate.getDay(); i++){
-      cell = row.insertCell();
-      cnt += 1;
-    }
-
-    row = calendarTable.insertRow();
-
-    for(i = 1; i <= lastDate.getDate(); i++){
-      cell = row.insertCell();
-      cnt += 1;
-
-      cell.setAttribute('id', i);
-      cell.innerHTML = i;
-      cell.align = "center";
-
-      cell.onclick = function(){
-        clickedYear = today.getFullYear();
-        clickedMonth = ( 1 + today.getMonth() );
-        clickedDate = this.getAttribute('id');
-
-        clickedDate = clickedDate >= 10 ? clickedDate : '0' + clickedDate;
-        clickedMonth = clickedMonth >= 10 ? clickedMonth : '0' + clickedMonth;
-        clickedYMD = clickedYear + "-" + clickedMonth + "-" + clickedDate;
-
-        opener.document.getElementById("date").value = clickedYMD;
-        self.close();
-      }
-
-      if (cnt % 7 == 1) {
-        cell.innerHTML = "<font color=#F79DC2>" + i + "</font>";
-      }
-
-      if (cnt % 7 == 0){
-        cell.innerHTML = "<font color=skyblue>" + i + "</font>";
-        row = calendar.insertRow();
-      }
-    }
-
-    if(cnt % 7 != 0){
-      for(i = 0; i < 7 - (cnt % 7); i++){
-        cell = row.insertCell();
-      }
-    }
-  }
-
-  function prevCalendar(){
-    today = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
-    buildCalendar();
-  }
-
-  function nextCalendar(){
-    today = new Date(today.getFullYear(), today.getMonth()+1, today.getDate());
-    buildCalendar();
-  }
-
-  /*]]>*/
-</script>
-
+</head>
 <body>
 
-<div class="container">
-  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-  <table id="calendar" th:align="center">
-    <tr>
-      <td th:align="center"><label onclick="prevCalendar()">  </label></td>
-      <td colspan="5" th:align="center" id="calendarTitle">yyyy m</td>
-      <td th:align="center"><label onclick="nextCalendar()">  </label></td>
-    </tr>
-    <tr>
-      <td th:align="center"><font color ="#F79DC2">sun</font></td>
-      <td th:align="center">mon</td>
-      <td th:align="center">tue</td>
-      <td th:align="center">wed</td>
-      <td th:align="center">thu</td>
-      <td th:align="center">fri</td>
-      <td th:align="center"><font color ="skyblue">sat</font></td>
-    </tr>
-    <script type="text/javascript">buildCalendar();</script>
-  </table>
+<div class="container2">
+    <input type="text" id="input_date" />
+    <div id="div_calendar" style="width:300px; display:none;">
+        <div>
+            <button type="button" onClick="changeMonth(-1);"><i class="fa fa-chevron-left"></i></button>
+            <input type="number" id="year" value="" style="width:80px;display:initial;" class="form-control"; onChange="changeMonth();"/>
+            <select id="month" class="form-control" style="width:80px;display:initial;" onChange="changeMonth();">
+                <option value="1">1월</option>
+                <option value="2">2월</option>
+                <option value="3">3월</option>
+                <option value="4">4월</option>
+                <option value="5">5월</option>
+                <option value="6">6월</option>
+                <option value="7">7월</option>
+                <option value="8">8월</option>
+                <option value="9">9월</option>
+                <option value="10">10월</option>
+                <option value="11">11월</option>
+                <option value="12">12월</option>
+
+            </select>
+            <button type="button" onClick="changeMonth(1);"><i class="fa fa-chevron-right"></i></button>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>일</th>
+                    <th>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                </tr>
+            </thead>
+            <tbody id="tb_body"></tbody>
+        </table>
+    </div>
+</div> <!-- /container2 -->
+
+<!--script 쉽게 짜기 위해서 jquery cdn으로 가져옴-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+<script>
+
+    let current_year = (new Date()).getFullYear();
+    let current_month = (new Date()).getMonth() + 1;
+    loadCalendar();
+
+        function checkLeapTear(year) {
+            if(year%400 == 0){
+                return true;
+            }
+            else if(year%100 == 0) {
+                return false;
+            }
+            else if(year%4 == 0) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        function getFirstDayOfWeek(year, month) {
+            if(month < 10) month = "0" + month;
+
+            return (new Date(year+"-"+month+"-01")).getDay();
+        }
+
+        function changeYearMonth(year, month) {
+            let month_day = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            if(month == 2) {
+                if(checkLeapTear(year)) month_day[1] = 29;
+            }
+
+            let first_day_of_week = getFirstDayOfWeek(year, month);
+            let arr_calendar = [];
+            for(let i=0; i<first_day_of_week; i++){
+                arr_calendar.push("");
+            }
+
+            for(let i=1; i<=month_day[month-1]; i++) {
+                arr_calendar.push(String(i));
+            }
+
+            let remain_day = 7 - (arr_calendar.length%7);
+            if(remain_day < 7) {
+                for (let i=0; i<remain_day; i++){
+                    arr_calendar.push("");
+                }
+            }
+
+            renderCalendar(arr_calendar);
+        }
+
+        function renderCalendar(data) {
+            let h = [];
+            for (let i=0; i<data.length; i++){
+                if(i==0) {
+                    h.push('<tr>');
+                }else if(i%7 == 0) {
+                    h.push('</tr>');
+                    h.push('<tr>');
+                }
+
+                h.push('<td onclick="setDate(' + data[i] + ');" style="cursor:pointer;">' + data[i] + '</td>');
+            }
+
+            h.push('</tr>');
+
+            $('#tb_body').html(h.join(""));
+        }
+
+        function setDate(day) {
+            if(day<10) day = "0" + day;
+            $("#input_date").val(current_year + "-" + current_month + "-" + day);
+            $("#div_calendar").hide();
+        }
 
 
-  <div th:replace="fragments/footer :: footer" />
-</div> <!-- /container -->
+        function changeMonth(diff) {
+            if(diff == undefined) {
+                current_year = parseInt($('#year').val());
+                current_month = parseInt($('#month').val());
+            }
+            else{
+                current_month = current_month + diff;
+
+                if(current_month == 0) {
+                    current_year = current_year -1;
+                    current_month = 12;
+                }
+                else if(current_month == 13) {
+                    current_year = current_year + 1;
+                    current_month = 1;
+                }
+            }
+
+            loadCalendar();
+        }
+
+        function loadCalendar() {
+            $('#year').val(current_year);
+            $('#month').val(current_month);
+            changeYearMonth(current_year, current_month);
+        }
+
+
+        $("#input_date").click(function () {
+
+            $("#div_calendar").toggle();
+        });
+
+    </script>
+
 
 </body>
-
-
 </html>

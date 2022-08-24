@@ -34,12 +34,6 @@ public class MedicalAppointmentService {
         return medicalAppointmentRepository.findByDoctorId(id);
     }
 
-//    public List<MedicalAppointment> findMedicalAppointmentsOld(MedicalAppointmentSearch medicalAppointmentSearch) {
-//
-//        return medicalAppointmentRepository.findAllByString(medicalAppointmentSearch);
-//    }
-
-
 
     /**
      * 예약
@@ -69,6 +63,7 @@ public class MedicalAppointmentService {
     public void cancelMedicalAppointment(Long medicalAppointmentId) {
         //예약 엔티티 조회
         MedicalAppointment medicalAppointment = medicalAppointmentRepository.findById(medicalAppointmentId).get();
+
         //에약 취소
         medicalAppointment.cancel();
     }
