@@ -29,7 +29,7 @@ public class MedicalAppointmentMyPageDoctorController {
         // TODO dto 사용
         model.addAttribute("medicalAppointments",medicalAppointments);
 
-        return "myPage/doctor/member-manage/medical-appointments";
+        return "myPage/doctor/member-manage";
     }
 
     //TODO 예약 환자 거절

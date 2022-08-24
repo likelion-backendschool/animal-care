@@ -38,7 +38,6 @@ public class HospitalService {
 
         // doctor에서 hospital 추출
         Hospital hospital = doctor.getHospital();
-        //List<Doctor> doctorList = hospital.getDoctors();
 
         // entity => dto
         LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalForm =
