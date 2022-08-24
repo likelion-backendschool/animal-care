@@ -19,7 +19,7 @@ public class MedicalAppointmentMyPageDoctorController {
     private final MedicalAppointmentService medicalAppointmentService;
 
     // 환자 예약 관리
-    @GetMapping("")
+    @GetMapping()
     public String loadMyPageDoctorDiagnosis(
             Model model,
             @PathVariable long doctorId,

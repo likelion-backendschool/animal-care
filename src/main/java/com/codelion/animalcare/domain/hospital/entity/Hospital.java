@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.hospital.entity;
 
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import com.codelion.animalcare.domain.hospital.util.OpeningHour;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.member.Address;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -34,6 +36,8 @@ public class Hospital extends BaseEntity {
 
     @Column()
     private LocalDateTime deletedAt;
+
+
 
     @Builder
     private Hospital(Long id, LocalDateTime createdAt, String name, Address address, String phoneNum, String openingHours, LocalDateTime deletedAt) {

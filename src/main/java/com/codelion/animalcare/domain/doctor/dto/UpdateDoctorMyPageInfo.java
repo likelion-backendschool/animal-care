@@ -41,6 +41,7 @@ public class UpdateDoctorMyPageInfo {
                     .phoneNum(phoneNum)
                     .introduce(introduce)
                     .genderId(genderId)
+                    .hospital(doctor.getHospital())
                     .createdAt(doctor.getCreatedAt())
                     .build();
         }

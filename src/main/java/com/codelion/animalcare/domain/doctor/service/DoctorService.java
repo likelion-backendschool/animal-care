@@ -50,6 +50,8 @@ public class DoctorService {
         // doctor check
         Doctor doctor = findDoctorById(doctorId);
 
+
+        // TODO 비밀번호 검사 쪽 디미터 법칙 적용
         // 비밀번호 확인
         if(!doctor.getLoginPwd().equals(requestDto.getBeforePassword())){
             throw new DoctorModifyBeforePasswordNotSameException("기존 비밀번호가 일치하지 않습니다.");

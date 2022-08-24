@@ -28,16 +28,13 @@ public class DoctorMyPageInfoController {
     // 내 정보
     @GetMapping()
     public String loadDoctorMyPageInfo(Model model, @PathVariable long doctorId){
-        LoadDoctorMyPageInfo.ResponseDto doctorForm = doctorService.findById(doctorId);
+        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findById(doctorId);
 
-        model.addAttribute("doctor", doctorForm);
+        model.addAttribute("doctor", doctorDto);
 
         return "myPage/doctor/info";
     }
 
-    // TODO GET, POST dto를 같게
-    //
-    // // TODO 생일입력 안받아짐.
     // 내 정보 수정 페이지
     @GetMapping("modify")
     public String loadDoctorMyPageInfoModify(
@@ -60,13 +57,12 @@ public class DoctorMyPageInfoController {
             @PathVariable long doctorId,
             @Valid UpdateDoctorMyPageInfo.RequestDto requestDto,
             BindingResult bindingResult
-            ){
+    ){
         if(bindingResult.hasErrors()){
             List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
             System.out.println(errors);
             return "myPage/doctor/info-modify";
         }
-        requestDto.setId(doctorId);
 
         doctorService.update(requestDto);
 

@@ -15,21 +15,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class HospitalService {
     private final DoctorRepository doctorRepository;
     private final HospitalRepository hospitalRepository;
 
+    @Transactional(readOnly = true)
     public Optional<Hospital> findById(long id) {
         return hospitalRepository.findById(id);
     }
 
     //병원 전체 조회
+    @Transactional(readOnly = true)
     public List<Hospital> findHospitals() {
         return hospitalRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public LoadDoctorMyPageHospitalInfoManage.ResponseDto findByDoctorId(long doctorId) {
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException("Doctor " + doctorId + " can't found."));
