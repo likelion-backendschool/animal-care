@@ -62,7 +62,10 @@
 
 <!--            달력 코드 시작-->
             <div class="calendar-container">
+
+<!--                달력위에 빈칸-->
                 <input type="text" id="input_date" />
+
                 <div id="div_calendar" style="width:300px; display:none;">
                     <div>
                         <button type="button" onClick="changeMonth(-1);"><i class="fa fa-chevron-left"></i></button>
@@ -179,8 +182,15 @@
 
                 function setDate(day) {
                     if(day<10) day = "0" + day;
+
+                    let tmp_current_month = current_month
+                    // 개수가 1개면
+                    if(current_month.toString().length == 1 ) current_month = "0" + current_month;
+
                     $("#input_date").val(current_year + "-" + current_month + "-" + day);
                     $("#div_calendar").hide();
+
+                    if(current_month < 10) current_month = tmp_current_month
                 }
 
 

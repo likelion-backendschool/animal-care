@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.mypage;
+package com.codelion.animalcare.domain.mypage.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

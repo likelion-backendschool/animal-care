@@ -66,12 +66,12 @@ public class MedicalAppointmentController {
                                       {
 
         medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId);
-        return "redirect:/usr/mypage/member/medical-appoint/medical-appointment-info";
+        return "redirect:/usr/mypage/member/{memberId}/medical-appointment/{medicalAppointmentId}/medical-appointment-info";
     }
 
 
 
-    // 마이페이지 회원 예약정보
+    // 마이페이지 회원 예약내역
 //    @GetMapping("/usr/mypage/member/medical-appoint/medical-appointment-info")
 //    public String medicalAppointmentList(@ModelAttribute("medicalAppointmentSearch") MedicalAppointmentSearch medicalAppointmentSearch, Model model) {
 //
@@ -83,8 +83,8 @@ public class MedicalAppointmentController {
 //    }
 
 
-    // 마이페이지 회원 예약정보 Dto 사용
-    @GetMapping("/usr/mypage/member/medical-appoint/medical-appointment-info")
+    // 마이페이지 회원 예약내역 Dto 사용
+    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment/{medicalAppointmentId}/medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model) {
 
         List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
@@ -98,7 +98,6 @@ public class MedicalAppointmentController {
 
         return "medicalAppointments/medicalAppointmentList";
     }
-
 
 
 
@@ -121,22 +120,21 @@ public class MedicalAppointmentController {
             animalName = medicalAppointment.getAnimal().getName();
             hospitalName = medicalAppointment.getHospital().getName();
             doctorName = medicalAppointment.getDoctor().getName();
+            medicalAppointmentDate = medicalAppointment.getMedicalAppointmentDate();
             medicalAppointmentStatus = medicalAppointment.getMedicalAppointmentStatus();
         }
     }
 
-
-
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/medical-appoint/medical-appointment-info/{medicalAppointmentId}/cancel")
+    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment/medical-appointment-info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/medical-appoint/medical-appointment-info";
+        return "redirect:/usr/mypage/member/{memberId}/medical-appointment/medical-appointment-info";
     }
 
 
     // 마이페이지 회원 예약정보 수정
-//    @GetMapping("/usr/mypage/member/medical-appoint/medical-appointment-info/{medicalAppointmentId}/edit")
+//    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment/{medicalAppointmentId}/medical-appointment-info/{medicalAppointmentId}/edit")
 //    public String updateMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId, Model model) {
 //        return "redirect:/usr/mypage/member/medical-appoint/medical-appointment-info";
 //    }
