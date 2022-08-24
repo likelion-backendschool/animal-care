@@ -19,8 +19,8 @@
                 <td th:text="${medicalAppointment.animal.name}"></td>
                 <td th:text="${#temporals.format(medicalAppointment.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${medicalAppointment.medicalAppointmentStatus}"></td>
-                <td>
-                    <input type="button" value="거절하기">
+                <td th:if='${medicalAppointment.medicalAppointmentStatus == "COMPLETE"}'>
+                    <input  type="button" value="거절하기">
                 </td>
             </tr>
         </tbody>
