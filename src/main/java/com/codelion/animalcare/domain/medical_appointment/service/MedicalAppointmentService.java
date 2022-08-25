@@ -34,12 +34,16 @@ public class MedicalAppointmentService {
         return medicalAppointmentRepository.findByDoctorId(id);
     }
 
+    public List<MedicalAppointment> findByMemberId(long id) {
+        return medicalAppointmentRepository.findByMemberId(id);
+    }
+
 
     /**
      * 예약
      */
     @Transactional
-    public Long medicalAppointment(Long memberId, Long animalId, long hospitalId, Long doctorId) {
+    public Long medicalAppointment(Long memberId, Long animalId, Long hospitalId, Long doctorId) {
 
         //엔티티 조회
         Member member = memberRepository.findById(memberId).get();
@@ -49,6 +53,20 @@ public class MedicalAppointmentService {
 
         //예약 생성
         MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointment(member, animal, hospital, doctor);
+
+        medicalAppointmentRepository.save(medicalAppointment);
+
+        return medicalAppointment.getId();
+    }
+
+    @Transactional
+    public Long medicalAppointmentMember(Long memberId) {
+
+        //엔티티 조회
+        Member member = memberRepository.findById(memberId).get();
+
+        //예약(회원) 생성
+        MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointmentMember(member);
 
         medicalAppointmentRepository.save(medicalAppointment);
 
@@ -67,6 +85,7 @@ public class MedicalAppointmentService {
         //에약 취소
         medicalAppointment.cancel();
     }
+
 
 
 }

@@ -38,6 +38,10 @@ public class AnimalService {
         return animalRepository.findById(id);
     }
 
+    public Optional<Animal> findByMemberId(Long id) {
+        return animalRepository.findByMember(id);
+    }
+
 
     //애완동물 전체 조회
     public List<Animal> findAnimals() {

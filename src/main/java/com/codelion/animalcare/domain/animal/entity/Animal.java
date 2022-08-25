@@ -12,8 +12,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Animal extends BaseEntity {
     @Column(nullable = false, length = 20)
@@ -32,7 +33,8 @@ public class Animal extends BaseEntity {
     @Column()
     private int gender_id;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -44,13 +46,13 @@ public class Animal extends BaseEntity {
     }
 
     @Builder
-    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registrationNum, LocalDateTime deletedAt, int genderId, Member member) {
+    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registration_num, LocalDateTime deletedAt, int gender_id, Member member) {
         super(id, createdAt);
         this.name = name;
         this.birthday = birthday;
-        this.registration_num = registrationNum;
+        this.registration_num = registration_num;
         this.deletedAt = deletedAt;
-        this.gender_id = genderId;
+        this.gender_id = gender_id;
         this.member = member;
     }
 

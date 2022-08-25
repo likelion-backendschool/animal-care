@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -40,20 +41,48 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦1
-    @GetMapping("/medical-appointment")
-    public String createForm(Model model) {
+    @GetMapping("/medical-appointment-member")
+    public String createMemberForm(Model model) {
 
         List<Member> members = memberService.findMembers();
-        List<Animal> animals = animalService.findAnimals();
-        List<Hospital> hospitals = hospitalService.findHospitals();
-        List<Doctor> doctors = doctorService.findDoctors();
+
+
+        // 아직 선택하지 않았는데 임의로 선택해서 그런가? 그러면 포스트를 여러개로??
+//        Member member = members.get(0);
+//        Optional<Animal> animalByMemberId = animalService.findByMemberId(member.getId());
+//        List<Animal> animals = animalService.findAnimals();
+
+
+//        List<Hospital> hospitals = hospitalService.findHospitals();
+//        List<Doctor> doctors = doctorService.findDoctors();
+
 
         model.addAttribute("members", members);
-        model.addAttribute("animals", animals);
-        model.addAttribute("hospitals", hospitals);
-        model.addAttribute("doctors", doctors);
+//        model.addAttribute("animals", animals);
+//        model.addAttribute("animals", animalByMemberId);
+//        model.addAttribute("hospitals", hospitals);
+//        model.addAttribute("doctors", doctors);
+        return "medicalAppointments/medicalAppointmentMemberForm";
+    }
 
-        return "medicalAppointments/medicalAppointmentForm";
+    @PostMapping("/medical-appointment-member")
+    public String medicalAppointmentMember(@RequestParam("memberId") Long memberId)
+    {
+        medicalAppointmentService.medicalAppointmentMember(memberId);
+
+        return "redirect:/medical-appointment-animal";
+    }
+
+    @GetMapping("/medical-appointment-animal")
+    public String createAnimalForm(Model model) {
+
+        // 아직 선택하지 않았는데 임의로 선택해서 그런가? 그러면 포스트를 여러개로??
+
+//        Optional<Animal> animalByMemberId = animalService.findByMemberId(member.getId());
+        List<Animal> animals = animalService.findAnimals();
+        model.addAttribute("animals", animals);
+
+        return "medicalAppointments/medicalAppointmentAnimalForm";
     }
 
 

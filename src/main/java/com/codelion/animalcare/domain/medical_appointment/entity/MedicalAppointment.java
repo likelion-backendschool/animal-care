@@ -55,6 +55,8 @@ public class MedicalAppointment extends BaseEntity {
     private Hospital hospital; // 예약 병원
 
 
+
+
     // == 연관관계 메서드 == //
     public void linkMember(Member member) {
         this.member = member;
@@ -90,6 +92,8 @@ public class MedicalAppointment extends BaseEntity {
     }
 
 
+
+
     //== 생성 메서드 ==//
     public static MedicalAppointment createMedicalAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor) {
         MedicalAppointment medicalAppointment = new MedicalAppointment();
@@ -103,6 +107,14 @@ public class MedicalAppointment extends BaseEntity {
         return medicalAppointment;
     }
 
+
+    //== 생성 메서드 ==//
+    public static MedicalAppointment createMedicalAppointmentMember(Member member) {
+
+        MedicalAppointment medicalAppointment = new MedicalAppointment();
+        medicalAppointment.linkMember(member);
+        return medicalAppointment;
+    }
 
     //==비즈니스 로직==//
     /**

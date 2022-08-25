@@ -8,10 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +58,7 @@ public class Member extends BaseEntity {
         this.genderId = genderId;
     }
 
+
     // Member : MedicalAppointment = 1: n;
     @JsonIgnore
     @OneToMany(mappedBy = "member")
@@ -68,9 +66,22 @@ public class Member extends BaseEntity {
 
 
     // Member : Animal = 1: n;
-    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Animal> animals = new ArrayList<>();
+
+
+//   Member에 따른 Animal 구현 실험 위해 잠시 만들었음
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "parent_id")
+//    private Member memberParent;
+
+// Member : Animal = 1: n;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "memberParent")
+//    private List<Member> animalsChildren = new ArrayList<>();
+
+
+
 
 
 }
