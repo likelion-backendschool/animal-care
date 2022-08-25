@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.member.entity;
 
+import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.member.Address;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
@@ -64,6 +65,12 @@ public class Member extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
+
+
+    // Member : Animal = 1: n;
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Animal> animals = new ArrayList<>();
 
 
 }
