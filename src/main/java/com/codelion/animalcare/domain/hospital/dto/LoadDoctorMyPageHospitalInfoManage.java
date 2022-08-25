@@ -2,7 +2,7 @@ package com.codelion.animalcare.domain.hospital.dto;
 
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
-import com.codelion.animalcare.domain.hospital.util.OpeningHour;
+import com.codelion.animalcare.global.util.OpeningHour;
 import lombok.Getter;
 import lombok.Setter;
 

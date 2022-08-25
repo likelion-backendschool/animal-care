@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.hospital.util;
+package com.codelion.animalcare.global.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

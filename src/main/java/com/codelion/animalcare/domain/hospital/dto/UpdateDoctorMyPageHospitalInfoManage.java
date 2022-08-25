@@ -1,18 +1,12 @@
 package com.codelion.animalcare.domain.hospital.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
-import com.codelion.animalcare.domain.hospital.util.OpeningHour;
+import com.codelion.animalcare.global.util.OpeningHour;
 import com.codelion.animalcare.domain.member.Address;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 public class UpdateDoctorMyPageHospitalInfoManage {
     @Getter
