@@ -8,7 +8,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,30 +24,26 @@ public class Animal extends BaseEntity {
     private LocalDateTime birthday;
 
     @Column(nullable = false, length = 100)
-    private String registrationNum;
-
-    @Column(length = 45)
-    private String health_status;
+    private String registration_num;
 
     @Column()
     private LocalDateTime deletedAt;
 
     @Column()
-    private int genderId;
+    private int gender_id;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registrationNum, String health_status, LocalDateTime deletedAt, int genderId, Member member) {
+    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registrationNum, LocalDateTime deletedAt, int genderId, Member member) {
         super(id, createdAt);
         this.name = name;
         this.birthday = birthday;
-        this.registrationNum = registrationNum;
-        this.health_status = health_status;
+        this.registration_num = registrationNum;
         this.deletedAt = deletedAt;
-        this.genderId = genderId;
+        this.gender_id = genderId;
         this.member = member;
     }
 

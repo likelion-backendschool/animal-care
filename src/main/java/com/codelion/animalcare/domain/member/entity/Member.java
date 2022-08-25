@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +21,10 @@ import java.util.List;
 public class Member extends BaseEntity {
 
     @Column(nullable = false, length = 50, unique = true)
-    private String loginEmail;
+    private String login_email;
 
     @Column(nullable = false, length = 50)
-    private String loginPwd;
+    private String login_pwd;
 
     @Column(nullable = false, length = 20)
     private String name;
@@ -34,12 +33,13 @@ public class Member extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime birthday;
 
-    @Column(nullable = false, length = 70)
+    //잠시 nullable = true로 바꿈
+    @Column(nullable = true, length = 70)
     @Embedded
     private Address address;
 
     @Column(nullable = false, length = 20)
-    private String phoneNum;
+    private String phone_num;
 
     @Column()
     private LocalDateTime deletedAt;
@@ -48,14 +48,14 @@ public class Member extends BaseEntity {
     private int genderId;
 
     @Builder
-    private Member(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, Address address, String phoneNum, LocalDateTime deletedAt, int genderId) {
+    private Member(Long id, LocalDateTime createdAt, String login_email, String login_pwd, String name, LocalDateTime birthday, Address address, String phone_num, LocalDateTime deletedAt, int genderId) {
         super(id, createdAt);
-        this.loginEmail = loginEmail;
-        this.loginPwd = loginPwd;
+        this.login_email = login_email;
+        this.login_pwd = login_pwd;
         this.name = name;
         this.birthday = birthday;
         this.address = address;
-        this.phoneNum = phoneNum;
+        this.phone_num = phone_num;
         this.deletedAt = deletedAt;
         this.genderId = genderId;
     }

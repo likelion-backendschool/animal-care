@@ -11,11 +11,10 @@ spring:
       encoding: UTF-8
   jpa:
     hibernate:
-      ddl-auto: create # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
+      ddl-auto: update # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
     properties:
       hibernate:
         format_sql: true # 실행되는 query를 보여줌
-        default_batch_fetch_size: 100
 
 logging.level:
   org.hibernate.SQL: debug
