@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-@Repository
 public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppointment, Long> {
 
 
