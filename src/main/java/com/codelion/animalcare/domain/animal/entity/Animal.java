@@ -14,7 +14,7 @@ import java.util.List;
 
 import static javax.persistence.FetchType.*;
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Animal extends BaseEntity {
     @Column(nullable = false, length = 20)

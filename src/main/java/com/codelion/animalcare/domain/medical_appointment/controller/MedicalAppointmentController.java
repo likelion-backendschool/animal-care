@@ -2,16 +2,14 @@ package com.codelion.animalcare.domain.medical_appointment.controller;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.service.DoctorService;
-import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
-import com.codelion.animalcare.domain.member.entity.Member;
+import com.codelion.animalcare.domain.member.MemberDto;
 import com.codelion.animalcare.domain.member.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -39,50 +36,27 @@ public class MedicalAppointmentController {
     private final HospitalService hospitalService;
 
 
-
     // 예약하기 임시 만듦1
     @GetMapping("/medical-appointment-member")
-    public String createMemberForm(Model model) {
+    public String createMemberForm(Model model,
+                                   @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                   @RequestParam(value = "limit", defaultValue = "100") int limit) {
 
-        List<Member> members = memberService.findMembers();
+//        List<Member> members = memberService.findMembers();
+        List<MemberDto> members = medicalAppointmentQueryService.findMembers(offset, limit);
 
-
-        // 아직 선택하지 않았는데 임의로 선택해서 그런가? 그러면 포스트를 여러개로??
-//        Member member = members.get(0);
-//        Optional<Animal> animalByMemberId = animalService.findByMemberId(member.getId());
-//        List<Animal> animals = animalService.findAnimals();
-
-
+                List<Animal> animals = animalService.findAnimals();
 //        List<Hospital> hospitals = hospitalService.findHospitals();
 //        List<Doctor> doctors = doctorService.findDoctors();
 
 
         model.addAttribute("members", members);
-//        model.addAttribute("animals", animals);
+        model.addAttribute("animals", animals);
 //        model.addAttribute("animals", animalByMemberId);
 //        model.addAttribute("hospitals", hospitals);
 //        model.addAttribute("doctors", doctors);
+
         return "medicalAppointments/medicalAppointmentMemberForm";
-    }
-
-    @PostMapping("/medical-appointment-member")
-    public String medicalAppointmentMember(@RequestParam("memberId") Long memberId)
-    {
-        medicalAppointmentService.medicalAppointmentMember(memberId);
-
-        return "redirect:/medical-appointment-animal";
-    }
-
-    @GetMapping("/medical-appointment-animal")
-    public String createAnimalForm(Model model) {
-
-        // 아직 선택하지 않았는데 임의로 선택해서 그런가? 그러면 포스트를 여러개로??
-
-//        Optional<Animal> animalByMemberId = animalService.findByMemberId(member.getId());
-        List<Animal> animals = animalService.findAnimals();
-        model.addAttribute("animals", animals);
-
-        return "medicalAppointments/medicalAppointmentAnimalForm";
     }
 
 

@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,8 +33,8 @@ public class Member extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime birthday;
 
-    //잠시 nullable = true로 바꿈
-    @Column(nullable = true, length = 70)
+
+    @Column(nullable = false, length = 70)
     @Embedded
     private Address address;
 
@@ -43,10 +45,10 @@ public class Member extends BaseEntity {
     private LocalDateTime deletedAt;
 
     @Column()
-    private int genderId;
+    private int gender_id;
 
     @Builder
-    private Member(Long id, LocalDateTime createdAt, String login_email, String login_pwd, String name, LocalDateTime birthday, Address address, String phone_num, LocalDateTime deletedAt, int genderId) {
+    private Member(Long id, LocalDateTime createdAt, String login_email, String login_pwd, String name, LocalDateTime birthday, Address address, String phone_num, LocalDateTime deletedAt, int gender_id) {
         super(id, createdAt);
         this.login_email = login_email;
         this.login_pwd = login_pwd;
@@ -55,7 +57,7 @@ public class Member extends BaseEntity {
         this.address = address;
         this.phone_num = phone_num;
         this.deletedAt = deletedAt;
-        this.genderId = genderId;
+        this.gender_id = gender_id;
     }
 
 
@@ -70,16 +72,16 @@ public class Member extends BaseEntity {
     private List<Animal> animals = new ArrayList<>();
 
 
+
 //   Member에 따른 Animal 구현 실험 위해 잠시 만들었음
-//    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = LAZY)
 //    @JoinColumn(name = "parent_id")
-//    private Member memberParent;
-
-// Member : Animal = 1: n;
+//    private Member parent;
+//
+//// Member : Animal = 1: n;
 //    @JsonIgnore
-//    @OneToMany(mappedBy = "memberParent")
-//    private List<Member> animalsChildren = new ArrayList<>();
-
+//    @OneToMany(mappedBy = "parent")
+//    private List<Member> children = new ArrayList<>();
 
 
 
