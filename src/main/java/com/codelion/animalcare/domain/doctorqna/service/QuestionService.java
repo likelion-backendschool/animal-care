@@ -65,4 +65,19 @@ public class QuestionService {
 
         questionRepository.delete(question);
     }
+
+    public boolean questionUnauthorized(Long id, Principal principal){
+        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("작성된 글이 없습니다."));
+
+
+        if(!question.getMember().getEmail().equals(principal.getName())) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+
+
 }

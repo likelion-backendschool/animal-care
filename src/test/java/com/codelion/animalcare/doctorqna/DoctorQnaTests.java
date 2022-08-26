@@ -2,7 +2,6 @@ package com.codelion.animalcare.doctorqna;
 
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.AnswerResponseDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionListResponseDto;
@@ -11,7 +10,6 @@ import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.doctorqna.service.AnswerService;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
-import com.codelion.animalcare.domain.user.entity.Patient;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

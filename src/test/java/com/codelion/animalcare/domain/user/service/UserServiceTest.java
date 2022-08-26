@@ -3,7 +3,6 @@ package com.codelion.animalcare.domain.user.service;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.repository.AdminRepository;
 import com.codelion.animalcare.domain.user.repository.DoctorLoginRepository;
-import com.codelion.animalcare.domain.user.repository.PatientRepository;
 import com.codelion.animalcare.domain.user.repository.UserRepository;
 import org.aspectj.lang.annotation.RequiredTypes;
 import org.junit.jupiter.api.Test;
@@ -19,8 +18,8 @@ class UserServiceTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PatientRepository patientRepository;
+   /* @Autowired
+    private PatientRepository patientRepository;*/
 
     @Autowired
     private AdminRepository adminRepository;
