@@ -51,20 +51,20 @@ public class UserService implements UserDetailsService {
         infoDto.setPassword(encoder.encode(infoDto.getPassword()));
 
         if(infoDto.getAuth().contains("ROLE_ADMIN")){
-            return adminRepository.save(Admin.adminBuilder()
+            return adminRepository.save(Admin.builder()
                     .email(infoDto.getEmail())
                     .auth(infoDto.getAuth())
                     .password(infoDto.getPassword()).build()).getId();
         }
 
         if(infoDto.getAuth().contains("ROLE_DOCTOR")){
-            return doctorLoginRepository.save(DoctorLogin.doctorLoginBuilder()
+            return doctorLoginRepository.save(DoctorLogin.builder()
                     .email(infoDto.getEmail())
                     .auth(infoDto.getAuth())
                     .password(infoDto.getPassword()).build()).getId();
         }
 
-        return patientRepository.save(Patient.patientBuilder()
+        return patientRepository.save(Patient.builder()
                 .email(infoDto.getEmail())
                 .auth(infoDto.getAuth())
                 .password(infoDto.getPassword())
@@ -75,5 +75,4 @@ public class UserService implements UserDetailsService {
 //        String tmp = "Patient";
 //        return userRepository.findByDtype(tmp);
 //    }
-
 }
