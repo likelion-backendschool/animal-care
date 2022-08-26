@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctorQna.repository;
+package com.codelion.animalcare.domain.doctorqna.repository;
 
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.Builder;
@@ -30,11 +30,10 @@ public class Question extends BaseEntity {
     private List<Answer> answerList = new ArrayList<>();
 
     @Builder
-    public Question(String title, String content, int view, List<Answer> answerList) {
+    public Question(String title, String content, int view) {
         this.title = title;
         this.content = content;
         this.view = view;
-        this.answerList = answerList;
     }
 
     public void update(String title, String content){
@@ -44,14 +43,15 @@ public class Question extends BaseEntity {
     public void addAnswer(Answer answer) {
         answer.setQuestion(this);
         getAnswerList().add(answer);
+
     }
 
 
     /*
     추후에 like entity 따로 만들어서 구성
     @Column
-    private int like;
+    private Integer like;
 
-    Forienkey(animal_breed_id), (patient_id) 추후에 구성
+    Forienkey(animal_breed_id), (member_id) 추후에 구성
     */
 }

@@ -1,0 +1,54 @@
+<html layout:decorate="~{doctorqna/doctorQnaLayout}">
+<div layout:fragment="content" class="container my-3">
+
+    <h2 class="border-bottom py-2" th:text="${question.title}"></h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;" th:text="${question.content}"></div>
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div th:text="|질문 등록일 ${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
+                </div>
+            </div>
+            <div class="my-3">
+                <a th:href="@{|/usr/doctor-qna/${question.id}/modify|}" class="btn btn-sm btn-outline-secondary"
+                   th:text="수정"></a>
+                <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/delete|}"
+                   class="delete btn btn-sm btn-outline-secondary"
+                   th:text="삭제"></a>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="border-bottom my-3 py-2" th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+
+<div class="card my-3" th:each="answer : ${question.answerList}">
+    <div class="card-body">
+        <div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
+        <div class="d-flex justify-content-end">
+            <div class="badge bg-light text-dark p-2 text-start">
+                <div th:text="|답변 작성일 ${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
+            </div>
+        </div>
+        <div class="my-3">
+            <a th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/modify|}" class="btn btn-sm btn-outline-secondary"
+               th:text="수정"></a>
+            <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/delete|}"
+               class="delete btn btn-sm btn-outline-secondary"
+               th:text="삭제"></a>
+        </div>
+    </div>
+</div>
+
+
+
+    <form th:action="@{|/usr/doctor-qna/${question.id}/answers/write|}" th:object="${answerSaveRequestDto}" method="post" class="my-3">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </div>
+    <textarea name="content" class="form-control" rows="10"></textarea>
+    <input type="submit" value="답변등록" class="btn btn-primary my-2">
+</form>
+</div>
+</html>
+
