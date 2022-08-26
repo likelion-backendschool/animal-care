@@ -4,6 +4,7 @@ import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.member.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@SuperBuilder
 public class Post extends BaseEntity {
     @Column(nullable = false)
     private String title;
@@ -37,13 +39,13 @@ public class Post extends BaseEntity {
     @OrderBy("id asc")
     private List<Comment> comments;
 
-    @Builder
-    private Post(Long id, LocalDateTime createdDate, String title, String content, int likes, int views, List<Comment> comments) {
-        super(id, createdDate);
-        this.title = title;
-        this.content = content;
-        this.likes = likes;
-        this.views = views;
-        this.comments = comments;
-    }
+//    @Builder
+//    private Post(Long id, LocalDateTime createdDate, String title, String content, int likes, int views, List<Comment> comments) {
+//        super(id, createdDate);
+//        this.title = title;
+//        this.content = content;
+//        this.likes = likes;
+//        this.views = views;
+//        this.comments = comments;
+//    }
 }
