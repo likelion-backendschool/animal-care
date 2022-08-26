@@ -100,7 +100,11 @@ public class QuestionController {
     //게시글 삭제 TODO : 로그인 기능 구현 후에
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{id}/delete")
-    public String delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id, Principal principal){
+
+        if(questionService.questionUnauthorized(id, principal)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
 
         questionService.delete(id);
         return "redirect:/usr/doctor-qna";
