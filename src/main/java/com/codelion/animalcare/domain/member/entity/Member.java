@@ -5,6 +5,7 @@ import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointm
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
 public class Member extends BaseEntity {
 
     @Column(nullable = false, length = 50, unique = true)
@@ -47,18 +49,18 @@ public class Member extends BaseEntity {
     @Column()
     private int genderId;
 
-    @Builder
-    private Member(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday/* Address address*/, String phoneNum, LocalDateTime deletedAt, int genderId) {
-        super(id, createdAt);
-        this.loginEmail = loginEmail;
-        this.loginPwd = loginPwd;
-        this.name = name;
-        this.birthday = birthday;
-        /*this.address = address;*/
-        this.phoneNum = phoneNum;
-        this.deletedAt = deletedAt;
-        this.genderId = genderId;
-    }
+//    @Builder
+//    private Member(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday/* Address address*/, String phoneNum, LocalDateTime deletedAt, int genderId) {
+//        super(id, createdAt);
+//        this.loginEmail = loginEmail;
+//        this.loginPwd = loginPwd;
+//        this.name = name;
+//        this.birthday = birthday;
+//        /*this.address = address;*/
+//        this.phoneNum = phoneNum;
+//        this.deletedAt = deletedAt;
+//        this.genderId = genderId;
+//    }
 
     // Member : MedicalAppointment = 1: n;
     @JsonIgnore

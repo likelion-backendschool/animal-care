@@ -33,6 +33,8 @@ public class UserController {
         return "redirect:/login";
     }
 
+
+
 //    @GetMapping("test")
 //    public void test(){
 //        UserInfo userInfo = userService.findPatientAndDoctor();

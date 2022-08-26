@@ -1,41 +1,55 @@
 package com.codelion.animalcare.domain.user.entity;
 
 import com.codelion.animalcare.global.common.entity.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 @Getter
 @DiscriminatorColumn
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@SuperBuilder
 public class UserInfo extends BaseEntity implements UserDetails {
 
     @Column(name = "email", unique = true)
     protected String email;
 
-    @Column(name = "password")
+    @Column()
     protected String password;
+
+    @Column()
+    protected String name;
+
+    @Column()
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private LocalDateTime birthday;
+
+    // Adress 들어가야함
+
+    @Column()
+    private String phoneNum;
 
     @Column(name = "auth")
     protected String auth;    // 권한(admin, user, doctor)
 
-    @Builder
-    public UserInfo(String email, String password, String auth) {
-        this.email = email;
-        this.password = password;
-        this.auth = auth;
-    }
+//    @Builder
+//    public UserInfo(String email, String password, String auth) {
+//        this.email = email;
+//        this.password = password;
+//        this.auth = auth;
+//    }
 
 
 
