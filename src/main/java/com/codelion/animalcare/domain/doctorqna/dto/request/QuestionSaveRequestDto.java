@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.doctorqna.dto.request;
 
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.user.entity.Patient;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,10 +28,11 @@ public class QuestionSaveRequestDto {
         this.content = content;
     }
 
-    public Question toEntity() {
+    public Question toEntity(Patient patient) {
         return Question.builder()
                 .title(title)
                 .content(content)
+                .patient(patient)
                 .build();
     }
 }

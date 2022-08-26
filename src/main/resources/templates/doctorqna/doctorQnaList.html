@@ -8,6 +8,7 @@
             <th>번호</th>
             <th>제목</th>
             <th>조회수</th>
+            <th>작성자</th>
             <th>작성일시</th>
         </tr>
         </thead>
@@ -18,6 +19,7 @@
                 <a th:href="@{|doctor-qna/${questionListResponseDto.id}|}" th:text="${questionListResponseDto.title}"></a>
             </td>
             <td><a th:text="${questionListResponseDto.view}"></a></td>
+            <td><a th:text="${questionlistResponseDto.patient?.email}"></a></td>
             <td th:text="${#temporals.format(questionListResponseDto.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
 
         </tr>

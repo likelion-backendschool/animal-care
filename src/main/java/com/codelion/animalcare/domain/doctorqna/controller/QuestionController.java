@@ -4,7 +4,10 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
+import com.codelion.animalcare.domain.user.entity.Patient;
+import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 // 질문 등록, 목록에 표현, 답변 갯수 표시, 답변 등록, 답변 표시, 수정 삭제 (임시)프론트까지 구현 완료
 /* TODO : 로그인 연계 기능들(질문 삭제, 수정, 답변 삭제, 수정) , VALID 기능으로 폼에 입력 제한 걸기, 조회수 구현하기, 해시태그로 게시물 표시하기
@@ -24,22 +28,25 @@ import javax.validation.Valid;
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final UserService userService;
 
     //게시글 등록 화면
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/write")
     public String saveForm(QuestionSaveRequestDto questionSaveRequestDto){
         return "/doctorqna/doctorQnaQuestionForm";
     }
 
     //게시글 등록 TODO : VAILD 추가 , 로그인 기능 구현 후 작성자 표시
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/write")
-    public String save(@Valid QuestionSaveRequestDto questionSaveRequestDto, BindingResult bindingResult) {
-
+    public String save(@Valid QuestionSaveRequestDto questionSaveRequestDto, BindingResult bindingResult, Principal principal) {
+        System.out.println(principal.getName());
         if(bindingResult.hasErrors()) {
             return "/doctorqna/doctorQnaQuestionForm";
         }
 
-        questionService.save(questionSaveRequestDto);
+        questionService.save(questionSaveRequestDto, principal);
 
         return "redirect:/usr/doctor-qna";
     }

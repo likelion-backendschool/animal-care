@@ -76,4 +76,13 @@ public class UserService implements UserDetailsService {
 //        return userRepository.findByDtype(tmp);
 //    }
 
+        public Patient getPatient(String email){
+            Patient patient = patientRepository.findByEmail(email);
+
+            return patient;
+        }
+
+
+
+
 }

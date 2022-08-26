@@ -6,10 +6,15 @@ import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionListRespons
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.user.entity.Patient;
+import com.codelion.animalcare.domain.user.repository.UserRepository;
+import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +25,15 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
+    private final UserService userService;
+
     @Transactional
-    public Long save(QuestionSaveRequestDto questionSaveRequestDto) {
-        return questionRepository.save(questionSaveRequestDto.toEntity()).getId();
+    public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
+
+        Patient patient = userService.getPatient(principal.getName());
+        System.out.println(patient.getEmail());
+
+        return questionRepository.save(questionSaveRequestDto.toEntity(patient)).getId();
     }
 
     @Transactional

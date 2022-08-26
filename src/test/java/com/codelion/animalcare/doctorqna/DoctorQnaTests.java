@@ -11,6 +11,7 @@ import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.doctorqna.service.AnswerService;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
+import com.codelion.animalcare.domain.user.entity.Patient;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class DoctorQnaTests {
     @Autowired
     AnswerRepository answerRepository;
 
-    public void init() {
+   /* public void init() {
         //1, 2번 질문 답변 생성
         questionService.save(QuestionSaveRequestDto.builder()
                 .title("title1")
@@ -54,7 +55,7 @@ public class DoctorQnaTests {
         answerService.save(2L, AnswerSaveRequestDto.builder()
                 .content("answer2")
                 .build());
-    }
+    }*/
 
 
 
@@ -64,7 +65,7 @@ public class DoctorQnaTests {
         answerRepository.deleteAll();
         questionRepository.truncate();
         answerRepository.truncate();
-        init();
+        /*init();*/
     }
 
 
@@ -85,10 +86,6 @@ public class DoctorQnaTests {
     @Test
     public void 질문_작성된다() {
 
-        questionService.save(QuestionSaveRequestDto.builder()
-                .title("title3")
-                .content("content3")
-                .build());
 
         List<QuestionListResponseDto> allList = questionService.findAllDesc();
 
