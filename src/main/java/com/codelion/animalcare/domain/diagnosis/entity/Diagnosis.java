@@ -1,9 +1,9 @@
 package com.codelion.animalcare.domain.diagnosis.entity;
 
+import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
-import com.codelion.animalcare.domain.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

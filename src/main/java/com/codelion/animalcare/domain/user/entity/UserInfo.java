@@ -36,13 +36,19 @@ public class UserInfo extends BaseEntity implements UserDetails {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime birthday;
 
-    // Adress 들어가야함
 
-    @Column()
+
+    @Column(length = 20)
     private String phoneNum;
 
     @Column(name = "auth")
     protected String auth;    // 권한(admin, user, doctor)
+
+    @Column()
+    private int genderId;
+
+    // TODO : Adress, deleteAt 들어가야함
+
 
 //    @Builder
 //    public UserInfo(String email, String password, String auth) {

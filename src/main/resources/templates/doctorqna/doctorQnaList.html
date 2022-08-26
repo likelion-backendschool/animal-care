@@ -19,7 +19,7 @@
                 <a th:href="@{|doctor-qna/${question.id}|}" th:text="${question.title}"></a>
             </td>
             <td><a th:text="${question.view}"></a></td>
-            <td><a th:text="${question.patient?.email}"></a></td>
+            <td><a th:text="${question.member?.email}"></a></td>
             <td th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
 
         </tr>

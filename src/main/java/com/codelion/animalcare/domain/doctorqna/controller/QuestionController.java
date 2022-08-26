@@ -4,7 +4,6 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
-import com.codelion.animalcare.domain.user.entity.Patient;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

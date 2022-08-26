@@ -8,8 +8,9 @@ import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepository;
-import com.codelion.animalcare.domain.member.entity.Member;
-import com.codelion.animalcare.domain.member.repository.MemberRepository;
+
+import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

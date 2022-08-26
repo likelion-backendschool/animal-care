@@ -6,7 +6,7 @@ import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionListRespons
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
-import com.codelion.animalcare.domain.user.entity.Patient;
+import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.UserRepository;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +30,10 @@ public class QuestionService {
     @Transactional
     public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
 
-        Patient patient = userService.getPatient(principal.getName());
-        System.out.println(patient.getEmail());
+        Member member = userService.getMember(principal.getName());
+        System.out.println(member.getEmail());
 
-        return questionRepository.save(questionSaveRequestDto.toEntity(patient)).getId();
+        return questionRepository.save(questionSaveRequestDto.toEntity(member)).getId();
     }
 
     @Transactional

@@ -10,8 +10,9 @@ import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStat
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
-import com.codelion.animalcare.domain.member.entity.Member;
-import com.codelion.animalcare.domain.member.service.MemberService;
+
+import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

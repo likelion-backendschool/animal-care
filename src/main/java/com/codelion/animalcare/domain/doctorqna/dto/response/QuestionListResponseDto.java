@@ -1,7 +1,8 @@
 package com.codelion.animalcare.domain.doctorqna.dto.response;
 
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
-import com.codelion.animalcare.domain.user.entity.Patient;
+
+import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ public class QuestionListResponseDto {
     private LocalDateTime createdAt;
     private int view;
 
-    private Patient patient;
+    private Member member;
 
     /*TODO : private String member
              private Integer like */
@@ -25,6 +26,6 @@ public class QuestionListResponseDto {
         this.title = entity.getTitle();
         this.createdAt = entity.getCreatedAt();
         this.view = entity.getView();
-        this.patient = entity.getPatient();
+        this.member = entity.getMember();
     }
 }
