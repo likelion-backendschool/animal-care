@@ -4,6 +4,7 @@ import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class DoctorLogin extends UserInfo{
 
     @Column()
@@ -23,10 +25,10 @@ public class DoctorLogin extends UserInfo{
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
-    @Builder(builderMethodName = "doctorLoginBuilder")
-    public DoctorLogin(String email, String password, String auth, String major, Hospital hospital) {
-        super(email, password, auth);
-        this.major = major;
-        this.hospital = hospital;
-    }
+//    @Builder(builderMethodName = "doctorLoginBuilder")
+//    public DoctorLogin(String email, String password, String auth, String major, Hospital hospital) {
+//        super(email, password, auth);
+//        this.major = major;
+//        this.hospital = hospital;
+//    }
 }
