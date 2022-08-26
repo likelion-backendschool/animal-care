@@ -5,15 +5,18 @@
     <title>sign up</title>
 </head>
 <body>
-<h1>Sign Up</h1> <hr>
+<h1>Sign Up</h1>
+<hr>
 
 <form th:action="@{/user}" method="POST">
     email : <input type="text" name="email"> <br>
     password : <input type="password" name="password"> <br>
-    <input type="radio" name="auth" value="ROLE_ADMIN,ROLE_USER"> admin
-    <input type="radio" name="auth" value="ROLE_USER" checked="checked"> user <br>
+    <input type="radio" name="auth" value="ROLE_ADMIN,ROLE_USER,ROLE_DOCTOR"> admin
+    <input type="radio" name="auth" value="ROLE_USER" checked="checked"> user
+    <input type="radio" name="auth" value="ROLE_DOCTOR"> doctor <br>
     <button type="submit">Join</button>
-</form> <br>
+</form>
+<br>
 
 <a href="/login">Go to login →</a>
 </body>
