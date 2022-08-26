@@ -41,7 +41,7 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/write")
     public String save(@Valid QuestionSaveRequestDto questionSaveRequestDto, BindingResult bindingResult, Principal principal) {
-        System.out.println(principal.getName());
+
         if(bindingResult.hasErrors()) {
             return "/doctorqna/doctorQnaQuestionForm";
         }

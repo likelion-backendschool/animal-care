@@ -13,14 +13,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="questionListResponseDto, loop : ${questionlist}">
+        <tr th:each="question, loop : ${questionlist}">
             <td th:text="${loop.count}"></td>
             <td>
-                <a th:href="@{|doctor-qna/${questionListResponseDto.id}|}" th:text="${questionListResponseDto.title}"></a>
+                <a th:href="@{|doctor-qna/${question.id}|}" th:text="${question.title}"></a>
             </td>
-            <td><a th:text="${questionListResponseDto.view}"></a></td>
-            <td><a th:text="${questionlistResponseDto.patient?.email}"></a></td>
-            <td th:text="${#temporals.format(questionListResponseDto.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            <td><a th:text="${question.view}"></a></td>
+            <td><a th:text="${question.patient?.email}"></a></td>
+            <td th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
 
         </tr>
         </tbody>
