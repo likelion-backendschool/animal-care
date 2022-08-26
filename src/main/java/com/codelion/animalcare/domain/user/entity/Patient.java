@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.Column;
@@ -12,14 +13,15 @@ import javax.persistence.Entity;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class Patient extends UserInfo{
 
     @Column
     private String animal;
 
-    @Builder(builderMethodName = "patientBuilder")
-    public Patient(String email, String password, String auth, String animal) {
-        super(email, password, auth);
-        this.animal = animal;
-    }
+//    @Builder(builderMethodName = "patientBuilder")
+//    public Patient(String email, String password, String auth, String animal) {
+////        super(email, password, auth);
+//        this.animal = animal;
+//    }
 }
