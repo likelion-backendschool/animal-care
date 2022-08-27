@@ -2,7 +2,6 @@ package com.codelion.animalcare.doctorqna;
 
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.AnswerResponseDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionListResponseDto;
