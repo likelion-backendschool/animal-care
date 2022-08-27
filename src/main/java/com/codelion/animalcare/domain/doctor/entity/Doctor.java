@@ -55,18 +55,5 @@ public class Doctor extends BaseEntity {
         loginPwd = newLoginPwd;
     }
 
-//    @Builder
-//    private Doctor(Long id, LocalDateTime createdAt, String loginEmail, String loginPwd, String name, LocalDateTime birthday, String major, String phoneNum, String introduce, LocalDateTime deletedAt, int genderId, Hospital hospital) {
-//        super(id, createdAt);
-//        this.loginEmail = loginEmail;
-//        this.loginPwd = loginPwd;
-//        this.name = name;
-//        this.birthday = birthday;
-//        this.major = major;
-//        this.phoneNum = phoneNum;
-//        this.introduce = introduce;
-//        this.deletedAt = deletedAt;
-//        this.genderId = genderId;
-//        this.hospital = hospital;
-//    }
+
 }

@@ -36,9 +36,9 @@ public class AnswerController {
             return "doctorqna/doctorQnaDetail";
         }
 
-        if(!answerService.isDoctor(principal)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
-        }
+//        if(!answerService.isDoctor(principal)) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
+//        }
 
         answerService.save(questionId, answerSaveRequestDto, principal);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);

@@ -28,7 +28,7 @@ public class AnswerService {
     private final QuestionRepository questionRepository;
 
     private final UserService userService;
-
+// TODO : 권한 설정을 추가해야함
     @Transactional
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
         Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
@@ -36,9 +36,9 @@ public class AnswerService {
 
         Member member = userService.getMember(principal.getName());
 
-        if(!member.getAuth().equals("doctor")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
-        }
+//        if(!member.getAuth().equals("doctor")) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
+//        }
 
         question.addAnswer(answerSaveRequestDto.toEntity(member));
         return answerRepository.save(answerSaveRequestDto.toEntity(member)).getId();
@@ -71,15 +71,13 @@ public class AnswerService {
         return new AnswerResponseDto(entity);
     }
 
-    public boolean isDoctor(Principal principal) {
-        Member member = userService.getMember(principal.getName());
-        System.out.println("!!!!!!!!!!!!!!!!");
-        System.out.println(member.getAuth());
-        if(member.getAuth().contains("ROLE_DOCTOR")){
-            return true;
-        }
-
-        return false;
-
-    }
+//    public boolean isDoctor(Principal principal) {
+//        Member member = userService.getMember(principal.getName());
+//        System.out.println("!!!!!!!!!!!!!!!!");
+//        System.out.println(member.getAuth());
+//        if(member.getAuth().contains("ROLE_DOCTOR")){
+//            return true;
+//        }
+//        return false;
+//    }
 }
