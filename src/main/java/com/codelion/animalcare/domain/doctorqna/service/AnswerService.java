@@ -82,14 +82,14 @@ public class AnswerService {
 //        return false;
 //    }
 
-    public boolean answerUnauthorized(Long answerId, Principal principal) {
+    public boolean answerAuthorized(Long answerId, Principal principal) {
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("작성된 글이 없습니다."));
 
 
-        if(!answer.getDoctor().getEmail().equals(principal.getName())) {
-            return true;
+        if(answer.getDoctor().getEmail().equals(principal.getName())) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 }

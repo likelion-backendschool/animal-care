@@ -48,7 +48,7 @@ public class AnswerController {
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto, Principal principal){
 
-        if(answerService.answerUnauthorized(answerId, principal)){
+        if(answerService.answerAuthorized(answerId, principal)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
@@ -64,7 +64,7 @@ public class AnswerController {
             return "/doctorqna/doctorQnaAnswerModifyForm";
         }
 
-        if(answerService.answerUnauthorized(answerId, principal)){
+        if(answerService.answerAuthorized(answerId, principal)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
@@ -77,7 +77,7 @@ public class AnswerController {
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/delete")
     public String delete(@PathVariable Long questionId, @PathVariable Long answerId, Principal principal) {
 
-        if(answerService.answerUnauthorized(answerId, principal)){
+        if(answerService.answerAuthorized(answerId, principal)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
