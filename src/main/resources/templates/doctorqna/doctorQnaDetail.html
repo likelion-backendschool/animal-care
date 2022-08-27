@@ -36,6 +36,8 @@
         </div>
         <div class="my-3">
             <a th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/modify|}" class="btn btn-sm btn-outline-secondary"
+               sec:authorize="isAuthenticated()"
+               th:if="${answer.member != null and #authentication.getPrincipal().getEmail() == answer.member.email}"
                th:text="수정"></a>
             <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/delete|}"
                class="delete btn btn-sm btn-outline-secondary"

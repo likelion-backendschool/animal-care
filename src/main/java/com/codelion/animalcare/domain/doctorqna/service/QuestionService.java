@@ -31,7 +31,6 @@ public class QuestionService {
     public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
 
         Member member = userService.getMember(principal.getName());
-        System.out.println(member.getEmail());
 
         return questionRepository.save(questionSaveRequestDto.toEntity(member)).getId();
     }
