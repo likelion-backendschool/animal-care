@@ -41,9 +41,9 @@ public class MedicalAppointmentController {
     @GetMapping("/medical-appointment")
     public String createMemberForm(
 //            @ModelAttribute("memberDto") MemberDto memberDto,
-            Model model
-//            @RequestParam(value = "offset", defaultValue = "0") int offset,
-//            @RequestParam(value = "limit", defaultValue = "100") int limit
+            Model model,
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "100") int limit
     ) {
 
         List<Member> members = memberService.findMembers();

@@ -6,7 +6,6 @@ import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.member.entity.Member;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +19,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MedicalAppointment extends BaseEntity {
 
-    // 잠시 true로 바꿈
+    // 잠시 지움 @Column(nullable = false)
     @Column()
     private LocalDateTime medicalAppointmentDate; // 예약날짜 및 시간
 
@@ -61,22 +60,22 @@ public class MedicalAppointment extends BaseEntity {
 
 
     // == 연관관계 메서드 == //
-    public void linkMember(Member member) {
+    public void addMember(Member member) {
         this.member = member;
         member.getMedicalAppointments().add(this);
     }
 
-    public void linkAnimal(Animal animal) {
+    public void addAnimal(Animal animal) {
         this.animal = animal;
         animal.getMedicalAppointments().add(this);
     }
 
-    public void linkDoctor(Doctor doctor) {
+    public void addDoctor(Doctor doctor) {
         this.doctor = doctor;
         doctor.getMedicalAppointments().add(this);
     }
 
-    public void linkHospital(Hospital hospital) {
+    public void addHospital(Hospital hospital) {
         this.hospital = hospital;
         hospital.getMedicalAppointments().add(this);
     }
@@ -100,10 +99,10 @@ public class MedicalAppointment extends BaseEntity {
     //== 생성 메서드 ==//
     public static MedicalAppointment createMedicalAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor) {
         MedicalAppointment medicalAppointment = new MedicalAppointment();
-        medicalAppointment.linkMember(member);
-        medicalAppointment.linkAnimal(animal);
-        medicalAppointment.linkDoctor(doctor);
-        medicalAppointment.linkHospital(hospital);
+        medicalAppointment.addMember(member);
+        medicalAppointment.addAnimal(animal);
+        medicalAppointment.addDoctor(doctor);
+        medicalAppointment.addHospital(hospital);
 
         medicalAppointment.setMedicalAppointmentStatus(MedicalAppointmentStatus.COMPLETE);
         medicalAppointment.setMedicalAppointmentDate(LocalDateTime.now());

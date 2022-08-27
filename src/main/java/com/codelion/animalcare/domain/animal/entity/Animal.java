@@ -40,7 +40,7 @@ public class Animal extends BaseEntity {
 
 
     // == 연관관계 메서드 == //
-    public void linkMember(Member member) {
+    public void addMember(Member member) {
         this.member = member;
         member.getAnimals().add(this);
     }
