@@ -22,17 +22,13 @@ public class MedicalAppointment extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime date; // 예약날짜 및 시간
 
-//    기존 @Column(columnDefinition = "TEXT", nullable = true)
-//    @Column()
-//    private String content;
-
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String content;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MedicalAppointmentStatus status; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
 
-
-    // 수정: 지연로딩 lazy 적용
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -51,7 +47,7 @@ public class MedicalAppointment extends BaseEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "hospital_id")
-    private Hospital hospital; // 예약 병원
+    private Hospital hospital;
 
 
 
@@ -82,7 +78,7 @@ public class MedicalAppointment extends BaseEntity {
                                LocalDateTime date,
                                Member member, Animal animal, Hospital hospital, Doctor doctor) {
         super(id, createdAt);
-//        this.content = content;
+        this.content = content;
         this.status = status;
         this.date = date;
         this.member = member;
@@ -103,7 +99,6 @@ public class MedicalAppointment extends BaseEntity {
         medicalAppointment.addHospital(hospital);
 
         medicalAppointment.setStatus(MedicalAppointmentStatus.COMPLETE);
-
         medicalAppointment.setDate(medicalAppointmentDate);
 
         return medicalAppointment;
