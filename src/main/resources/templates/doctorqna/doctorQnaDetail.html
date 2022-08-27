@@ -47,14 +47,16 @@
 </div>
 
 
+    <div sec:authorize="hasRole('ROLE_DOCTOR')">
+        <form th:action="@{|/usr/doctor-qna/${question.id}/answers/write|}" th:object="${answerSaveRequestDto}" method="post" class="my-3">
+            <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+                <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+            </div>
+            <textarea name="content" class="form-control" rows="10"></textarea>
+            <input type="submit" value="답변등록" class="btn btn-primary my-2">
+        </form>
+    </div>
 
-    <form th:action="@{|/usr/doctor-qna/${question.id}/answers/write|}" th:object="${answerSaveRequestDto}" method="post" class="my-3">
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-        </div>
-    <textarea name="content" class="form-control" rows="10"></textarea>
-    <input type="submit" value="답변등록" class="btn btn-primary my-2">
-</form>
 </div>
 </html>
 
