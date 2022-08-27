@@ -6,14 +6,18 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestD
 import com.codelion.animalcare.domain.doctorqna.service.AnswerService;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RequiredArgsConstructor
 @Controller
@@ -23,15 +27,20 @@ public class AnswerController {
     private final QuestionService questionService;
 
     //답변 작성
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{questionId}/answers/write")
-    public String save(Model model, @PathVariable Long questionId, @Valid AnswerSaveRequestDto answerSaveRequestDto, BindingResult bindingResult){
+    public String save(Model model, @PathVariable Long questionId, @Valid AnswerSaveRequestDto answerSaveRequestDto, BindingResult bindingResult, Principal principal){
 
         if(bindingResult.hasErrors()) {
             model.addAttribute("question", questionService.findById(questionId));
             return "doctorqna/doctorQnaDetail";
         }
 
-        answerService.save(questionId, answerSaveRequestDto);
+        if(!answerService.isDoctor(principal)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
+        }
+
+        answerService.save(questionId, answerSaveRequestDto, principal);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 

@@ -7,10 +7,19 @@ import com.codelion.animalcare.domain.doctorqna.repository.Answer;
 import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
+
+/*
+TODO : MEMBER REPO에서 DOCTOR을 못가져오는데, USER REPO 이용 ??
+* */
 @RequiredArgsConstructor
 @Service
 public class AnswerService {
@@ -18,12 +27,21 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
 
+    private final UserService userService;
+
     @Transactional
-    public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto){
+    public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
         Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
         answerSaveRequestDto.setQuestion(question);
-        question.addAnswer(answerSaveRequestDto.toEntity());
-        return answerRepository.save(answerSaveRequestDto.toEntity()).getId();
+
+        Member member = userService.getMember(principal.getName());
+
+        if(!member.getAuth().equals("doctor")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
+        }
+
+        question.addAnswer(answerSaveRequestDto.toEntity(member));
+        return answerRepository.save(answerSaveRequestDto.toEntity(member)).getId();
     }
 
     @Transactional
@@ -51,5 +69,17 @@ public class AnswerService {
         Answer entity = answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
 
         return new AnswerResponseDto(entity);
+    }
+
+    public boolean isDoctor(Principal principal) {
+        Member member = userService.getMember(principal.getName());
+        System.out.println("!!!!!!!!!!!!!!!!");
+        System.out.println(member.getAuth());
+        if(member.getAuth().contains("ROLE_DOCTOR")){
+            return true;
+        }
+
+        return false;
+
     }
 }
