@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.doctorqna.repository;
 
-import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,13 +29,13 @@ public class Answer extends BaseEntity {
     private Question question;
 
     @ManyToOne
-    private Member member;
+    private Doctor doctor;
 
     @Builder
-    public Answer(String content, Question question, Member member) {
+    public Answer(String content, Question question, Doctor doctor) {
         this.content = content;
         this.question = question;
-        this.member = member;
+        this.doctor = doctor;
     }
 
     public void update(String content){

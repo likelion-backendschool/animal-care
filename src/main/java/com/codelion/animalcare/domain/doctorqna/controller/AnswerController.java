@@ -45,28 +45,43 @@ public class AnswerController {
     }
 
     //TODO : 아래 기능들은 로그인 후 구현?
-
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
-    public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto){
+    public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto, Principal principal){
+
+        if(answerService.answerUnauthorized(answerId, principal)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
 
         model.addAttribute("answer", answerService.findById(answerId));
 
         return "/doctorqna/doctorQnaAnswerModifyForm";
     }
-
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
-    public String modify(@PathVariable Long questionId, @PathVariable Long answerId, @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult){
+    public String modify(@PathVariable Long questionId, @PathVariable Long answerId, @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult, Principal principal){
 
         if(bindingResult.hasErrors()) {
             return "/doctorqna/doctorQnaAnswerModifyForm";
         }
+
+        if(answerService.answerUnauthorized(answerId, principal)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+
         answerService.update(questionId, answerId, answerUpdateRequestDto);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
     //답변 삭제
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/delete")
-    public String delete(@PathVariable Long questionId, @PathVariable Long answerId) {
+    public String delete(@PathVariable Long questionId, @PathVariable Long answerId, Principal principal) {
+
+        if(answerService.answerUnauthorized(answerId, principal)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+
         answerService.delete(questionId, answerId);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }

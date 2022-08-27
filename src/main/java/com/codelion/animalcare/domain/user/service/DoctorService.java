@@ -24,6 +24,7 @@ public class DoctorService {
 
     public List<Doctor> findDoctors() {
         return doctorRepository.findAll();
+    }
     public Doctor getDoctor(String email) {
         Doctor doctor = doctorRepository.findByEmail(email);
 
