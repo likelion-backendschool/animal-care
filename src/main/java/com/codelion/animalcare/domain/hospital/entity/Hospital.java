@@ -1,20 +1,15 @@
 package com.codelion.animalcare.domain.hospital.entity;
 
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
-/*import com.codelion.animalcare.domain.member.Address;*/
+
 import com.codelion.animalcare.global.common.entity.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

@@ -1,9 +1,7 @@
-package com.codelion.animalcare.domain.doctor.dto;
+package com.codelion.animalcare.domain.doctormypage.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 /*import com.codelion.animalcare.domain.member.Address;*/
-
-import javax.persistence.Embedded;
 
 public class LoadDoctorMyPageHospitalInfoManage {
     public static class ResponseDto{

@@ -2,12 +2,11 @@ package com.codelion.animalcare.domain.user.service;
 
 
 import com.codelion.animalcare.domain.user.entity.Admin;
-import com.codelion.animalcare.domain.user.entity.DoctorLogin;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.dto.UserInfoDto;
-import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.repository.AdminRepository;
-import com.codelion.animalcare.domain.user.repository.DoctorLoginRepository;
+import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.user.repository.MemberRepository;
 
 import com.codelion.animalcare.domain.user.repository.UserRepository;
@@ -27,7 +26,7 @@ public class UserService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final AdminRepository adminRepository;
 
-    private final DoctorLoginRepository doctorLoginRepository;
+    private final DoctorRepository doctorLoginRepository;
 
     /**
      * Spring Security 필수 메소드 구현
@@ -60,7 +59,7 @@ public class UserService implements UserDetailsService {
         }
 
         if(infoDto.getAuth().contains("ROLE_DOCTOR")){
-            return doctorLoginRepository.save(DoctorLogin.builder()
+            return doctorLoginRepository.save(Doctor.builder()
                     .email(infoDto.getEmail())
                     .auth(infoDto.getAuth())
                     .password(infoDto.getPassword()).build()).getId();

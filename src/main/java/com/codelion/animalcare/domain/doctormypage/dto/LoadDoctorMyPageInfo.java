@@ -1,8 +1,8 @@
-package com.codelion.animalcare.domain.doctor.dto;
+package com.codelion.animalcare.domain.doctormypage.dto;
 
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
 
-import java.sql.Date;
+import com.codelion.animalcare.domain.user.entity.Doctor;
+
 import java.time.LocalDateTime;
 
 public class LoadDoctorMyPageInfo {
@@ -29,7 +29,7 @@ public class LoadDoctorMyPageInfo {
 
         public ResponseDto(Doctor doctor) {
             this.id = doctor.getGenderId();
-            this.loginEmail = doctor.getLoginEmail();
+            this.loginEmail = doctor.getEmail();
             this.name = doctor.getName();
             this.birthday = doctor.getBirthday();
             this.major = doctor.getMajor();

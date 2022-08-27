@@ -1,17 +1,18 @@
-package com.codelion.animalcare.domain.doctor.controller;
+package com.codelion.animalcare.domain.doctormypage.controller;
 
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
-import com.codelion.animalcare.domain.doctor.service.DoctorService;
+
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
-import com.codelion.animalcare.domain.doctor.dto.LoadDoctorMyPageHospitalInfoManage;
-import com.codelion.animalcare.domain.doctor.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageHospitalInfoManage;
-import com.codelion.animalcare.domain.doctor.dto.UpdateDoctorMyPageInfo;
+import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageHospitalInfoManage;
+import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageHospitalInfoManage;
+import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfo;
+import com.codelion.animalcare.domain.user.entity.Doctor;
+import com.codelion.animalcare.domain.user.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
