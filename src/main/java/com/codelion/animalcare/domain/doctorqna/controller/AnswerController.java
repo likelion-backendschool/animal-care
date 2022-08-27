@@ -44,7 +44,6 @@ public class AnswerController {
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
-    //TODO : 아래 기능들은 로그인 후 구현?
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto, Principal principal){
