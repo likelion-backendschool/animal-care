@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.medical_appointment.repository;
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.medical_appointment.entity.MedicalDateTmp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,5 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
 
     @Query("select ma from MedicalAppointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h")
     List<MedicalAppointment> findAllWithMemberAnimalHospitalDoctor();
-
 
 }

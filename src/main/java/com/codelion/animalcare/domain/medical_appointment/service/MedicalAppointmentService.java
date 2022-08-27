@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -43,7 +44,7 @@ public class MedicalAppointmentService {
      * 예약
      */
     @Transactional
-    public Long medicalAppointment(Long memberId, Long animalId, Long hospitalId, Long doctorId) {
+    public Long medicalAppointment(Long memberId, Long animalId, Long hospitalId, Long doctorId, LocalDateTime medicalAppointmentDate) {
 
         //엔티티 조회
         Member member = memberRepository.findById(memberId).get();
@@ -51,8 +52,9 @@ public class MedicalAppointmentService {
         Hospital hospital = hospitalRepository.findById(hospitalId).get();
         Doctor doctor = doctorRepository.findById(doctorId).get();
 
+
         //예약 생성
-        MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointment(member, animal, hospital, doctor);
+        MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointment(member, animal, hospital, doctor, medicalAppointmentDate);
 
         medicalAppointmentRepository.save(medicalAppointment);
 

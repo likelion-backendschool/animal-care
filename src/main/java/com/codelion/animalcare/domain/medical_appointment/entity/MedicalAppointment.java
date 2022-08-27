@@ -19,13 +19,13 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MedicalAppointment extends BaseEntity {
 
-    // 잠시 지움 @Column(nullable = false)
-    @Column()
-    private LocalDateTime medicalAppointmentDate; // 예약날짜 및 시간
+    @Column(nullable = false)
+    private LocalDateTime date; // 예약날짜 및 시간
 
 //    기존 @Column(columnDefinition = "TEXT", nullable = true)
 //    @Column()
 //    private String content;
+
 
     // 수정: status -> medicalAppointmentStatus
     // 자바의 enum을 사용하기 위해 @Enumerated 어노테이션으로 매핑함
@@ -58,7 +58,6 @@ public class MedicalAppointment extends BaseEntity {
 
 
 
-
     // == 연관관계 메서드 == //
     public void addMember(Member member) {
         this.member = member;
@@ -82,11 +81,13 @@ public class MedicalAppointment extends BaseEntity {
 
 
     @Builder
-    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus medicalAppointmentStatus, LocalDateTime medicalAppointmentDate, Member member, Animal animal, Hospital hospital, Doctor doctor) {
+    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus medicalAppointmentStatus,
+                               LocalDateTime date,
+                               Member member, Animal animal, Hospital hospital, Doctor doctor) {
         super(id, createdAt);
 //        this.content = content;
         this.medicalAppointmentStatus = medicalAppointmentStatus;
-        this.medicalAppointmentDate = medicalAppointmentDate;
+        this.date = date;
         this.member = member;
         this.animal = animal;
         this.hospital = hospital;
@@ -97,7 +98,7 @@ public class MedicalAppointment extends BaseEntity {
 
 
     //== 생성 메서드 ==//
-    public static MedicalAppointment createMedicalAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor) {
+    public static MedicalAppointment createMedicalAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor, LocalDateTime medicalAppointmentDate) {
         MedicalAppointment medicalAppointment = new MedicalAppointment();
         medicalAppointment.addMember(member);
         medicalAppointment.addAnimal(animal);
@@ -105,7 +106,9 @@ public class MedicalAppointment extends BaseEntity {
         medicalAppointment.addHospital(hospital);
 
         medicalAppointment.setMedicalAppointmentStatus(MedicalAppointmentStatus.COMPLETE);
-        medicalAppointment.setMedicalAppointmentDate(LocalDateTime.now());
+
+        medicalAppointment.setDate(medicalAppointmentDate);
+
         return medicalAppointment;
     }
 

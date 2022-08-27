@@ -1,6 +1,5 @@
 package com.codelion.animalcare.domain.medical_appointment.controller;
 
-import com.codelion.animalcare.domain.animal.AnimalDto;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
@@ -12,11 +11,11 @@ import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStat
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
-import com.codelion.animalcare.domain.member.MemberDto;
 import com.codelion.animalcare.domain.member.entity.Member;
 import com.codelion.animalcare.domain.member.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +42,7 @@ public class MedicalAppointmentController {
 //            @ModelAttribute("memberDto") MemberDto memberDto,
             Model model,
             @RequestParam(value = "offset", defaultValue = "0") int offset,
-            @RequestParam(value = "limit", defaultValue = "100") int limit
-    ) {
+            @RequestParam(value = "limit", defaultValue = "100") int limit) {
 
         List<Member> members = memberService.findMembers();
 //        List<MemberDto> members = medicalAppointmentQueryService.findMembers(offset, limit);
@@ -68,10 +66,11 @@ public class MedicalAppointmentController {
             @RequestParam("memberId") Long memberId,
             @RequestParam("animalId") Long animalId,
             @RequestParam("hospitalId") Long hospitalId,
-            @RequestParam("doctorId") Long doctorId)
+            @RequestParam("doctorId") Long doctorId,
+            @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime medicalAppointmentDate)
                                       {
 
-        medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId);
+        medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId, medicalAppointmentDate);
         return "redirect:/usr/mypage/member/medical-appointment/info";
     }
 
@@ -117,6 +116,7 @@ public class MedicalAppointmentController {
         private String doctorName;
 
         private LocalDateTime medicalAppointmentDate;
+//        private MedicalDateTmp medicalDateTmp;
         private MedicalAppointmentStatus medicalAppointmentStatus;
 
 
@@ -126,7 +126,9 @@ public class MedicalAppointmentController {
             animalName = medicalAppointment.getAnimal().getName();
             hospitalName = medicalAppointment.getHospital().getName();
             doctorName = medicalAppointment.getDoctor().getName();
-            medicalAppointmentDate = medicalAppointment.getMedicalAppointmentDate();
+            medicalAppointmentDate = medicalAppointment.getDate();
+//            medicalDateTmp = medicalAppointment.getMedicalDateTmp();
+//            medicalDateTmp = medicalAppointment.getMedicalDateTmp();
             medicalAppointmentStatus = medicalAppointment.getMedicalAppointmentStatus();
         }
     }
