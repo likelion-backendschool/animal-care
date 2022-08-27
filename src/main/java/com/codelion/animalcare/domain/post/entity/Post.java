@@ -1,13 +1,13 @@
 package com.codelion.animalcare.domain.post.entity;
 
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Entity

@@ -2,16 +2,12 @@ package com.codelion.animalcare.domain.user.service;
 
 import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.repository.AdminRepository;
-import com.codelion.animalcare.domain.user.repository.DoctorLoginRepository;
+import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.user.repository.MemberRepository;
 import com.codelion.animalcare.domain.user.repository.UserRepository;
-import org.aspectj.lang.annotation.RequiredTypes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceTest {
@@ -26,7 +22,7 @@ class UserServiceTest {
     private AdminRepository adminRepository;
 
     @Autowired
-    private DoctorLoginRepository doctorLoginRepository;
+    private DoctorRepository doctorLoginRepository;
 
     @Test
     public void UserInfo_만들기(){

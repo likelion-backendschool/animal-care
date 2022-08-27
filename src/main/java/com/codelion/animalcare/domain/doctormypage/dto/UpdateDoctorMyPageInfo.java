@@ -1,10 +1,9 @@
-package com.codelion.animalcare.domain.doctor.dto;
+package com.codelion.animalcare.domain.doctormypage.dto;
 
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class UpdateDoctorMyPageInfo {
@@ -27,8 +26,8 @@ public class UpdateDoctorMyPageInfo {
         public Doctor toEntity(Doctor doctor){
             return Doctor.builder()
                     .id(doctor.getId())
-                    .loginEmail(loginEmail)
-                    .loginPwd(doctor.getLoginPwd())
+                    .email(loginEmail)
+                    .password(doctor.getPassword())
                     .name(name)
                     .birthday(birthday)
                     .major(major)
