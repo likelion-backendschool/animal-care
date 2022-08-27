@@ -42,7 +42,6 @@ public class MedicalAppointmentController {
     public String createMemberForm(
 //            @ModelAttribute("memberDto") MemberDto memberDto,
             Model model
-//            ,
 //            @RequestParam(value = "offset", defaultValue = "0") int offset,
 //            @RequestParam(value = "limit", defaultValue = "100") int limit
     ) {
@@ -73,7 +72,7 @@ public class MedicalAppointmentController {
                                       {
 
         medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId);
-        return "redirect:/usr/mypage/member//medical-appointment//medical-appointment-info";
+        return "redirect:/usr/mypage/member/medical-appointment/info";
     }
 
 
@@ -91,7 +90,7 @@ public class MedicalAppointmentController {
 
 
     // 마이페이지 회원 예약내역 Dto 사용
-    @GetMapping("/usr/mypage/member//medical-appointment//medical-appointment-info")
+    @GetMapping("/usr/mypage/member/medical-appointment/info")
     public String medicalAppointmentListUseDto(Model model) {
 
         List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
@@ -133,10 +132,10 @@ public class MedicalAppointmentController {
     }
 
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/medical-appointment/medical-appointment-info/{medicalAppointmentId}/cancel")
+    @PostMapping("/usr/mypage/member/medical-appointment/info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/medical-appointment/medical-appointment-info";
+        return "redirect:/usr/mypage/member/medical-appointment/info";
     }
 
 
