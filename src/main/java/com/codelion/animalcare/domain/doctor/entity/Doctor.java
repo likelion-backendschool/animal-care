@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
@@ -46,7 +47,7 @@ public class Doctor extends BaseEntity {
     private int genderId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 

@@ -20,16 +20,19 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MedicalAppointment extends BaseEntity {
 
-    @Column(nullable = false)
+    // 잠시 true로 바꿈
+    @Column()
     private LocalDateTime medicalAppointmentDate; // 예약날짜 및 시간
 
-    @Column(columnDefinition = "TEXT",nullable = false)
-    private String content;
+//    기존 @Column(columnDefinition = "TEXT", nullable = true)
+//    @Column()
+//    private String content;
 
     // 수정: status -> medicalAppointmentStatus
     // 자바의 enum을 사용하기 위해 @Enumerated 어노테이션으로 매핑함
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
+//    @Column(nullable = true)
+//    @Enumerated(EnumType.STRING)
+    @Column()
     private MedicalAppointmentStatus medicalAppointmentStatus; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
 
 
@@ -82,7 +85,7 @@ public class MedicalAppointment extends BaseEntity {
     @Builder
     private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus medicalAppointmentStatus, LocalDateTime medicalAppointmentDate, Member member, Animal animal, Hospital hospital, Doctor doctor) {
         super(id, createdAt);
-        this.content = content;
+//        this.content = content;
         this.medicalAppointmentStatus = medicalAppointmentStatus;
         this.medicalAppointmentDate = medicalAppointmentDate;
         this.member = member;
@@ -108,13 +111,6 @@ public class MedicalAppointment extends BaseEntity {
     }
 
 
-    //== 생성 메서드 ==//
-    public static MedicalAppointment createMedicalAppointmentMember(Member member) {
-
-        MedicalAppointment medicalAppointment = new MedicalAppointment();
-        medicalAppointment.linkMember(member);
-        return medicalAppointment;
-    }
 
     //==비즈니스 로직==//
     /**

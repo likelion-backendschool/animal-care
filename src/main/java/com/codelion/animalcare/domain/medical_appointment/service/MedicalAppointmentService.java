@@ -59,20 +59,6 @@ public class MedicalAppointmentService {
         return medicalAppointment.getId();
     }
 
-    @Transactional
-    public Long medicalAppointmentMember(Long memberId) {
-
-        //엔티티 조회
-        Member member = memberRepository.findById(memberId).get();
-
-        //예약(회원) 생성
-        MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointmentMember(member);
-
-        medicalAppointmentRepository.save(medicalAppointment);
-
-        return medicalAppointment.getId();
-    }
-
 
     /**
      * 예약 취소

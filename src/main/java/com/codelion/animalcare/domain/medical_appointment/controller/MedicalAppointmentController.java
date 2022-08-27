@@ -1,8 +1,11 @@
 package com.codelion.animalcare.domain.medical_appointment.controller;
 
+import com.codelion.animalcare.domain.animal.AnimalDto;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
+import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.service.DoctorService;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 
@@ -10,15 +13,13 @@ import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointm
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
 import com.codelion.animalcare.domain.member.MemberDto;
+import com.codelion.animalcare.domain.member.entity.Member;
 import com.codelion.animalcare.domain.member.service.MemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,39 +38,42 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦1
-    @GetMapping("/medical-appointment-member")
-    public String createMemberForm(Model model,
-                                   @RequestParam(value = "offset", defaultValue = "0") int offset,
-                                   @RequestParam(value = "limit", defaultValue = "100") int limit) {
+    @GetMapping("/medical-appointment")
+    public String createMemberForm(
+//            @ModelAttribute("memberDto") MemberDto memberDto,
+            Model model
+//            ,
+//            @RequestParam(value = "offset", defaultValue = "0") int offset,
+//            @RequestParam(value = "limit", defaultValue = "100") int limit
+    ) {
 
-//        List<Member> members = memberService.findMembers();
-        List<MemberDto> members = medicalAppointmentQueryService.findMembers(offset, limit);
-
-                List<Animal> animals = animalService.findAnimals();
-//        List<Hospital> hospitals = hospitalService.findHospitals();
-//        List<Doctor> doctors = doctorService.findDoctors();
+        List<Member> members = memberService.findMembers();
+//        List<MemberDto> members = medicalAppointmentQueryService.findMembers(offset, limit);
+        List<Animal> animals = animalService.findAnimals();
+        List<Hospital> hospitals = hospitalService.findHospitals();
+        List<Doctor> doctors = doctorService.findDoctors();
 
 
         model.addAttribute("members", members);
         model.addAttribute("animals", animals);
-//        model.addAttribute("animals", animalByMemberId);
-//        model.addAttribute("hospitals", hospitals);
-//        model.addAttribute("doctors", doctors);
+        model.addAttribute("hospitals", hospitals);
+        model.addAttribute("doctors", doctors);
 
-        return "medicalAppointments/medicalAppointmentMemberForm";
+        return "medicalAppointments/medicalAppointmentForm";
     }
 
 
     // 예약하기 임시 만듦2
     @PostMapping("/medical-appointment")
-    public String medicalAppointment(@RequestParam("memberId") Long memberId,
-                                     @RequestParam("animalId") Long animalId,
-                                     @RequestParam("hospitalId") Long hospitalId,
-                                     @RequestParam("doctorId") Long doctorId)
+    public String medicalAppointment(
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("animalId") Long animalId,
+            @RequestParam("hospitalId") Long hospitalId,
+            @RequestParam("doctorId") Long doctorId)
                                       {
 
         medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId);
-        return "redirect:/usr/mypage/member/{memberId}/medical-appointment/{medicalAppointmentId}/medical-appointment-info";
+        return "redirect:/usr/mypage/member//medical-appointment//medical-appointment-info";
     }
 
 
@@ -87,7 +91,7 @@ public class MedicalAppointmentController {
 
 
     // 마이페이지 회원 예약내역 Dto 사용
-    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment/{medicalAppointmentId}/medical-appointment-info")
+    @GetMapping("/usr/mypage/member//medical-appointment//medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model) {
 
         List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
@@ -129,10 +133,10 @@ public class MedicalAppointmentController {
     }
 
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment/medical-appointment-info/{medicalAppointmentId}/cancel")
+    @PostMapping("/usr/mypage/member/medical-appointment/medical-appointment-info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/{memberId}/medical-appointment/medical-appointment-info";
+        return "redirect:/usr/mypage/member/medical-appointment/medical-appointment-info";
     }
 
 

@@ -24,4 +24,5 @@ public class MemberRepositoryTmp {
                 .setMaxResults(limit)
                 .getResultList();
     }
+
 }

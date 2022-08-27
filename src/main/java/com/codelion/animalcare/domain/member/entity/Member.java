@@ -20,6 +20,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
+
     @Column(nullable = false, length = 50, unique = true)
     private String login_email;
 
@@ -70,20 +71,6 @@ public class Member extends BaseEntity {
     // Member : Animal = 1: n;
     @OneToMany(mappedBy = "member")
     private List<Animal> animals = new ArrayList<>();
-
-
-
-//   Member에 따른 Animal 구현 실험 위해 잠시 만들었음
-//    @ManyToOne(fetch = LAZY)
-//    @JoinColumn(name = "parent_id")
-//    private Member parent;
-//
-//// Member : Animal = 1: n;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "parent")
-//    private List<Member> children = new ArrayList<>();
-
-
 
 
 }

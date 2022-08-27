@@ -5,6 +5,7 @@ import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.member.controller.MemberController;
 import com.codelion.animalcare.domain.member.entity.Member;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,17 +19,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@Setter
 public class MemberDto {
 
-    //id 빼야하나?
     private Long memberId;
-
     private String login_email;
+
     private String login_pwd;
 
     @NotEmpty(message = "회원 이름은 필수 입니다")
-    private String name;
+    private String member_name;
 
 
     // @Temporal: 날짜 타입(java.util.Date, java.util.Calendar)을 매핑할 때 사용
@@ -46,7 +45,8 @@ public class MemberDto {
     public MemberDto(Member member) {
         memberId = member.getId();
         login_email = member.getLogin_email();
-        name = member.getName();
+        login_pwd = member.getLogin_pwd();
+        member_name = member.getName();
         birthDay = member.getBirthday();
         address = member.getAddress();
         phone_num = member.getPhone_num();
@@ -55,6 +55,5 @@ public class MemberDto {
                 .map(animals -> new AnimalDto(animals))
                 .collect(Collectors.toList());
     }
-
 
 }

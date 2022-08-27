@@ -9,22 +9,22 @@
     <form role="form" action="/medical-appointment" method="post">
 
         <div class="form-group">
-            <label>회원이름</label>
+            <label for="member">회원이름</label>
             <select name="memberId" id="member" class="form-control">
-                <option value="">회원선택</option>
+                <option value="">회원 선택</option>
                 <option th:each="member : ${members}"
-                        th:value="${member.id}"
-                        th:text="${member.name}" />
+                    th:value="${member.id}"
+                    th:text="${member.name}"/>
             </select>
         </div>
 
         <div class="form-group">
             <label for="animal">애완동물이름</label>
             <select name="animalId" id="animal" class="form-control">
-                <option value="">애완동물선택</option>
+                <option value="">애완동물 선택</option>
                 <option th:each="animal : ${animals}"
                         th:value="${animal.id}"
-                        th:text="${animal.name}" />
+                        th:text="${animal.name}"/>
             </select>
         </div>
 
@@ -48,10 +48,10 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label>예약날짜</label>
-            <input id="input_date" type="datetime-local" class="form-control form-control-sm"/>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <label>예약날짜</label>-->
+<!--            <input id="input_date" type="datetime-local" class="form-control form-control-sm"/>-->
+<!--        </div>-->
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -61,4 +61,5 @@
 </div> <!-- /container -->
 
 </body>
+
 </html>
