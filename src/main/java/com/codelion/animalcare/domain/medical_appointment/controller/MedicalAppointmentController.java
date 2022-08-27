@@ -95,11 +95,11 @@ public class MedicalAppointmentController {
         List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
 
 
-        List<MedicalAppointmentDto> simpleMedicalAppointmentDtos = medicalAppointments.stream()
+        List<MedicalAppointmentDto> MedicalAppointmentDtos = medicalAppointments.stream()
                 .map(o -> new MedicalAppointmentDto(o))
                 .collect(Collectors.toList());
 
-        model.addAttribute("simpleMedicalAppointmentDtos", simpleMedicalAppointmentDtos);
+        model.addAttribute("MedicalAppointmentDtos", MedicalAppointmentDtos);
 
         return "medicalAppointments/medicalAppointmentList";
     }
@@ -115,9 +115,8 @@ public class MedicalAppointmentController {
         private String hospitalName;
         private String doctorName;
 
-        private LocalDateTime medicalAppointmentDate;
-//        private MedicalDateTmp medicalDateTmp;
-        private MedicalAppointmentStatus medicalAppointmentStatus;
+        private LocalDateTime date;
+        private MedicalAppointmentStatus status;
 
 
         public MedicalAppointmentDto(MedicalAppointment medicalAppointment) {
@@ -126,10 +125,8 @@ public class MedicalAppointmentController {
             animalName = medicalAppointment.getAnimal().getName();
             hospitalName = medicalAppointment.getHospital().getName();
             doctorName = medicalAppointment.getDoctor().getName();
-            medicalAppointmentDate = medicalAppointment.getDate();
-//            medicalDateTmp = medicalAppointment.getMedicalDateTmp();
-//            medicalDateTmp = medicalAppointment.getMedicalDateTmp();
-            medicalAppointmentStatus = medicalAppointment.getMedicalAppointmentStatus();
+            date = medicalAppointment.getDate();
+            status = medicalAppointment.getStatus();
         }
     }
 

@@ -27,12 +27,9 @@ public class MedicalAppointment extends BaseEntity {
 //    private String content;
 
 
-    // 수정: status -> medicalAppointmentStatus
-    // 자바의 enum을 사용하기 위해 @Enumerated 어노테이션으로 매핑함
-//    @Column(nullable = true)
-//    @Enumerated(EnumType.STRING)
-    @Column()
-    private MedicalAppointmentStatus medicalAppointmentStatus; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private MedicalAppointmentStatus status; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
 
 
     // 수정: 지연로딩 lazy 적용
@@ -81,12 +78,12 @@ public class MedicalAppointment extends BaseEntity {
 
 
     @Builder
-    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus medicalAppointmentStatus,
+    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus status,
                                LocalDateTime date,
                                Member member, Animal animal, Hospital hospital, Doctor doctor) {
         super(id, createdAt);
 //        this.content = content;
-        this.medicalAppointmentStatus = medicalAppointmentStatus;
+        this.status = status;
         this.date = date;
         this.member = member;
         this.animal = animal;
@@ -105,7 +102,7 @@ public class MedicalAppointment extends BaseEntity {
         medicalAppointment.addDoctor(doctor);
         medicalAppointment.addHospital(hospital);
 
-        medicalAppointment.setMedicalAppointmentStatus(MedicalAppointmentStatus.COMPLETE);
+        medicalAppointment.setStatus(MedicalAppointmentStatus.COMPLETE);
 
         medicalAppointment.setDate(medicalAppointmentDate);
 
@@ -119,7 +116,7 @@ public class MedicalAppointment extends BaseEntity {
      * 예약 취소
      */
     public void cancel() {
-        this.setMedicalAppointmentStatus(MedicalAppointmentStatus.CANCEL);
+        this.setStatus(MedicalAppointmentStatus.CANCEL);
     }
 
 
