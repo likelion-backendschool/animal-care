@@ -1,14 +1,12 @@
 package com.codelion.animalcare.domain.doctor.entity;
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
-import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.codelion.animalcare.domain.diagnosis.controller;
 
 import com.codelion.animalcare.domain.diagnosis.DiagnosisSearch;
-import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,6 @@
 package com.codelion.animalcare.domain.medical_appointment.repository;
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalDateTmp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

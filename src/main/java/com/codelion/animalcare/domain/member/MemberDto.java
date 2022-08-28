@@ -1,20 +1,13 @@
 package com.codelion.animalcare.domain.member;
 
 import com.codelion.animalcare.domain.animal.AnimalDto;
-import com.codelion.animalcare.domain.animal.entity.Animal;
-import com.codelion.animalcare.domain.member.controller.MemberController;
-import com.codelion.animalcare.domain.member.entity.Member;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Embedded;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

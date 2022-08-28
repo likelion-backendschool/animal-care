@@ -4,11 +4,9 @@ import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointm
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepository;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepositoryTmp;
 import com.codelion.animalcare.domain.member.MemberDto;
-import com.codelion.animalcare.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;

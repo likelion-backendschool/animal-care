@@ -2,11 +2,10 @@ package com.codelion.animalcare.domain.medical_appointment.entity;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
-import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
-import com.codelion.animalcare.domain.member.entity.Member;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,6 +16,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
 public class MedicalAppointment extends BaseEntity {
 
     @Column(nullable = false)
@@ -73,19 +73,19 @@ public class MedicalAppointment extends BaseEntity {
     }
 
 
-    @Builder
-    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus status,
-                               LocalDateTime date,
-                               Member member, Animal animal, Hospital hospital, Doctor doctor) {
-        super(id, createdAt);
-        this.content = content;
-        this.status = status;
-        this.date = date;
-        this.member = member;
-        this.animal = animal;
-        this.hospital = hospital;
-        this.doctor = doctor;
-    }
+//    @Builder
+//    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus status,
+//                               LocalDateTime date,
+//                               Member member, Animal animal, Hospital hospital, Doctor doctor) {
+//        super(id, createdAt);
+//        this.content = content;
+//        this.status = status;
+//        this.date = date;
+//        this.member = member;
+//        this.animal = animal;
+//        this.hospital = hospital;
+//        this.doctor = doctor;
+//    }
 
 
 

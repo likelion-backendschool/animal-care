@@ -1,7 +1,6 @@
 package com.codelion.animalcare.domain.member.repository;
 
 
-import com.codelion.animalcare.domain.member.entity.Member;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

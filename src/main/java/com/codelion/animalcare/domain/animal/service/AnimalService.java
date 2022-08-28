@@ -34,7 +34,7 @@ public class AnimalService {
         }
     }
 
-    public Optional<Animal> findById(Long id) {
+    public Optional<Animal> find ById(Long id) {
         return animalRepository.findById(id);
     }
 

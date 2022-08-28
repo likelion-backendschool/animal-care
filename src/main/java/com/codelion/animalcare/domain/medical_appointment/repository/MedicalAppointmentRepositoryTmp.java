@@ -1,6 +1,5 @@
 package com.codelion.animalcare.domain.medical_appointment.repository;
 
-import com.codelion.animalcare.domain.member.entity.Member;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

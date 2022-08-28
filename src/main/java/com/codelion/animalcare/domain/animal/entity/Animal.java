@@ -1,10 +1,9 @@
 package com.codelion.animalcare.domain.animal.entity;
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
-import com.codelion.animalcare.global.common.entity.BaseEntity;
-import com.codelion.animalcare.domain.member.entity.Member;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,6 +15,7 @@ import static javax.persistence.FetchType.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
 public class Animal extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
@@ -45,16 +45,16 @@ public class Animal extends BaseEntity {
         member.getAnimals().add(this);
     }
 
-    @Builder
-    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registration_num, LocalDateTime deletedAt, int gender_id, Member member) {
-        super(id, createdAt);
-        this.name = name;
-        this.birthday = birthday;
-        this.registration_num = registration_num;
-        this.deletedAt = deletedAt;
-        this.gender_id = gender_id;
-        this.member = member;
-    }
+//    @Builder
+//    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registration_num, LocalDateTime deletedAt, int gender_id, Member member) {
+//        super(id, createdAt);
+//        this.name = name;
+//        this.birthday = birthday;
+//        this.registration_num = registration_num;
+//        this.deletedAt = deletedAt;
+//        this.gender_id = gender_id;
+//        this.member = member;
+//    }
 
 
     // Animal : MedicalAppointment = 1: n;

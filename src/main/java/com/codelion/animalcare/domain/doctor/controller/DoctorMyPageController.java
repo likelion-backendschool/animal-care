@@ -1,6 +1,5 @@
 package com.codelion.animalcare.domain.doctor.controller;
 
-import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.service.DoctorService;

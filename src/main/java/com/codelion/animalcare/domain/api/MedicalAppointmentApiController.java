@@ -4,7 +4,6 @@ package com.codelion.animalcare.domain.api;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepository;
-import com.codelion.animalcare.domain.member.entity.Member;
 import com.codelion.animalcare.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
