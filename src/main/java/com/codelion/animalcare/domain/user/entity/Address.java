@@ -1,3 +1,4 @@
+/*
 package com.codelion.animalcare.domain.member;
 
 import lombok.Getter;
@@ -21,3 +22,4 @@ public class Address {
         this.zipcode = zipcode;
     }
 }
+*/
