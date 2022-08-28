@@ -42,13 +42,14 @@ public class MedicalAppointmentController {
     @GetMapping("/usr/mypage/member/{memberId}/medical-appointment")
     public String createMedicalAppointmentForm(Model model) {
 
-        List<Animal> animals = animalService.findAnimals();
-        List<Hospital> hospitals = hospitalService.findHospitals();
-        List<Doctor> doctors = doctorService.findDoctors();
-
-        model.addAttribute("animals", animals);
-        model.addAttribute("hospitals", hospitals);
-        model.addAttribute("doctors", doctors);
+//        TODO memberId에 맞추어 구현해야함
+//        List<Animal> animals = animalService.findAnimals();
+//        List<Hospital> hospitals = hospitalService.findHospitals();
+//        List<Doctor> doctors = doctorService.findDoctors();
+//
+//        model.addAttribute("animals", animals);
+//        model.addAttribute("hospitals", hospitals);
+//        model.addAttribute("doctors", doctors);
 
         return "medicalAppointments/medicalAppointmentForm";
     }
