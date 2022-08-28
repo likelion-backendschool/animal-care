@@ -1,10 +1,9 @@
 package com.codelion.animalcare.domain.hospital.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
-import com.codelion.animalcare.domain.doctor.repository.DoctorRepository;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
+import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,8 +1,7 @@
 package com.codelion.animalcare.domain.hospital.entity;
 
-
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

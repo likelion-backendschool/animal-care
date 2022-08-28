@@ -29,8 +29,8 @@ public class AnimalDto {
             animalId = animal.getId();
             name = animal.getName();
             birthDay = animal.getBirthday();
-            registration_num = animal.getRegistration_num();
-            gender_id = animal.getGender_id();
+            registration_num = animal.getRegistrationNum();
+            gender_id = animal.getGenderId();
         }
 
 }

@@ -90,7 +90,7 @@ public class MedicalAppointment extends BaseEntity {
 
 
     //== 생성 메서드 ==//
-    public static MedicalAppointment createMedicalAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor) {
+    public static MedicalAppointment createMedicalAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor, LocalDateTime medicalAppointmentDate) {
         MedicalAppointment medicalAppointment = new MedicalAppointment();
         medicalAppointment.addMember(member);
         medicalAppointment.addAnimal(animal);
@@ -98,7 +98,7 @@ public class MedicalAppointment extends BaseEntity {
         medicalAppointment.addDoctor(doctor);
 
         medicalAppointment.setStatus(MedicalAppointmentStatus.COMPLETE);
-        medicalAppointment.setDate(LocalDateTime.now());
+        medicalAppointment.setDate(medicalAppointmentDate);
         return medicalAppointment;
     }
 

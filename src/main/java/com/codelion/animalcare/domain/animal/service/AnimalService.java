@@ -2,7 +2,6 @@ package com.codelion.animalcare.domain.animal.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +33,7 @@ public class AnimalService {
         }
     }
 
-    public Optional<Animal> find ById(Long id) {
+    public Optional<Animal> findById(Long id) {
         return animalRepository.findById(id);
     }
 

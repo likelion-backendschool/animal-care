@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.member;
 
+import com.nimbusds.openid.connect.sdk.claims.Address;
 import lombok.Getter;
 import lombok.Setter;
 

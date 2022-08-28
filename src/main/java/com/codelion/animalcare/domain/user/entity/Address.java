@@ -1,5 +1,4 @@
-/*
-package com.codelion.animalcare.domain.member;
+package com.codelion.animalcare.domain.user.entity;
 
 import lombok.Getter;
 
@@ -22,4 +21,4 @@ public class Address {
         this.zipcode = zipcode;
     }
 }
-*/
+
