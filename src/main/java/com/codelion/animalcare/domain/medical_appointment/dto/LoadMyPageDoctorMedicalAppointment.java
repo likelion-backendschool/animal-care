@@ -21,11 +21,12 @@ public class LoadMyPageDoctorMedicalAppointment {
     @Setter
     @AllArgsConstructor
     static public class ResponseDto{
+        private Long id;
         private LocalDateTime medicalAppointmentDate; // 예약날짜 및 시간
 
         private String content;
 
-        private MedicalAppointmentStatus medicalAppointmentStatus; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
+        private MedicalAppointmentStatus medicalAppointmentStatus; // 예약상태 [COMPLETE, CANCEL, REFUSE] 완료, 취소
 
         private Doctor doctor;
 
@@ -40,6 +41,7 @@ public class LoadMyPageDoctorMedicalAppointment {
         private LocalDateTime updatedAt;
 
         public ResponseDto(MedicalAppointment medicalAppointment){
+            this.id = medicalAppointment.getId();
             this.medicalAppointmentDate = medicalAppointment.getMedicalAppointmentDate();
             this.content = medicalAppointment.getContent();
             this.medicalAppointmentStatus = medicalAppointment.getMedicalAppointmentStatus();

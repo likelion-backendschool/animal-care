@@ -113,4 +113,10 @@ public class MedicalAppointment extends BaseEntity {
         this.setMedicalAppointmentStatus(MedicalAppointmentStatus.CANCEL);
     }
 
+    /**
+     * 예약 상태 변경
+     */
+    public void updateStatus(MedicalAppointmentStatus refuse) {
+        this.setMedicalAppointmentStatus(MedicalAppointmentStatus.CANCEL);
+    }
 }

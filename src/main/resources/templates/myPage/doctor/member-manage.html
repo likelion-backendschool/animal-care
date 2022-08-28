@@ -25,10 +25,12 @@
                 <td th:text="${#temporals.format(medicalAppointment?.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${medicalAppointment?.medicalAppointmentStatus}"></td>
                 <td>
-                    <button th:if="${medicalAppointment.medicalAppointmentStatus.name == 'COMPLETE' }"
-                            type="button">
-                        거절
-                    </button>
+                    <form th:action="|/usr/mypage/doctor/${doctorId}/member-manage/medical-appointments/${medicalAppointment?.id}/refuse|" method="post">
+                        <input class="btn btn-primary" type="submit"
+                               th:if="${medicalAppointment.medicalAppointmentStatus.name == 'COMPLETE' }"
+                               onclick="return confirm('정말 거절하시겠습니까?')" value="환자 거절">
+                        </input>
+                    </form>
                 </td>
                 <td>
                     <button type="button" th:onclick="|location.href='medical-appointments/${medicalAppointment.member.id}'|">보기</button>

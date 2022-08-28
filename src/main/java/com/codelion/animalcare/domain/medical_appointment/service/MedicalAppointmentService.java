@@ -6,6 +6,7 @@ import com.codelion.animalcare.domain.doctor.entity.Doctor;
 import com.codelion.animalcare.domain.doctor.repository.DoctorRepository;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
+import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 import com.codelion.animalcare.domain.medical_appointment.dto.LoadMyPageDoctorMedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepository;
@@ -45,7 +46,6 @@ public class MedicalAppointmentService {
 //    }
 
     public List<MedicalAppointment> findMedicalAppointments() {
-
         return medicalAppointmentRepository.findAllByMemberAndAnimalAndHospitalAndDoctor();
     }
 
@@ -80,5 +80,18 @@ public class MedicalAppointmentService {
         MedicalAppointment medicalAppointment = medicalAppointmentRepository.getReferenceById(medicalAppointmentId);
         //에약 취소
         medicalAppointment.cancel();
+    }
+
+    /**
+     * 예약 거절(의사)
+     */
+    @Transactional
+    public void updateMedicalAppointmentStatus(Long medicalAppointmentId, MedicalAppointmentStatus refuse) {
+        //예약 엔티티 조회
+        MedicalAppointment medicalAppointment = medicalAppointmentRepository.getReferenceById(medicalAppointmentId);
+
+        medicalAppointment.updateStatus(refuse);
+        //에약 거절
+        //medicalAppointmentRepository.save(medicalAppointment);
     }
 }
