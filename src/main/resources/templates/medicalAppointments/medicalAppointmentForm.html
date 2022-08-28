@@ -10,12 +10,7 @@
 
         <div class="form-group">
             <label for="member">회원이름</label>
-            <select name="memberId" id="member" class="form-control">
-                <option value="">회원 선택</option>
-                <option th:each="member : ${members}"
-                    th:value="${member.id}"
-                    th:text="${member.name}"/>
-            </select>
+            <input name="memberId" id="member" class="form-control"/>
         </div>
 
         <div class="form-group">

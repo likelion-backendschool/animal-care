@@ -9,6 +9,7 @@ import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStat
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
+import com.codelion.animalcare.domain.member.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.DoctorService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -37,21 +39,13 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦1
-    @GetMapping("/medical-appointment")
-    public String createMemberForm(
-//            @ModelAttribute("memberDto") MemberDto memberDto,
-            Model model,
-            @RequestParam(value = "offset", defaultValue = "0") int offset,
-            @RequestParam(value = "limit", defaultValue = "100") int limit) {
+    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment")
+    public String createMedicalAppointmentForm(Model model) {
 
-        List<Member> members = memberService.findMembers();
-//        List<MemberDto> members = medicalAppointmentQueryService.findMembers(offset, limit);
         List<Animal> animals = animalService.findAnimals();
         List<Hospital> hospitals = hospitalService.findHospitals();
         List<Doctor> doctors = doctorService.findDoctors();
 
-
-        model.addAttribute("members", members);
         model.addAttribute("animals", animals);
         model.addAttribute("hospitals", hospitals);
         model.addAttribute("doctors", doctors);
@@ -61,7 +55,7 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦2
-    @PostMapping("/medical-appointment")
+    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment")
     public String medicalAppointment(
             @RequestParam("memberId") Long memberId,
             @RequestParam("animalId") Long animalId,
@@ -71,13 +65,13 @@ public class MedicalAppointmentController {
                                       {
 
         medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId, medicalAppointmentDate);
-        return "redirect:/usr/mypage/member/medical-appointment/info";
+        return "redirect:/usr/mypage/member/{memberId}/medical-appointment/info";
     }
 
 
 
     // 마이페이지 회원 예약내역
-//    @GetMapping("/usr/mypage/member/medical-appoint/medical-appointment-info")
+//    @GetMapping("/usr/mypage/member/medical-appointment/info")
 //    public String medicalAppointmentList(@ModelAttribute("medicalAppointmentSearch") MedicalAppointmentSearch medicalAppointmentSearch, Model model) {
 //
 //        List<MedicalAppointment> medicalAppointments = medicalAppointmentService.findMedicalAppointmentsOld(medicalAppointmentSearch);
@@ -89,7 +83,7 @@ public class MedicalAppointmentController {
 
 
     // 마이페이지 회원 예약내역 Dto 사용
-    @GetMapping("/usr/mypage/member/medical-appointment/info")
+    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment/info")
     public String medicalAppointmentListUseDto(Model model) {
 
         List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
@@ -130,11 +124,12 @@ public class MedicalAppointmentController {
         }
     }
 
+
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/medical-appointment/info/{medicalAppointmentId}/cancel")
+    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment/info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/medical-appointment/info";
+        return "redirect:/usr/mypage/member/{memberId}/medical-appointment/info";
     }
 
 
