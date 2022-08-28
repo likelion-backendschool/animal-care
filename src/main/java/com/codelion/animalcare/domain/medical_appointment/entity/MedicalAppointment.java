@@ -54,22 +54,22 @@ public class MedicalAppointment extends BaseEntity {
 
 
     // == 연관관계 메서드 == //
-    public void setMember(Member member) {
+    public void addMember(Member member) {
         this.member = member;
         member.getMedicalAppointments().add(this);
     }
 
-    public void setAnimal(Animal animal) {
+    public void addAnimal(Animal animal) {
         this.animal = animal;
         animal.getMedicalAppointments().add(this);
     }
 
-    public void setDoctor(Doctor doctor) {
+    public void addDoctor(Doctor doctor) {
         this.doctor = doctor;
         doctor.getMedicalAppointments().add(this);
     }
 
-    public void setHospital(Hospital hospital) {
+    public void addHospital(Hospital hospital) {
         this.hospital = hospital;
         hospital.getMedicalAppointments().add(this);
     }
@@ -92,10 +92,10 @@ public class MedicalAppointment extends BaseEntity {
     //== 생성 메서드 ==//
     public static MedicalAppointment createMedicalAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor) {
         MedicalAppointment medicalAppointment = new MedicalAppointment();
-        medicalAppointment.setMember(member);
-        medicalAppointment.setAnimal(animal);
-        medicalAppointment.setHospital(hospital);
-        medicalAppointment.setDoctor(doctor);
+        medicalAppointment.addMember(member);
+        medicalAppointment.addAnimal(animal);
+        medicalAppointment.addHospital(hospital);
+        medicalAppointment.addDoctor(doctor);
 
         medicalAppointment.setStatus(MedicalAppointmentStatus.COMPLETE);
         medicalAppointment.setDate(LocalDateTime.now());
