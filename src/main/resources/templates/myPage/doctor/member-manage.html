@@ -4,14 +4,15 @@
         <a href="/usr/mypage/doctor">뒤로</a>
     </nav>
     <div>
-        <table>
+        <table class="table">
             <thead>
             <tr>
-                <th>고객 이름</th>
-                <th>동물 이름</th>
-                <th>날짜</th>
-                <th>상태</th>
-                <th>상태 변경</th>
+                <th scope="col">고객 이름</th>
+                <th scope="col">동물 이름</th>
+                <th scope="col">날짜</th>
+                <th scope="col">상태</th>
+                <th scope="col">상태 변경</th>
+                <th scope="col">상세</th>
             </tr>
             </thead>
             <tbody>
@@ -20,8 +21,14 @@
                 <td th:text="${medicalAppointment?.animal?.name}"></td>
                 <td th:text="${#temporals.format(medicalAppointment?.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${medicalAppointment?.medicalAppointmentStatus}"></td>
-                <td th:if='${medicalAppointment?.medicalAppointmentStatus == "COMPLETE"}'>
-                    <input  type="button" value="거절하기">
+                <td>
+                    <button th:if="${medicalAppointment.medicalAppointmentStatus.name == 'COMPLETE' }"
+                            type="button">
+                        거절
+                    </button>
+                </td>
+                <td>
+                    <button type="button" th:onclick="|location.href='medical-appointments/${medicalAppointment.member.id}'|">보기</button>
                 </td>
             </tr>
             </tbody>

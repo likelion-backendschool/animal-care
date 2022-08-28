@@ -28,7 +28,6 @@ public class MedicalAppointmentMyPageDoctorController {
         List<LoadMyPageDoctorMedicalAppointment.ResponseDto> medicalAppointments
                 = medicalAppointmentService.findAllByDoctorId(doctorId);
         model.addAttribute("medicalAppointments", medicalAppointments);
-
         return "myPage/doctor/member-manage";
     }
     // TODO 예약 환자 거절 기능
