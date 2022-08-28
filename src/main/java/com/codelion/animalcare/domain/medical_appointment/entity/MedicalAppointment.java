@@ -22,16 +22,15 @@ import static javax.persistence.FetchType.LAZY;
 public class MedicalAppointment extends BaseEntity {
 
     @Column(nullable = false)
-    private LocalDateTime medicalAppointmentDate; // 예약날짜 및 시간
+    private LocalDateTime date; // 예약날짜 및 시간
 
     @Column(columnDefinition = "TEXT",nullable = false)
     private String content;
 
-    // 수정: status -> medicalAppointmentStatus
-    // 자바의 enum을 사용하기 위해 @Enumerated 어노테이션으로 매핑함
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private MedicalAppointmentStatus medicalAppointmentStatus; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
+    private MedicalAppointmentStatus status; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
 
 
     // 수정: 지연로딩 lazy 적용
@@ -65,15 +64,15 @@ public class MedicalAppointment extends BaseEntity {
         animal.getMedicalAppointments().add(this);
     }
 
-//    public void setDoctor(Doctor doctor) {
-//        this.doctor = doctor;
-//        doctor.getMedicalAppointments().add(this);
-//    }
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+        doctor.getMedicalAppointments().add(this);
+    }
 
-//    public void setHospital(Hospital hospital) {
-//        this.hospital = hospital;
-//        hospital.getMedicalAppointments().add(this);
-//    }
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+        hospital.getMedicalAppointments().add(this);
+    }
 
 
 
@@ -98,8 +97,8 @@ public class MedicalAppointment extends BaseEntity {
         medicalAppointment.setHospital(hospital);
         medicalAppointment.setDoctor(doctor);
 
-        medicalAppointment.setMedicalAppointmentStatus(MedicalAppointmentStatus.COMPLETE);
-        medicalAppointment.setMedicalAppointmentDate(LocalDateTime.now());
+        medicalAppointment.setStatus(MedicalAppointmentStatus.COMPLETE);
+        medicalAppointment.setDate(LocalDateTime.now());
         return medicalAppointment;
     }
 
@@ -109,7 +108,7 @@ public class MedicalAppointment extends BaseEntity {
      * 예약 취소
      */
     public void cancel() {
-        this.setMedicalAppointmentStatus(MedicalAppointmentStatus.CANCEL);
+        this.setStatus(MedicalAppointmentStatus.CANCEL);
     }
 
 
