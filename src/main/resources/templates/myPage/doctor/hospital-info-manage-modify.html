@@ -1,7 +1,7 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://thymeleaf.org">
 <nav>
-    <a href="/usr/mypage/doctor/${doctorId}/hospital-info-manage">뒤로</a>
+    <a th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage|}">뒤로</a>
 </nav>
 <div>
     <form th:action="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
