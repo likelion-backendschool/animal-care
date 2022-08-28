@@ -40,7 +40,7 @@ public class MedicalAppointmentMyPageDoctorController {
         return "redirect:/usr/mypage/doctor/{doctorId}/member-manage/medical-appointments";
     }
 
-    // TODO 진단서 확인
     // TODO 환자정보 확인
+    // TODO 진단서 확인
 
 }

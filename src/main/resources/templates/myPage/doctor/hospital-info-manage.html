@@ -1,13 +1,13 @@
 <html layout:decorate="~{myPage/doctor/sampleLayout}">
 <div class="container" layout:fragment="content">
     <nav class="navbar">
-        <a href="/usr/mypage/doctor">뒤로</a>
+        <a  href="/usr/mypage/doctor">뒤로</a>
     </nav>
     <h2 class="p-4">
         병원 관리
     </h2>
     <nav class="navbar">
-        <a th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
+        <a class="btn btn-primary" th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
            th:text="수정"></a>
     </nav>
     <h4>병원 정보</h4>

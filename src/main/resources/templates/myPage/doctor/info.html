@@ -7,8 +7,9 @@
         내 정보
     </h2>
     <nav class="navbar">
-    <a th:href="@{|/usr/mypage/doctor/${doctor.getId()}/info/modify|}"
-       th:text="수정"></a>
+        <a class="btn btn-primary"
+           th:href="@{|/usr/mypage/doctor/${doctor.getId()}/info/modify|}"
+           th:text="수정"></a>
     </nav>
     <table class="table">
         <tbody>
@@ -19,11 +20,8 @@
         <tr>
             <th>비밀번호</th>
             <td>
-                <button >
-                    <a th:href="@{|/usr/mypage/doctor/${doctor.getId()}/info/modify/password|}"
-                            th:text="수정">비밀번호 변경
-                    </a>
-                </button>
+                <a class="btn btn-primary" th:href="@{|/usr/mypage/doctor/${doctor.getId()}/info/modify/password|}">비밀번호 수정
+                </a>
             </td>
         </tr>
         <tr>
