@@ -1,5 +1,5 @@
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://thymeleaf.org">
+<html layout:decorate="~{myPage/doctor/sampleLayout}">
+<div layout:fragment="content">
 <nav>
     <a th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage|}">뒤로</a>
 </nav>
@@ -155,5 +155,6 @@
         </table>
         <input type="submit" value="수정 완료">
     </form>
+</div>
 </div>
 </html>

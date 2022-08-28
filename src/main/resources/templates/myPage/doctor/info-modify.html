@@ -1,7 +1,9 @@
-<div>
+<html layout:decorate="~{myPage/doctor/sampleLayout}">
+<div layout:fragment="content">
+<nav>
     <a th:href="@{|/usr/mypage/doctor/${doctorId}/info|}"
        th:text="돌아가기"></a>
-</div>
+</nav>
 <div>
     <form th:action="@{|/usr/mypage/doctor/${doctorId}/info/modify|}"
           th:object="${requestDto}" method="post">
@@ -76,3 +78,5 @@
         <input type="submit" value="수정 완료">
     </form>
 </div>
+</div>
+</html>
