@@ -7,9 +7,7 @@
 <div>
     <form th:action="@{|/usr/mypage/doctor/${doctorId}/info/modify|}"
           th:object="${requestDto}" method="post">
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-        </div>
+        <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
         <table>
             <tbody>
             <tr>

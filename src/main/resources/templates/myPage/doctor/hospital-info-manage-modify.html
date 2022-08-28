@@ -6,9 +6,7 @@
 <div>
     <form th:action="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
           th:object="${requestDto}" method="post">
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-        </div>
+        <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
         <table>
             <input type="hidden" th:field="*{id}">
             <tbody>
