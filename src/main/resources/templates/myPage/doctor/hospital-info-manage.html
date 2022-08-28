@@ -1,130 +1,139 @@
 <html layout:decorate="~{myPage/doctor/sampleLayout}">
-<div layout:fragment="content">
-<nav>
-    <a href="/usr/mypage/doctor">뒤로</a>
+<div class="container" layout:fragment="content">
+    <nav class="navbar">
+        <a href="/usr/mypage/doctor">뒤로</a>
+    </nav>
+    <h2 class="p-4">
+        병원 관리
+    </h2>
+    <nav class="navbar">
+        <a th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
+           th:text="수정"></a>
+    </nav>
+    <h4>병원 정보</h4>
+    <nav>
 
-</nav>
-<h2>병원 정보</h2>
-<nav>
-    <a th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
-       th:text="수정"></a>
-</nav>
-<div>
-    <table>
-        <tbody>
-        <tr>
-            <th>이름</th>
-            <td th:text="${hospital.name}"></td>
-        </tr>
-        <tr>
-            <th>전화 번호</th>
-            <td th:text="${hospital.phoneNum}"></td>
-        </tr>
-        <tr>
-            <th>지번</th>
-            <td th:text="${hospital.city}"></td>
-        </tr>
-        <tr>
-            <th>도로명</th>
-            <td th:text="${hospital.street}"></td>
-        </tr>
-        <tr>
-            <th>지역 번호</th>
-            <td th:text="${hospital.zipcode}"></td>
-        </tr>
-        <tr>
-            <th>영업 시간</th>
-        </tr>
-        <tr>
-            <th>월요일</th>
-            <td th:if="${OpeningHours.getMonEnd()}" th:text="|${OpeningHours.monStart} ~ ${OpeningHours.monEnd}|"></td>
-            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
-        </tr>
-        <tr>
-            <th>화요일</th>
-            <td th:if="${OpeningHours.getTueEnd()}" th:text="|${OpeningHours.getTueStart()} ~ ${OpeningHours.getTueEnd()}|"></td>
-            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
-        </tr>
-        <tr>
-            <th>수요일</th>
-            <td th:if="${OpeningHours.getWedEnd()}" th:text="|${OpeningHours.getWedStart()} ~ ${OpeningHours.getWedEnd()}|"></td>
-            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
-        </tr>
-        <tr>
-            <th>목요일</th>
-            <td th:if="${OpeningHours.getThuEnd()}" th:text="|${OpeningHours.getThuStart()} ~ ${OpeningHours.getThuEnd()}|"></td>
-            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
-        </tr>
-        <tr>
-            <th>금요일</th>
-            <td th:if="${OpeningHours.getFriEnd()}" th:text="|${OpeningHours.getFriStart()} ~ ${OpeningHours.getFriEnd()}|"></td>
-            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
-        </tr>
-        <tr>
-            <th>토요일</th>
-            <td th:if="${OpeningHours.getSatEnd()}" th:text="|${OpeningHours.getSatStart()} ~ ${OpeningHours.getSatEnd()}|"></td>
-            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
-        </tr>
-        <tr>
-            <th>일요일</th>
-            <td th:if="${OpeningHours.getSunEnd()}" th:text="|${OpeningHours.getSunStart()} ~ ${OpeningHours.getSunEnd()}|"></td>
-            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
-        </tr>
+    </nav>
+    <div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>이름</th>
+                <td th:text="${hospital.name}"></td>
+            </tr>
+            <tr>
+                <th>전화 번호</th>
+                <td th:text="${hospital.phoneNum}"></td>
+            </tr>
+            <tr>
+                <th>지번</th>
+                <td th:text="${hospital.city}"></td>
+            </tr>
+            <tr>
+                <th>도로명</th>
+                <td th:text="${hospital.street}"></td>
+            </tr>
+            <tr>
+                <th>지역 번호</th>
+                <td th:text="${hospital.zipcode}"></td>
+            </tr>
+            <tr>
+                <th>영업 시간</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>월요일</th>
+                <td th:if="${OpeningHours.getMonEnd()}" th:text="|${OpeningHours.monStart} ~ ${OpeningHours.monEnd}|"></td>
+                <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+            </tr>
+            <tr>
+                <th>화요일</th>
+                <td th:if="${OpeningHours.getTueEnd()}" th:text="|${OpeningHours.getTueStart()} ~ ${OpeningHours.getTueEnd()}|"></td>
+                <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+            </tr>
+            <tr>
+                <th>수요일</th>
+                <td th:if="${OpeningHours.getWedEnd()}" th:text="|${OpeningHours.getWedStart()} ~ ${OpeningHours.getWedEnd()}|"></td>
+                <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+            </tr>
+            <tr>
+                <th>목요일</th>
+                <td th:if="${OpeningHours.getThuEnd()}" th:text="|${OpeningHours.getThuStart()} ~ ${OpeningHours.getThuEnd()}|"></td>
+                <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+            </tr>
+            <tr>
+                <th>금요일</th>
+                <td th:if="${OpeningHours.getFriEnd()}" th:text="|${OpeningHours.getFriStart()} ~ ${OpeningHours.getFriEnd()}|"></td>
+                <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+            </tr>
+            <tr>
+                <th>토요일</th>
+                <td th:if="${OpeningHours.getSatEnd()}" th:text="|${OpeningHours.getSatStart()} ~ ${OpeningHours.getSatEnd()}|"></td>
+                <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+            </tr>
+            <tr>
+                <th>일요일</th>
+                <td th:if="${OpeningHours.getSunEnd()}" th:text="|${OpeningHours.getSunStart()} ~ ${OpeningHours.getSunEnd()}|"></td>
+                <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+            </tr>
 
-        <tr>
-            <th>등록 날짜</th>
-            <td th:text="${#temporals.format(hospital.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
-        </tr>
-        <tr>
-            <th>수정 날짜</th>
-            <td th:text="${#temporals.format(hospital.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-    <h2>의사 정보</h2>
-    <div  style="display: flex; flex-wrap: wrap">
-       <table th:each="doctor, i : ${hospital.getDoctorList()}">
-           <thead>
-               <tr>
-               <th colspan="2" th:text="${doctor.getName()}"></th>
-               </tr>
-           </thead>
-           <tbody>
-           <tr >
-              <td colspan="2" height="200px" style="border: 1px solid #444444; text-align: center">
-                  사진
-              </td>
-           </tr>
-           <tr>
-               <th>이메일</th>
-               <td th:text="${doctor.loginEmail}"></td>
-           </tr>
-           <tr>
-               <th>생년월일</th>
-               <td th:text="${doctor.getBirthday()}"></td>
-           </tr>
-           <tr>
-               <th>전공</th>
-               <td th:text="${doctor.getMajor()}"></td>
-           </tr>
-           <tr>
-               <th>핸드폰 번호</th>
-               <td th:text="${doctor.getPhoneNum()}"></td>
-           </tr>
-           <tr>
-               <th>성별</th>
-               <td th:text="${doctor.getGenderId() == 0 ? '여' : '남'}"></td>
-           </tr>
-           <tr>
-               <th>자기 소개</th>
-               <td th:text="${doctor.getIntroduce()}"></td>
-           </tr>
+            <tr>
+                <th>등록 날짜</th>
+                <td th:text="${#temporals.format(hospital.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            <tr>
+                <th>수정 날짜</th>
+                <td th:text="${#temporals.format(hospital.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <h4>의사 정보</h4>
+        <div class="container" style="display: flex; flex-wrap: wrap">
+            <div class="row">
+                <div class="col-xl-4 col-md-6 col-sm-12" th:each="doctor, i : ${hospital.getDoctorList()}">
+                    <table class="table" >
+                        <thead>
+                        <tr>
+                            <th colspan="2" th:text="${doctor.getName()}"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr >
+                            <td colspan="2" height="300px" style="border: 1px solid #444444; text-align: center">
+                                사진
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>이메일</th>
+                            <td class="col-8" th:text="${doctor.loginEmail}"></td>
+                        </tr>
+                        <tr>
+                            <th>생년월일</th>
+                            <td th:text="${doctor.getBirthday()}"></td>
+                        </tr>
+                        <tr>
+                            <th>전공</th>
+                            <td th:text="${doctor.getMajor()}"></td>
+                        </tr>
+                        <tr>
+                            <th>핸드폰 번호</th>
+                            <td th:text="${doctor.getPhoneNum()}"></td>
+                        </tr>
+                        <tr>
+                            <th>성별</th>
+                            <td th:text="${doctor.getGenderId() == 0 ? '여' : '남'}"></td>
+                        </tr>
+                        <tr>
+                            <th>자기 소개</th>
+                            <td th:text="${doctor.getIntroduce()}"></td>
+                        </tr>
 
-           </tbody>
-
-       </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 </html>

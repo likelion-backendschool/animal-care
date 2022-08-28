@@ -1,158 +1,161 @@
 <html layout:decorate="~{myPage/doctor/sampleLayout}">
-<div layout:fragment="content">
-<nav>
-    <a th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage|}">뒤로</a>
-</nav>
-<div>
-    <form th:action="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
-          th:object="${requestDto}" method="post">
-        <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
-        <table>
-            <input type="hidden" th:field="*{id}">
-            <tbody>
-            <tr>
-                <th>이름</th>
-                <td>
-                    <input type="text" th:field="*{name}">
-                </td>
-            </tr>
-            <tr>
-                <th>전화 번호</th>
-                <td>
-                    <input type="text" th:field="*{phoneNum}">
-                </td>
-            </tr>
-            <tr>
-                <th>지번</th>
-                <td>
-                    <input type="text" th:field="*{city}">
-                </td>
-            </tr>
-            <tr>
-                <th>도로명</th>
-                <td>
-                    <input type="text" th:field="*{street}">
-                </td>
-            </tr>
-            <tr>
-                <th>지역 번호</th>
-                <td>
-                    <input type="text" th:field="*{zipcode}">
-                </td>
-            </tr>
-            <tr>
-                <th>영업 시간</th>
-            </tr>
-            <tr>
-                <th>월요일</th>
-                <td>
-                    <label>
-                        시작시간:
-                        <input type="time"
-                               th:field="*{monStart}" >
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        종료시간:
-                        <input type="time" th:field="*{monEnd}">
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <th>화요일</th>
-                <td>
-                    <label>
-                        시작시간:
-                        <input type="time" th:field="*{tueStart}">
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        종료시간:
-                        <input type="time" th:field="*{tueEnd}">
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <th>수요일</th>
-                <td>
-                    <label>
-                        시작시간:
-                        <input type="time" th:field="*{wedStart}">
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        종료시간:
-                        <input type="time" th:field="*{wedEnd}">
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <th>목요일</th>
-                <td>
-                    <label>
-                        시작시간:
-                        <input type="time" th:field="*{thuStart}">
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        종료시간:
-                        <input type="time" th:field="*{thuEnd}">
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <th>금요일</th>
-                <td>
-                    <label>
-                        시작시간:
-                        <input type="time" th:field="*{friStart}">
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        종료시간:
-                        <input type="time" th:field="*{friEnd}">
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <th>토요일</th>
-                <td>
-                    <label>
-                        시작시간:
-                        <input type="time" th:field="*{satStart}">
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        종료시간:
-                        <input type="time" th:field="*{satEnd}">
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <th>일요일</th>
-                <td>
-                    <label>
-                        시작시간:
-                        <input type="time" th:field="*{sunStart}">
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        종료시간:
-                        <input type="time" th:field="*{sunEnd}">
-                    </label>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <input type="submit" value="수정 완료">
-    </form>
-</div>
+<div class="container" layout:fragment="content">
+    <nav class="navbar">
+        <a th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage|}">뒤로</a>
+    </nav>
+    <h2 class="p-4">
+        병원 관리 수정
+    </h2>
+    <div>
+        <form th:action="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
+              th:object="${requestDto}" method="post">
+            <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
+            <table class="table">
+                <input type="hidden" th:field="*{id}">
+                <tbody>
+                <tr>
+                    <th>이름</th>
+                    <td>
+                        <input type="text" th:field="*{name}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>전화 번호</th>
+                    <td>
+                        <input type="text" th:field="*{phoneNum}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>지번</th>
+                    <td>
+                        <input type="text" th:field="*{city}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>도로명</th>
+                    <td>
+                        <input type="text" th:field="*{street}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>지역 번호</th>
+                    <td>
+                        <input type="text" th:field="*{zipcode}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>영업 시간</th>
+                </tr>
+                <tr>
+                    <th>월요일</th>
+                    <td>
+                        <label>
+                            시작시간:
+                            <input type="time"
+                                   th:field="*{monStart}" >
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            종료시간:
+                            <input type="time" th:field="*{monEnd}">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>화요일</th>
+                    <td>
+                        <label>
+                            시작시간:
+                            <input type="time" th:field="*{tueStart}">
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            종료시간:
+                            <input type="time" th:field="*{tueEnd}">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>수요일</th>
+                    <td>
+                        <label>
+                            시작시간:
+                            <input type="time" th:field="*{wedStart}">
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            종료시간:
+                            <input type="time" th:field="*{wedEnd}">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>목요일</th>
+                    <td>
+                        <label>
+                            시작시간:
+                            <input type="time" th:field="*{thuStart}">
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            종료시간:
+                            <input type="time" th:field="*{thuEnd}">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>금요일</th>
+                    <td>
+                        <label>
+                            시작시간:
+                            <input type="time" th:field="*{friStart}">
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            종료시간:
+                            <input type="time" th:field="*{friEnd}">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>토요일</th>
+                    <td>
+                        <label>
+                            시작시간:
+                            <input type="time" th:field="*{satStart}">
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            종료시간:
+                            <input type="time" th:field="*{satEnd}">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>일요일</th>
+                    <td>
+                        <label>
+                            시작시간:
+                            <input type="time" th:field="*{sunStart}">
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            종료시간:
+                            <input type="time" th:field="*{sunEnd}">
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="수정 완료">
+        </form>
+    </div>
 </div>
 </html>

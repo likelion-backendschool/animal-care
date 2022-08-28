@@ -1,8 +1,12 @@
 <html layout:decorate="~{myPage/doctor/sampleLayout}">
-<div layout:fragment="content">
-my page doctor
-<a href="/usr/mypage/doctor/2/member-manage/medical-appointments">환자 관리</a>
-<a href="/usr/mypage/doctor/2/hospital-info-manage">병원 소개 관리</a>
-<a href="/usr/mypage/doctor/2/info">내정보</a>
+<div class="container" layout:fragment="content">
+<h2 class="p-4">
+    my page doctor
+</h2>
+    <ul class="list-group">
+        <a class="list-group-item list-group-item-action" href="/usr/mypage/doctor/2/member-manage/medical-appointments">환자 관리</a>
+        <a class="list-group-item list-group-item-action" href="/usr/mypage/doctor/2/hospital-info-manage">병원 관리</a>
+        <a class="list-group-item list-group-item-action" href="/usr/mypage/doctor/2/info">내정보</a>
+    </ul>
 </div>
 </html>
