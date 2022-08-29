@@ -10,6 +10,7 @@ import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppoint
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,6 @@ public class MedicalAppointmentController {
 
         Member member = memberService.findByEmail(principal.getName());
         List<Animal> animals = animalService.findByMember(member);
-
 
         List<Hospital> hospitals = hospitalService.findHospitals();
         List<Doctor> doctors = doctorService.findDoctors();

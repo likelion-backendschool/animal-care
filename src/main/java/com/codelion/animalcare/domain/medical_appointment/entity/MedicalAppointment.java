@@ -4,6 +4,7 @@ import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import lombok.*;
@@ -51,7 +52,7 @@ public class MedicalAppointment extends BaseEntity {
     private Hospital hospital;
 
 
-    // == 연관관계 메서드 == //
+     // == 연관관계 메서드 == //
     public void addMember(Member member) {
         this.member = member;
         member.getMedicalAppointments().add(this);
@@ -88,9 +89,10 @@ public class MedicalAppointment extends BaseEntity {
 
 
     //== 생성 메서드 ==//
-    public static MedicalAppointment createMedicalAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor, LocalDateTime medicalAppointmentDate) {
+    public static MedicalAppointment createMedicalAppointment(Member member,Animal animal, Hospital hospital, Doctor doctor, LocalDateTime medicalAppointmentDate) {
         MedicalAppointment medicalAppointment = new MedicalAppointment();
         medicalAppointment.addMember(member);
+
         medicalAppointment.addAnimal(animal);
         medicalAppointment.addHospital(hospital);
         medicalAppointment.addDoctor(doctor);
