@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MyPageHomeController {
 
 
-    @GetMapping("/usr/mypage/member")
+    @GetMapping("/user/mypage/member/{memberId}")
     public String myPageHome() {
         log.info("myPageHome controller");
 

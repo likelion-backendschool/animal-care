@@ -28,7 +28,6 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class MedicalAppointmentController {
 
     private final MedicalAppointmentQueryService medicalAppointmentQueryService;
@@ -40,7 +39,7 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦1
-    @GetMapping("/usr/mypage/member/medical-appointment")
+    @GetMapping("/user/mypage/member/{memberId}/medical-appointment")
     public String createMedicalAppointmentForm(Model model, Principal principal) {
 
         Member member = memberService.findByEmail(principal.getName());
@@ -58,26 +57,27 @@ public class MedicalAppointmentController {
     }
 
 
-
     // 예약하기 임시 만듦2
-    @PostMapping("/usr/mypage/member/medical-appointment")
+    @PostMapping("/user/mypage/member/{memberId}/medical-appointment")
     public String medicalAppointment(
-            @RequestParam("memberId") Long memberId,
+            Principal principal,
             @RequestParam("animalId") Long animalId,
             @RequestParam("hospitalId") Long hospitalId,
             @RequestParam("doctorId") Long doctorId,
-            @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime medicalAppointmentDate)
-                                      {
+            @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime medicalAppointmentDate) {
 
-        medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId, medicalAppointmentDate);
-        return "redirect:/usr/mypage/member/medical-appointment-info";
+        Member member = memberService.findByEmail(principal.getName());
+        medicalAppointmentService.medicalAppointment(member.getId(), animalId, hospitalId, doctorId, medicalAppointmentDate);
+
+        return "redirect:/user/mypage/member/{memberId}/medical-appointment-info";
     }
 
 
     // 마이페이지 회원 예약내역
-    @GetMapping("/usr/mypage/member/medical-appointment-info")
+    @GetMapping("/user/mypage/member/{memberId}/medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model) {
 
+        // TODO 2 회원 본인의 예약내역 가져오게 구현하기
         List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findMedicalAppointments();
 
         model.addAttribute("medicalAppointmentDtos", medicalAppointmentDtos);
@@ -88,10 +88,10 @@ public class MedicalAppointmentController {
 
 
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/medical-appointment-info/{medicalAppointmentId}/cancel")
+    @PostMapping("/user/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/medical-appointment-info";
+        return "redirect:/user/mypage/member/{memberId}/medical-appointment-info";
     }
 
 

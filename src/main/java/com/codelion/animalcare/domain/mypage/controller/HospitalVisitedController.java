@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class HospitalVisitedController {
 
-    @GetMapping("/usr/mypage/member/hospitalVisited-info")
+    @GetMapping("/user/mypage/member/{memberId}/hospitalVisited-info")
     public String createForm(Model model) {
         model.addAttribute("hospitalVisitedDto", new HospitalVisitedDto());
         return "member/hospitalVisited";

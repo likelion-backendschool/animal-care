@@ -25,6 +25,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
     @Override
     protected void configure(HttpSecurity http) throws Exception { // 5
         http
+                .csrf().disable()
+                // TODO 1 해결해야할 사항
+                // 오류로인해 잠시 위에 줄 추가함: There was an unexpected error (type=Forbidden, status=403). Forbidden
+                // .csrf().disable() 적용 안할시 임시 예약하기 관련 post request시 에러, login은 됨
+                // .csrf().disable() 주석처리하면 임시 예약하기 post가 안됨, login 에러
                 .authorizeRequests() // 6
                 .antMatchers("/login", "/signup", "/user", "/test", "/").permitAll() // 누구나 접근 허용
 //                .antMatchers("/**").permitAll() // 개발시 주석 해제하고 사용해주세요 // 주석 해제후 위에 주석 처리
