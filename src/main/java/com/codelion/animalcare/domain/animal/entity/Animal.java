@@ -42,6 +42,13 @@ public class Animal extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    // == 연관관계 메서드 == //
+    public void addMember(Member member) {
+        this.member = member;
+        member.getAnimals().add(this);
+    }
+
+
 //    @Builder
 //    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registrationNum, String health_status, LocalDateTime deletedAt, int genderId, Member member) {
 //        super(id, createdAt);
@@ -59,13 +66,5 @@ public class Animal extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "animal")
     private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
-
-
-    // == 연관관계 메서드 == //
-    public void addMember(Member member) {
-        this.member = member;
-        member.getAnimals().add(this);
-    }
-
 
 }

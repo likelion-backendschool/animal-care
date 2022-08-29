@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.medical_appointment.service;
 
+import com.codelion.animalcare.domain.medical_appointment.dto.MedicalAppointmentDto;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepository;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepositoryTmp;
@@ -22,9 +23,15 @@ public class MedicalAppointmentQueryService {
     private final MedicalAppointmentRepositoryTmp medicalAppointmentRepositorytmp;
 
 
-    public List<MedicalAppointment> findMedicalAppointments() {
+    public List<MedicalAppointmentDto> findMedicalAppointments() {
 
-        return medicalAppointmentRepository.findAllWithMemberAnimalHospitalDoctor();
+        List<MedicalAppointment> medicalAppointments = medicalAppointmentRepository.findAllWithMemberAnimalHospitalDoctor();
+
+        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointments.stream()
+                .map(o -> new MedicalAppointmentDto(o))
+                .collect(Collectors.toList());
+
+        return medicalAppointmentDtos;
     }
 
 

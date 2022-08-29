@@ -6,6 +6,7 @@ import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 
+import com.codelion.animalcare.domain.medical_appointment.dto.MedicalAppointmentDto;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
@@ -67,71 +68,28 @@ public class MedicalAppointmentController {
                                       {
 
         medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId, medicalAppointmentDate);
-        return "redirect:/usr/mypage/member/{memberId}/medical-appointment/info";
+        return "redirect:/usr/mypage/member/{memberId}/medical-appointment-info";
     }
 
 
-
     // 마이페이지 회원 예약내역
-//    @GetMapping("/usr/mypage/member/medical-appointment/info")
-//    public String medicalAppointmentList(@ModelAttribute("medicalAppointmentSearch") MedicalAppointmentSearch medicalAppointmentSearch, Model model) {
-//
-//        List<MedicalAppointment> medicalAppointments = medicalAppointmentService.findMedicalAppointmentsOld(medicalAppointmentSearch);
-//
-//        model.addAttribute("medicalAppointments", medicalAppointments);
-//
-//        return "medicalAppointments/medicalAppointmentList";
-//    }
-
-
-    // 마이페이지 회원 예약내역 Dto 사용
-    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment/info")
+    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model) {
 
-        List<MedicalAppointment> medicalAppointments = medicalAppointmentQueryService.findMedicalAppointments();
+        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findMedicalAppointments();
 
-
-        List<MedicalAppointmentDto> MedicalAppointmentDtos = medicalAppointments.stream()
-                .map(o -> new MedicalAppointmentDto(o))
-                .collect(Collectors.toList());
-
-        model.addAttribute("MedicalAppointmentDtos", MedicalAppointmentDtos);
+        model.addAttribute("medicalAppointmentDtos", medicalAppointmentDtos);
 
         return "medicalAppointments/medicalAppointmentList";
     }
 
 
 
-    @Getter
-    static class MedicalAppointmentDto {
-
-        private Long medicalAppointmentId;
-        private String memberName;
-        private String animalName;
-        private String hospitalName;
-        private String doctorName;
-
-        private LocalDateTime date;
-        private MedicalAppointmentStatus status;
-
-
-        public MedicalAppointmentDto(MedicalAppointment medicalAppointment) {
-            medicalAppointmentId = medicalAppointment.getId();
-            memberName = medicalAppointment.getMember().getName();
-            animalName = medicalAppointment.getAnimal().getName();
-            hospitalName = medicalAppointment.getHospital().getName();
-            doctorName = medicalAppointment.getDoctor().getName();
-            date = medicalAppointment.getDate();
-            status = medicalAppointment.getStatus();
-        }
-    }
-
-
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment/info/{medicalAppointmentId}/cancel")
+    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/{memberId}/medical-appointment/info";
+        return "redirect:/usr/mypage/member/{memberId}/medical-appointment-info";
     }
 
 
