@@ -55,6 +55,7 @@ public class MedicalAppointmentController {
     }
 
 
+
     // 예약하기 임시 만듦2
     @PostMapping("/usr/mypage/member/{memberId}/medical-appointment")
     public String medicalAppointment(

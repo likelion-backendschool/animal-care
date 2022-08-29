@@ -60,4 +60,12 @@ public class Animal extends BaseEntity {
     @OneToMany(mappedBy = "animal")
     private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
 
+
+    // == 연관관계 메서드 == //
+    public void addMember(Member member) {
+        this.member = member;
+        member.getAnimals().add(this);
+    }
+
+
 }
