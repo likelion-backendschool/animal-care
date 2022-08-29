@@ -4,31 +4,30 @@ import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
-import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 
 import com.codelion.animalcare.domain.medical_appointment.dto.MedicalAppointmentDto;
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
-import com.codelion.animalcare.domain.member.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MedicalAppointmentController {
 
     private final MedicalAppointmentQueryService medicalAppointmentQueryService;
@@ -40,17 +39,20 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦1
-    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment")
-    public String createMedicalAppointmentForm(Model model) {
+    @GetMapping("/usr/mypage/member/medical-appointment")
+    public String createMedicalAppointmentForm(Model model, Principal principal) {
 
-//        TODO memberId에 맞추어 구현해야함
-//        List<Animal> animals = animalService.findAnimals();
-//        List<Hospital> hospitals = hospitalService.findHospitals();
-//        List<Doctor> doctors = doctorService.findDoctors();
-//
-//        model.addAttribute("animals", animals);
-//        model.addAttribute("hospitals", hospitals);
-//        model.addAttribute("doctors", doctors);
+        Member member = memberService.findByEmail(principal.getName());
+        List<Animal> animals = animalService.findByMember(member);
+
+
+        List<Hospital> hospitals = hospitalService.findHospitals();
+        List<Doctor> doctors = doctorService.findDoctors();
+
+        model.addAttribute("member", member);
+        model.addAttribute("animals", animals);
+        model.addAttribute("hospitals", hospitals);
+        model.addAttribute("doctors", doctors);
 
         return "medicalAppointments/medicalAppointmentForm";
     }
@@ -58,7 +60,7 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦2
-    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment")
+    @PostMapping("/usr/mypage/member/medical-appointment")
     public String medicalAppointment(
             @RequestParam("memberId") Long memberId,
             @RequestParam("animalId") Long animalId,
@@ -68,12 +70,12 @@ public class MedicalAppointmentController {
                                       {
 
         medicalAppointmentService.medicalAppointment(memberId, animalId, hospitalId, doctorId, medicalAppointmentDate);
-        return "redirect:/usr/mypage/member/{memberId}/medical-appointment-info";
+        return "redirect:/usr/mypage/member/medical-appointment-info";
     }
 
 
     // 마이페이지 회원 예약내역
-    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment-info")
+    @GetMapping("/usr/mypage/member/medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model) {
 
         List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findMedicalAppointments();
@@ -86,10 +88,10 @@ public class MedicalAppointmentController {
 
 
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/cancel")
+    @PostMapping("/usr/mypage/member/medical-appointment-info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/{memberId}/medical-appointment-info";
+        return "redirect:/usr/mypage/member/medical-appointment-info";
     }
 
 

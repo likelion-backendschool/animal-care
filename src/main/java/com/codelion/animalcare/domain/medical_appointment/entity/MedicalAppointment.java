@@ -33,7 +33,6 @@ public class MedicalAppointment extends BaseEntity {
     private MedicalAppointmentStatus status; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
 
 
-    // 수정: 지연로딩 lazy 적용
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
@@ -47,10 +46,9 @@ public class MedicalAppointment extends BaseEntity {
     private Animal animal;
 
 
-    // 수정: hospital 추가함
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "hospital_id")
-    private Hospital hospital; // 예약 병원
+    private Hospital hospital;
 
 
     // == 연관관계 메서드 == //

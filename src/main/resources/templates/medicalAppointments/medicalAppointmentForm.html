@@ -9,8 +9,8 @@
     <form role="form" action="/medical-appointment" method="post">
 
         <div class="form-group">
-            <label for="member">회원이름</label>
-            <input name="memberId" id="member" class="form-control"/>
+            <label>회원이름</label>
+            <input name="memberId" id="member" th:placeholder="${member.name}" class="form-control"/>
         </div>
 
         <div class="form-group">

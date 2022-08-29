@@ -74,5 +74,7 @@ public class MedicalAppointmentService {
     }
 
 
-
+    public Member findMemberByMemberId(Long memberId) {
+        return medicalAppointmentRepository.findMemberByMemberId(memberId);
+    }
 }
