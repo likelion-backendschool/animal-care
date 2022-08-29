@@ -16,9 +16,11 @@ import java.util.List;
 public class MedicalAppointmentMyPageDoctorController {
     private final MedicalAppointmentService medicalAppointmentService;
 
-    // 환자 예약 관리
+    /**
+     * 환자 예약 관리
+     */
     @GetMapping()
-    public String loadMyPageDoctorMedicalAppointment(
+    public String loadMyPageDoctorMedicalAppointments(
             Model model,
             @PathVariable long doctorId,
             @RequestParam(value = "page", defaultValue = "0") int page
@@ -30,7 +32,9 @@ public class MedicalAppointmentMyPageDoctorController {
         return "myPage/doctor/member-manage";
     }
 
-    // TODO 예약 환자 거절 기능
+    /**
+     * 예약 환자 거절 기능
+     */
     @PostMapping("{medicalAppointmentId}/refuse")
     public String refuseMedicalAppointment(
             @PathVariable long doctorId,
@@ -41,6 +45,29 @@ public class MedicalAppointmentMyPageDoctorController {
     }
 
     // TODO 환자정보 확인
+
+    /**
+     * 환자 정보 확인
+     */
+    @GetMapping("{medicalAppointmentId}")
+    public String loadMyPageDoctorMedicalAppointment(
+            Model model,
+            @PathVariable long doctorId,
+            @PathVariable long medicalAppointmentId
+    ){
+        LoadMyPageDoctorMedicalAppointment.ResponseDto medicalAppointment
+                = medicalAppointmentService.findById(medicalAppointmentId);
+
+        model.addAttribute("medicalAppointment", medicalAppointment);
+        model.addAttribute("member", medicalAppointment.getMember());
+        model.addAttribute("animal", medicalAppointment.getAnimal());
+        model.addAttribute("hospital", medicalAppointment.getHospital());
+        model.addAttribute("diagnosis", medicalAppointment.getDiagnosis());
+        model.addAttribute("doctor", medicalAppointment.getDoctor());
+        model.addAttribute("doctorId", doctorId);
+        return "myPage/doctor/member-manage-self";
+    }
+
     // TODO 진단서 확인
 
 }

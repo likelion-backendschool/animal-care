@@ -83,15 +83,25 @@ public class MedicalAppointmentService {
     }
 
     /**
-     * 예약 거절(의사)
+     * 예약 거절
+     * @param medicalAppointmentId 예약서id
+     * @param refuse 상태
      */
     @Transactional
     public void updateMedicalAppointmentStatus(Long medicalAppointmentId, MedicalAppointmentStatus refuse) {
         //예약 엔티티 조회
         MedicalAppointment medicalAppointment = medicalAppointmentRepository.getReferenceById(medicalAppointmentId);
-
+        // 예약 변경.
         medicalAppointment.updateStatus(refuse);
-        //에약 거절
-        //medicalAppointmentRepository.save(medicalAppointment);
     }
+
+    @Transactional(readOnly = true)
+    public LoadMyPageDoctorMedicalAppointment.ResponseDto findById(long medicalAppointmentId) {
+        MedicalAppointment medicalAppointment = medicalAppointmentRepository
+                .findByIdWithMemberAndAnimalAndHospitalAndDoctorAndDiagnosis(medicalAppointmentId)
+                        .orElseThrow(() -> new RuntimeException("MedicalAppointment id " + medicalAppointmentId + " is not found."));
+
+        return new LoadMyPageDoctorMedicalAppointment.ResponseDto(medicalAppointment);
+    }
+
 }

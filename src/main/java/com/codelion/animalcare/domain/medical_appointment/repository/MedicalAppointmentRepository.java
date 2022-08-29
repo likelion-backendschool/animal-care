@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -18,5 +19,6 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
     @Query("select ma from MedicalAppointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h")
     List<MedicalAppointment> findAllByMemberAndAnimalAndHospitalAndDoctor();
 
-
+    @Query("select ma from MedicalAppointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h left join fetch ma.diagnosis where ma.id = :medicalAppointmentId")
+    Optional<MedicalAppointment> findByIdWithMemberAndAnimalAndHospitalAndDoctorAndDiagnosis(@Param("medicalAppointmentId") long medicalAppointmentId);
 }
