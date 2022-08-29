@@ -16,7 +16,32 @@ spring:
     properties:
       hibernate:
         format_sql: true # 실행되는 query를 보여줌
-
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
+        registration:
+          kakao:
+            client-id: a064e9d95779f6f8e062d16d93ca641e
+            client-secret: XUQ6x4oTbUzFxbL4mmSym8kI0Rvb6s8M
+            client-authentication-method: POST
+            authorizationGrantType: authorization_code
+            redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            scope: profile_nickname, profile_image, account_email
+            client-name: Kakao
 logging.level:
   org.hibernate.SQL: debug
   

@@ -55,7 +55,7 @@ public class PostDto {
         public Post toEntity(Post oldPost) {
             return Post.builder()
                     .id(oldPost.getId())
-                    .createdDate(oldPost.getCreatedAt())
+                    .createdAt(oldPost.getCreatedAt())
                     .title(title)
                     .content(content)
                     .likes(oldPost.getLikes())

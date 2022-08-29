@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.doctorqna.dto.request;
 
 import com.codelion.animalcare.domain.doctorqna.repository.Answer;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +26,11 @@ public class AnswerSaveRequestDto {
         this.question = question;
     }
 
-    public Answer toEntity() {
+    public Answer toEntity(Doctor doctor) {
         return Answer.builder()
                 .content(content)
                 .question(question)
+                .doctor(doctor)
                 .build();
     }
 }

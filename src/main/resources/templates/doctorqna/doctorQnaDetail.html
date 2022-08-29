@@ -12,9 +12,13 @@
             </div>
             <div class="my-3">
                 <a th:href="@{|/usr/doctor-qna/${question.id}/modify|}" class="btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${question.member != null and #authentication.getPrincipal().getEmail() == question.member.email}"
                    th:text="수정"></a>
                 <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/delete|}"
                    class="delete btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${question.member != null and #authentication.getPrincipal().getEmail() == question.member.email}"
                    th:text="삭제"></a>
             </div>
         </div>
@@ -32,8 +36,12 @@
         </div>
         <div class="my-3">
             <a th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/modify|}" class="btn btn-sm btn-outline-secondary"
+               sec:authorize="isAuthenticated()"
+               th:if="${answer.doctor != null and #authentication.getPrincipal().getEmail() == answer.doctor.email}"
                th:text="수정"></a>
             <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/delete|}"
+               sec:authorize="isAuthenticated()"
+               th:if="${answer.doctor != null and #authentication.getPrincipal().getEmail() == answer.doctor.email}"
                class="delete btn btn-sm btn-outline-secondary"
                th:text="삭제"></a>
         </div>
@@ -41,14 +49,16 @@
 </div>
 
 
+    <div sec:authorize="hasRole('ROLE_DOCTOR')">
+        <form th:action="@{|/usr/doctor-qna/${question.id}/answers/write|}" th:object="${answerSaveRequestDto}" method="post" class="my-3">
+            <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+                <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+            </div>
+            <textarea name="content" class="form-control" rows="10"></textarea>
+            <input type="submit" value="답변등록" class="btn btn-primary my-2">
+        </form>
+    </div>
 
-    <form th:action="@{|/usr/doctor-qna/${question.id}/answers/write|}" th:object="${answerSaveRequestDto}" method="post" class="my-3">
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-        </div>
-    <textarea name="content" class="form-control" rows="10"></textarea>
-    <input type="submit" value="답변등록" class="btn btn-primary my-2">
-</form>
 </div>
 </html>
 

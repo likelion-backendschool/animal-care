@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.doctorqna.repository;
 
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,10 +28,14 @@ public class Answer extends BaseEntity {
     @JoinColumn(foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Question question;
 
+    @ManyToOne
+    private Doctor doctor;
+
     @Builder
-    public Answer(String content, Question question) {
+    public Answer(String content, Question question, Doctor doctor) {
         this.content = content;
         this.question = question;
+        this.doctor = doctor;
     }
 
     public void update(String content){

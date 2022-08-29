@@ -6,10 +6,13 @@ import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionListRespons
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +23,14 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
+    private final UserService userService;
+
     @Transactional
-    public Long save(QuestionSaveRequestDto questionSaveRequestDto) {
-        return questionRepository.save(questionSaveRequestDto.toEntity()).getId();
+    public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
+
+        Member member = userService.getMember(principal.getName());
+
+        return questionRepository.save(questionSaveRequestDto.toEntity(member)).getId();
     }
 
     @Transactional
@@ -54,4 +62,21 @@ public class QuestionService {
 
         questionRepository.delete(question);
     }
+
+    public boolean questionAuthorized(Long id, Principal principal){
+        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("작성된 글이 없습니다."));
+
+
+        if(question.getMember().getEmail().equals(principal.getName())) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    //delete flag
+
+
+
 }
