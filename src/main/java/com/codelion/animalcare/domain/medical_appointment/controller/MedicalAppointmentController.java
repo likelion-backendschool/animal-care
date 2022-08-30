@@ -91,17 +91,18 @@ public class MedicalAppointmentController {
     }
 
 
-    // 마이페이지 회원 예약정보 수정
-//    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment/{medicalAppointmentId}/medical-appointment-info/{medicalAppointmentId}/edit")
+    // TODO 마이페이지 회원 예약정보 수정
+//    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/edit")
 //    public String updateMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId, Model model) {
-//        return "redirect:/usr/mypage/member/medical-appoint/medical-appointment-info";
+//
+//        return "redirect:/user/mypage/member/{memberId}/medical-appointment";
 //    }
+
+//    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/edit")
+//    public String updateMedicalAppointment(@PathVariable Long medicalAppointmentId) {
 //
-//    @PostMapping("/usr/mypage/member/medical-appoint/medical-appointment-info/{medicalAppointmentId}/edit")
-//    public String updateMedicalAppointment(@PathVariable Long medicalAppointmentId, LocalDateTime date) {
+//        medicalAppointmentService.updateMedicalAppointment(medicalAppointmentId);
 //
-//        medicalAppointmentService.updateMedicalAppointment(medicalAppointmentId, date);
-//
-//        return "redirect:/usr/mypage/member/medical-appoint/medical-appointment-info";
+//        return "redirect:/user/mypage/member/{memberId}/medical-appointment";
 //    }
 }
