@@ -33,11 +33,14 @@ public class MedicalAppointmentService {
     private final HospitalRepository hospitalRepository;
 
 
-    public List<LoadMyPageDoctorMedicalAppointment.ResponseDto> findAllByDoctorId(long doctorId) {
-        List<MedicalAppointment> medicalAppointmentList = medicalAppointmentRepository.findAllByDoctorId(doctorId);
+    public List<LoadMyPageDoctorMedicalAppointment.ResponseDto> findAllByDoctorEmail(String email) {
+        Doctor doctor = doctorRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
+
+        List<MedicalAppointment> medicalAppointmentList = medicalAppointmentRepository.findAllByDoctorId(doctor.getId());
 
         List< LoadMyPageDoctorMedicalAppointment.ResponseDto> result =medicalAppointmentList.stream()
-                .map(item -> new LoadMyPageDoctorMedicalAppointment.ResponseDto(item)).toList();
+                .map(LoadMyPageDoctorMedicalAppointment.ResponseDto::new).toList();
 
         return result;
     }
@@ -87,14 +90,14 @@ public class MedicalAppointmentService {
     /**
      * 예약 거절
      * @param medicalAppointmentId 예약서id
-     * @param refuse 상태
+     * @param status 상태
      */
     @Transactional
-    public void updateMedicalAppointmentStatus(Long medicalAppointmentId, MedicalAppointmentStatus refuse) {
-        //예약 엔티티 조회
+    public void updateMedicalAppointmentStatus(Long medicalAppointmentId, MedicalAppointmentStatus status) {
+        // 예약 엔티티 조회
         MedicalAppointment medicalAppointment = medicalAppointmentRepository.getReferenceById(medicalAppointmentId);
         // 예약 변경.
-        medicalAppointment.updateStatus(refuse);
+        medicalAppointment.updateStatus(status);
     }
 
     @Transactional(readOnly = true)
