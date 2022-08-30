@@ -1,6 +1,8 @@
-package com.codelion.animalcare.domain.user.entity;
+package com.codelion.animalcare.domain.user.dto;
 
-import com.codelion.animalcare.domain.animal.AnimalDto;
+import com.codelion.animalcare.domain.animal.dto.AnimalDto;
+import com.codelion.animalcare.domain.user.entity.Address;
+import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.Getter;
 
 import javax.persistence.Embedded;

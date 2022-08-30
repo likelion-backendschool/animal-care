@@ -75,20 +75,6 @@ public class MedicalAppointment extends BaseEntity {
     }
 
 
-
-//    @Builder
-//    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus medicalAppointmentStatus, LocalDateTime medicalAppointmentDate, Doctor doctor, Member member, Animal animal, Hospital hospital) {
-//        super(id, createdAt);
-//        this.content = content;
-//        this.medicalAppointmentStatus = medicalAppointmentStatus;
-//        this.medicalAppointmentDate = medicalAppointmentDate;
-//        this.doctor = doctor;
-//        this.member = member;
-//        this.animal = animal;
-//        this.hospital = hospital;
-//    }
-
-
     //== 생성 메서드 ==//
     public static MedicalAppointment createMedicalAppointment(Member member,Animal animal, Hospital hospital, Doctor doctor, LocalDateTime medicalAppointmentDate) {
         MedicalAppointment medicalAppointment = new MedicalAppointment();

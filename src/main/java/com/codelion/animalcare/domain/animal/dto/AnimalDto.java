@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.animal;
+package com.codelion.animalcare.domain.animal.dto;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import lombok.Getter;

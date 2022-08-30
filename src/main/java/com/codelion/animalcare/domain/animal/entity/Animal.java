@@ -50,19 +50,6 @@ public class Animal extends BaseEntity {
     }
 
 
-//    @Builder
-//    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registrationNum, String health_status, LocalDateTime deletedAt, int genderId, Member member) {
-//        super(id, createdAt);
-//        this.name = name;
-//        this.birthday = birthday;
-//        this.registrationNum = registrationNum;
-//        this.health_status = health_status;
-//        this.deletedAt = deletedAt;
-//        this.genderId = genderId;
-//        this.member = member;
-//    }
-
-
     // Animal : MedicalAppointment = 1: n;
     @JsonIgnore
     @OneToMany(mappedBy = "animal")

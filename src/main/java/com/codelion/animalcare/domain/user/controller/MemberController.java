@@ -1,6 +1,6 @@
-package com.codelion.animalcare.domain.medical_appointment.controller;
+package com.codelion.animalcare.domain.user.controller;
 
-import com.codelion.animalcare.domain.member.MemberForm;
+import com.codelion.animalcare.domain.user.entity.MemberForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

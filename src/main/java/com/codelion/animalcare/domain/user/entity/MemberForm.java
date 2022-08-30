@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.member;
+package com.codelion.animalcare.domain.user.entity;
 
 import com.nimbusds.openid.connect.sdk.claims.Address;
 import lombok.Getter;
