@@ -3,6 +3,7 @@ package com.codelion.animalcare.domain.post.dto;
 import com.codelion.animalcare.domain.post.dto.CommentDto.CommentResponseDto;
 import com.codelion.animalcare.domain.post.entity.Post;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class PostDto {
     @Getter
+    @Setter
     public static class PostRequestDto {
         private String title;
         private String content;

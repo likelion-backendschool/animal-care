@@ -23,7 +23,7 @@ public class PostController {
         this.postService = postService;
     }
 
-    // 커뮤니티 게시글 리스트
+    // 커뮤니티 게시글 페이징
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Post> postList = postService.listPost(pageable);
@@ -34,11 +34,11 @@ public class PostController {
         model.addAttribute("hasNext", postList.hasNext());
         model.addAttribute("hasPrev", postList.hasPrevious());
 
-        return "community/list";
+        return "community/communityList";
     }
 
     // 게시글 상세 조회
-    @GetMapping("/{id}")
+    @GetMapping("/")
     public PostResponseDto detail(@PathVariable Long id) {
         return postService.findPostById(id);
     }
@@ -55,10 +55,17 @@ public class PostController {
         return ResponseEntity.ok(postService.modifyPost(id, modifyPostRequestDto));
     }
 
-    // 게시글 작성
+    // 게시글 작성 화면
+    @GetMapping("/write")
+    public String writeForm(PostRequestDto postRequestDto) {
+        return "community/communityForm";
+    }
+
+
     @PostMapping("/write")
-    public ResponseEntity create(@RequestBody PostRequestDto postRequestDto) {
-        return ResponseEntity.ok(postService.savePost(postRequestDto));
+    public String write(PostRequestDto postRequestDto) {
+        postService.savePost(postRequestDto);
+        return "redirect:/usr/posts/list";
     }
 
 }
