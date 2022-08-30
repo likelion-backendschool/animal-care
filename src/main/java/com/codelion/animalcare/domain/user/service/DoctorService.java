@@ -28,6 +28,16 @@ public class DoctorService {
         return doctorForm;
     }
 
+    @Transactional(readOnly = true)
+    public LoadDoctorMyPageInfo.ResponseDto findByEmail(String email) {
+        Doctor doctor = findDoctorByEmail(email);
+
+        // entity => dto
+        LoadDoctorMyPageInfo.ResponseDto doctorForm = new LoadDoctorMyPageInfo.ResponseDto(doctor);
+
+        return doctorForm;
+    }
+
 
     public Doctor save(Doctor doctor) {
         return doctorRepository.save(doctor);
@@ -38,8 +48,9 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
+    // TODO 사용하는 곳 없다면 삭제
     public Doctor getDoctor(String email) {
-        Doctor doctor = doctorRepository.findByEmail(email);
+        Doctor doctor = findDoctorByEmail(email);
         return doctor;
     }
 
@@ -56,10 +67,10 @@ public class DoctorService {
 
     // TODO 비밀번호 암호화 적용.
     // 의사 비밀번호 변경
-    public void updatePassword(UpdateDoctorMyPageInfoPassword.RequestDto requestDto, Long doctorId) throws DoctorModifyBeforePasswordNotSameException {
+    public void updatePassword(UpdateDoctorMyPageInfoPassword.RequestDto requestDto, String email) throws DoctorModifyBeforePasswordNotSameException {
 
         // doctor check
-        Doctor doctor = findDoctorById(doctorId);
+        Doctor doctor = findDoctorByEmail(email);
 
         // TODO 비밀번호 검사 쪽 디미터 법칙 적용
         // 비밀번호 확인
@@ -78,6 +89,12 @@ public class DoctorService {
 
     private Doctor findDoctorById(long doctorId) {
         return doctorRepository.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException("Doctor " + doctorId + " can't found."));
+                .orElseThrow(() -> new RuntimeException("Doctor id:" + doctorId + " can't found."));
+    }
+
+    private Doctor findDoctorByEmail(String email) {
+        return doctorRepository.findByEmail(email)
+                // TODO exception 생성.
+                .orElseThrow(() -> new RuntimeException("Doctor email:" + email + " can't found."));
     }
 }
