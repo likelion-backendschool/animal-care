@@ -8,6 +8,7 @@ import lombok.Setter;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class LoadDoctorMyPageInfo {
     @Getter
@@ -20,7 +21,7 @@ public class LoadDoctorMyPageInfo {
 
         private String name;
 
-        private LocalDateTime birthday;
+        private Date birthday;
 
         private String major;
 

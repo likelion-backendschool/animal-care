@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <th>예약날짜 및 시간</th>
-                    <td th:text="${medicalAppointment.medicalAppointmentDate}"></td>
+                    <td th:text="${#temporals.format(medicalAppointment.medicalAppointmentDate, 'yyyy-MM-dd HH:mm')}"></td>
                 </tr>
                 <tr>
                     <th>진단서</th>
@@ -158,7 +158,7 @@
                 </tr>
                 <tr>
                     <th th:text="생년월일"></th>
-                    <td th:text="${#temporals.format(member.birthday, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></td>
                 </tr>
                 <tr>
                     <th th:text="지번"></th>
@@ -191,8 +191,8 @@
                     <td th:text="${animal.registrationNum}"></td>
                 </tr>
                 <tr>
-                    <th>생일</th>
-                    <td th:text="${#temporals.format(animal.birthday, 'yyyy-MM-dd HH:mm')}"></td>
+                    <th>생년월일</th>
+                    <td th:text="${#dates.format(animal.birthday, 'yyyy-MM-dd')}"></td>
                 </tr>
                 <tr>
                     <th>성별</th>
