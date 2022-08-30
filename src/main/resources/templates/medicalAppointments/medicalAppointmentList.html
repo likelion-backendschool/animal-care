@@ -38,7 +38,7 @@
                 <td th:text="${mad.status}"></td>
                 <td>
                     <a th:if="${mad.status.name() == 'COMPLETE'}"
-                       href="#" th:href="@{/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/edit (id=${mad.medicalAppointmentId})}"
+                       href="#" th:href="@{/usr/mypage/member/medical-appointment-info/{medicalAppointmentId}/edit (id=${mad.medicalAppointmentId})}"
                        class="btn btn-primary" role="button">MODIFY</a>
                 </td>
                 <td>
@@ -59,7 +59,7 @@
     function cancel(id) {
         var form = document.createElement("form");
         form.setAttribute("method", "post");
-        form.setAttribute("action", "/usr/mypage/member/{memberId}/medical-appointment-info/" + id + "/cancel");
+        form.setAttribute("action", "/usr/mypage/member/medical-appointment-info/" + id + "/cancel");
         document.body.appendChild(form);
         form.submit();
     }

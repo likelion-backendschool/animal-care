@@ -1,8 +1,8 @@
 package com.codelion.animalcare.domain.api;
 
-import com.codelion.animalcare.domain.member.MemberDto;
 import com.codelion.animalcare.domain.member.repository.MemberRepositoryTmp;
 import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

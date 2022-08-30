@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -25,11 +26,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
     @Override
     protected void configure(HttpSecurity http) throws Exception { // 5
         http
-//                .csrf().disable()
-                // TODO 해결해야할 사항
-                // 오류로인해 잠시 위에 줄 추가함: There was an unexpected error (type=Forbidden, status=403). Forbidden
-                // .csrf().disable() 적용하면 -> 임시 예약하기 관련 post 성공, login은 에러
-                // .csrf().disable() 적용 안하면(주석처리하면) -> 임시 예약하기 post 에러, login 성공
                 .authorizeRequests() // 6
                 .antMatchers("/login", "/signup", "/user", "/test", "/").permitAll() // 누구나 접근 허용
 //                .antMatchers("/**").permitAll() // 개발시 주석 해제하고 사용해주세요 // 주석 해제후 위에 주석 처리
@@ -48,9 +44,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                     .oauth2Login()  // OAuth로 로그인할때 필요
                     .loginPage("/loginForm")
                     .defaultSuccessUrl("/")
-                    .userInfoEndpoint()
+                    .userInfoEndpoint();
+
 //                    .userService()  // 사용자 정보처리할 때 사용
-        ;
+
+        // 403 에러로 인한 ignore 처리
+        http.csrf().ignoringAntMatchers("/**");
     }
 
     @Override

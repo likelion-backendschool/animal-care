@@ -1,8 +1,6 @@
-package com.codelion.animalcare.domain.member;
+package com.codelion.animalcare.domain.user.entity;
 
 import com.codelion.animalcare.domain.animal.AnimalDto;
-import com.codelion.animalcare.domain.user.entity.Member;
-import com.nimbusds.openid.connect.sdk.claims.Address;
 import lombok.Getter;
 
 import javax.persistence.Embedded;
@@ -43,7 +41,7 @@ public class MemberDto {
         login_pwd = member.getPassword();
         member_name = member.getName();
         birthDay = member.getBirthday();
-//        address = member.getAddress();
+        address = member.getAddress();
         phone_num = member.getPhoneNum();
         gender_id = member.getId();
         animals = member.getAnimals().stream()

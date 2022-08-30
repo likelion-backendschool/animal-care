@@ -35,9 +35,8 @@ public class MedicalAppointmentController {
     private final HospitalService hospitalService;
 
 
-    // 예약하기 임시 만듦1
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment")
+    // 임시 예약하기
+    @GetMapping("/usr/mypage/member/medical-appointment")
     public String createMedicalAppointmentForm(Model model, Principal principal) {
 
         Member member = memberService.findByEmail(principal.getName());
@@ -55,9 +54,8 @@ public class MedicalAppointmentController {
     }
 
 
-    // 예약하기 임시 만듦2
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment")
+    // 임시 예약하기
+    @PostMapping("/usr/mypage/member/medical-appointment")
     public String medicalAppointment(
             Principal principal,
             @RequestParam("animalId") Long animalId,
@@ -68,13 +66,12 @@ public class MedicalAppointmentController {
         Member member = memberService.findByEmail(principal.getName());
         medicalAppointmentService.medicalAppointment(member.getId(), animalId, hospitalId, doctorId, medicalAppointmentDate);
 
-        return "redirect:/usr/mypage/member/{memberId}/medical-appointment-info";
+        return "redirect:/usr/mypage/member/medical-appointment-info";
     }
 
 
     // 마이페이지 회원 예약내역
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment-info")
+    @GetMapping("/usr/mypage/member/medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model, Principal principal) {
 
         Member member = memberService.findByEmail(principal.getName());
@@ -88,11 +85,10 @@ public class MedicalAppointmentController {
 
 
     // 마이페이지 회원 예약정보 취소
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/cancel")
+    @PostMapping("/usr/mypage/member/medical-appointment-info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/{memberId}/medical-appointment-info";
+        return "redirect:/usr/mypage/member/medical-appointment-info";
     }
 
 

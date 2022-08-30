@@ -37,6 +37,8 @@ public class UserInfo extends BaseEntity implements UserDetails {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDateTime birthday;
 
+    @Column
+    private Address address;
 
 
     @Column(length = 20)
