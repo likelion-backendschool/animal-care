@@ -14,6 +14,7 @@ import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,8 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦1
-    @GetMapping("/user/mypage/member/{memberId}/medical-appointment")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment")
     public String createMedicalAppointmentForm(Model model, Principal principal) {
 
         Member member = memberService.findByEmail(principal.getName());
@@ -54,7 +56,8 @@ public class MedicalAppointmentController {
 
 
     // 예약하기 임시 만듦2
-    @PostMapping("/user/mypage/member/{memberId}/medical-appointment")
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment")
     public String medicalAppointment(
             Principal principal,
             @RequestParam("animalId") Long animalId,
@@ -65,12 +68,13 @@ public class MedicalAppointmentController {
         Member member = memberService.findByEmail(principal.getName());
         medicalAppointmentService.medicalAppointment(member.getId(), animalId, hospitalId, doctorId, medicalAppointmentDate);
 
-        return "redirect:/user/mypage/member/{memberId}/medical-appointment-info";
+        return "redirect:/usr/mypage/member/{memberId}/medical-appointment-info";
     }
 
 
     // 마이페이지 회원 예약내역
-    @GetMapping("/user/mypage/member/{memberId}/medical-appointment-info")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model, Principal principal) {
 
         Member member = memberService.findByEmail(principal.getName());
@@ -84,10 +88,11 @@ public class MedicalAppointmentController {
 
 
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/user/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/cancel")
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/cancel")
     public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
         medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/user/mypage/member/{memberId}/medical-appointment-info";
+        return "redirect:/usr/mypage/member/{memberId}/medical-appointment-info";
     }
 
 
@@ -95,7 +100,7 @@ public class MedicalAppointmentController {
 //    @GetMapping("/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/edit")
 //    public String updateMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId, Model model) {
 //
-//        return "redirect:/user/mypage/member/{memberId}/medical-appointment";
+//        return "redirect:/usr/mypage/member/{memberId}/medical-appointment";
 //    }
 
 //    @PostMapping("/usr/mypage/member/{memberId}/medical-appointment-info/{medicalAppointmentId}/edit")
@@ -103,6 +108,6 @@ public class MedicalAppointmentController {
 //
 //        medicalAppointmentService.updateMedicalAppointment(medicalAppointmentId);
 //
-//        return "redirect:/user/mypage/member/{memberId}/medical-appointment";
+//        return "redirect:/usr/mypage/member/{memberId}/medical-appointment";
 //    }
 }

@@ -51,7 +51,6 @@ public class MedicalAppointmentService {
         Hospital hospital = hospitalRepository.findById(hospitalId).get();
         Doctor doctor = doctorRepository.findById(doctorId).get();
 
-
         //예약 생성
         MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointment(member, animal, hospital, doctor, medicalAppointmentDate);
 
