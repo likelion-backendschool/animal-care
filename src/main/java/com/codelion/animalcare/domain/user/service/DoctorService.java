@@ -8,6 +8,7 @@ import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.global.error.exception.DoctorModifyAfterPasswordNotSameException;
 import com.codelion.animalcare.global.error.exception.DoctorModifyBeforePasswordNotSameException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,13 +69,13 @@ public class DoctorService {
     // TODO 비밀번호 암호화 적용.
     // 의사 비밀번호 변경
     public void updatePassword(UpdateDoctorMyPageInfoPassword.RequestDto requestDto, String email) throws DoctorModifyBeforePasswordNotSameException {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         // doctor check
         Doctor doctor = findDoctorByEmail(email);
 
-        // TODO 비밀번호 검사 쪽 디미터 법칙 적용
         // 비밀번호 확인
-        if (!doctor.getPassword().equals(requestDto.getBeforePassword())) {
+        if (!encoder.matches(requestDto.getBeforePassword(), doctor.getPassword())) {
             throw new DoctorModifyBeforePasswordNotSameException("기존 비밀번호가 일치하지 않습니다.");
         }
         // 비밀번호 체크
@@ -82,7 +83,9 @@ public class DoctorService {
             throw new DoctorModifyAfterPasswordNotSameException("새 비밀번호가 서로 일치하지 않습니다.");
         }
 
-        doctor.updateLoginPwd(requestDto.getNewPassword());
+
+
+        doctor.updateLoginPwd(encoder.encode(requestDto.getNewPassword()));
 
         doctorRepository.save(doctor);
     }
@@ -94,7 +97,6 @@ public class DoctorService {
 
     private Doctor findDoctorByEmail(String email) {
         return doctorRepository.findByEmail(email)
-                // TODO exception 생성.
                 .orElseThrow(() -> new RuntimeException("Doctor email:" + email + " can't found."));
     }
 }
