@@ -1,13 +1,13 @@
 <html layout:decorate="~{myPage/doctor/sampleLayout}">
 <div class="container" layout:fragment="content">
     <nav class="navbar">
-        <a th:href="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage|}">뒤로</a>
+        <a href="/usr/mypage/doctor/hospital-info-manage">뒤로</a>
     </nav>
     <h2 class="p-4">
         병원 관리 수정
     </h2>
     <div>
-        <form th:action="@{|/usr/mypage/doctor/${doctorId}/hospital-info-manage/modify|}"
+        <form action="/usr/mypage/doctor/hospital-info-manage/modify"
               th:object="${requestDto}" method="post">
             <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
             <table class="table">

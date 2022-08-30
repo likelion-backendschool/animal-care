@@ -1,16 +1,16 @@
 <html layout:decorate="~{myPage/doctor/sampleLayout}">
 <div class="container" layout:fragment="content" >
     <nav class="navbar">
-        <a th:href="@{|/usr/mypage/doctor/${doctorId}/info|}"
+        <a href="/usr/mypage/doctor/info"
            th:text="돌아가기"></a>
     </nav>
     <h2 class="p-4">
         내 정보 수정
     </h2>
     <div>
-        <form th:action="@{|/usr/mypage/doctor/${doctorId}/info/modify|}"
+        <form action="/usr/mypage/doctor/info/modify"
               th:object="${requestDto}" method="post">
-            <div  th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
+            <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
             <table class="table">
                 <tbody>
                 <tr>
