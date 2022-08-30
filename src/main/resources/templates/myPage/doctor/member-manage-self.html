@@ -65,11 +65,11 @@
                                             <tr>
                                                 <th>주소</th>
                                                 <td colspan="3">
-                                                    (도로명) [[${member.address.street}]]
+                                                    (도로명)
                                                     <br />
-                                                    (지번) [[${member.address.city}]]
+                                                    (지번)
                                                     <br />
-                                                    (지역 번호) [[${member.address.zipcode}]]
+                                                    (지역 번호)
                                                 </td>
                                             <tr>
                                                 <th>사육 장소</th>
@@ -125,7 +125,7 @@
                                         </div>
                                         <div class="container">
                                             <p>동물병원 명칭 : [[${hospital.name}]]</p>
-                                            <p>동물병원 주소 : [[${hospital.address.street}]]</p>
+                                            <p>동물병원 주소 : </p>
                                             <p>수의사 면허 : </p>
                                         </div>
                                         <div class="text-center container">
@@ -154,23 +154,20 @@
                 </tr>
                 <tr>
                     <th th:text="이메일"></th>
-                    <td th:text="${member.loginEmail}"></td>
+                    <td th:text="${member.email}"></td>
                 </tr>
                 <tr>
                     <th th:text="생년월일"></th>
-                    <td th:text="${#temporals.format(member.birthday, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#temporals.format(member.birthday, 'yyyy-MM-dd')}"></td>
                 </tr>
                 <tr>
                     <th th:text="지번"></th>
-                    <td th:text="${member.address.city}"></td>
                 </tr>
                 <tr>
                     <th th:text="도로명"></th>
-                    <td th:text="${member.address.street}"></td>
                 </tr>
                 <tr>
                     <th >지역 번호</th>
-                    <td th:text="${member.address.zipcode}"></td>
                 </tr>
                 <tr>
                     <th th:text="전화번호"></th>

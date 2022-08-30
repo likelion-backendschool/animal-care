@@ -2,16 +2,18 @@ package com.codelion.animalcare.domain.medical_appointment.controller;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
-import com.codelion.animalcare.domain.doctor.service.DoctorService;
+
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
-import com.codelion.animalcare.domain.member.entity.Member;
-import com.codelion.animalcare.domain.member.service.MemberService;
+
+import com.codelion.animalcare.domain.user.entity.Doctor;
+import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.service.DoctorService;
+import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

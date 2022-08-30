@@ -3,11 +3,12 @@ package com.codelion.animalcare.domain.medical_appointment.entity;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
+import com.codelion.animalcare.domain.user.entity.Doctor;
+import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
-import com.codelion.animalcare.domain.member.entity.Member;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
 public class MedicalAppointment extends BaseEntity {
 
     @Column(nullable = false)
@@ -78,17 +80,17 @@ public class MedicalAppointment extends BaseEntity {
 
 
 
-    @Builder
-    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus medicalAppointmentStatus, LocalDateTime medicalAppointmentDate, Doctor doctor, Member member, Animal animal, Hospital hospital) {
-        super(id, createdAt);
-        this.content = content;
-        this.medicalAppointmentStatus = medicalAppointmentStatus;
-        this.medicalAppointmentDate = medicalAppointmentDate;
-        this.doctor = doctor;
-        this.member = member;
-        this.animal = animal;
-        this.hospital = hospital;
-    }
+//    @Builder
+//    private MedicalAppointment(Long id, LocalDateTime createdAt, String content, MedicalAppointmentStatus medicalAppointmentStatus, LocalDateTime medicalAppointmentDate, Doctor doctor, Member member, Animal animal, Hospital hospital) {
+//        super(id, createdAt);
+//        this.content = content;
+//        this.medicalAppointmentStatus = medicalAppointmentStatus;
+//        this.medicalAppointmentDate = medicalAppointmentDate;
+//        this.doctor = doctor;
+//        this.member = member;
+//        this.animal = animal;
+//        this.hospital = hospital;
+//    }
 
 
     //== 생성 메서드 ==//

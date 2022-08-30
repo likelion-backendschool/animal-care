@@ -1,8 +1,10 @@
 package com.codelion.animalcare.domain.post.entity;
 
-import com.codelion.animalcare.domain.member.entity.Member;
+
+import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
+@SuperBuilder
 public class Comment extends BaseEntity {
     @Column(nullable = false)
     private String content;
@@ -28,11 +31,11 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Builder
-    private Comment(Long id, LocalDateTime createdDate, String content, int likes, Post post) {
-        super(id, createdDate);
-        this.content = content;
-        this.likes = likes;
-        this.post = post;
-    }
+//    @Builder
+//    private Comment(Long id, LocalDateTime createdDate, String content, int likes, Post post) {
+//        super(id, createdDate);
+//        this.content = content;
+//        this.likes = likes;
+//        this.post = post;
+//    }
 }

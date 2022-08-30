@@ -1,8 +1,8 @@
 package com.codelion.animalcare.domain.hospital.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
-import com.codelion.animalcare.domain.doctor.repository.DoctorRepository;
+import com.codelion.animalcare.domain.user.entity.Doctor;
+import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.dto.UpdateDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;

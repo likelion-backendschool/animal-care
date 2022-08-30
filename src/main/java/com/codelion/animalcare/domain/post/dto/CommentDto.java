@@ -49,7 +49,7 @@ public class CommentDto {
         public Comment toEntity(Comment oldComment) {
             return Comment.builder()
                     .id(oldComment.getId())
-                    .createdDate(oldComment.getCreatedAt())
+                    .createdAt(oldComment.getCreatedAt())
                     .content(content)
                     .likes(oldComment.getLikes())
                     .build();

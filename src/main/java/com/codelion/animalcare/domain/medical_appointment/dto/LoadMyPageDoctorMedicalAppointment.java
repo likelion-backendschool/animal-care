@@ -2,11 +2,11 @@ package com.codelion.animalcare.domain.medical_appointment.dto;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
-import com.codelion.animalcare.domain.member.entity.Member;
+import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

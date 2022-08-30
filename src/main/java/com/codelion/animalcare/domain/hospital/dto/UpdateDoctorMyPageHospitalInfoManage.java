@@ -2,7 +2,7 @@ package com.codelion.animalcare.domain.hospital.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.global.util.OpeningHour;
-import com.codelion.animalcare.domain.member.Address;
+//import com.codelion.animalcare.domain.member.Address;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,7 +47,7 @@ public class UpdateDoctorMyPageHospitalInfoManage {
             return Hospital.builder()
                     .id(id)
                     .name(name)
-                    .address(new Address(city, street, zipcode))
+//                    .address(new Address(city, street, zipcode))
                     .phoneNum(phoneNum)
                     .openingHours(openingHourToString())
                     .createdAt(hospital.getCreatedAt())

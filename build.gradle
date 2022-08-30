@@ -23,7 +23,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
-	runtimeOnly 'com.h2database:h2:1.4.200'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// swagger
@@ -41,6 +40,15 @@ dependencies {
 
 	// hot reload
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// Oauth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	//Junit
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.0'
 }
 
 tasks.named('test') {

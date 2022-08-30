@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.hospital.dto;
 
-import com.codelion.animalcare.domain.doctor.entity.Doctor;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.global.util.OpeningHour;
 import lombok.Getter;
@@ -33,9 +33,9 @@ public class LoadDoctorMyPageHospitalInfoManage {
             this.id = hospital.getId();
             this.name = hospital.getName();
             this.phoneNum = hospital.getPhoneNum();
-            this.city = hospital.getAddress().getCity();
-            this.street = hospital.getAddress().getStreet();
-            this.zipcode = hospital.getAddress().getZipcode();
+//            this.city = hospital.getAddress().getCity();
+//            this.street = hospital.getAddress().getStreet();
+//            this.zipcode = hospital.getAddress().getZipcode();
             this.openingHours = hospital.getOpeningHours();
             this.createdAt = hospital.getCreatedAt();
             this.updatedAt = hospital.getUpdatedAt();
