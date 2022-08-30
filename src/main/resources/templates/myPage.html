@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header">
+<head th:replace="global/fragments/header :: header">
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div th:replace="global/fragments/bodyHeader :: bodyHeader" />
     <div class="jumbotron">
         <h1>회원 My Page</h1>
 
@@ -23,7 +23,7 @@
         <p> <a class="btn btn-lg btn-secondary" href="/user/mypage/member/{memberId}/itemOrder/list">물품 구입 현황</a></p>
 
     </div>
-    <div th:replace="fragments/footer :: footer" />
+    <div th:replace="global/fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>
 </html>

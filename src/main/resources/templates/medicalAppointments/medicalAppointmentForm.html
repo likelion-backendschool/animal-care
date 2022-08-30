@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header" />
+<head th:replace="global/fragments/header :: header" />
 
 <body>
 <div class="container">
 
-    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div th:replace="global/fragments/bodyHeader :: bodyHeader"/>
     <form role="form" action="/user/mypage/member/{memberId}/medical-appointment" method="post">
 <!--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
         <div class="form-group">
@@ -53,7 +53,7 @@
     </form>
     <br/>
 
-    <div th:replace="fragments/footer :: footer" />
+    <div th:replace="global/fragments/footer :: footer" />
 </div> <!-- /container -->
 
 </body>
