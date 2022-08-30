@@ -1,6 +1,5 @@
 package com.codelion.animalcare.domain.hospital.service;
 
-import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
@@ -32,9 +31,9 @@ public class HospitalService {
     }
 
     @Transactional(readOnly = true)
-    public LoadDoctorMyPageHospitalInfoManage.ResponseDto findByDoctorId(long doctorId) {
-        Doctor doctor = doctorRepository.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException("Doctor " + doctorId + " can't found."));
+    public LoadDoctorMyPageHospitalInfoManage.ResponseDto findByDoctorEmail(String doctorEmail) {
+        Doctor doctor = doctorRepository.findByEmail(doctorEmail)
+                .orElseThrow(() -> new RuntimeException("Doctor email " + doctorEmail + " can't found."));
 
         // doctor에서 hospital 추출
         Hospital hospital = doctor.getHospital();

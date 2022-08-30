@@ -10,9 +10,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
-@RequestMapping("/usr/mypage/doctor/{doctorId}/hospital-info-manage")
+@RequestMapping("/usr/mypage/doctor/hospital-info-manage")
 @RequiredArgsConstructor
 public class HospitalMyPageDoctorController {
     private final HospitalService hospitalService;
@@ -21,9 +22,10 @@ public class HospitalMyPageDoctorController {
     @GetMapping()
     public String loadDoctorMyPageHospitalInfoManage(
             Model model,
-            @PathVariable long doctorId
+            Principal principal
     ){
-        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = hospitalService.findByDoctorId(doctorId);
+        String doctorEmail = principal.getName();
+        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = hospitalService.findByDoctorEmail(doctorEmail);
 
         model.addAttribute("hospital", hospitalDto);
         model.addAttribute("OpeningHours", hospitalDto.makeOpeningHoursToObject());
@@ -36,12 +38,12 @@ public class HospitalMyPageDoctorController {
     @GetMapping("modify")
     public String loadDoctorMyPageHospitalInfoManageModify(
             Model model,
-            @PathVariable long doctorId
+            Principal principal
     ){
-        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = hospitalService.findByDoctorId(doctorId);
+        String doctorEmail = principal.getName();
+        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = hospitalService.findByDoctorEmail(doctorEmail);
 
         model.addAttribute("requestDto", hospitalDto);
-        model.addAttribute("doctorId", doctorId);
 
         return "myPage/doctor/hospital-info-manage-modify";
     }
@@ -50,7 +52,6 @@ public class HospitalMyPageDoctorController {
     @PostMapping("modify")
     public String updateDoctorMyPageHospitalInfoManage(
             Model model,
-            @PathVariable long doctorId,
             @Valid UpdateDoctorMyPageHospitalInfoManage.RequestDto requestDto,
             BindingResult bindingResult
         ){
@@ -60,6 +61,6 @@ public class HospitalMyPageDoctorController {
 
             hospitalService.update(requestDto);
 
-        return "redirect:/usr/mypage/doctor/{doctorId}/hospital-info-manage";
+        return "redirect:/usr/mypage/doctor/hospital-info-manage";
     }
 }
