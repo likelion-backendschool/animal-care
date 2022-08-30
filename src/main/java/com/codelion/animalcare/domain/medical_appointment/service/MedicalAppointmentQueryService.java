@@ -51,9 +51,9 @@ public class MedicalAppointmentQueryService {
     }
 
 
-    public List<MedicalAppointmentDto> findMedicalAppointmentByMemberId(Long id) {
+    public List<MedicalAppointmentDto> findMedicalAppointmentByMemberId(Long memberId) {
 
-        List<MedicalAppointment> medicalAppointments = medicalAppointmentRepository.findByMemberId(id);
+        List<MedicalAppointment> medicalAppointments = medicalAppointmentRepository.findByMemberId(memberId);
 
         List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointments.stream()
                 .map(o -> new MedicalAppointmentDto(o))
