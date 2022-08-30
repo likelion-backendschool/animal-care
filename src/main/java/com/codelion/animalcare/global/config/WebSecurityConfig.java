@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
     @Override
     protected void configure(HttpSecurity http) throws Exception { // 5
         http
-                .csrf().disable()
+//                .csrf().disable()
                 // TODO 해결해야할 사항
                 // 오류로인해 잠시 위에 줄 추가함: There was an unexpected error (type=Forbidden, status=403). Forbidden
                 // .csrf().disable() 적용하면 -> 임시 예약하기 관련 post 성공, login은 에러
