@@ -46,6 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                     .userInfoEndpoint()
 //                    .userService()  // 사용자 정보처리할 때 사용
         ;
+
+        http.csrf().ignoringAntMatchers("/usr/mypage/doctor/**"); // TODO csrf.token 대체
     }
 
     @Override
