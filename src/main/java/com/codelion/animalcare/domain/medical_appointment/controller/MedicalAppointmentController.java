@@ -10,7 +10,6 @@ import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppoint
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -75,10 +71,10 @@ public class MedicalAppointmentController {
 
     // 마이페이지 회원 예약내역
     @GetMapping("/user/mypage/member/{memberId}/medical-appointment-info")
-    public String medicalAppointmentListUseDto(Model model) {
+    public String medicalAppointmentListUseDto(Model model, Principal principal) {
 
-        // TODO 2 회원 본인의 예약내역 가져오게 구현하기
-        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findMedicalAppointments();
+        Member member = memberService.findByEmail(principal.getName());
+        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findMedicalAppointmentByMemberId(member.getId());
 
         model.addAttribute("medicalAppointmentDtos", medicalAppointmentDtos);
 

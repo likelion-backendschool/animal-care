@@ -22,8 +22,10 @@ public class MedicalAppointmentQueryService {
     private final MedicalAppointmentRepository medicalAppointmentRepository;
     private final MedicalAppointmentRepositoryTmp medicalAppointmentRepositorytmp;
 
-
-    public List<MedicalAppointmentDto> findMedicalAppointments() {
+    /**
+     * Admin 페이지에서 필요할거 같음
+     */
+    public List<MedicalAppointmentDto> findAllMedicalAppointments() {
 
         List<MedicalAppointment> medicalAppointments = medicalAppointmentRepository.findAllWithMemberAnimalHospitalDoctor();
 
@@ -49,5 +51,14 @@ public class MedicalAppointmentQueryService {
     }
 
 
+    public List<MedicalAppointmentDto> findMedicalAppointmentByMemberId(Long id) {
 
+        List<MedicalAppointment> medicalAppointments = medicalAppointmentRepository.findByMemberId(id);
+
+        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointments.stream()
+                .map(o -> new MedicalAppointmentDto(o))
+                .collect(Collectors.toList());
+
+        return medicalAppointmentDtos;
+    }
 }

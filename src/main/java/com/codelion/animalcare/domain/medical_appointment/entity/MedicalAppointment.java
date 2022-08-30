@@ -25,6 +25,7 @@ public class MedicalAppointment extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime date; // 예약날짜 및 시간
 
+    // TODO 3
     //에러로 인한 잠시 주석처리 Column 'content' cannot be null
 //    @Column(columnDefinition = "TEXT",nullable = false)
 //    private String content;
