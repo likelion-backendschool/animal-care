@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org">
-<head th:replace="fragments/header :: header"/>
+<head th:replace="/global/fragments/header :: header"/>
 <body>
     <div class="container">
-        <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+        <div th:replace="/global/fragments/bodyHeader :: bodyHeader"/>
 
         <div class="page-header">
             <h3>Community</h3>
@@ -49,7 +49,7 @@
             </th:bolck>
         </div>
 
-        <div th:replace="fragments/footer :: footer" />
+        <div th:replace="/global/fragments/footer :: footer" />
     </div>
 </body>
 </html>

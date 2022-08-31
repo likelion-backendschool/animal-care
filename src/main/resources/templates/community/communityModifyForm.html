@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head th:replace="fragments/header :: header"/>
+<head th:replace="/global/fragments/header :: header"/>
 <body>
-<div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div class="container">
+        <div th:replace="/global/fragments/bodyHeader :: bodyHeader"/>
 
-    <div class="page-header">
-        <h3>Community</h3>
+        <div class="page-header">
+            <h3>Community</h3>
+        </div>
+
+        <form th:action="@{|/usr/posts/${id}/modify|}" th:object="${modifyPostRequestDto}" method="post">
+            <div class="form-group">
+                <input type="text" th:field="*{title}" class="form-control" placeholder="제목" required="required">
+            </div>
+            <div class="form-group">
+                <textarea th:field="*{content}" class="form-control" rows="10" placeholder="내용" required="required"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary my-2">게시글 수정</button>
+        </form>
+        <br/>
+
+        <div th:replace="/global/fragments/footer :: footer"/>
     </div>
-
-    <form th:action="@{|/usr/posts/${id}/modify|}" th:object="${modifyPostRequestDto}" method="post">
-        <div class="form-group">
-            <input type="text" th:field="*{title}" class="form-control" placeholder="제목" required="required">
-        </div>
-        <div class="form-group">
-            <textarea th:field="*{content}" class="form-control" rows="10" placeholder="내용" required="required"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary my-2">게시글 수정</button>
-    </form>
-    <br/>
-
-    <div th:replace="fragments/footer :: footer"/>
-</div>
 </body>
 </html>

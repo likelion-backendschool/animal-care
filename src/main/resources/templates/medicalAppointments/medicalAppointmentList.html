@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header" />
+<head th:replace="global/fragments/header :: header" />
 <style>
     .fieldError {
         border-color: #bd2130;
@@ -9,7 +9,7 @@
 <body>
 
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div th:replace="global/fragments/bodyHeader :: bodyHeader"/>
 
     <div>
 
@@ -27,21 +27,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="s : ${simpleMedicalAppointmentDtos}">
-                <td th:text="${s.medicalAppointmentId}"></td>
-                <td th:text="${s.memberName}"></td>
-                <td th:text="${s.animalName}"></td>
-                <td th:text="${s.hospitalName}"></td>
-                <td th:text="${s.doctorName}"></td>
-                <td th:text="${s.medicalAppointmentDate}"></td>
-                <td th:text="${s.medicalAppointmentStatus}"></td>
+            <tr th:each="mad : ${medicalAppointmentDtos}">
+                <td th:text="${mad.medicalAppointmentId}"></td>
+                <td th:text="${mad.memberName}"></td>
+                <td th:text="${mad.animalName}"></td>
+                <td th:text="${mad.hospitalName}"></td>
+                <td th:text="${mad.doctorName}"></td>
+                <td th:text="${mad.date}"></td>
+                <td th:text="${mad.status}"></td>
                 <td>
-                    <a th:if="${s.medicalAppointmentStatus.name() == 'COMPLETE'}"
-                       href="#" th:href="@{/usr/mypage/member/medical-appoint/medical-appointment-info/{medicalAppointmentId}/edit (id=${s.medicalAppointmentId})}"
+                    <a th:if="${mad.status.name() == 'COMPLETE'}"
+                       href="#" th:href="@{/usr/mypage/member/medical-appointment-info/{medicalAppointmentId}/edit (id=${mad.medicalAppointmentId})}"
                        class="btn btn-primary" role="button">MODIFY</a>
                 </td>
                 <td>
-                    <a th:if="${s.medicalAppointmentStatus.name() == 'COMPLETE'}" href="#" th:href="'javascript:cancel('+${s.medicalAppointmentId}+')'"
+                    <a th:if="${mad.status.name() == 'COMPLETE'}" href="#" th:href="'javascript:cancel('+${mad.medicalAppointmentId}+')'"
                        class="btn btn-danger">CANCEL</a>
                 </td>
             </tr>
@@ -50,7 +50,7 @@
         </table>
     </div>
 
-    <div th:replace="fragments/footer :: footer" />
+    <div th:replace="global/fragments/footer :: footer" />
 </div> <!-- /container -->
 
 </body>
@@ -58,7 +58,7 @@
     function cancel(id) {
         var form = document.createElement("form");
         form.setAttribute("method", "post");
-        form.setAttribute("action", "/usr/mypage/member/medical-appoint/medical-appointment-info/" + id + "/cancel");
+        form.setAttribute("action", "/usr/mypage/member/medical-appointment-info/" + id + "/cancel");
         document.body.appendChild(form);
         form.submit();
     }

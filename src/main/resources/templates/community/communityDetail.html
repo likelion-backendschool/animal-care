@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head th:replace="fragments/header :: header"/>
+<head th:replace="/global/fragments/header :: header"/>
 <body>
     <div class="container">
-        <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+        <div th:replace="/global/fragments/bodyHeader :: bodyHeader"/>
 
         <div class="page-header">
             <h3>Community</h3>
@@ -101,6 +101,7 @@
             <button type="submit" class="btn btn-primary my-2">댓글 쓰기</button>
         </form>
 
+        <div th:replace="/global/fragments/footer :: footer" />
     </div>
 </body>
 </html>

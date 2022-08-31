@@ -1,10 +1,12 @@
 package com.codelion.animalcare.domain.animal.entity;
 
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
-import com.codelion.animalcare.domain.member.entity.Member;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,13 +18,14 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
 public class Animal extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
 
     @Column()
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDateTime birthday;
+    private Date birthday;
 
     @Column(nullable = false, length = 100)
     private String registrationNum;
@@ -40,16 +43,10 @@ public class Animal extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Builder
-    private Animal(Long id, LocalDateTime createdAt, String name, LocalDateTime birthday, String registrationNum, String health_status, LocalDateTime deletedAt, int genderId, Member member) {
-        super(id, createdAt);
-        this.name = name;
-        this.birthday = birthday;
-        this.registrationNum = registrationNum;
-        this.health_status = health_status;
-        this.deletedAt = deletedAt;
-        this.genderId = genderId;
+    // == 연관관계 메서드 == //
+    public void addMember(Member member) {
         this.member = member;
+        member.getAnimals().add(this);
     }
 
 
