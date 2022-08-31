@@ -7,11 +7,12 @@ import com.codelion.animalcare.domain.post.dto.PostDto.PostResponseDto;
 import com.codelion.animalcare.domain.post.service.CommentService;
 import com.codelion.animalcare.domain.post.service.PostService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/usr/posts/{post_id}")
 public class CommentController {
     private CommentService commentService;
@@ -31,8 +32,10 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("/comments/write")
-    public ResponseEntity create(@PathVariable Long post_id, @RequestBody CommentRequestDto commentRequestDto) {
-        return ResponseEntity.ok(commentService.saveComment(post_id, commentRequestDto));
+    public String write(@PathVariable Long post_id, CommentRequestDto commentRequestDto) {
+        commentService.saveComment(post_id, commentRequestDto);
+
+        return "redirect:/usr/posts/%d".formatted(post_id);
     }
 
     // 댓글 수정

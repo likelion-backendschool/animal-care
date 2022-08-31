@@ -82,8 +82,21 @@
         <a th:href="@{|/usr/posts/${post.id}/modify|}" class="btn btn-primary my-2" th:text="|게시글 수정|"></a>
 
         <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/posts/${post.id}/delete|}"
-           class="btn btn-primary my-2"
-           th:text="|게시글 삭제|"></a>
+           class="btn btn-primary my-2" th:text="|게시글 삭제|"></a>
+
+        <div class="card" th:each="comment : ${post.comments}">
+            <div class="card-body">
+                <div class="card-text" th:text="${comment.content}"></div>
+                <div class="card-text" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
+            </div>
+        </div>
+
+        <form th:action="@{|/usr/posts/${post.id}/comments/write|}" th:object="${commentRequestDto}" method="post">
+            <div class="form-group">
+                <textarea th:field="*{content}" class="form-control" rows="5" placeholder="댓글" required="required"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary my-2">댓글 쓰기</button>
+        </form>
 
     </div>
 </body>

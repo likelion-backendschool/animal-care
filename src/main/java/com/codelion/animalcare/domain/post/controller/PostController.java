@@ -1,5 +1,7 @@
 package com.codelion.animalcare.domain.post.controller;
 
+import com.codelion.animalcare.domain.post.dto.CommentDto;
+import com.codelion.animalcare.domain.post.dto.CommentDto.CommentRequestDto;
 import com.codelion.animalcare.domain.post.dto.PostDto.ModifyPostRequestDto;
 import com.codelion.animalcare.domain.post.dto.PostDto.PostRequestDto;
 import com.codelion.animalcare.domain.post.dto.PostDto.PostResponseDto;
@@ -46,7 +48,7 @@ public class PostController {
 
     // 게시글 상세 조회
     @GetMapping("/{id}")
-    public String detail(Model model, @PathVariable Long id) {
+    public String detail(Model model, @PathVariable Long id, CommentRequestDto commentRequestDto) {
         postService.updatePostViews(id);
         model.addAttribute("post", postService.findPostById(id));
 
