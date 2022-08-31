@@ -6,6 +6,8 @@ import com.codelion.animalcare.domain.post.dto.PostDto.PostResponseDto;
 import com.codelion.animalcare.domain.post.entity.Post;
 import com.codelion.animalcare.domain.post.exception.PostNotFoundException;
 import com.codelion.animalcare.domain.post.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,10 +21,10 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-//    @Transactional
-//    public Page<Post> listPost(Pageable pageable) {
-//
-//    }
+    @Transactional
+    public Page<Post> listPost(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
 
     @Transactional
     public PostResponseDto findPostById(Long id) {
@@ -31,6 +33,7 @@ public class PostService {
         if(!post.isPresent()) {
             throw new PostNotFoundException(String.format("Post ID:%s is not found", id));
         }
+
         return new PostResponseDto(post.get());
     }
 
@@ -54,4 +57,13 @@ public class PostService {
         return postRepository.save(postRequestDto.toEntity()).getId();
     }
 
+    @Transactional
+    public int updatePostViews(Long id) {
+        return postRepository.updateViews(id);
+    }
+
+    @Transactional
+    public int updatePostLikes(Long id) {
+        return postRepository.updateLikes(id);
+    }
 }
