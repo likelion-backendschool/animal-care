@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -35,7 +36,7 @@ public class UserInfo extends BaseEntity implements UserDetails {
 
     @Column()
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDateTime birthday;
+    private Date birthday;
 
     @Column
     private Address address;

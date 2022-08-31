@@ -9,6 +9,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class MemberDto {
 
     // @Temporal: 날짜 타입(java.util.Date, java.util.Calendar)을 매핑할 때 사용
     @Temporal(TemporalType.DATE)
-    private LocalDateTime birthDay;
+    private Date birthDay;
 
     @Embedded
     private Address address;

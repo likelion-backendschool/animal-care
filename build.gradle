@@ -44,21 +44,19 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// hot reload
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
 	// security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	// Oauth2
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-	//spring validation
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	//Junit
 	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.0'
-
-	// devtools
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
 }
 
 tasks.named('test') {

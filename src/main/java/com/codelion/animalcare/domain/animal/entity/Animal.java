@@ -25,7 +25,7 @@ public class Animal extends BaseEntity {
 
     @Column()
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDateTime birthday;
+    private Date birthday;
 
     @Column(nullable = false, length = 100)
     private String registrationNum;

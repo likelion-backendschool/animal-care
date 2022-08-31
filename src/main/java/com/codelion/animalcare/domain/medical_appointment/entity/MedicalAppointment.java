@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.medical_appointment.entity;
 
+import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 import com.codelion.animalcare.domain.user.entity.Doctor;
@@ -47,11 +48,13 @@ public class MedicalAppointment extends BaseEntity {
     @JoinColumn(name = "animal_id")
     private Animal animal;
 
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "diagnosis_id")
+    private Diagnosis diagnosis;
 
      // == 연관관계 메서드 == //
     public void addMember(Member member) {
@@ -98,5 +101,10 @@ public class MedicalAppointment extends BaseEntity {
         this.setStatus(MedicalAppointmentStatus.CANCEL);
     }
 
-
+    /**
+     * 예약 상태 변경
+     */
+    public void updateStatus(MedicalAppointmentStatus refuse) {
+        this.status = refuse;
+    }
 }

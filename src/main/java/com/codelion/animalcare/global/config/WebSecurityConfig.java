@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
 //                    .userService()  // 사용자 정보처리할 때 사용
 
         // 403 에러로 인한 ignore 처리
-        http.csrf().ignoringAntMatchers("/**");
+        http.csrf().ignoringAntMatchers("/usr/**");
     }
 
     @Override

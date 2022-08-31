@@ -35,7 +35,7 @@ public class AnswerService {
         Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
         answerSaveRequestDto.setQuestion(question);
 
-        Doctor doctor = doctorRepository.findByEmail(principal.getName());
+        Doctor doctor = doctorRepository.findByEmail(principal.getName()).orElseThrow(() -> new IllegalArgumentException("의사가 존재하지 않습니다."));
 
 //        if(!member.getAuth().equals("doctor")) {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");

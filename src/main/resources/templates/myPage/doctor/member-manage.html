@@ -1,0 +1,42 @@
+<html layout:decorate="~{myPage/doctor/sampleLayout}">
+<div class="container" layout:fragment="content" >
+    <nav class="navbar">
+        <a href="/usr/mypage/doctor">뒤로</a>
+    </nav>
+    <h2 class="p-4">
+        환자 관리
+    </h2>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">고객 이름</th>
+                <th scope="col">동물 이름</th>
+                <th scope="col">날짜</th>
+                <th scope="col">상태</th>
+                <th scope="col">상태 변경</th>
+                <th scope="col">상세</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="medicalAppointment, i : ${medicalAppointments}">
+                <td th:text="${medicalAppointment?.member?.name}"></td>
+                <td th:text="${medicalAppointment?.animal?.name}"></td>
+                <td th:text="${#temporals.format(medicalAppointment?.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${medicalAppointment?.medicalAppointmentStatus}"></td>
+                <td>
+                    <form th:action="|/usr/mypage/doctor/member-manage/medical-appointments/${medicalAppointment?.id}/refuse|" method="post">
+                        <input class="btn btn-primary" type="submit"
+                               th:if="${medicalAppointment.medicalAppointmentStatus.name == 'COMPLETE' }"
+                               onclick="return confirm('정말 거절하시겠습니까?')" value="환자 거절" />
+                    </form>
+                </td>
+                <td>
+                    <a class="btn btn-primary" th:href="|/usr/mypage/doctor/member-manage/medical-appointments/${medicalAppointment?.id}|">상세</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>
