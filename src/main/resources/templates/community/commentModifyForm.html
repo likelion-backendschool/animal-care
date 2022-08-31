@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <div class="page-header">
+        <h3>Community</h3>
+    </div>
+
+    <form th:action="@{|/usr/posts/${comment.postId}/comments/${comment.id}/modify|}" th:object="${modifyCommentRequestDto}" method="post">
+        <div class="form-group">
+            <textarea th:field="*{content}" class="form-control" rows="5" placeholder="댓글" required="required"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary my-2">댓글 수정</button>
+    </form>
+    <br/>
+
+    <div th:replace="fragments/footer :: footer"/>
+</div>
+</body>
+</html>

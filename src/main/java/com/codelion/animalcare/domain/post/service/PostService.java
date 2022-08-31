@@ -7,7 +7,6 @@ import com.codelion.animalcare.domain.post.entity.Post;
 import com.codelion.animalcare.domain.post.exception.PostNotFoundException;
 import com.codelion.animalcare.domain.post.repository.PostRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

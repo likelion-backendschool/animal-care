@@ -88,6 +88,9 @@
             <div class="card-body">
                 <div class="card-text" th:text="${comment.content}"></div>
                 <div class="card-text" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
+                <a th:href="@{|/usr/posts/${post.id}/comments/${comment.id}/modify|}" class="btn btn-sm my-2">수정</a>
+                <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;"
+                th:href="@{|/usr/posts/${post.id}/comments/${comment.id}/delete|}" class="btn btn-sm my-2">삭제</a>
             </div>
         </div>
 

@@ -1,20 +1,23 @@
 package com.codelion.animalcare.domain.post.controller;
 
-import com.codelion.animalcare.domain.post.dto.CommentDto;
 import com.codelion.animalcare.domain.post.dto.CommentDto.CommentRequestDto;
 import com.codelion.animalcare.domain.post.dto.PostDto.ModifyPostRequestDto;
 import com.codelion.animalcare.domain.post.dto.PostDto.PostRequestDto;
-import com.codelion.animalcare.domain.post.dto.PostDto.PostResponseDto;
 import com.codelion.animalcare.domain.post.entity.Post;
 import com.codelion.animalcare.domain.post.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+  /*
+        ToDo
+        1. 게시글 작성, 수정, 삭제 사용자 인증(로그인 연동)
+        2. 게시글 상세 조회로 리다이렉트 시, 조회수 증가 방지 필요
+     */
 
 @Controller
 @RequestMapping("/usr/posts")
@@ -24,13 +27,6 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-
-    /*
-        ToDo
-        1. 게시글 작성, 수정, 삭제 사용자 인증(로그인 연동)
-        2. 게시글 상세 조회로 리다이렉트 시, 조회수 증가 방지 필요
-        3. 새로운 템플릿 적용
-     */
 
     // 게시글 목록 페이징
     @GetMapping("")

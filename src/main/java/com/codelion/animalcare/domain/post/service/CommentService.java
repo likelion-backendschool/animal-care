@@ -25,6 +25,17 @@ public class CommentService {
     }
 
     @Transactional
+    public CommentResponseDto findCommentById(Long id) {
+        Optional<Comment> comment = commentRepository.findById(id);
+
+        if(!comment.isPresent()) {
+            throw new PostNotFoundException(String.format("Post ID:%s is not found", id));
+        }
+
+        return new CommentResponseDto(comment.get());
+    }
+
+    @Transactional
     public Long saveComment(Long id, CommentRequestDto commentRequestDto) {
         Optional<Post> post = postRepository.findById(id);
 
@@ -39,18 +50,12 @@ public class CommentService {
     }
 
     @Transactional
-    public Long modifyComment(Long id, ModifyCommentRequestDto modifyCommentRequestDto) {
-        Optional<Comment> oldComment = commentRepository.findById(id);
-        Optional<Post> post = postRepository.findById(id);
-
-        if(!post.isPresent()) {
-            throw new PostNotFoundException(String.format("Post ID:%s is not found", id));
-        }
+    public Long modifyComment(Long commentId, ModifyCommentRequestDto modifyCommentRequestDto) {
+        Optional<Comment> oldComment = commentRepository.findById(commentId);
 
         if(!oldComment.isPresent()) {
-            throw new CommentNotFoundException(String.format("Comment ID:%s is not found", id));
+            throw new CommentNotFoundException(String.format("Comment ID:%s is not found", commentId));
         }
-        modifyCommentRequestDto.setPost(post.get());
 
         return commentRepository.save(modifyCommentRequestDto.toEntity(oldComment.get())).getId();
     }

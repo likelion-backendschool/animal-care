@@ -54,7 +54,7 @@ public class CommentDto {
                     .createdAt(oldComment.getCreatedAt())
                     .content(content)
                     .likes(oldComment.getLikes())
-                    .post(post)
+                    .post(oldComment.getPost())
                     .build();
         }
     }
