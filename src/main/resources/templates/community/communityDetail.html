@@ -77,6 +77,10 @@
             </div>
         </div>
 
+        <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/posts/${post.id}/delete|}"
+           class="btn btn-primary my-2"
+           th:text="|게시글 삭제|"></a>
+
     </div>
 </body>
 </html>

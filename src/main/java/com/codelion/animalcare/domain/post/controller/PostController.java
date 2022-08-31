@@ -52,8 +52,10 @@ public class PostController {
 
     // 게시글 삭제
     @GetMapping("/{id}/delete")
-    public void delete(@PathVariable Long id) {
+    public String delete(@PathVariable Long id) {
         postService.deletePost(id);
+
+        return "redirect:/usr/posts";
     }
 
     // 게시글 수정
