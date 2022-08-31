@@ -77,7 +77,9 @@
             </div>
         </div>
 
-        <a  th:href="@{|/usr/posts/${post.id}/modify|}" class="btn btn-primary my-2" th:text="|게시글 수정|"></a>
+        <a th:href="@{|/usr/posts/${post.id}/like|}" class="btn btn-primary my-2" th:text="|추천|"></a>
+
+        <a th:href="@{|/usr/posts/${post.id}/modify|}" class="btn btn-primary my-2" th:text="|게시글 수정|"></a>
 
         <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/posts/${post.id}/delete|}"
            class="btn btn-primary my-2"

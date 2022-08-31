@@ -34,6 +34,7 @@ public class PostService {
         if(!post.isPresent()) {
             throw new PostNotFoundException(String.format("Post ID:%s is not found", id));
         }
+
         return new PostResponseDto(post.get());
     }
 
@@ -57,4 +58,13 @@ public class PostService {
         return postRepository.save(postRequestDto.toEntity()).getId();
     }
 
+    @Transactional
+    public int updatePostViews(Long id) {
+        return postRepository.updateViews(id);
+    }
+
+    @Transactional
+    public int updatePostLikes(Long id) {
+        return postRepository.updateLikes(id);
+    }
 }

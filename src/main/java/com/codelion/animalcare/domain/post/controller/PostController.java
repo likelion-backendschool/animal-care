@@ -23,9 +23,11 @@ public class PostController {
         this.postService = postService;
     }
 
-    /**
-     * ToDo:
-     *
+    /*
+        ToDo
+        1. 게시글 작성, 수정, 삭제 사용자 인증(로그인 연동)
+        2. 게시글 상세 조회로 리다이렉트 시, 조회수 증가 방지 필요
+        3. 새로운 템플릿 적용
      */
 
     // 게시글 목록 페이징
@@ -45,6 +47,7 @@ public class PostController {
     // 게시글 상세 조회
     @GetMapping("/{id}")
     public String detail(Model model, @PathVariable Long id) {
+        postService.updatePostViews(id);
         model.addAttribute("post", postService.findPostById(id));
 
         return "community/communityDetail";
@@ -60,9 +63,7 @@ public class PostController {
 
     // 게시글 수정 화면
     @GetMapping("/{id}/modify")
-    public String modify(Model model, @PathVariable Long id, ModifyPostRequestDto modifyPostRequestDto) {
-        model.addAttribute("post", postService.findPostById(id));
-
+    public String modifyForm(@PathVariable Long id, ModifyPostRequestDto modifyPostRequestDto) {
         return "community/communityModifyForm";
     }
 
@@ -84,6 +85,15 @@ public class PostController {
     @PostMapping("/write")
     public String write(PostRequestDto postRequestDto) {
         postService.savePost(postRequestDto);
+
         return "redirect:/usr/posts";
+    }
+
+    // 게시글 추천
+    @GetMapping("/{id}/like")
+    public String like(@PathVariable Long id) {
+        postService.updatePostLikes(id);
+
+        return "redirect:/usr/posts/%d".formatted(id);
     }
 }

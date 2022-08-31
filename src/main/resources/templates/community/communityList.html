@@ -15,6 +15,7 @@
                 <th>번호</th>
                 <th>제목</th>
                 <th>조회수</th>
+                <th>추천수</th>
                 <th>작성일시</th>
             </tr>
             </thead>
@@ -23,6 +24,7 @@
                 <td th:text="${post.id}"></td>
                 <td><a th:href="@{|/usr/posts/${post.id}|}" th:text="${post.title}"></a></td>
                 <td th:text="${post.views}"></td>
+                <td th:text="${post.likes}"></td>
                 <td th:text="${post.createdAt} ? ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')} : ${post.createdAt}"></td>
             </tr>
             </tbody>
