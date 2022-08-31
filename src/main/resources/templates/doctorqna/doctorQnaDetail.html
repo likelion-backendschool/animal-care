@@ -1,6 +1,7 @@
-<html layout:decorate="~{doctorqna/doctorQnaLayout}">
+<html layout:decorate="~{global/layout}">
+<head th:replace="/global/fragments/header :: header"/>
 <div layout:fragment="content" class="container my-3">
-
+    <div th:replace="/global/fragments/bodyHeader :: bodyHeader"/>
     <h2 class="border-bottom py-2" th:text="${question.title}"></h2>
     <div class="card my-3">
         <div class="card-body">
@@ -58,7 +59,7 @@
             <input type="submit" value="답변등록" class="btn btn-primary my-2">
         </form>
     </div>
-
+    <div th:replace="/global/fragments/footer :: footer" />
 </div>
 </html>
 
