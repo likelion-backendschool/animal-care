@@ -1,23 +1,49 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>login</title>
-</head>
-<body>
-<h1>Login</h1>
-<hr>
-<img src="/img/test.jpeg"/>
 
-<a href="/oauth2/authorization/kakao"><img src="/img/kakao.jpeg"/></a>
-<form action="/login" method="POST">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    email : <input type="text" name="username"> <br>
-    password : <input type="password" name="password"> <br>
-    <button type="submit">Login</button>
-</form>
-<br>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>sign up</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Sign Up</h1>-->
+<!--<hr>-->
 
-<a href="/signup">Go to join! →</a>
-</body>
+<!--<form th:action="@{/user}" method="POST">-->
+<!--    email : <input type="text" name="email"> <br>-->
+<!--    password : <input type="password" name="password"> <br>-->
+<!--    <input type="radio" name="auth" value="ROLE_ADMIN,ROLE_USER,ROLE_DOCTOR"> admin-->
+<!--    <input type="radio" name="auth" value="ROLE_USER" checked="checked"> user-->
+<!--    <input type="radio" name="auth" value="ROLE_DOCTOR,ROLE_USER"> doctor <br>-->
+<!--    <button type="submit">Join</button>-->
+<!--</form>-->
+<!--<br>-->
+
+<!--<a href="/login">Go to login →</a>-->
+<!--</body>-->
+<!--</html>-->
+
+<html layout:decorate="~{layout}">
+
+<div layout:fragment="content" class="container my-3">
+    <img src="/img/test.jpeg"/>
+    <a href="/oauth2/authorization/kakao"><img src="/img/kakao.jpeg"/></a>
+    <form action="/login" method="POST">
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+        <div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">사용자ID</label>
+            <input type="text" name="username" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">비밀번호</label>
+            <input type="password" name="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+</div>
+
 </html>
