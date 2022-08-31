@@ -50,6 +50,7 @@ public class PostDto {
     }
 
     @Getter
+    @Setter
     public static class ModifyPostRequestDto {
         private String title;
         private String content;

@@ -38,7 +38,7 @@
                         <label class="control-label">수정일</label>
                     </div>
                     <div class="col-sm-10">
-                        <p class="form-control" id="updatedAt" th:text="${post.updatedAt}"></p>
+                        <p class="form-control" id="updatedAt" th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm')}"></p>
                     </div>
                 </div>
             </div>
@@ -76,6 +76,8 @@
                 </div>
             </div>
         </div>
+
+        <a  th:href="@{|/usr/posts/${post.id}/modify|}" class="btn btn-primary my-2" th:text="|게시글 수정|"></a>
 
         <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/posts/${post.id}/delete|}"
            class="btn btn-primary my-2"

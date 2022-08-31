@@ -58,10 +58,20 @@ public class PostController {
         return "redirect:/usr/posts";
     }
 
+    // 게시글 수정 화면
+    @GetMapping("/{id}/modify")
+    public String modify(Model model, @PathVariable Long id, ModifyPostRequestDto modifyPostRequestDto) {
+        model.addAttribute("post", postService.findPostById(id));
+
+        return "community/communityModifyForm";
+    }
+
     // 게시글 수정
     @PostMapping("/{id}/modify")
-    public ResponseEntity modify(@PathVariable Long id, @RequestBody ModifyPostRequestDto modifyPostRequestDto) {
-        return ResponseEntity.ok(postService.modifyPost(id, modifyPostRequestDto));
+    public String modify(@PathVariable Long id, ModifyPostRequestDto modifyPostRequestDto) {
+        postService.modifyPost(id, modifyPostRequestDto);
+
+        return "redirect:/usr/posts/%d".formatted(id);
     }
 
     // 게시글 작성 화면
