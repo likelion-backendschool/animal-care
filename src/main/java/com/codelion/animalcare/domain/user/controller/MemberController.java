@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Optional;
 
 /**
  * 회원 마이페이지 내정보
@@ -42,8 +41,8 @@ public class MemberController {
 
         Member member = memberService.findByEmail(principal.getName());
 
-        member.changeUsername(form.getName());
-        member.changeUserAddress(address);
+        member.changeName(form.getName());
+        member.changeAddress(address);
 
         memberService.join(member);
 
