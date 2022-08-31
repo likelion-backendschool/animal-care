@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -73,7 +74,7 @@ public class MedicalAppointmentService {
     }
 
 
-    public Member findMemberByMemberId(Long memberId) {
+    public Optional<Member> findMemberByMemberId(Long memberId) {
         return medicalAppointmentRepository.findMemberByMemberId(memberId);
     }
 }
