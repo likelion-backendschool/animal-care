@@ -7,10 +7,8 @@ import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.repository.UserRepository;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,17 +63,19 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
-    public boolean questionUnauthorized(Long id, Principal principal){
+    public boolean questionAuthorized(Long id, Principal principal){
         Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("작성된 글이 없습니다."));
 
 
-        if(!question.getMember().getEmail().equals(principal.getName())) {
-            return true;
+        if(question.getMember().getEmail().equals(principal.getName())) {
+            return false;
         }
 
-        return false;
+        return true;
 
     }
+
+    //delete flag
 
 
 
