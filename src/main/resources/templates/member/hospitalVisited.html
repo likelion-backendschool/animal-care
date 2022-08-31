@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="global/fragments/header :: header" />
+<style>
+  .fieldError {
+    border-color: #bd2130;
+  }
+</style>
+<body>
+
+<div class="container">
+  <div th:replace="global/fragments/bodyHeader :: bodyHeader"/>
+
+  병원 방문내역입니다.
+
+  <div>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>회원</th>
+        <th>애완동물</th>
+        <th>병원</th>
+        <th>닥터</th>
+        <th>방문 날짜</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+
+
+      </tbody>
+    </table>
+  </div>
+
+  <div th:replace="global/fragments/footer :: footer" />
+</div> <!-- /container -->
+
+</body>
+
+</html>

@@ -8,5 +8,5 @@ import lombok.Setter;
 public class MedicalAppointmentSearch {
 
     private String memberName; // 회원 이름
-    private MedicalAppointmentStatus medicalAppointmentStatus; //예약 상태[COMPLETE, CANCEL]
+    private MedicalAppointmentStatus status; //예약 상태[COMPLETE, CANCEL]
 }

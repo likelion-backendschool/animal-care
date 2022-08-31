@@ -1,15 +1,20 @@
 package com.codelion.animalcare.domain.hospital.entity;
 
-
+import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,18 +46,17 @@ public class Hospital extends BaseEntity {
 //        this.openingHours = openingHours;
 //        this.deletedAt = deletedAt;
 //    }
+//
+//
+    // Hospital : Doctor = 1: n;
+    @JsonIgnore
+    @OneToMany(mappedBy = "hospital")
+    private List<Doctor> doctors = new ArrayList<>();
 
-    // TODO : 엔터티(예약 - 병원 - 닥터) 연결순서로 인해 나중에 수정해야함
-//    // Hospital : MedicalAppointment = 1: n;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "hospital")
-//    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
-//
-//
-//    // Hospital : Doctor = 1: n;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "hospital")
-//    private List<Doctor> doctors = new ArrayList<>();
+    // Animal : MedicalAppointment = 1: n;
+    @JsonIgnore
+    @OneToMany(mappedBy = "hospital")
+    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
 
 
 }

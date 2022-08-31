@@ -3,6 +3,7 @@ package com.codelion.animalcare.domain.hospital.service;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
+import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ public class HospitalService {
 
 
     private final HospitalRepository hospitalRepository;
+    private final DoctorRepository doctorRepository;
 
     public Optional<Hospital> findById(long id) {
         return hospitalRepository.findById(id);
@@ -30,5 +32,11 @@ public class HospitalService {
     public List<Hospital> findHospitals() {
         return hospitalRepository.findAll();
     }
+
+    //병원에 따른 닥터 조회
+//    public List<Doctor> findDoctors(long hospitalId) {
+//
+//        return doctorRepository.findAllById(hospitalId);
+//    }
 
 }
