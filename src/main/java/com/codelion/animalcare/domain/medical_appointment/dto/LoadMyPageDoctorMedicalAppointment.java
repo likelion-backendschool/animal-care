@@ -42,9 +42,9 @@ public class LoadMyPageDoctorMedicalAppointment {
 
         public ResponseDto(MedicalAppointment medicalAppointment){
             this.id = medicalAppointment.getId();
-            this.medicalAppointmentDate = medicalAppointment.getMedicalAppointmentDate();
+            this.medicalAppointmentDate = medicalAppointment.getDate();
             this.content = medicalAppointment.getContent();
-            this.medicalAppointmentStatus = medicalAppointment.getMedicalAppointmentStatus();
+            this.medicalAppointmentStatus = medicalAppointment.getStatus();
             this.doctor = medicalAppointment.getDoctor();
             this.member = medicalAppointment.getMember();
             this.animal = medicalAppointment.getAnimal();

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -54,7 +57,35 @@ public class QuestionController {
 
     //개별 조회
     @GetMapping("/usr/doctor-qna/{id}")
-    public String findById(Model model, @PathVariable Long id, AnswerSaveRequestDto answerSaveRequestDto){
+    public String findById(Model model, @PathVariable Long id, AnswerSaveRequestDto answerSaveRequestDto, HttpServletRequest request, HttpServletResponse response){
+        // 조회수 쿠키로 중복방지
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(var cookie : cookies) {
+                if(cookie.getName().equals("DoctorQnaView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if(oldCookie != null) {
+            if(!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+                questionService.updateView(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+            }
+        } else {
+            questionService.updateView(id);
+            Cookie newCookie = new Cookie("DoctorQnaView", "[" + id + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(newCookie);
+        }
+
+
         model.addAttribute("question", questionService.findById(id));
 
         return "/doctorqna/doctorQnaDetail";

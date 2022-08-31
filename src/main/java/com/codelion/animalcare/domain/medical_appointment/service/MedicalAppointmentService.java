@@ -2,14 +2,12 @@ package com.codelion.animalcare.domain.medical_appointment.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
-
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
 import com.codelion.animalcare.domain.medical_appointment.dto.LoadMyPageDoctorMedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepository;
-
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
@@ -18,7 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -45,13 +45,12 @@ public class MedicalAppointmentService {
         return result;
     }
 
-//    public List<MedicalAppointment> findMedicalAppointmentsOld(MedicalAppointmentSearch medicalAppointmentSearch) {
-//
-//        return medicalAppointmentRepository.findAllByString(medicalAppointmentSearch);
-//    }
-
     public List<MedicalAppointment> findMedicalAppointments() {
-        return medicalAppointmentRepository.findAllByMemberAndAnimalAndHospitalAndDoctor();
+        return medicalAppointmentRepository.findAllWithMemberAnimalHospitalDoctor();
+    }
+
+    public List<MedicalAppointment> findByMemberId(long id) {
+        return medicalAppointmentRepository.findByMemberId(id);
     }
 
 
@@ -59,16 +58,16 @@ public class MedicalAppointmentService {
      * 예약
      */
     @Transactional
-    public Long medicalAppointment(Long memberId, Long animalId, long hospitalId, Long doctorId) {
+    public Long medicalAppointment(Long memberId, Long animalId, Long hospitalId, Long doctorId, LocalDateTime medicalAppointmentDate) {
 
         //엔티티 조회
-        Member member = memberRepository.getReferenceById(memberId);
-        Animal animal = animalRepository.getReferenceById(animalId);
-        Hospital hospital = hospitalRepository.getReferenceById(hospitalId);
-        Doctor doctor = doctorRepository.getReferenceById(doctorId);
+        Member member = memberRepository.findById(memberId).get();
+        Animal animal = animalRepository.findById(animalId).get();
+        Hospital hospital = hospitalRepository.findById(hospitalId).get();
+        Doctor doctor = doctorRepository.findById(doctorId).get();
 
         //예약 생성
-        MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointment(member, animal, hospital, doctor);
+        MedicalAppointment medicalAppointment = MedicalAppointment.createMedicalAppointment(member, animal, hospital, doctor, medicalAppointmentDate);
 
         medicalAppointmentRepository.save(medicalAppointment);
 
@@ -82,7 +81,8 @@ public class MedicalAppointmentService {
     @Transactional
     public void cancelMedicalAppointment(Long medicalAppointmentId) {
         //예약 엔티티 조회
-        MedicalAppointment medicalAppointment = medicalAppointmentRepository.getReferenceById(medicalAppointmentId);
+        MedicalAppointment medicalAppointment = medicalAppointmentRepository.findById(medicalAppointmentId).get();
+
         //에약 취소
         medicalAppointment.cancel();
     }
@@ -109,4 +109,8 @@ public class MedicalAppointmentService {
         return new LoadMyPageDoctorMedicalAppointment.ResponseDto(medicalAppointment);
     }
 
+
+    public Optional<Member> findMemberByMemberId(Long memberId) {
+        return medicalAppointmentRepository.findMemberByMemberId(memberId);
+    }
 }

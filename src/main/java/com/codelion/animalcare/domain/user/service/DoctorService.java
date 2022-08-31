@@ -4,6 +4,7 @@ import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfoPassword;
 import com.codelion.animalcare.domain.user.entity.Doctor;
+import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.global.error.exception.DoctorModifyAfterPasswordNotSameException;
 import com.codelion.animalcare.global.error.exception.DoctorModifyBeforePasswordNotSameException;

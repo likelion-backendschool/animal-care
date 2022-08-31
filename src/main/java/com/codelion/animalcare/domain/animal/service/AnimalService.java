@@ -2,11 +2,14 @@ package com.codelion.animalcare.domain.animal.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
+import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,9 +35,14 @@ public class AnimalService {
         }
     }
 
-    public Animal findOne(Long animalId) {
-        return animalRepository.getReferenceById(animalId);
+    public Optional<Animal> findById(Long id) {
+        return animalRepository.findById(id);
     }
+
+    public Optional<Animal> findByMemberId(Long id) {
+        return animalRepository.findByMemberId(id);
+    }
+
 
 
     //애완동물 전체 조회
@@ -42,4 +50,8 @@ public class AnimalService {
         return animalRepository.findAll();
     }
 
+
+    public List<Animal> findByMember(Member member) {
+        return animalRepository.findByMember(member);
+    }
 }

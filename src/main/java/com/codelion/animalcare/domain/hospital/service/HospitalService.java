@@ -6,6 +6,7 @@ import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoM
 import com.codelion.animalcare.domain.hospital.dto.UpdateDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
+import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,4 +56,10 @@ public class HospitalService {
 
         hospitalRepository.save(afterHospital);
     }
+    //병원에 따른 닥터 조회
+//    public List<Doctor> findDoctors(long hospitalId) {
+//
+//        return doctorRepository.findAllById(hospitalId);
+//    }
+
 }

@@ -49,6 +49,11 @@ public class QuestionService {
 
     }
 
+    @Transactional
+    public int updateView(Long id) {
+        return this.questionRepository.updateView(id);
+    }
+
     @Transactional(readOnly = true)
     public List<QuestionListResponseDto> findAllDesc() {
         return questionRepository.findAllDesc().stream()
