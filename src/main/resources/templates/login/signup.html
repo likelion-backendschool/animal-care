@@ -55,7 +55,7 @@
     <form th:action="@{/user}" method="POST">
         <input type="radio" name="auth" id="user" value="ROLE_USER" checked="checked"> user
         <input type="radio" name="auth" id="doctor" value="ROLE_DOCTOR,ROLE_USER"> doctor <br>
-        <div th:if="${user.cheked() == "cheked"}"> ok</div>
+
             <div class="mb-3">
                 <label class="form-label">이메일</label>
                 <input type="email" name="email" class="form-control">
