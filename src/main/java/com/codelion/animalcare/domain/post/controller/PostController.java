@@ -23,8 +23,13 @@ public class PostController {
         this.postService = postService;
     }
 
-    // 커뮤니티 게시글 페이징
-    @GetMapping("/list")
+    /**
+     * ToDo:
+     *
+     */
+
+    // 게시글 목록 페이징
+    @GetMapping("")
     public String list(Model model, @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Post> postList = postService.listPost(pageable);
 
@@ -38,9 +43,11 @@ public class PostController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/")
-    public PostResponseDto detail(@PathVariable Long id) {
-        return postService.findPostById(id);
+    @GetMapping("/{id}")
+    public String detail(Model model, @PathVariable Long id) {
+        model.addAttribute("post", postService.findPostById(id));
+
+        return "community/communityDetail";
     }
 
     // 게시글 삭제
@@ -61,11 +68,10 @@ public class PostController {
         return "community/communityForm";
     }
 
-
+    // 게시글 작성
     @PostMapping("/write")
     public String write(PostRequestDto postRequestDto) {
         postService.savePost(postRequestDto);
-        return "redirect:/usr/posts/list";
+        return "redirect:/usr/posts";
     }
-
 }

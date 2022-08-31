@@ -33,17 +33,17 @@
 
         <div class="pagination justify-content-center">
             <th:block th:if="${hasPrev}">
-                <a th:href="@{/usr/posts/list(page=${previous})}" class="btn btn-lg bi bi-caret-left-square-fill">&lsaquo;</a>
+                <a th:href="@{/usr/posts(page=${previous})}" class="btn btn-lg bi bi-caret-left-square-fill">&lsaquo;</a>
             </th:block>
             <th:block th:unless="${hasPrev}">
-                <a th:href="@{/usr/posts/list(page=${previoust})}" class="btn btn-lg bi bi-caret-left-square-fill disabled">&lsaquo;</a>
+                <a th:href="@{/usr/posts(page=${previoust})}" class="btn btn-lg bi bi-caret-left-square-fill disabled">&lsaquo;</a>
             </th:block>
 
             <th:block th:if="${hasNext}">
-                <a th:href="@{/usr/posts/list(page=${next})}" class="btn btn-lg bi bi-caret-right-square-fill">&rsaquo;</a>
+                <a th:href="@{/usr/posts(page=${next})}" class="btn btn-lg bi bi-caret-right-square-fill">&rsaquo;</a>
             </th:block>
             <th:bolck th:unless="${hasNext}">
-                <a th:href="@{/usr/posts/list(page=${next})}" class="btn btn-lg bi bi-caret-right-square-fill disabled">&rsaquo;</a>
+                <a th:href="@{/usr/posts(page=${next})}" class="btn btn-lg bi bi-caret-right-square-fill disabled">&rsaquo;</a>
             </th:bolck>
         </div>
 
