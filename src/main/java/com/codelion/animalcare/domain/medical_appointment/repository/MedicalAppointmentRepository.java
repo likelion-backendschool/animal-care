@@ -22,7 +22,7 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
 
 
     /**
-     * 단순히 여러 정보(회원, 애완동물, 닥터, 병원)를 가져옴
+     * 예약내역에 대한 단순히 여러 정보(회원, 애완동물, 닥터, 병원)를 가져옴
      */
     @Query("select ma from MedicalAppointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h")
     List<MedicalAppointment> findAllMedicalAppointments();
