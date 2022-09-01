@@ -6,7 +6,7 @@
 <div class="container">
 
     <div th:replace="global/fragments/bodyHeader :: bodyHeader"/>
-    <form role="form" action="/usr/mypage/member/medical-appointment" method="post">
+    <form role="form" action="/usr/mypage/member/appointment" method="post">
         <div class="form-group">
             <label>회원이름</label>
             <input name="memberId" id="member" th:value="${member.name}" class="form-control"/>

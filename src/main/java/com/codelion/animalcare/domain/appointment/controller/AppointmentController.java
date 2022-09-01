@@ -1,22 +1,19 @@
-package com.codelion.animalcare.domain.medical_appointment.controller;
+package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 
-import com.codelion.animalcare.domain.medical_appointment.dto.MedicalAppointmentDto;
-import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
-import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
-import com.codelion.animalcare.domain.user.dto.MemberDto;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
+import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
+import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +25,10 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-public class MedicalAppointmentController {
+public class AppointmentController {
 
-    private final MedicalAppointmentQueryService medicalAppointmentQueryService;
-    private final MedicalAppointmentService medicalAppointmentService;
+    private final AppointmentQueryService appointmentQueryService;
+    private final AppointmentService appointmentService;
     private final MemberService memberService;
     private final AnimalService animalService;
     private final DoctorService doctorService;
@@ -39,8 +36,8 @@ public class MedicalAppointmentController {
 
 
     // 임시 예약하기
-    @GetMapping("/usr/mypage/member/medical-appointment")
-    public String createMedicalAppointmentForm(Model model, Principal principal) {
+    @GetMapping("/usr/mypage/member/appointment")
+    public String createAppointmentForm(Model model, Principal principal) {
 
         Optional<Member> member = memberService.findByEmail(principal.getName());
         List<Animal> animals = animalService.findByMember(member.get());
@@ -52,55 +49,55 @@ public class MedicalAppointmentController {
         model.addAttribute("hospitals", hospitals);
         model.addAttribute("doctors", doctors);
 
-        return "medicalAppointments/medicalAppointmentForm";
+        return "appointments/appointmentForm";
     }
 
 
     // 임시 예약하기
-    @PostMapping("/usr/mypage/member/medical-appointment")
-    public String medicalAppointment(
+    @PostMapping("/usr/mypage/member/appointment")
+    public String appointment(
             Principal principal,
             @RequestParam("animalId") Long animalId,
             @RequestParam("hospitalId") Long hospitalId,
             @RequestParam("doctorId") Long doctorId,
-            @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime medicalAppointmentDate) {
+            @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
         Optional<Member> member = memberService.findByEmail(principal.getName());
-        medicalAppointmentService.medicalAppointment(member.get().getId(), animalId, hospitalId, doctorId, medicalAppointmentDate);
+        appointmentService.appointment(member.get().getId(), animalId, hospitalId, doctorId, appointmentDate);
 
-        return "redirect:/usr/mypage/member/medical-appointment-info";
+        return "redirect:/usr/mypage/member/appointment-info";
     }
 
 
     // 마이페이지 회원 예약내역
-    @GetMapping("/usr/mypage/member/medical-appointment-info")
-    public String medicalAppointmentListUseDto(Model model, Principal principal) {
+    @GetMapping("/usr/mypage/member/appointment-info")
+    public String appointmentListUseDto(Model model, Principal principal) {
 
         Optional<Member> member = memberService.findByEmail(principal.getName());
-        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findMedicalAppointmentByMemberId(member.get().getId());
+        List<AppointmentDto> appointmentDtos = appointmentQueryService.findAppointmentByMemberId(member.get().getId());
 
-        model.addAttribute("medicalAppointmentDtos", medicalAppointmentDtos);
+        model.addAttribute("appointmentDtos", appointmentDtos);
 
-        return "medicalAppointments/medicalAppointmentList";
+        return "appointments/appointmentList";
     }
 
     // 모든 예약 내역
-//    @GetMapping("/usr/mypage/member/medical-appointment-info")
-//    public String medicalAppointmentListUseDto(Model model) {
+//    @GetMapping("/usr/mypage/member/appointment-info")
+//    public String appointmentListUseDto(Model model) {
 //
-//        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findAllMedicalAppointments();
+//        List<AppointmentDto> appointmentDtos = appointmentQueryService.findAllAppointments();
 //
-//        model.addAttribute("medicalAppointmentDtos", medicalAppointmentDtos);
+//        model.addAttribute("appointmentDtos", appointmentDtos);
 //
-//        return "medicalAppointments/medicalAppointmentList";
+//        return "appointments/appointmentList";
 //    }
 
 
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/medical-appointment-info/{medicalAppointmentId}/cancel")
-    public String cancelMedicalAppointment(@PathVariable("medicalAppointmentId") Long medicalAppointmentId) {
-        medicalAppointmentService.cancelMedicalAppointment(medicalAppointmentId);
-        return "redirect:/usr/mypage/member/medical-appointment-info";
+    @PostMapping("/usr/mypage/member/appointment-info/{appointmentId}/cancel")
+    public String cancelAppointment(@PathVariable("appointmentId") Long appointmentId) {
+        appointmentService.cancelAppointment(appointmentId);
+        return "redirect:/usr/mypage/member/appointment-info";
     }
 
 

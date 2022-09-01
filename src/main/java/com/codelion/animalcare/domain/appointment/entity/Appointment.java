@@ -1,11 +1,10 @@
-package com.codelion.animalcare.domain.medical_appointment.entity;
+package com.codelion.animalcare.domain.appointment.entity;
 
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
-import com.codelion.animalcare.domain.medical_appointment.MedicalAppointmentStatus;
+import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import lombok.*;
@@ -21,7 +20,7 @@ import static javax.persistence.FetchType.LAZY;
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
-public class MedicalAppointment extends BaseEntity {
+public class Appointment extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDateTime date; // 예약날짜 및 시간
@@ -33,7 +32,7 @@ public class MedicalAppointment extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private MedicalAppointmentStatus status; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
+    private AppointmentStatus status; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
 
 
     @ManyToOne(fetch = LAZY)
@@ -59,37 +58,37 @@ public class MedicalAppointment extends BaseEntity {
      // == 연관관계 메서드 == //
     public void addMember(Member member) {
         this.member = member;
-        member.getMedicalAppointments().add(this);
+        member.getAppointments().add(this);
     }
 
     public void addAnimal(Animal animal) {
         this.animal = animal;
-        animal.getMedicalAppointments().add(this);
+        animal.getAppointments().add(this);
     }
 
     public void addDoctor(Doctor doctor) {
         this.doctor = doctor;
-        doctor.getMedicalAppointments().add(this);
+        doctor.getAppointments().add(this);
     }
 
     public void addHospital(Hospital hospital) {
         this.hospital = hospital;
-        hospital.getMedicalAppointments().add(this);
+        hospital.getAppointments().add(this);
     }
 
 
     //== 생성 메서드 ==//
-    public static MedicalAppointment createMedicalAppointment(Member member,Animal animal, Hospital hospital, Doctor doctor, LocalDateTime medicalAppointmentDate) {
-        MedicalAppointment medicalAppointment = new MedicalAppointment();
-        medicalAppointment.addMember(member);
+    public static Appointment createAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor, LocalDateTime appointmentDate) {
+        Appointment appointment = new Appointment();
+        appointment.addMember(member);
 
-        medicalAppointment.addAnimal(animal);
-        medicalAppointment.addHospital(hospital);
-        medicalAppointment.addDoctor(doctor);
+        appointment.addAnimal(animal);
+        appointment.addHospital(hospital);
+        appointment.addDoctor(doctor);
 
-        medicalAppointment.setStatus(MedicalAppointmentStatus.COMPLETE);
-        medicalAppointment.setDate(medicalAppointmentDate);
-        return medicalAppointment;
+        appointment.setStatus(AppointmentStatus.COMPLETE);
+        appointment.setDate(appointmentDate);
+        return appointment;
     }
 
 
@@ -98,13 +97,13 @@ public class MedicalAppointment extends BaseEntity {
      * 예약 취소
      */
     public void cancel() {
-        this.setStatus(MedicalAppointmentStatus.CANCEL);
+        this.setStatus(AppointmentStatus.CANCEL);
     }
 
     /**
      * 예약 상태 변경
      */
-    public void updateStatus(MedicalAppointmentStatus refuse) {
+    public void updateStatus(AppointmentStatus refuse) {
         this.status = refuse;
     }
 }

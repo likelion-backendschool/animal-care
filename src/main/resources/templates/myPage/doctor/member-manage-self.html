@@ -1,7 +1,7 @@
 <html layout:decorate="~{myPage/doctor/sampleLayout}">
 <div class="container" layout:fragment="content" >
     <nav class="navbar">
-        <a href="/usr/mypage/doctor/member-manage/medical-appointments">뒤로</a>
+        <a href="/usr/mypage/doctor/member-manage/appointments">뒤로</a>
     </nav>
     <h2 class="p-4">
         환자 관리
@@ -20,22 +20,22 @@
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td th:text="${medicalAppointment.content}"></td>
+                    <td th:text="${appointment.content}"></td>
                 </tr>
                 <tr>
                     <th>예약 상태</th>
                     <td>
-                        [[${medicalAppointment.medicalAppointmentStatus}]]
-                        <form th:action="|/usr/mypage/doctor/member-manage/medical-appointments/${medicalAppointment?.id}/refuse|" method="post">
+                        [[${appointment.appointmentStatus}]]
+                        <form th:action="|/usr/mypage/doctor/member-manage/appointments/${appointment?.id}/refuse|" method="post">
                             <input class="btn btn-primary" type="submit"
-                                   th:if="${medicalAppointment.medicalAppointmentStatus.name == 'COMPLETE' }"
+                                   th:if="${appointment.getAppointmentStatus.name == 'COMPLETE' }"
                                    onclick="return confirm('정말 거절하시겠습니까?')" value="환자 거절" />
                         </form>
                     </td>
                 </tr>
                 <tr>
                     <th>예약날짜 및 시간</th>
-                    <td th:text="${#temporals.format(medicalAppointment.medicalAppointmentDate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#temporals.format(appointment.getAppointmentDate, 'yyyy-MM-dd HH:mm')}"></td>
                 </tr>
                 <tr>
                     <th>진단서</th>

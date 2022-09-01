@@ -1,14 +1,11 @@
 package com.codelion.animalcare.domain.user.entity;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -24,7 +21,7 @@ public class Member extends UserInfo{
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
-    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
