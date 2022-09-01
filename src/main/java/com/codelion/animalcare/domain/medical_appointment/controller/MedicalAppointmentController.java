@@ -8,11 +8,13 @@ import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.medical_appointment.dto.MedicalAppointmentDto;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentQueryService;
 import com.codelion.animalcare.domain.medical_appointment.service.MedicalAppointmentService;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,13 +42,12 @@ public class MedicalAppointmentController {
     @GetMapping("/usr/mypage/member/medical-appointment")
     public String createMedicalAppointmentForm(Model model, Principal principal) {
 
-        Member member = memberService.findByEmail(principal.getName());
-        List<Animal> animals = animalService.findByMember(member);
-
+        Optional<Member> member = memberService.findByEmail(principal.getName());
+        List<Animal> animals = animalService.findByMember(member.get());
         List<Hospital> hospitals = hospitalService.findHospitals();
         List<Doctor> doctors = doctorService.findDoctors();
 
-        model.addAttribute("member", member);
+        model.addAttribute("member", member.get());
         model.addAttribute("animals", animals);
         model.addAttribute("hospitals", hospitals);
         model.addAttribute("doctors", doctors);
@@ -63,8 +65,8 @@ public class MedicalAppointmentController {
             @RequestParam("doctorId") Long doctorId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime medicalAppointmentDate) {
 
-        Member member = memberService.findByEmail(principal.getName());
-        medicalAppointmentService.medicalAppointment(member.getId(), animalId, hospitalId, doctorId, medicalAppointmentDate);
+        Optional<Member> member = memberService.findByEmail(principal.getName());
+        medicalAppointmentService.medicalAppointment(member.get().getId(), animalId, hospitalId, doctorId, medicalAppointmentDate);
 
         return "redirect:/usr/mypage/member/medical-appointment-info";
     }
@@ -74,8 +76,8 @@ public class MedicalAppointmentController {
     @GetMapping("/usr/mypage/member/medical-appointment-info")
     public String medicalAppointmentListUseDto(Model model, Principal principal) {
 
-        Member member = memberService.findByEmail(principal.getName());
-        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findMedicalAppointmentByMemberId(member.getId());
+        Optional<Member> member = memberService.findByEmail(principal.getName());
+        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findMedicalAppointmentByMemberId(member.get().getId());
 
         model.addAttribute("medicalAppointmentDtos", medicalAppointmentDtos);
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
 
 /**
  * 회원 마이페이지 내정보
@@ -39,12 +40,12 @@ public class MemberController {
 
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
 
-        Member member = memberService.findByEmail(principal.getName());
+        Optional<Member> member = memberService.findByEmail(principal.getName());
 
-        member.changeName(form.getName());
-        member.changeAddress(address);
+        member.get().changeName(form.getName());
+        member.get().changeAddress(address);
 
-        memberService.join(member);
+        memberService.join(member.get());
 
         return "redirect:/usr/mypage/member";
     }
@@ -53,9 +54,9 @@ public class MemberController {
     @GetMapping("/usr/mypage/member/info")
     public String list(Model model, Principal principal) {
 
-        Member member = memberService.findByEmail(principal.getName());
+        Optional<Member> member = memberService.findByEmail(principal.getName());
 
-        model.addAttribute("member", member);
+        model.addAttribute("member", member.get());
         return "member/memberInfo";
     }
 
