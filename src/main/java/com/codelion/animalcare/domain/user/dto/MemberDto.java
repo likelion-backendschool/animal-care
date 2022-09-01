@@ -35,7 +35,7 @@ public class MemberDto {
 
     private String phone_num;
 
-    private Long gender_id;
+    private int gender_id;
     private List<AnimalDto> animals;
 
     public MemberDto(Member member) {
@@ -46,7 +46,7 @@ public class MemberDto {
         birthDay = member.getBirthday();
         address = member.getAddress();
         phone_num = member.getPhoneNum();
-        gender_id = member.getId();
+        gender_id = member.getGenderId();
         animals = member.getAnimals().stream()
                 .map(animals -> new AnimalDto(animals))
                 .collect(Collectors.toList());

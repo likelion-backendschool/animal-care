@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.medical_delivery_tmp;
+package com.codelion.animalcare.domain.delivery;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 @RequiredArgsConstructor
-public class MedicalDeliveryInfoController {
+public class DeliveryInfoController {
 
-    @GetMapping("/usr/mypage/member/medicine-delivery-info")
+    @GetMapping("/usr/mypage/member/delivery-info")
     public String createForm(Model model) {
-        model.addAttribute("medicalDeliveryForm", new MedicalDeliveryDto());
-        return "medicalDelivery/medicalDelivery";
+        model.addAttribute("deliveryForm", new DeliveryDto());
+        return "delivery/delivery";
     }
 }

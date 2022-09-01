@@ -27,8 +27,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="mad : ${medicalAppointmentDtos}">
-                <td th:text="${mad.medicalAppointmentId}"></td>
+            <tr th:each="mad : ${appointmentDtos}">
+                <td th:text="${mad.getAppointmentId}"></td>
                 <td th:text="${mad.memberName}"></td>
                 <td th:text="${mad.animalName}"></td>
                 <td th:text="${mad.hospitalName}"></td>
@@ -37,11 +37,11 @@
                 <td th:text="${mad.status}"></td>
                 <td>
                     <a th:if="${mad.status.name() == 'COMPLETE'}"
-                       href="#" th:href="@{/usr/mypage/member/medical-appointment-info/{medicalAppointmentId}/edit (id=${mad.medicalAppointmentId})}"
+                       href="#" th:href="@{/usr/mypage/member/appointment-info/{appointmentId}/edit (id=${mad.getAppointmentId})}"
                        class="btn btn-primary" role="button">MODIFY</a>
                 </td>
                 <td>
-                    <a th:if="${mad.status.name() == 'COMPLETE'}" href="#" th:href="'javascript:cancel('+${mad.medicalAppointmentId}+')'"
+                    <a th:if="${mad.status.name() == 'COMPLETE'}" href="#" th:href="'javascript:cancel('+${mad.getAppointmentId}+')'"
                        class="btn btn-danger">CANCEL</a>
                 </td>
             </tr>
@@ -58,7 +58,7 @@
     function cancel(id) {
         var form = document.createElement("form");
         form.setAttribute("method", "post");
-        form.setAttribute("action", "/usr/mypage/member/medical-appointment-info/" + id + "/cancel");
+        form.setAttribute("action", "/usr/mypage/member/appointment-info/" + id + "/cancel");
         document.body.appendChild(form);
         form.submit();
     }

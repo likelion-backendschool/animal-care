@@ -4,7 +4,7 @@ package com.codelion.animalcare.domain.hospital.entity;
 
 import com.codelion.animalcare.domain.user.entity.Doctor;
 //import com.codelion.animalcare.domain.member.Address;
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
 
 
 import com.codelion.animalcare.global.common.entity.BaseEntity;
@@ -62,7 +62,7 @@ public class Hospital extends BaseEntity {
     // Animal : MedicalAppointment = 1: n;
     @JsonIgnore
     @OneToMany(mappedBy = "hospital")
-    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
 
 
 }
