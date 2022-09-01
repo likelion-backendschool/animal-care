@@ -3,11 +3,9 @@ package com.codelion.animalcare.domain.medical_appointment.service;
 import com.codelion.animalcare.domain.medical_appointment.dto.MedicalAppointmentDto;
 import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.domain.medical_appointment.repository.MedicalAppointmentRepository;
-import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +22,7 @@ public class MedicalAppointmentQueryService {
      */
     public List<MedicalAppointmentDto> findAllMedicalAppointments() {
 
-        List<MedicalAppointment> medicalAppointments = medicalAppointmentRepository.findAllWithMemberAnimalHospitalDoctor();
+        List<MedicalAppointment> medicalAppointments = medicalAppointmentRepository.findAllMedicalAppointments();
 
         List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointments.stream()
                 .map(o -> new MedicalAppointmentDto(o))

@@ -46,7 +46,7 @@ public class MedicalAppointmentService {
     }
 
     public List<MedicalAppointment> findMedicalAppointments() {
-        return medicalAppointmentRepository.findAllWithMemberAnimalHospitalDoctor();
+        return medicalAppointmentRepository.findAllMedicalAppointments();
     }
 
     public List<MedicalAppointment> findByMemberId(long id) {

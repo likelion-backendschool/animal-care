@@ -84,6 +84,16 @@ public class MedicalAppointmentController {
         return "medicalAppointments/medicalAppointmentList";
     }
 
+    // 모든 예약 내역
+//    @GetMapping("/usr/mypage/member/medical-appointment-info")
+//    public String medicalAppointmentListUseDto(Model model) {
+//
+//        List<MedicalAppointmentDto> medicalAppointmentDtos = medicalAppointmentQueryService.findAllMedicalAppointments();
+//
+//        model.addAttribute("medicalAppointmentDtos", medicalAppointmentDtos);
+//
+//        return "medicalAppointments/medicalAppointmentList";
+//    }
 
 
     // 마이페이지 회원 예약정보 취소
