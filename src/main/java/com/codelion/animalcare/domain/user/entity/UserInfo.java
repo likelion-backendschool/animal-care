@@ -109,13 +109,4 @@ public class UserInfo extends BaseEntity implements UserDetails {
         // 계정이 사용 가능한지 확인하는 로직
         return true; // true -> 사용 가능
     }
-
-
-//    public void changeName(String name) {
-//        this.name = name;
-//    }
-//
-//    public void changeAddress(Address address) {
-//        this.address = address;
-//    }
 }
