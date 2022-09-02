@@ -1,7 +1,12 @@
 package com.codelion.animalcare.domain.hospital.entity;
 
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+
+
 import com.codelion.animalcare.domain.user.entity.Doctor;
+//import com.codelion.animalcare.domain.member.Address;
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
+
+
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -37,6 +42,11 @@ public class Hospital extends BaseEntity {
     @Column()
     private LocalDateTime deletedAt;
 
+    // Hospital : Doctor = 1: n;
+    @JsonIgnore
+    @OneToMany(mappedBy = "hospital")
+    private List<Doctor> doctors = new ArrayList<>();
+
 //    @Builder
 //    private Hospital(Long id, LocalDateTime createdAt, String name/* Address address*/, String phoneNum, String openingHours, LocalDateTime deletedAt) {
 //        super(id, createdAt);
@@ -48,15 +58,11 @@ public class Hospital extends BaseEntity {
 //    }
 //
 //
-    // Hospital : Doctor = 1: n;
-    @JsonIgnore
-    @OneToMany(mappedBy = "hospital")
-    private List<Doctor> doctors = new ArrayList<>();
 
     // Animal : MedicalAppointment = 1: n;
     @JsonIgnore
     @OneToMany(mappedBy = "hospital")
-    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
 
 
 }

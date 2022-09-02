@@ -1,7 +1,7 @@
 package com.codelion.animalcare.domain.user.entity;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,5 +42,5 @@ public class Doctor extends UserInfo{
     // Doctor : MedicalAppointment = 1: n;
     @JsonIgnore
     @OneToMany(mappedBy = "doctor")
-    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
 }

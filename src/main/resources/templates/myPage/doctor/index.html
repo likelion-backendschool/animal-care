@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-my page doctor
-<a href="http://localhost:8080/usr/my-page/doctor/1/patient-manage/medical-appointments">환자 관리</a>
-<a href="http://localhost:8080/usr/my-page/doctor/1/hospital-info-manage">병원 소개 관리</a>
-<a href="http://localhost:8080/usr/my-page/doctor/1/info">내정보</a>
-</body>
+<html layout:decorate="~{myPage/doctor/sampleLayout}">
+<div class="container" layout:fragment="content">
+<h2 class="p-4">
+    my page doctor
+</h2>
+    <ul class="list-group">
+        <a class="list-group-item list-group-item-action" href="/usr/mypage/doctor/member-manage/appointments">환자 관리</a>
+        <a class="list-group-item list-group-item-action" href="/usr/mypage/doctor/hospital-info-manage">병원 관리</a>
+        <a class="list-group-item list-group-item-action" href="/usr/mypage/doctor/info">내정보</a>
+    </ul>
+</div>
 </html>

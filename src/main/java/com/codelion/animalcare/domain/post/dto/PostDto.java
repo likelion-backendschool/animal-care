@@ -3,6 +3,7 @@ package com.codelion.animalcare.domain.post.dto;
 import com.codelion.animalcare.domain.post.dto.CommentDto.CommentResponseDto;
 import com.codelion.animalcare.domain.post.entity.Post;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class PostDto {
     @Getter
+    @Setter
     public static class PostRequestDto {
         private String title;
         private String content;
@@ -27,8 +29,8 @@ public class PostDto {
     @Getter
     public static class PostResponseDto {
         private Long id;
-        private LocalDateTime createdDate;
-        private LocalDateTime updatedDate;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
         private String title;
         private String content;
         private int likes;
@@ -41,13 +43,14 @@ public class PostDto {
             this.content = post.getContent();
             this.likes = post.getLikes();
             this.views = post.getViews();
-            this.createdDate = post.getCreatedAt();
-            this.updatedDate = post.getUpdatedAt();
+            this.createdAt = post.getCreatedAt();
+            this.updatedAt = post.getUpdatedAt();
             this.comments = post.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
         }
     }
 
     @Getter
+    @Setter
     public static class ModifyPostRequestDto {
         private String title;
         private String content;

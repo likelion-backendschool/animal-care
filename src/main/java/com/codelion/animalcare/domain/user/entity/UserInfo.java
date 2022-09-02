@@ -1,9 +1,6 @@
 package com.codelion.animalcare.domain.user.entity;
 
-import com.codelion.animalcare.domain.animal.entity.Animal;
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Date;
 import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,7 +32,7 @@ public class UserInfo extends BaseEntity implements UserDetails {
 
     @Column()
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDateTime birthday;
+    private Date birthday;
 
     @Column
     private Address address;
@@ -113,4 +110,12 @@ public class UserInfo extends BaseEntity implements UserDetails {
         return true; // true -> 사용 가능
     }
 
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changeAddress(Address address) {
+        this.address = address;
+    }
 }

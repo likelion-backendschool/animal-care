@@ -1,8 +1,7 @@
 package com.codelion.animalcare.domain.animal.entity;
 
-import com.codelion.animalcare.domain.medical_appointment.entity.MedicalAppointment;
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -25,7 +24,7 @@ public class Animal extends BaseEntity {
 
     @Column()
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDateTime birthday;
+    private Date birthday;
 
     @Column(nullable = false, length = 100)
     private String registrationNum;
@@ -53,6 +52,6 @@ public class Animal extends BaseEntity {
     // Animal : MedicalAppointment = 1: n;
     @JsonIgnore
     @OneToMany(mappedBy = "animal")
-    private List<MedicalAppointment> medicalAppointments = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
 
 }

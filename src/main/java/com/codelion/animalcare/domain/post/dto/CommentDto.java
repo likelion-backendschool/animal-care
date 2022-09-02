@@ -26,16 +26,16 @@ public class CommentDto {
     @Getter
     public static class CommentResponseDto {
         private Long id;
-        private LocalDateTime createdDate;
-        private LocalDateTime updatedDate;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
         private String content;
         private int likes;
         private Long postId;
 
         public CommentResponseDto(Comment comment) {
             this.id = comment.getId();
-            this.createdDate = comment.getCreatedAt();
-            this.updatedDate = comment.getUpdatedAt();
+            this.createdAt = comment.getCreatedAt();
+            this.updatedAt = comment.getUpdatedAt();
             this.content = comment.getContent();
             this.likes = comment.getLikes();
             this.postId = comment.getPost().getId();
@@ -43,8 +43,10 @@ public class CommentDto {
     }
 
     @Getter
+    @Setter
     public static class ModifyCommentRequestDto {
         private String content;
+        private Post post;
 
         public Comment toEntity(Comment oldComment) {
             return Comment.builder()
@@ -52,6 +54,7 @@ public class CommentDto {
                     .createdAt(oldComment.getCreatedAt())
                     .content(content)
                     .likes(oldComment.getLikes())
+                    .post(oldComment.getPost())
                     .build();
         }
     }
