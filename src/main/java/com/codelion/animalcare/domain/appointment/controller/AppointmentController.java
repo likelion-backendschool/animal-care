@@ -2,6 +2,8 @@ package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
+import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 
@@ -42,14 +44,14 @@ public class AppointmentController {
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
         List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get());
 
-        List<Hospital> hospitals = hospitalService.findHospitals();
-        List<Doctor> doctors = doctorService.findDoctors();
+        List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
+        List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
 
 
         model.addAttribute("memberDto", memberDto.get());
         model.addAttribute("animalDtos", animalDtos);
-        model.addAttribute("hospitals", hospitals);
-        model.addAttribute("doctors", doctors);
+        model.addAttribute("hospitalDtos", hospitalDtos);
+        model.addAttribute("doctorDtos", doctorDtos);
 
         return "appointments/appointmentForm";
     }
@@ -60,12 +62,12 @@ public class AppointmentController {
     public String appointment(
             Principal principal,
             @RequestParam("animalDtosId") Long animalDtosId,
-            @RequestParam("hospitalId") Long hospitalId,
-            @RequestParam("doctorId") Long doctorId,
+            @RequestParam("hospitalDtosId") Long hospitalDtosId,
+            @RequestParam("doctorDtosId") Long doctorDtosId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        appointmentService.appointment(memberDto.get().getId(), animalDtosId, hospitalId, doctorId, appointmentDate);
+        appointmentService.appointment(memberDto.get().getId(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
         return "redirect:/usr/mypage/member/appointment-info";
     }

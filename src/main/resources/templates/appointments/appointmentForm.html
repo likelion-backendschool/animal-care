@@ -25,22 +25,22 @@
         </div>
 
         <div class="form-group">
-            <label for="hospital">병원이름</label>
-            <select name="hospitalId" id="hospital" class="form-control">
+            <label for="hospitalDtos">병원이름</label>
+            <select name="hospitalDtosId" id="hospitalDtos" class="form-control">
                 <option value="">병원선택</option>
-                <option th:each="hospital : ${hospitals}"
-                        th:value="${hospital.id}"
-                        th:text="${hospital.name}" />
+                <option th:each="hospitalDto : ${hospitalDtos}"
+                        th:value="${hospitalDto.id}"
+                        th:text="${hospitalDto.name}" />
             </select>
         </div>
 
         <div class="form-group">
-            <label for="doctor">의사이름</label>
-            <select name="doctorId" id="doctor" class="form-control">
+            <label for="doctorDtos">의사이름</label>
+            <select name="doctorDtosId" id="doctorDtos" class="form-control">
                 <option value="">의사선택</option>
-                <option th:each="doctor : ${doctors}"
-                        th:value="${doctor.id}"
-                        th:text="${doctor.name}" />
+                <option th:each="doctorDto : ${doctorDtos}"
+                        th:value="${doctorDto.id}"
+                        th:text="${doctorDto.name}" />
             </select>
         </div>
 

@@ -58,13 +58,13 @@ public class AppointmentService {
      * 예약
      */
     @Transactional
-    public Long appointment(Long memberId, Long animalId, Long hospitalId, Long doctorId, LocalDateTime appointmentDate) {
+    public Long appointment(Long memberDtoId, Long animalDtoId, Long hospitalDtosId, Long doctorDtosId, LocalDateTime appointmentDate) {
 
         //엔티티 조회
-        Member member = memberRepository.findById(memberId).get();
-        Animal animal = animalRepository.findById(animalId).get();
-        Hospital hospital = hospitalRepository.findById(hospitalId).get();
-        Doctor doctor = doctorRepository.findById(doctorId).get();
+        Member member = memberRepository.findById(memberDtoId).get();
+        Animal animal = animalRepository.findById(animalDtoId).get();
+        Hospital hospital = hospitalRepository.findById(hospitalDtosId).get();
+        Doctor doctor = doctorRepository.findById(doctorDtosId).get();
 
         //예약 생성
         Appointment appointment = Appointment.createAppointment(member, animal, hospital, doctor, appointmentDate);
