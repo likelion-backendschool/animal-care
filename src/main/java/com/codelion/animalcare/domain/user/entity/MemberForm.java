@@ -17,15 +17,20 @@ public class MemberForm {
     @NotEmpty(message = "회원 이름은 필수 입니다")
     private String name;
 
-    private String login_email;
-    private String login_pwd;
+//    private String login_email;
+//    private String login_pwd;
 
     // @Temporal: 날짜 타입(java.util.Date, java.util.Calendar)을 매핑할 때 사용
-    @Temporal(TemporalType.DATE)
-    private LocalDateTime birthday;
+//    @Temporal(TemporalType.DATE)
+//    private LocalDateTime birthday;
 
-    @Embedded
-    private Address address;
+//    @Embedded
+//    private Address address;
 
-    private String phone_num;
+    private String city;
+    private String street;
+    private String zipcode;
+
+
+//    private String phone_num;
 }
