@@ -11,10 +11,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -57,7 +60,10 @@ public class QuestionService {
     @Transactional(readOnly = true)
     public Page<Question> findAll(int page) {
 
-        Pageable pageable = PageRequest.of(page, 10);
+        List<Sort.Order> sortsList = new ArrayList<>();
+        sortsList.add(Sort.Order.desc("createdAt"));
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sortsList));
 
         return questionRepository.findAll(pageable);
     }
