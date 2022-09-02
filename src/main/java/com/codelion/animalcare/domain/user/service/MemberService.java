@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
     public List<Member> findMembers() {
@@ -26,7 +27,7 @@ public class MemberService {
     public Optional<MemberDto> findByEmail(String email){
 
         Optional<Member> optionalMember = memberRepository.findOptionalByEmail(email);
-        Optional<MemberDto> memberDto = optionalMember.map(member -> new MemberDto(member));
+        Optional<MemberDto> memberDto = optionalMember.map(o -> new MemberDto(o));
 
         return memberDto;
     }

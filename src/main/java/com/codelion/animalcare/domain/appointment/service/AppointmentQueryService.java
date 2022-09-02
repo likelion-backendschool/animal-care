@@ -3,6 +3,7 @@ package com.codelion.animalcare.domain.appointment.service;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +33,9 @@ public class AppointmentQueryService {
     }
 
 
-    public List<AppointmentDto> findAppointmentByMemberId(Long memberId) {
+    public List<AppointmentDto> findAppointmentByMemberDto(MemberDto memberDto) {
 
-        List<Appointment> appointments = appointmentRepository.findByMemberId(memberId);
+        List<Appointment> appointments = appointmentRepository.findByMemberId(memberDto.getId());
 
         List<AppointmentDto> appointmentDtos = appointments.stream()
                 .map(o -> new AppointmentDto(o))

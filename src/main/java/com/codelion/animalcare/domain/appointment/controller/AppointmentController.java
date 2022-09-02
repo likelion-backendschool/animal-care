@@ -4,14 +4,12 @@ import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
-import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
-import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +45,6 @@ public class AppointmentController {
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
 
-
         model.addAttribute("memberDto", memberDto.get());
         model.addAttribute("animalDtos", animalDtos);
         model.addAttribute("hospitalDtos", hospitalDtos);
@@ -67,7 +64,7 @@ public class AppointmentController {
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        appointmentService.appointment(memberDto.get().getId(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
+        appointmentService.appointment(memberDto.get(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
         return "redirect:/usr/mypage/member/appointment-info";
     }
@@ -75,10 +72,10 @@ public class AppointmentController {
 
     // 마이페이지 회원 예약내역
     @GetMapping("/usr/mypage/member/appointment-info")
-    public String appointmentListUseDto(Model model, Principal principal) {
+    public String appointmentList(Model model, Principal principal) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        List<AppointmentDto> appointmentDtos = appointmentQueryService.findAppointmentByMemberId(memberDto.get().getId());
+        List<AppointmentDto> appointmentDtos = appointmentQueryService.findAppointmentByMemberDto(memberDto.get());
 
         model.addAttribute("appointmentDtos", appointmentDtos);
 

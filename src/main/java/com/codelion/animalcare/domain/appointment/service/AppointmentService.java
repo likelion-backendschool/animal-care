@@ -8,6 +8,7 @@ import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
@@ -58,10 +59,10 @@ public class AppointmentService {
      * 예약
      */
     @Transactional
-    public Long appointment(Long memberDtoId, Long animalDtoId, Long hospitalDtosId, Long doctorDtosId, LocalDateTime appointmentDate) {
+    public Long appointment(MemberDto memberDto, Long animalDtoId, Long hospitalDtosId, Long doctorDtosId, LocalDateTime appointmentDate) {
 
         //엔티티 조회
-        Member member = memberRepository.findById(memberDtoId).get();
+        Member member = memberRepository.findById(memberDto.getId()).get();
         Animal animal = animalRepository.findById(animalDtoId).get();
         Hospital hospital = hospitalRepository.findById(hospitalDtosId).get();
         Doctor doctor = doctorRepository.findById(doctorDtosId).get();
@@ -100,7 +101,7 @@ public class AppointmentService {
         appointment.updateStatus(status);
     }
 
-    @Transactional(readOnly = true)
+
     public LoadMyPageDoctorAppointment.ResponseDto findById(long appointmentId) {
         Appointment appointment = appointmentRepository
                 .findByIdWithMemberAndAnimalAndHospitalAndDoctorAndDiagnosis(appointmentId)
