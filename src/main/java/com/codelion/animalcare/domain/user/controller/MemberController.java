@@ -1,7 +1,7 @@
 package com.codelion.animalcare.domain.user.controller;
 
+import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Address;
-import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.entity.MemberForm;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -40,12 +40,12 @@ public class MemberController {
 
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
 
-        Optional<Member> member = memberService.findByEmail(principal.getName());
+        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
 
-        member.get().changeName(form.getName());
-        member.get().changeAddress(address);
+        memberDto.get().setMember_name(form.getName());
+        memberDto.get().setAddress(address);
 
-        memberService.join(member.get());
+        memberService.join(memberDto.get());
 
         return "redirect:/usr/mypage/member";
     }
@@ -54,9 +54,9 @@ public class MemberController {
     @GetMapping("/usr/mypage/member/info")
     public String list(Model model, Principal principal) {
 
-        Optional<Member> member = memberService.findByEmail(principal.getName());
+        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
 
-        model.addAttribute("member", member.get());
+        model.addAttribute("memberDto", memberDto.get());
         return "member/memberInfo";
     }
 

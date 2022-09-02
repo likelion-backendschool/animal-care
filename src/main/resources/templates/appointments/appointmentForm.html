@@ -9,17 +9,18 @@
     <form role="form" action="/usr/mypage/member/appointment" method="post">
         <div class="form-group">
             <label>회원이름</label>
-            <input name="memberId" id="member" th:value="${member.name}" class="form-control"/>
+            <input name="memberDtoId" id="memberDto" th:value="${memberDto.member_name}" class="form-control"/>
+
             </input>
         </div>
 
         <div class="form-group">
-            <label for="animal">애완동물이름</label>
-            <select name="animalId" id="animal" class="form-control">
+            <label for="animalDtos">애완동물이름</label>
+            <select name="animalDtosId" id="animalDtos" class="form-control">
                 <option value="">애완동물 선택</option>
-                <option th:each="animal : ${animals}"
-                        th:value="${animal.id}"
-                        th:text="${animal.name}"/>
+                <option th:each="animalDto : ${animalDtos}"
+                        th:value="${animalDto.animalId}"
+                        th:text="${animalDto.name}"/>
             </select>
         </div>
 

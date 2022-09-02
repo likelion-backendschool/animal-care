@@ -111,11 +111,11 @@ public class UserInfo extends BaseEntity implements UserDetails {
     }
 
 
-    public void changeName(String name) {
-        this.name = name;
-    }
-
-    public void changeAddress(Address address) {
-        this.address = address;
-    }
+//    public void changeName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void changeAddress(Address address) {
+//        this.address = address;
+//    }
 }

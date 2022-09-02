@@ -1,7 +1,5 @@
 package com.codelion.animalcare.domain.animal.repository;
 import com.codelion.animalcare.domain.animal.entity.Animal;
-import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.entity.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,6 +9,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     Optional<Animal> findByMemberId(Long id);
 
-    List<Animal> findByMember(Member member);
+    List<Animal> findListAnimalByMemberId(Long memberId);
 
 }

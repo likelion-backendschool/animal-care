@@ -2,25 +2,26 @@ package com.codelion.animalcare.domain.user.dto;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.user.entity.Address;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Embedded;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
+@Getter @Setter
 public class MemberDto {
 
     private Long memberId;
-    private String login_email;
+    private String email;
 
-    private String login_pwd;
+    private String password;
 
     @NotEmpty(message = "회원 이름은 필수 입니다")
     private String member_name;
@@ -40,8 +41,8 @@ public class MemberDto {
 
     public MemberDto(Member member) {
         memberId = member.getId();
-        login_email = member.getEmail();
-        login_pwd = member.getPassword();
+        email = member.getEmail();
+        password = member.getPassword();
         member_name = member.getName();
         birthDay = member.getBirthday();
         address = member.getAddress();
@@ -52,4 +53,20 @@ public class MemberDto {
                 .collect(Collectors.toList());
     }
 
+    public Member toEntity(Member member) {
+
+        return Member.builder()
+                .id(member.getId())
+                .email(email)
+                .password(member.getPassword())
+                .name(member_name)
+                .address(address)
+                .birthday(birthDay)
+                .phoneNum(phone_num)
+                .genderId(gender_id)
+                .animals(member.getAnimals())
+                .createdAt(member.getCreatedAt())
+                .auth(member.getAuth())
+                .build();
+    }
 }

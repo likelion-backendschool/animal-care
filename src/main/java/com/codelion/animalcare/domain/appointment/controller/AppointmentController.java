@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.appointment.controller;
 
-import com.codelion.animalcare.domain.animal.entity.Animal;
+import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
@@ -8,8 +8,8 @@ import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
-import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -39,13 +39,15 @@ public class AppointmentController {
     @GetMapping("/usr/mypage/member/appointment")
     public String createAppointmentForm(Model model, Principal principal) {
 
-        Optional<Member> member = memberService.findByEmail(principal.getName());
-        List<Animal> animals = animalService.findByMember(member.get());
+        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
+        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get());
+
         List<Hospital> hospitals = hospitalService.findHospitals();
         List<Doctor> doctors = doctorService.findDoctors();
 
-        model.addAttribute("member", member.get());
-        model.addAttribute("animals", animals);
+
+        model.addAttribute("memberDto", memberDto.get());
+        model.addAttribute("animalDtos", animalDtos);
         model.addAttribute("hospitals", hospitals);
         model.addAttribute("doctors", doctors);
 
@@ -57,13 +59,13 @@ public class AppointmentController {
     @PostMapping("/usr/mypage/member/appointment")
     public String appointment(
             Principal principal,
-            @RequestParam("animalId") Long animalId,
+            @RequestParam("animalDtosId") Long animalDtosId,
             @RequestParam("hospitalId") Long hospitalId,
             @RequestParam("doctorId") Long doctorId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
-        Optional<Member> member = memberService.findByEmail(principal.getName());
-        appointmentService.appointment(member.get().getId(), animalId, hospitalId, doctorId, appointmentDate);
+        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
+        appointmentService.appointment(memberDto.get().getMemberId(), animalDtosId, hospitalId, doctorId, appointmentDate);
 
         return "redirect:/usr/mypage/member/appointment-info";
     }
@@ -73,8 +75,8 @@ public class AppointmentController {
     @GetMapping("/usr/mypage/member/appointment-info")
     public String appointmentListUseDto(Model model, Principal principal) {
 
-        Optional<Member> member = memberService.findByEmail(principal.getName());
-        List<AppointmentDto> appointmentDtos = appointmentQueryService.findAppointmentByMemberId(member.get().getId());
+        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
+        List<AppointmentDto> appointmentDtos = appointmentQueryService.findAppointmentByMemberId(memberDto.get().getMemberId());
 
         model.addAttribute("appointmentDtos", appointmentDtos);
 
