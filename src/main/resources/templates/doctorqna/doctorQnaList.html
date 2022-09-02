@@ -3,13 +3,13 @@
 <div layout:fragment="content" class="container my-5">
     <body>
     <table class = "table">
-        <thead class = "table-dark text-center">
+        <thead class = "table-dark">
         <tr>
             <th>번호</th>
             <th>제목</th>
-            <th>조회수</th>
             <th>작성자</th>
             <th>작성일시</th>
+            <th>조회수</th>
         </tr>
         </thead>
         <tbody>
@@ -23,9 +23,9 @@
                       th:text="${#lists.size(question.answerList)}">
                     </span>
             </td>
-            <td><a th:text="${question.view}"></a></td>
             <td><a th:text="${question.member?.email}"></a></td>
             <td th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            <td><a th:text="${question.view}"></a></td>
 
         </tr>
         </tbody>
