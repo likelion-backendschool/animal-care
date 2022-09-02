@@ -1,7 +1,7 @@
 <html layout:decorate="~{global/layout}">
-<head th:replace="/global/fragments/header :: header"/>
-<div layout:fragment="content" class="container my-3">
-    <div th:replace="/global/fragments/bodyHeader :: bodyHeader"/>
+
+<div layout:fragment="content" class="container my-5">
+
     <h5 class="my-3 border-bottom pb-2">답변수정</h5>
     <form th:action="@{|/usr/doctor-qna/${answer.question.id}/answers/${answer.id}/modify|}" th:object="${answerUpdateRequestDto}" method="post">
 
@@ -14,6 +14,5 @@
         </div>
         <input type="submit" value="수정하기" class="btn btn-primary my-2">
     </form>
-    <div th:replace="/global/fragments/footer :: footer"/>
 </div>
 </html>

@@ -1,9 +1,8 @@
 <html layout:decorate="~{global/layout}">
-<head th:replace="/global/fragments/header :: header"/>
-<div layout:fragment="content" class="container my-3">
-<body>
-<div th:replace="/global/fragments/bodyHeader :: bodyHeader"/>
-<table class = "table">
+
+<div layout:fragment="content" class="container my-5">
+    <body>
+    <table class = "table">
         <thead class = "table-dark">
         <tr>
             <th>번호</th>
@@ -28,8 +27,7 @@
     </table>
 
     <a th:href="@{/usr/doctor-qna/write}" class="btn btn-primary">질문 등록하기</a>
-<div th:replace="/global/fragments/footer :: footer" />
-</body>
+    </body>
 </div>
 
 </html>
