@@ -2,19 +2,19 @@ package com.codelion.animalcare.domain.doctorqna.service;
 
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionListResponseDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -55,10 +55,11 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public List<QuestionListResponseDto> findAllDesc() {
-        return questionRepository.findAllDesc().stream()
-                .map(QuestionListResponseDto::new)
-                .collect(Collectors.toList());
+    public Page<Question> findAll(int page) {
+
+        Pageable pageable = PageRequest.of(page, 10);
+
+        return questionRepository.findAll(pageable);
     }
 
     @Transactional
