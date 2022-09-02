@@ -31,18 +31,11 @@ public class MemberService {
         return memberDto;
     }
 
-
-//    @Transactional
-//    public Long join(Member member) {
-//        memberRepository.save(member);
-//        return member.getId();
-//    }
-
     @Transactional
     public void join(MemberDto memberDto) {
 
         // member check
-        Member beforeMember = findMemberById(memberDto.getMemberId());
+        Member beforeMember = findMemberById(memberDto.getId());
 
         // dto => entity
         Member newMember = memberDto.toEntity(beforeMember);

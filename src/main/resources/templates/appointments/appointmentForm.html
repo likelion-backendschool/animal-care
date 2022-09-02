@@ -9,7 +9,7 @@
     <form role="form" action="/usr/mypage/member/appointment" method="post">
         <div class="form-group">
             <label>회원이름</label>
-            <input name="memberDtoId" id="memberDto" th:value="${memberDto.member_name}" class="form-control"/>
+            <input name="memberDtoId" id="memberDto" th:value="${memberDto.name}" class="form-control"/>
 
             </input>
         </div>
@@ -19,7 +19,7 @@
             <select name="animalDtosId" id="animalDtos" class="form-control">
                 <option value="">애완동물 선택</option>
                 <option th:each="animalDto : ${animalDtos}"
-                        th:value="${animalDto.animalId}"
+                        th:value="${animalDto.id}"
                         th:text="${animalDto.name}"/>
             </select>
         </div>

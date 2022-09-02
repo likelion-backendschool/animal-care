@@ -42,7 +42,7 @@ public class MemberController {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
 
-        memberDto.get().setMember_name(form.getName());
+        memberDto.get().setName(form.getName());
         memberDto.get().setAddress(address);
 
         memberService.join(memberDto.get());

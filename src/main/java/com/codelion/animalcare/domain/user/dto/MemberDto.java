@@ -2,7 +2,6 @@ package com.codelion.animalcare.domain.user.dto;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.user.entity.Address;
-import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,36 +17,36 @@ import java.util.stream.Collectors;
 @Getter @Setter
 public class MemberDto {
 
-    private Long memberId;
+    private Long id;
     private String email;
 
     private String password;
 
     @NotEmpty(message = "회원 이름은 필수 입니다")
-    private String member_name;
+    private String name;
 
 
     // @Temporal: 날짜 타입(java.util.Date, java.util.Calendar)을 매핑할 때 사용
     @Temporal(TemporalType.DATE)
-    private Date birthDay;
+    private Date birthday;
 
     @Embedded
     private Address address;
 
-    private String phone_num;
+    private String phoneNum;
 
-    private int gender_id;
+    private int genderId;
     private List<AnimalDto> animals;
 
     public MemberDto(Member member) {
-        memberId = member.getId();
+        id = member.getId();
         email = member.getEmail();
         password = member.getPassword();
-        member_name = member.getName();
-        birthDay = member.getBirthday();
+        name = member.getName();
+        birthday = member.getBirthday();
         address = member.getAddress();
-        phone_num = member.getPhoneNum();
-        gender_id = member.getGenderId();
+        phoneNum = member.getPhoneNum();
+        genderId = member.getGenderId();
         animals = member.getAnimals().stream()
                 .map(animals -> new AnimalDto(animals))
                 .collect(Collectors.toList());
@@ -59,11 +58,11 @@ public class MemberDto {
                 .id(member.getId())
                 .email(email)
                 .password(member.getPassword())
-                .name(member_name)
+                .name(name)
                 .address(address)
-                .birthday(birthDay)
-                .phoneNum(phone_num)
-                .genderId(gender_id)
+                .birthday(birthday)
+                .phoneNum(phoneNum)
+                .genderId(genderId)
                 .animals(member.getAnimals())
                 .createdAt(member.getCreatedAt())
                 .auth(member.getAuth())

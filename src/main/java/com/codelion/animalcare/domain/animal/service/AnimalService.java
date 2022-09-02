@@ -54,7 +54,7 @@ public class AnimalService {
 
     public List<AnimalDto> findByMember(MemberDto memberDto) {
 
-        List<Animal> animals = animalRepository.findListAnimalByMemberId(memberDto.getMemberId());
+        List<Animal> animals = animalRepository.findListAnimalByMemberId(memberDto.getId());
         List<AnimalDto> result = animals.stream()
                 .map(o -> new AnimalDto(o))
                 .collect(Collectors.toList());

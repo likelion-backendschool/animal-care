@@ -65,7 +65,7 @@ public class AppointmentController {
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        appointmentService.appointment(memberDto.get().getMemberId(), animalDtosId, hospitalId, doctorId, appointmentDate);
+        appointmentService.appointment(memberDto.get().getId(), animalDtosId, hospitalId, doctorId, appointmentDate);
 
         return "redirect:/usr/mypage/member/appointment-info";
     }
@@ -76,7 +76,7 @@ public class AppointmentController {
     public String appointmentListUseDto(Model model, Principal principal) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        List<AppointmentDto> appointmentDtos = appointmentQueryService.findAppointmentByMemberId(memberDto.get().getMemberId());
+        List<AppointmentDto> appointmentDtos = appointmentQueryService.findAppointmentByMemberId(memberDto.get().getId());
 
         model.addAttribute("appointmentDtos", appointmentDtos);
 
