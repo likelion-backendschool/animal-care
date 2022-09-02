@@ -41,6 +41,7 @@ public class MemberService {
         // dto => entity
         Member newMember = memberDto.toEntity(beforeMember);
 
+        // TODO save가 아닌 update 형식으로 구현해야함
         memberRepository.save(newMember);
     }
 
