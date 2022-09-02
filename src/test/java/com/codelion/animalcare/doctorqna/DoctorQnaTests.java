@@ -1,24 +1,21 @@
 package com.codelion.animalcare.doctorqna;
 
-import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
-import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.dto.response.AnswerResponseDto;
-import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionListResponseDto;
-import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
+import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.doctorqna.service.AnswerService;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import com.codelion.animalcare.domain.user.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import java.util.List;
 
+@Transactional
+@ActiveProfiles("test")
 @SpringBootTest
 public class DoctorQnaTests {
 
@@ -33,6 +30,9 @@ public class DoctorQnaTests {
 
     @Autowired
     AnswerRepository answerRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
 
    /* public void init() {
         //1, 2번 질문 답변 생성
@@ -57,14 +57,15 @@ public class DoctorQnaTests {
 
 
 
-    @BeforeEach
+    /*@BeforeEach
     public void tearDown() {
         questionRepository.deleteAll();
         answerRepository.deleteAll();
         questionRepository.truncate();
         answerRepository.truncate();
-        /*init();*/
+        *//*init();*//*
     }
+
 
 
 
@@ -137,18 +138,18 @@ public class DoctorQnaTests {
         assertThat(answerResponseDto.getContent()).isEqualTo("answer2");
     }
 
-/*    @Test
-    *//*public void 답변_작성된다(){
+*//*    @Test
+    *//**//*public void 답변_작성된다(){
         answerService.save(1L, AnswerSaveRequestDto.builder()
                 .content("saveContent!")
-                .build());*//*
+                .build());*//**//*
 
         AnswerResponseDto answerResponseDto = answerService.findById(3L);
         String testContent = answerResponseDto.getContent();
 
-        *//*assertThat(testContent).isEqualTo("saveContent!");*//*
+        *//**//*assertThat(testContent).isEqualTo("saveContent!");*//**//*
 
-    }*/
+    }*//*
 
     @Test
     public void 답변_수정된다(){
@@ -174,8 +175,16 @@ public class DoctorQnaTests {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("답변이 존재하지 않습니다.");
 
+    }*/
+
+    @Test
+    public void 질문_조회된다() {
+
+
+        Question question = questionRepository.findById(1L).orElseThrow();
+
+        assertThat(question.getTitle()).isEqualTo("title1");
+
     }
-
-
 
 }
