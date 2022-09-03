@@ -38,7 +38,7 @@ public class MemberController {
             return "member/memberForm";
         }
 
-        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
+        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode(), form.getDetail());
 
         Optional<Member> member = memberService.findByEmail(principal.getName());
 

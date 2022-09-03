@@ -30,6 +30,7 @@ public class MemberForm {
     private String city;
     private String street;
     private String zipcode;
+    private String detail;
 
 
 //    private String phone_num;

@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.hospital.dto;
 
+import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.global.util.OpeningHour;
@@ -21,6 +22,7 @@ public class LoadDoctorMyPageHospitalInfoManage {
         private String city;
         private String street;
         private String zipcode;
+        private String detail;
 
         private String openingHours;
         private LocalDateTime createdAt;
@@ -30,12 +32,17 @@ public class LoadDoctorMyPageHospitalInfoManage {
 
         public ResponseDto(Hospital hospital) {
             super(hospital.getOpeningHours());
+
+            Address address = hospital.getAddress();
             this.id = hospital.getId();
             this.name = hospital.getName();
             this.phoneNum = hospital.getPhoneNum();
-//            this.city = hospital.getAddress().getCity();
-//            this.street = hospital.getAddress().getStreet();
-//            this.zipcode = hospital.getAddress().getZipcode();
+            if(address != null){
+                this.city = address.getCity();
+                this.street = address.getStreet();
+                this.zipcode = address.getZipcode();
+                this.detail = address.getDetail();
+            }
             this.openingHours = hospital.getOpeningHours();
             this.createdAt = hospital.getCreatedAt();
             this.updatedAt = hospital.getUpdatedAt();

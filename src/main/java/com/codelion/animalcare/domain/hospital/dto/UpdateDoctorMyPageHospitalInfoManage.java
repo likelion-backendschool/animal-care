@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.hospital.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.global.util.OpeningHour;
 //import com.codelion.animalcare.domain.member.Address;
 import lombok.Getter;
@@ -20,10 +21,9 @@ public class UpdateDoctorMyPageHospitalInfoManage {
         private String phoneNum;
 
         private String city;
-
         private String street;
-
         private String zipcode;
+        private String detail;
 
         private String openingHours;
 
@@ -32,7 +32,7 @@ public class UpdateDoctorMyPageHospitalInfoManage {
 //        }
 
 
-        public RequestDto(String monStart, String monEnd, String tueStart, String tueEnd, String wedStart, String wedEnd, String thuStart, String thuEnd, String friStart, String friEnd, String satStart, String satEnd, String sunStart, String sunEnd, Long id, String name, String phoneNum, String city, String street, String zipcode, String openingHours) {
+        public RequestDto(String monStart, String monEnd, String tueStart, String tueEnd, String wedStart, String wedEnd, String thuStart, String thuEnd, String friStart, String friEnd, String satStart, String satEnd, String sunStart, String sunEnd, Long id, String name, String phoneNum, String city, String street, String zipcode, String detail, String openingHours) {
             super(monStart, monEnd, tueStart, tueEnd, wedStart, wedEnd, thuStart, thuEnd, friStart, friEnd, satStart, satEnd, sunStart, sunEnd);
             this.id = id;
             this.name = name;
@@ -40,6 +40,7 @@ public class UpdateDoctorMyPageHospitalInfoManage {
             this.city = city;
             this.street = street;
             this.zipcode = zipcode;
+            this.detail = detail;
             this.openingHours = openingHours;
         }
 
@@ -47,7 +48,7 @@ public class UpdateDoctorMyPageHospitalInfoManage {
             return Hospital.builder()
                     .id(id)
                     .name(name)
-//                    .address(new Address(city, street, zipcode))
+                    .address(new Address(city, street, zipcode,detail))
                     .phoneNum(phoneNum)
                     .openingHours(openingHourToString())
                     .createdAt(hospital.getCreatedAt())
