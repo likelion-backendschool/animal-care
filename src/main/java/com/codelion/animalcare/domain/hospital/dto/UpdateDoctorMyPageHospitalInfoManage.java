@@ -48,7 +48,7 @@ public class UpdateDoctorMyPageHospitalInfoManage {
             return Hospital.builder()
                     .id(id)
                     .name(name)
-                    .address(new Address(city, street, zipcode,detail))
+                    .address(new Address(city, street, zipcode, detail))
                     .phoneNum(phoneNum)
                     .openingHours(openingHourToString())
                     .createdAt(hospital.getCreatedAt())
