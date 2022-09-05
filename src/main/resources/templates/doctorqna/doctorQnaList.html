@@ -17,11 +17,11 @@
 
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td>
-                <a th:href="@{|doctor-qna/${question.id}|}" th:text="${question.title}"></a>
+                <a th:href="@{|/usr/doctor-qna/${question.id}|}" th:text="${question.title}"></a>
                 <span class="text-danger small ms-2"
                       th:if="${#lists.size(question.answerList) > 0}"
                       th:text="${#lists.size(question.answerList)}">
-                    </span>
+                </span>
             </td>
             <td><a th:text="${question.member?.email}"></a></td>
             <td th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
