@@ -1,55 +1,51 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://thymeleaf.org">
-<head th:replace="/global/fragments/header :: header"/>
-<body>
-    <div class="container">
-        <div th:replace="/global/fragments/bodyHeader :: bodyHeader"/>
+<html layout:decorate="~{global/layout}" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<div layout:fragment="content" class="container my-5">
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h3>Community</h3>
+            </div>
 
-        <div class="page-header">
-            <h3>Community</h3>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>조회수</th>
+                    <th>추천수</th>
+                    <th>작성일시</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post : ${postList}">
+                    <td th:text="${post.id}"></td>
+                    <td><a th:href="@{|/usr/posts/${post.id}|}" th:text="${post.title}"></a></td>
+                    <td th:text="${post.views}"></td>
+                    <td th:text="${post.likes}"></td>
+                    <td th:text="${post.createdAt} ? ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')} : ${post.createdAt}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <a th:href="@{/usr/posts/write}" class="btn btn-primary">게시글 작성</a>
+            <br/>
+
+            <div class="pagination justify-content-center">
+                <th:block th:if="${hasPrev}">
+                    <a th:href="@{/usr/posts(page=${previous})}" class="btn btn-lg bi bi-caret-left-square-fill">&lsaquo;</a>
+                </th:block>
+                <th:block th:unless="${hasPrev}">
+                    <a th:href="@{/usr/posts(page=${previoust})}" class="btn btn-lg bi bi-caret-left-square-fill disabled">&lsaquo;</a>
+                </th:block>
+
+                <th:block th:if="${hasNext}">
+                    <a th:href="@{/usr/posts(page=${next})}" class="btn btn-lg bi bi-caret-right-square-fill">&rsaquo;</a>
+                </th:block>
+                <th:bolck th:unless="${hasNext}">
+                    <a th:href="@{/usr/posts(page=${next})}" class="btn btn-lg bi bi-caret-right-square-fill disabled">&rsaquo;</a>
+                </th:bolck>
+            </div>
         </div>
-
-        <table class="table table-hover">
-            <thead class="table-dark">
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>조회수</th>
-                <th>추천수</th>
-                <th>작성일시</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="post : ${postList}">
-                <td th:text="${post.id}"></td>
-                <td><a th:href="@{|/usr/posts/${post.id}|}" th:text="${post.title}"></a></td>
-                <td th:text="${post.views}"></td>
-                <td th:text="${post.likes}"></td>
-                <td th:text="${post.createdAt} ? ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')} : ${post.createdAt}"></td>
-            </tr>
-            </tbody>
-        </table>
-
-        <a th:href="@{/usr/posts/write}" class="btn btn-primary">게시글 작성</a>
-        <br/>
-
-        <div class="pagination justify-content-center">
-            <th:block th:if="${hasPrev}">
-                <a th:href="@{/usr/posts(page=${previous})}" class="btn btn-lg bi bi-caret-left-square-fill">&lsaquo;</a>
-            </th:block>
-            <th:block th:unless="${hasPrev}">
-                <a th:href="@{/usr/posts(page=${previoust})}" class="btn btn-lg bi bi-caret-left-square-fill disabled">&lsaquo;</a>
-            </th:block>
-
-            <th:block th:if="${hasNext}">
-                <a th:href="@{/usr/posts(page=${next})}" class="btn btn-lg bi bi-caret-right-square-fill">&rsaquo;</a>
-            </th:block>
-            <th:bolck th:unless="${hasNext}">
-                <a th:href="@{/usr/posts(page=${next})}" class="btn btn-lg bi bi-caret-right-square-fill disabled">&rsaquo;</a>
-            </th:bolck>
-        </div>
-
-        <div th:replace="/global/fragments/footer :: footer" />
-    </div>
-</body>
+    </body>
+</div>
 </html>
