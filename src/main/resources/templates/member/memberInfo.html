@@ -1,43 +1,39 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="global/fragments/header :: header" />
-<style>
-    .fieldError {
-        border-color: #bd2130;
-    }
-</style>
-<body>
+<html layout:decorate="~{global/layout}">
 
-<div class="container">
-    <div th:replace="global/fragments/bodyHeader :: bodyHeader"/>
+    <div layout:fragment="content" class="container my-5">
+        <body>
+        <div class="container">
+            <div class="page-header">
+                <h3>내 정보</h3>
+            </div>
+
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>이름</th>
+                        <th>도시(city)</th>
+                        <th>거리(street)</th>
+                        <th>우편번호(zipcode)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${memberDto.getId}"></td>
+                        <td th:text="${memberDto.getName}"></td>
+                        <td th:text="${memberDto.address?.city}"></td>
+                        <td th:text="${memberDto.address?.street}"></td>
+                        <td th:text="${memberDto.address?.zipcode}"></td>
+                    </tr>
+                    </input>
+
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- /container -->
 
 
-    <div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>이름</th>
-                <th>도시(city)</th>
-                <th>거리(street)</th>
-                <th>우편번호(zipcode)</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td th:text="${memberDto.getId}"></td>
-                <td th:text="${memberDto.getName}"></td>
-                <td th:text="${memberDto.address?.city}"></td>
-                <td th:text="${memberDto.address?.street}"></td>
-                <td th:text="${memberDto.address?.zipcode}"></td>
-            </tr>
-            </input>
-
-            </tbody>
-        </table>
+        </body>
     </div>
-    <div th:replace="global/fragments/footer :: footer" />
-</div> <!-- /container -->
-
-</body>
 </html>
