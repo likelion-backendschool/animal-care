@@ -13,10 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
   /*
         ToDo
         1. 게시글 작성, 수정, 삭제 사용자 인증(로그인 연동)
-        2. 게시글 상세 조회로 리다이렉트 시, 조회수 증가 방지 필요
      */
 
 @Controller
@@ -44,8 +47,33 @@ public class PostController {
 
     // 게시글 상세 조회
     @GetMapping("/{id}")
-    public String detail(Model model, @PathVariable Long id, CommentRequestDto commentRequestDto) {
-        postService.updatePostViews(id);
+    public String detail(Model model, @PathVariable Long id, HttpServletRequest request, HttpServletResponse response, CommentRequestDto commentRequestDto) {
+        // 조회수 중복 방지
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(var cookie : cookies) {
+                if(cookie.getName().equals("CommunityView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if(oldCookie != null) {
+            if(!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+                postService.updatePostViews(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+            }
+        } else {
+            postService.updatePostViews(id);
+            Cookie newCookie = new Cookie("CommunityView", "[" + id + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(newCookie);
+        }
         model.addAttribute("post", postService.findPostById(id));
 
         return "community/communityDetail";
@@ -91,8 +119,33 @@ public class PostController {
 
     // 게시글 추천
     @GetMapping("/{id}/like")
-    public String like(@PathVariable Long id) {
-        postService.updatePostLikes(id);
+    public String like(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+        // 추천수 중복 방지
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(var cookie : cookies) {
+                if(cookie.getName().equals("CommunityLike")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if(oldCookie != null) {
+            if(!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+                postService.updatePostLikes(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+            }
+        } else {
+            postService.updatePostLikes(id);
+            Cookie newCookie = new Cookie("CommunityLike", "[" + id + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(newCookie);
+        }
 
         return "redirect:/usr/posts/%d".formatted(id);
     }
