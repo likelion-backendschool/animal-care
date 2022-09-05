@@ -3,16 +3,16 @@
     <body>
         <div class="container">
             <div class="page-header">
-                <h3>Community</h3>
+                <a th:href="@{/usr/posts}"><h3>Community</h3></a>
             </div>
 
             <form th:action="@{|/usr/posts/${id}/modify|}" th:object="${modifyPostRequestDto}" method="post">
-                <h3>게시글 수정</h3>
+                <h5>게시글 수정</h5>
                 <div class="form-group">
-                    <input type="text" th:field="*{title}" class="form-control" placeholder="제목" required="required">
+                    <input type="text" name="title" th:value="${post.title}" class="form-control" placeholder="제목" required="required">
                 </div>
                 <div class="form-group">
-                    <textarea th:field="*{content}" class="form-control" rows="10" placeholder="내용" required="required"></textarea>
+                    <textarea name="content" th:text="${post.content}" class="form-control" placeholder="내용" rows="10" required="required"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary my-2">게시글 수정</button>
             </form>

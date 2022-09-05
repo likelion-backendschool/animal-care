@@ -61,7 +61,9 @@ public class PostController {
 
     // 게시글 수정 화면
     @GetMapping("/{id}/modify")
-    public String modifyForm(@PathVariable Long id, ModifyPostRequestDto modifyPostRequestDto) {
+    public String modifyForm(Model model, @PathVariable Long id) {
+        model.addAttribute("post", postService.findPostById(id));
+
         return "community/communityModifyForm";
     }
 
