@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.hospital.controller;
 
+import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.dto.UpdateDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
@@ -25,13 +26,51 @@ public class HospitalMyPageDoctorController {
             Principal principal
     ){
         String doctorEmail = principal.getName();
-        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = hospitalService.findByDoctorEmail(doctorEmail);
+        LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = null;
+
+        try{
+            hospitalDto = hospitalService.findByDoctorEmail(doctorEmail);
+        } catch(RuntimeException e){
+            return "myPage/doctor/hospital-create-or-select";
+        }
 
         model.addAttribute("hospital", hospitalDto);
         model.addAttribute("OpeningHours", hospitalDto.makeOpeningHoursToObject());
 
         System.out.println(hospitalDto.getDoctorList());
         return "myPage/doctor/hospital-info-manage";
+    }
+
+    @GetMapping("create")
+    // 병원 생성
+    public String loadDoctorMyPageHospitalCreate(
+            Model model,
+            CreateHospital.RequestDto requestDto
+    ){
+
+        model.addAttribute("requestDto", requestDto);
+        // TODO modify를 form으로 이름을 바꾼다.
+        return "myPage/doctor/hospital-info-manage-create";
+    }
+
+    @PostMapping("create")
+    // 병원 생성
+    public String doDoctorMyPageHospitalCreate(
+            Model model,
+            Principal principal,
+            @Valid CreateHospital.RequestDto requestDto,
+            BindingResult bindingResult
+    ){
+        if(bindingResult.hasErrors()){
+            return "myPage/doctor/hospital-info-manage-create";
+        }
+
+        String doctorEmail = principal.getName();
+
+        hospitalService.create(requestDto, doctorEmail);
+
+        // TODO modify를 form으로 이름을 바꾼다.
+        return "redirect:/usr/mypage/doctor/hospital-info-manage";
     }
 
     // 병원 소개 수정 페이지

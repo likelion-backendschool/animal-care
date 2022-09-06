@@ -1,0 +1,232 @@
+<html layout:decorate="~{myPage/doctor/sampleLayout}">
+<div class="container" layout:fragment="content">
+    <nav class="navbar">
+        <a href="/usr/mypage/doctor/hospital-info-manage">뒤로</a>
+    </nav>
+    <h2 class="p-4">
+        병원 생성
+    </h2>
+    <div>
+        <form action="/usr/mypage/doctor/hospital-info-manage/create"
+              th:object="${requestDto}" method="post">
+            <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
+            <table class="table">
+                <input type="hidden" th:field="*{id}">
+                <tbody>
+                <tr>
+                    <th>이름</th>
+                    <td>
+                        <input class="form-control" type="text" th:field="*{name}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>전화 번호</th>
+                    <td>
+                        <input class="form-control" type="text" th:field="*{phoneNum}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        우편번호
+                    </th>
+                    <td class="row">
+                        <div class="col-auto">
+                            <input class="form-control-plaintext" type="text" id="zipcode"  th:field="*{zipcode}" readonly>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-primary" onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>도로명 주소</th>
+                    <td>
+                        <input  type="text" id="street" name="street" placeholder="도로명주소" class=" form-control-plaintext col-md-6 col-12" th:field="*{street}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th>지번 주소</th>
+                    <td>
+                        <input  type="text" placeholder="지번주소" class="form-control-plaintext disabled col-md-6 col-12" th:field="*{city}" readonly>
+                        <span id="guide" style="color:#999;display:none"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>상세 주소</th>
+                    <td>
+                        <input type="text" th:field="*{detail}" placeholder="상세주소" class="form-control col-md-6 col-12">
+                    </td>
+                </tr>
+                <tr>
+                    <th>영업 시간</th>
+                    <th>
+                        <table class="table">
+                            <tr>
+                                <th>월요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{monStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{monEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>화요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{tueStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{tueEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>수요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{wedStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{wedEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>목요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{thuStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{thuEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>금요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{friStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{friEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>토요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{satStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{satEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>일요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{sunStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{sunEnd}">
+                                </td>
+                            </tr>
+
+                        </table>
+                    </th>
+                </tr>
+
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">생성 완료</button>
+        </form>
+        <!-- kakao 우편번호 서비스 -->
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script>
+            //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+            function sample4_execDaumPostcode() {
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                        // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var roadAddr = data.roadAddress; // 도로명 주소 변수
+                        var extraRoadAddr = ''; // 참고 항목 변수
+
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraRoadAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                            extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if(extraRoadAddr !== ''){
+                            extraRoadAddr = ' (' + extraRoadAddr + ')';
+                        }
+
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        document.getElementById('zipcode').value = data.zonecode;
+                        document.getElementById("street").value = roadAddr;
+                        document.getElementById("city").value = data.jibunAddress;
+
+                        var guideTextBox = document.getElementById("guide");
+                        // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                        if(data.autoRoadAddress) {
+                            var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                            guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                            guideTextBox.style.display = 'block';
+
+                        } else if(data.autoJibunAddress) {
+                            var expJibunAddr = data.autoJibunAddress;
+                            guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                            guideTextBox.style.display = 'block';
+                        } else {
+                            guideTextBox.innerHTML = '';
+                            guideTextBox.style.display = 'none';
+                        }
+                    }
+                }).open();
+            }
+        </script>
+    </div>
+</div>
+</html>

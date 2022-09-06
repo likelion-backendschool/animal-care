@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.hospital.service;
 
+import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
@@ -46,6 +47,18 @@ public class HospitalService {
         return hospitalForm;
     }
 
+    @Transactional
+    public void create(CreateHospital.RequestDto hospitalDto, String doctorEmail) {
+        Doctor doctor = doctorRepository.findByEmail(doctorEmail)
+                .orElseThrow(() -> new RuntimeException("Doctor email " + doctorEmail + " can't found."));
+
+        // entity => dto
+        Hospital hospital = hospitalDto.toEntity();
+
+        Hospital saveHospital = hospitalRepository.save(hospital);
+
+        doctor.addHospital(hospital);
+    }
 
     public void update(UpdateDoctorMyPageHospitalInfoManage.RequestDto hospitalDto) {
         Hospital beforeHospital =  hospitalRepository.findById(hospitalDto.getId())

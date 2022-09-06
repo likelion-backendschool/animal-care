@@ -89,11 +89,11 @@
         </table>
         <br>
         <h4>의사 정보</h4>
-        <div class="container" style="display: flex; flex-wrap: wrap">
+        <div class="container">
             <div class="row">
                 <div class="col-xl-4 col-md-6 col-sm-12 " th:each="doctor, i : ${hospital.getDoctorList()}">
                     <div class="card">
-                        <div class="card-header" th:text="${doctor.getName()}"></div>
+                        <div class="card-header" th:text="${doctor.name}"></div>
                         <div class="card-body">
                             <div style="height: 300px; text-align: center ">
                                 <img src="https://picsum.photos/200/300">

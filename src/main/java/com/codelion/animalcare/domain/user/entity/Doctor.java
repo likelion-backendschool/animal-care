@@ -43,4 +43,8 @@ public class Doctor extends UserInfo{
     @JsonIgnore
     @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments = new ArrayList<>();
+
+    public void addHospital(Hospital hospital){
+        this.hospital = hospital;
+    }
 }

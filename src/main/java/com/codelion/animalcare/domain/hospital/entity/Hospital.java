@@ -52,6 +52,4 @@ public class Hospital extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "hospital")
     private List<Appointment> appointments = new ArrayList<>();
-
-
 }
