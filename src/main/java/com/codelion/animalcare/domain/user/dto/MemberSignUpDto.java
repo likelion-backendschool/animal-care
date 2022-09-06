@@ -6,6 +6,7 @@ import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.*;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.sql.Date;
 
@@ -41,6 +42,9 @@ public class MemberSignUpDto {
 
     private LocalDateTime updatedAt;
 
+    private Double latitude; // 위도
+
+    private Double longitude; // 경도
 
     public Member toEntity(MemberSignUpDto memberSignUpDto){
         return Member.builder()
@@ -52,6 +56,8 @@ public class MemberSignUpDto {
                 .phoneNum(memberSignUpDto.getPhoneNum())
                 .genderId(memberSignUpDto.getGenderId())
                 .auth("ROLE_MEMBER")
+                .latitude(memberSignUpDto.getLatitude())
+                .longitude(memberSignUpDto.getLongitude())
                 .build();
     }
 }

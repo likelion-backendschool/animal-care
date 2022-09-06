@@ -47,6 +47,11 @@ public class UserInfo extends BaseEntity implements UserDetails {
     @Column()
     private int genderId;
 
+    @Column()
+    private Double latitude; // 위도
+    
+    @Column()
+    private Double longitude; // 경도
     // TODO : Adress, deleteAt 들어가야함
 
 

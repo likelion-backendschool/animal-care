@@ -6,6 +6,7 @@ import com.codelion.animalcare.domain.user.entity.Doctor;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.sql.Date;
 
@@ -48,6 +49,10 @@ public class DoctorSignUpDto {
 
     private Hospital hospital;
 
+    private Double latitude; // 위도
+
+    private Double longitude; // 경도
+
     public Doctor toEntity(DoctorSignUpDto doctorDto){
         return Doctor.builder()
                 .email(doctorDto.getEmail())
@@ -60,6 +65,8 @@ public class DoctorSignUpDto {
                 .major(doctorDto.getMajor())
                 .introduce(doctorDto.getIntroduce())
                 .auth("ROLE_DOCTOR")
+                .latitude(doctorDto.getLatitude())
+                .longitude(doctorDto.getLongitude())
                 .build();
     }
 }
