@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>sign up</title>
-</head>
-<body>
-<h1>Sign Up</h1>
-<hr>
+<html layout:decorate="~{global/layout}">
 
-<form th:action="@{/user}" method="POST">
-    email : <input type="text" name="email"> <br>
-    password : <input type="password" name="password"> <br>
-    <input type="radio" name="auth" value="ROLE_ADMIN,ROLE_USER,ROLE_DOCTOR"> admin
-    <input type="radio" name="auth" value="ROLE_USER" checked="checked"> user
-    <input type="radio" name="auth" value="ROLE_DOCTOR,ROLE_USER"> doctor <br>
-    <button type="submit">Join</button>
-</form>
-<br>
+<div layout:fragment="content" class="container my-5">
+    <body>
+    <h1>Sign Up</h1>
+    <hr>
 
-<a href="/login">Go to login →</a>
-</body>
+    <a th:href="@{/usr/member/signup}" class="btn btn-primary" role="button">Member Signup</a>
+    <a th:href="@{/usr/doctor/signup}" class="btn btn-primary" role="button">Doctor Signup</a>
+    <hr>
+    <a th:href="@{/login}" class="btn btn-primary" role="button">Go to login →</a>
+    </body>
+</div>
 </html>
