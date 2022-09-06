@@ -28,10 +28,12 @@
             <tr>
                 <th>지번 주소</th>
                 <td th:text="${hospital.city}"></td>
+                <td style="width:350px;" rowspan="4"> <div class="mb-3" id="map" style="width:100%;height:350px;"></div></td>
             </tr>
             <tr>
                 <th>도로명 주소</th>
                 <td th:text="${hospital.street}"></td>
+                <input type="hidden" name="street" id="street" th:value="${hospital.street}">
             </tr>
             <tr>
                 <th>우편 번호</th>
@@ -137,6 +139,54 @@
                 </div>
             </div>
         </div>
+        <!--TODO appkey 비밀키 사용  -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e11ec606a9ab5e56f6fcdae9c805b669&libraries=services"></script>
+        <script>
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+
+            // 지도를 생성합니다
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            var ps = new kakao.maps.services.Places();
+
+            // 주소-좌표 변환 객체를 생성합니다
+            var geocoder = new kakao.maps.services.Geocoder();
+            // 주소로 좌표를 검색합니다
+            updatePlace();
+
+            function updatePlace(){
+                const street = document.getElementById('street').value;
+                console.log('updatePlace');
+                console.log(street);
+                geocoder.addressSearch(street, function(result, status) {
+
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === kakao.maps.services.Status.OK) {
+
+                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                        // 결과값으로 받은 위치를 마커로 표시합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+
+                        // 인포윈도우로 장소에 대한 설명을 표시합니다
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: '<div style="width:150px;text-align:center;padding:6px 0;">병원</div>'
+                        });
+                        infowindow.open(map, marker);
+
+                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                        map.setCenter(coords);
+                    }
+                });
+            }
+        </script>
     </div>
 </div>
 </html>
