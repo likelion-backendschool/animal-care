@@ -48,10 +48,6 @@ public class AppointmentService {
         return result;
     }
 
-//    public List<Appointment> findAppointments() {
-//        return appointmentRepository.findAllAppointments();
-//    }
-
     public List<Appointment> findByMemberId(long id) {
         return appointmentRepository.findByMemberId(id);
     }
@@ -137,10 +133,6 @@ public class AppointmentService {
         return new LoadMyPageDoctorAppointment.ResponseDto(appointment);
     }
 
-
-    public Optional<Member> findMemberByMemberId(Long memberId) {
-        return appointmentRepository.findMemberByMemberId(memberId);
-    }
 
     public Optional<AppointmentDto> findById(Long appointmentId) {
         Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);

@@ -121,8 +121,4 @@ public class Appointment extends BaseEntity {
         this.status = refuse;
     }
 
-//    public void update() {
-//
-//
-//    }
 }
