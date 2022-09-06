@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.appointment.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -46,9 +48,9 @@ public class AppointmentService {
         return result;
     }
 
-    public List<Appointment> findAppointments() {
-        return appointmentRepository.findAllAppointments();
-    }
+//    public List<Appointment> findAppointments() {
+//        return appointmentRepository.findAllAppointments();
+//    }
 
     public List<Appointment> findByMemberId(long id) {
         return appointmentRepository.findByMemberId(id);
@@ -77,7 +79,7 @@ public class AppointmentService {
 
 
     /**
-     * 예약 취소
+     * 예약내역에서 예약취소
      */
     @Transactional
     public void cancelAppointment(Long appointmentId) {
@@ -102,6 +104,31 @@ public class AppointmentService {
     }
 
 
+
+    /**
+     * 예약내역에서 예약수정
+     */
+    @Transactional
+    public Long updateAppointment(Long appointmentId, MemberDto memberDto, Long animalDtoId, Long hospitalDtosId, Long doctorDtosId, LocalDateTime appointmentDate) {
+
+        //예약 엔티티 조회
+        Appointment appointment = appointmentRepository.findById(appointmentId).get();
+
+        //엔티티 조회
+        Member member = memberRepository.findById(memberDto.getId()).get();
+        Animal animal = animalRepository.findById(animalDtoId).get();
+        Hospital hospital = hospitalRepository.findById(hospitalDtosId).get();
+        Doctor doctor = doctorRepository.findById(doctorDtosId).get();
+
+        //예약 수정
+        appointment = appointment.updateAppointment(appointment, member, animal, hospital, doctor, appointmentDate);
+
+        appointmentRepository.save(appointment);
+
+        return appointment.getId();
+    }
+
+
     public LoadMyPageDoctorAppointment.ResponseDto findById(long appointmentId) {
         Appointment appointment = appointmentRepository
                 .findByIdWithMemberAndAnimalAndHospitalAndDoctorAndDiagnosis(appointmentId)
@@ -113,5 +140,12 @@ public class AppointmentService {
 
     public Optional<Member> findMemberByMemberId(Long memberId) {
         return appointmentRepository.findMemberByMemberId(memberId);
+    }
+
+    public Optional<AppointmentDto> findById(Long appointmentId) {
+        Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
+        Optional<AppointmentDto> appointmentDto = appointmentOptional.map(o -> new AppointmentDto(o));
+
+        return appointmentDto;
     }
 }

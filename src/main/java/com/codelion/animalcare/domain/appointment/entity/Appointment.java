@@ -55,7 +55,8 @@ public class Appointment extends BaseEntity {
     @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosis;
 
-     // == 연관관계 메서드 == //
+
+    // == 연관관계 메서드 == //
     public void addMember(Member member) {
         this.member = member;
         member.getAppointments().add(this);
@@ -91,6 +92,19 @@ public class Appointment extends BaseEntity {
         return appointment;
     }
 
+    //== 수정 메서드 ==//
+    public static Appointment updateAppointment(Appointment appointment, Member member, Animal animal, Hospital hospital, Doctor doctor, LocalDateTime appointmentDate) {
+
+        appointment.addMember(member);
+
+        appointment.addAnimal(animal);
+        appointment.addHospital(hospital);
+        appointment.addDoctor(doctor);
+
+        appointment.setStatus(AppointmentStatus.COMPLETE);
+        appointment.setDate(appointmentDate);
+        return appointment;
+    }
 
     //==비즈니스 로직==//
     /**
@@ -106,4 +120,9 @@ public class Appointment extends BaseEntity {
     public void updateStatus(AppointmentStatus refuse) {
         this.status = refuse;
     }
+
+//    public void update() {
+//
+//
+//    }
 }

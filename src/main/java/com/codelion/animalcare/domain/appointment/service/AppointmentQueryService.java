@@ -21,16 +21,16 @@ public class AppointmentQueryService {
     /**
      * Admin 페이지에서 필요할거 같음
      */
-    public List<AppointmentDto> findAllAppointments() {
-
-        List<Appointment> appointments = appointmentRepository.findAllAppointments();
-
-        List<AppointmentDto> appointmentDtos = appointments.stream()
-                .map(o -> new AppointmentDto(o))
-                .collect(Collectors.toList());
-
-        return appointmentDtos;
-    }
+//    public List<AppointmentDto> findAllAppointments() {
+//
+//        List<Appointment> appointments = appointmentRepository.findAllAppointments();
+//
+//        List<AppointmentDto> appointmentDtos = appointments.stream()
+//                .map(o -> new AppointmentDto(o))
+//                .collect(Collectors.toList());
+//
+//        return appointmentDtos;
+//    }
 
 
     public List<AppointmentDto> findAppointmentByMemberDto(MemberDto memberDto) {

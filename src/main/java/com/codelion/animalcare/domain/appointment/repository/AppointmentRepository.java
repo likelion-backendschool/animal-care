@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.appointment.repository;
 
+import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.user.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +29,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findAllAppointments();
 
     Optional<Member> findMemberByMemberId(Long memberId);
+
 }

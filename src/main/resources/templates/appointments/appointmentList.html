@@ -25,21 +25,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="mad : ${appointmentDtos}">
-                        <td th:text="${mad.getAppointmentId}"></td>
-                        <td th:text="${mad.memberName}"></td>
-                        <td th:text="${mad.animalName}"></td>
-                        <td th:text="${mad.hospitalName}"></td>
-                        <td th:text="${mad.doctorName}"></td>
-                        <td th:text="${mad.date}"></td>
-                        <td th:text="${mad.status}"></td>
+                    <tr th:each="ad : ${appointmentDto}">
+                        <td th:text="${ad.appointmentId}"></td>
+                        <td th:text="${ad.memberName}"></td>
+                        <td th:text="${ad.animalName}"></td>
+                        <td th:text="${ad.hospitalName}"></td>
+                        <td th:text="${ad.doctorName}"></td>
+                        <td th:text="${ad.date}"></td>
+                        <td th:text="${ad.status}"></td>
                         <td>
-                            <a th:if="${mad.status.name() == 'COMPLETE'}"
-                               href="#" th:href="@{/usr/mypage/member/appointment-info/{appointmentId}/edit (id=${mad.getAppointmentId})}"
-                               class="btn btn-primary" role="button">MODIFY</a>
+                            <a th:if="${ad.status.name() == 'COMPLETE'}"
+                            href="#" th:href="@{/usr/mypage/member/appointment-info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">MODIFY</a>
                         </td>
                         <td>
-                            <a th:if="${mad.status.name() == 'COMPLETE'}" href="#" th:href="'javascript:cancel('+${mad.getAppointmentId}+')'"
+                            <a th:if="${ad.status.name() == 'COMPLETE'}" href="#" th:href="'javascript:cancel('+${ad.appointmentId}+')'"
                                class="btn btn-danger">CANCEL</a>
                         </td>
                     </tr>
