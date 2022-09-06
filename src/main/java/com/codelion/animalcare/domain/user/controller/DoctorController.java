@@ -18,7 +18,7 @@ public class DoctorController {
 
     @GetMapping("/signup")
     public String signup(Model model){
-        model.addAttribute("doctorDto", new DoctorSignUpDto());
+        model.addAttribute("doctorSignUpDto", new DoctorSignUpDto());
         return "login/doctorSignup";
     }
 
