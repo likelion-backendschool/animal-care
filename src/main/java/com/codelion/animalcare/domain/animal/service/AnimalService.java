@@ -1,15 +1,16 @@
 package com.codelion.animalcare.domain.animal.service;
 
+import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
-import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.entity.UserInfo;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -51,7 +52,13 @@ public class AnimalService {
     }
 
 
-    public List<Animal> findByMember(Member member) {
-        return animalRepository.findByMember(member);
+    public List<AnimalDto> findByMember(MemberDto memberDto) {
+
+        List<Animal> animals = animalRepository.findListAnimalByMemberId(memberDto.getId());
+        List<AnimalDto> result = animals.stream()
+                .map(o -> new AnimalDto(o))
+                .collect(Collectors.toList());
+
+        return result;
     }
 }
