@@ -20,6 +20,7 @@
 <!--        <div class="mb-3">-->
 <!--            <label for="birthDay" class="form-label">생일</label>-->
 <!--            <input type="date" th:name="birthDay" th:field="*{birthDay}"  class="form-control">-->
+<!--&lt;!&ndash;            <input type="text"  placeholder="생년월일(yyMMdd)" autocomplete="off" th:name="birthDay" th:field="*{birthDay} class="form-control"/>&ndash;&gt;-->
 <!--        </div>-->
 
         <div class="mb-3">
@@ -55,7 +56,7 @@
             <label for="introduce" class="form-label">성별</label>
             <br>
             <label>
-                여: <input type="radio" th:field="*{genderId}" th:value="0">
+                여: <input type="radio" th:field="*{genderId}" th:value="0" checked>
             </label>
             <label>
                 남: <input type="radio" th:field="*{genderId}" th:value="1">
