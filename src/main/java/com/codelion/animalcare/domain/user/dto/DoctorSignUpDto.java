@@ -4,9 +4,10 @@ import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -22,6 +23,7 @@ public class DoctorSignUpDto {
     private String password;
 
     private String name;
+
 
     private Date birthDay;
 

@@ -7,7 +7,7 @@ import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
