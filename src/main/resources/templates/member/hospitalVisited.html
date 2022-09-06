@@ -1,18 +1,10 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="global/fragments/header :: header" />
-<style>
-  .fieldError {
-    border-color: #bd2130;
-  }
-</style>
-<body>
+<html layout:decorate="~{global/layout}">
 
-<div class="container">
-  <div th:replace="global/fragments/bodyHeader :: bodyHeader"/>
-
-  병원 방문내역입니다.
-
+<div layout:fragment="content" class="container my-5">
+  <body>
+  <div class="page-header">
+    <h3>병원방문내역</h3>
+  </div>
   <div>
 
     <table class="table table-striped">
@@ -29,14 +21,22 @@
       </thead>
       <tbody>
 
+      <tr th:each="ad : ${appointmentDto}">
+        <div a th:if="${ad.status.name() == 'COMPLETE'}">
+
+        <td th:text="${ad.appointmentId}"></td>
+        <td th:text="${ad.memberName}"></td>
+        <td th:text="${ad.animalName}"></td>
+        <td th:text="${ad.hospitalName}"></td>
+        <td th:text="${ad.doctorName}"></td>
+        <td th:text="${ad.date}"></td>
+
+      </div>
+      </tr>
 
       </tbody>
     </table>
   </div>
-
-  <div th:replace="global/fragments/footer :: footer" />
-</div> <!-- /container -->
-
-</body>
-
+  </body>
+</div>
 </html>

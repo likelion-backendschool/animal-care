@@ -1,20 +1,13 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="global/fragments/header :: header" />
-<style>
-  .fieldError {
-    border-color: #bd2130;
-  }
-</style>
-<body>
+<html layout:decorate="~{global/layout}">
 
-<div class="container">
-  <div th:replace="global/fragments/bodyHeader :: bodyHeader"/>
+<div layout:fragment="content" class="container my-5">
+  <body>
+  <div class="page-header">
+    <h3>물품 구입 현황</h3>
+  </div>
 
-  물품 구입 현황 페이지 입니다.
+  <h6 class="font-weight-bolder mb-0">물품 구입 현황 페이지입니다.</h6>
 
-  <div th:replace="global/fragments/footer :: footer" />
-</div> <!-- /container -->
-
-</body>
+  </body>
+</div>
 </html>
