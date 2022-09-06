@@ -51,18 +51,8 @@ public class DoctorService {
     public Doctor save(DoctorDto doctorDto) {
         // TODO : @Bean 주입으로 바꾸기
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        Doctor doctor = Doctor.builder()
-                .email(doctorDto.getEmail())
-                .password(encoder.encode(doctorDto.getPassword()))
-                .name(doctorDto.getName())
-                .birthday((Date) doctorDto.getBirthDay())
-                .address(new Address(doctorDto.getCity(), doctorDto.getStreet(), doctorDto.getZipcode()))
-                .phoneNum(doctorDto.getPhoneNum())
-                .genderId(doctorDto.getGenderId())
-                .major(doctorDto.getMajor())
-                .introduce(doctorDto.getIntroduce())
-                .auth("ROLE_DOCTOR")
-                .build();
+        doctorDto.setPassword(encoder.encode(doctorDto.getPassword()));
+        Doctor doctor = doctorDto.toEntity(doctorDto);
         return doctorRepository.save(doctor);
     }
 

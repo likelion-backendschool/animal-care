@@ -1,6 +1,8 @@
 package com.codelion.animalcare.domain.user.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import com.codelion.animalcare.domain.user.entity.Address;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -42,4 +44,19 @@ public class DoctorDto {
     private LocalDateTime updatedAt;
 
     private Hospital hospital;
+
+    public Doctor toEntity(DoctorDto doctorDto){
+        return Doctor.builder()
+                .email(doctorDto.getEmail())
+                .password(doctorDto.getPassword())
+                .name(doctorDto.getName())
+                .birthday((java.sql.Date) doctorDto.getBirthDay())
+                .address(new Address(doctorDto.getCity(), doctorDto.getStreet(), doctorDto.getZipcode()))
+                .phoneNum(doctorDto.getPhoneNum())
+                .genderId(doctorDto.getGenderId())
+                .major(doctorDto.getMajor())
+                .introduce(doctorDto.getIntroduce())
+                .auth("ROLE_DOCTOR")
+                .build();
+    }
 }
