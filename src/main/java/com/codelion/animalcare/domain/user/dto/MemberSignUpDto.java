@@ -29,6 +29,7 @@ public class MemberSignUpDto {
     private String city;
     private String street;
     private String zipcode;
+    private String detail;
 
     private String phoneNum;
 
@@ -47,7 +48,7 @@ public class MemberSignUpDto {
                 .password(memberSignUpDto.getPassword())
                 .name(memberSignUpDto.getName())
                 .birthday((java.sql.Date) memberSignUpDto.getBirthDay())
-                .address(new Address(memberSignUpDto.getCity(), memberSignUpDto.getStreet(), memberSignUpDto.getZipcode()))
+                .address(new Address(memberSignUpDto.getCity(), memberSignUpDto.getStreet(), memberSignUpDto.getZipcode(), memberSignUpDto.getDetail()))
                 .phoneNum(memberSignUpDto.getPhoneNum())
                 .genderId(memberSignUpDto.getGenderId())
                 .auth("ROLE_MEMBER")

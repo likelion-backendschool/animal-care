@@ -30,6 +30,7 @@ public class DoctorSignUpDto {
     private String city;
     private String street;
     private String zipcode;
+    private String detail;
 
     private String phoneNum;
 
@@ -53,7 +54,7 @@ public class DoctorSignUpDto {
                 .password(doctorDto.getPassword())
                 .name(doctorDto.getName())
                 .birthday((java.sql.Date) doctorDto.getBirthDay())
-                .address(new Address(doctorDto.getCity(), doctorDto.getStreet(), doctorDto.getZipcode()))
+                .address(new Address(doctorDto.getCity(), doctorDto.getStreet(), doctorDto.getZipcode(), doctorDto.getDetail()))
                 .phoneNum(doctorDto.getPhoneNum())
                 .genderId(doctorDto.getGenderId())
                 .major(doctorDto.getMajor())
