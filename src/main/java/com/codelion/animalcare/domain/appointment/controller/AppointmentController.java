@@ -68,6 +68,10 @@ public class AppointmentController {
         return "redirect:/usr/mypage/member/appointment-info";
     }
 
+    @GetMapping("/usr/member/appointment")
+    public String appointment(Model model){
+        return "appointments/appointmentHospitalMap";
+    }
 
     // 마이페이지 회원 예약내역
     @GetMapping("/usr/mypage/member/appointment-info")
