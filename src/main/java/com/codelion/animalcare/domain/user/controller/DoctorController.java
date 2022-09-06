@@ -1,7 +1,6 @@
 package com.codelion.animalcare.domain.user.controller;
 
-import com.codelion.animalcare.domain.user.dto.DoctorDto;
-import com.codelion.animalcare.domain.user.entity.Doctor;
+import com.codelion.animalcare.domain.user.dto.DoctorSignUpDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,12 +18,12 @@ public class DoctorController {
 
     @GetMapping("/signup")
     public String signup(Model model){
-        model.addAttribute("doctorDto", new DoctorDto());
+        model.addAttribute("doctorDto", new DoctorSignUpDto());
         return "login/doctorSignup";
     }
 
     @PostMapping("/signup")
-    public String signup(DoctorDto doctorDto){
+    public String signup(DoctorSignUpDto doctorDto){
         doctorService.save(doctorDto);
         return "main";
     }

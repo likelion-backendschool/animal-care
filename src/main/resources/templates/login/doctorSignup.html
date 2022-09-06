@@ -4,7 +4,7 @@
     <body>
     <h1>Doctor Sign Up</h1>
     <hr>
-    <form th:action="@{/usr/doctor/signup}" th:object="${doctorDto}" method="post">
+    <form th:action="@{/usr/doctor/signup}" th:object="${doctorSignUpDto}" method="post">
         <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
             <input type="email" th:field="*{email}" class="form-control">

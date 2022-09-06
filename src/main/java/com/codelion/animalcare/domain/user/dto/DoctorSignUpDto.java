@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DoctorDto {
+public class DoctorSignUpDto {
 
     private Long id;
 
@@ -45,7 +45,7 @@ public class DoctorDto {
 
     private Hospital hospital;
 
-    public Doctor toEntity(DoctorDto doctorDto){
+    public Doctor toEntity(DoctorSignUpDto doctorDto){
         return Doctor.builder()
                 .email(doctorDto.getEmail())
                 .password(doctorDto.getPassword())

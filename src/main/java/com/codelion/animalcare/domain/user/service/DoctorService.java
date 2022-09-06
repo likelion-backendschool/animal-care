@@ -3,10 +3,8 @@ package com.codelion.animalcare.domain.user.service;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfoPassword;
-import com.codelion.animalcare.domain.user.dto.DoctorDto;
-import com.codelion.animalcare.domain.user.entity.Address;
+import com.codelion.animalcare.domain.user.dto.DoctorSignUpDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
-import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.global.error.exception.DoctorModifyAfterPasswordNotSameException;
 import com.codelion.animalcare.global.error.exception.DoctorModifyBeforePasswordNotSameException;
@@ -15,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -48,7 +45,7 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-    public Doctor save(DoctorDto doctorDto) {
+    public Doctor save(DoctorSignUpDto doctorDto) {
         // TODO : @Bean 주입으로 바꾸기
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         doctorDto.setPassword(encoder.encode(doctorDto.getPassword()));
