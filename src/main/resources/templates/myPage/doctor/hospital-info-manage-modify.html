@@ -16,155 +16,164 @@
                 <tr>
                     <th>이름</th>
                     <td>
-                        <input type="text" th:field="*{name}">
+                        <input class="form-control" type="text" th:field="*{name}">
                     </td>
                 </tr>
                 <tr>
                     <th>전화 번호</th>
                     <td>
-                        <input type="text" th:field="*{phoneNum}">
+                        <input class="form-control" type="text" th:field="*{phoneNum}">
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <label for="zipcode" class="form-label">우편번호</label>
-                    </td>
-                    <td>
-                        <input type="text" id="zipcode"  th:field="*{zipcode}" readonly>
-                        <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-                    </td>
-                </tr>
-                <tr>
-                    <td>도로명 주소</td>
-                    <td>
-                        <input type="text" id="street" name="street" placeholder="도로명주소" class="col-md-6 col-12" th:field="*{street}" readonly>
+                    <th>
+                        우편번호
+                    </th>
+                    <td class="row">
+                        <div class="col-auto">
+                            <input class="form-control-plaintext" type="text" id="zipcode"  th:field="*{zipcode}" readonly>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-primary" onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>지번 주소</td>
+                    <th>도로명 주소</th>
                     <td>
-                        <input type="text" placeholder="지번주소" class="col-md-6 col-12" th:field="*{city}" readonly>
+                        <input  type="text" id="street" name="street" placeholder="도로명주소" class=" form-control-plaintext col-md-6 col-12" th:field="*{street}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th>지번 주소</th>
+                    <td>
+                        <input  type="text" placeholder="지번주소" class="form-control-plaintext disabled col-md-6 col-12" th:field="*{city}" readonly>
                         <span id="guide" style="color:#999;display:none"></span>
                     </td>
                 </tr>
                 <tr>
-                    <td>상세 주소</td>
+                    <th>상세 주소</th>
                     <td>
                         <input type="text" th:field="*{detail}" placeholder="상세주소" class="form-control col-md-6 col-12">
                     </td>
                 </tr>
                 <tr>
                     <th>영업 시간</th>
+                    <th>
+                        <table class="table">
+                            <tr>
+                                <th>월요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{monStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{monEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>화요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{tueStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{tueEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>수요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{wedStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{wedEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>목요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{thuStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{thuEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>금요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{friStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{friEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>토요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{satStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{satEnd}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>일요일</th>
+                                <td>
+                                    <input class="form-control"
+                                           type="time"
+                                           th:field="*{sunStart}" >
+                                </td>
+                                <td style="text-align: center">
+                                    ~
+                                </td>
+                                <td>
+                                    <input class="form-control"
+                                           type="time" th:field="*{sunEnd}">
+                                </td>
+                            </tr>
+
+                        </table>
+                    </th>
                 </tr>
-                <tr>
-                    <th>월요일</th>
-                    <td>
-                        <label>
-                            시작시간:
-                            <input type="time"
-                                   th:field="*{monStart}" >
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            종료시간:
-                            <input type="time" th:field="*{monEnd}">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>화요일</th>
-                    <td>
-                        <label>
-                            시작시간:
-                            <input type="time" th:field="*{tueStart}">
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            종료시간:
-                            <input type="time" th:field="*{tueEnd}">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>수요일</th>
-                    <td>
-                        <label>
-                            시작시간:
-                            <input type="time" th:field="*{wedStart}">
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            종료시간:
-                            <input type="time" th:field="*{wedEnd}">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>목요일</th>
-                    <td>
-                        <label>
-                            시작시간:
-                            <input type="time" th:field="*{thuStart}">
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            종료시간:
-                            <input type="time" th:field="*{thuEnd}">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>금요일</th>
-                    <td>
-                        <label>
-                            시작시간:
-                            <input type="time" th:field="*{friStart}">
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            종료시간:
-                            <input type="time" th:field="*{friEnd}">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>토요일</th>
-                    <td>
-                        <label>
-                            시작시간:
-                            <input type="time" th:field="*{satStart}">
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            종료시간:
-                            <input type="time" th:field="*{satEnd}">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>일요일</th>
-                    <td>
-                        <label>
-                            시작시간:
-                            <input type="time" th:field="*{sunStart}">
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            종료시간:
-                            <input type="time" th:field="*{sunEnd}">
-                        </label>
-                    </td>
-                </tr>
+
                 </tbody>
             </table>
-            <input type="submit" value="수정 완료">
+            <button type="submit" class="btn btn-primary">수정 완료</button>
         </form>
         <!-- kakao 우편번호 서비스 -->
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
