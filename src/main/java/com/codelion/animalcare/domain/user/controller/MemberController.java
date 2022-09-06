@@ -1,5 +1,8 @@
 package com.codelion.animalcare.domain.user.controller;
 
+import com.codelion.animalcare.domain.user.dto.DoctorSignUpDto;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
+import com.codelion.animalcare.domain.user.dto.MemberSignUpDto;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.entity.MemberForm;
@@ -60,4 +63,15 @@ public class MemberController {
         return "member/memberInfo";
     }
 
+    @GetMapping("/usr/member/signup")
+    public String signup(Model model){
+        model.addAttribute("memberSignUpDto", new MemberSignUpDto());
+        return "login/memberSignup";
+    }
+
+    @PostMapping("/usr/member/signup")
+    public String signup(MemberSignUpDto memberSignUpDto){
+        memberService.save(memberSignUpDto);
+        return "main";
+    }
 }
