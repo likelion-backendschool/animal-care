@@ -3,6 +3,8 @@ package com.codelion.animalcare.domain.user.service;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfoPassword;
+import com.codelion.animalcare.domain.user.dto.DoctorDto;
+import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -42,6 +45,24 @@ public class DoctorService {
 
 
     public Doctor save(Doctor doctor) {
+        return doctorRepository.save(doctor);
+    }
+
+    public Doctor save(DoctorDto doctorDto) {
+        // TODO : @Bean 주입으로 바꾸기
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        Doctor doctor = Doctor.builder()
+                .email(doctorDto.getEmail())
+                .password(encoder.encode(doctorDto.getPassword()))
+                .name(doctorDto.getName())
+                .birthday((Date) doctorDto.getBirthDay())
+                .address(new Address(doctorDto.getCity(), doctorDto.getStreet(), doctorDto.getZipcode()))
+                .phoneNum(doctorDto.getPhoneNum())
+                .genderId(doctorDto.getGenderId())
+                .major(doctorDto.getMajor())
+                .introduce(doctorDto.getIntroduce())
+                .auth("ROLE_DOCTOR")
+                .build();
         return doctorRepository.save(doctor);
     }
 
