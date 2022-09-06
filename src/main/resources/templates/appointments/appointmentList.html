@@ -34,11 +34,11 @@
                         <td th:text="${ad.date}"></td>
                         <td th:text="${ad.status}"></td>
                         <td>
-                            <a th:if="${ad.status.name() == 'COMPLETE'}"
+                            <a th:if="${ad.status.name() == 'READY'}"
                             href="#" th:href="@{/usr/mypage/member/appointment-info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">MODIFY</a>
                         </td>
                         <td>
-                            <a th:if="${ad.status.name() == 'COMPLETE'}" href="#" th:href="'javascript:cancel('+${ad.appointmentId}+')'"
+                            <a th:if="${ad.status.name() == 'READY'}" href="#" th:href="'javascript:cancel('+${ad.appointmentId}+')'"
                                class="btn btn-danger">CANCEL</a>
                         </td>
                     </tr>

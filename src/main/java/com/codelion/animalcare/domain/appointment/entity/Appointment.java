@@ -87,7 +87,7 @@ public class Appointment extends BaseEntity {
         appointment.addHospital(hospital);
         appointment.addDoctor(doctor);
 
-        appointment.setStatus(AppointmentStatus.COMPLETE);
+        appointment.setStatus(AppointmentStatus.READY);
         appointment.setDate(appointmentDate);
         return appointment;
     }
@@ -101,7 +101,7 @@ public class Appointment extends BaseEntity {
         appointment.addHospital(hospital);
         appointment.addDoctor(doctor);
 
-        appointment.setStatus(AppointmentStatus.COMPLETE);
+        appointment.setStatus(AppointmentStatus.READY);
         appointment.setDate(appointmentDate);
         return appointment;
     }
