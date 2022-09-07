@@ -8,7 +8,7 @@ import lombok.Setter;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 
 public class LoadDoctorMyPageInfo {
     @Getter

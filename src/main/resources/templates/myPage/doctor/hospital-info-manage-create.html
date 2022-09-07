@@ -4,10 +4,10 @@
         <a href="/usr/mypage/doctor/hospital-info-manage">뒤로</a>
     </nav>
     <h2 class="p-4">
-        병원 관리 수정
+        병원 생성
     </h2>
     <div>
-        <form action="/usr/mypage/doctor/hospital-info-manage/modify"
+        <form action="/usr/mypage/doctor/hospital-info-manage/create"
               th:object="${requestDto}" method="post">
             <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
             <table class="table">
@@ -175,7 +175,7 @@
 
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">수정 완료</button>
+            <button type="submit" class="btn btn-primary">생성 완료</button>
         </form>
         <!-- kakao 우편번호 서비스 -->
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -247,7 +247,6 @@
                     }
                 });
             }
-
         </script>
     </div>
 </div>

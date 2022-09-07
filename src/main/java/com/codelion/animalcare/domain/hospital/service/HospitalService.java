@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.hospital.service;
 
 import com.codelion.animalcare.domain.mypage.dto.HospitalVisitedDto;
+import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
@@ -9,6 +10,9 @@ import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +25,12 @@ import java.util.stream.Collectors;
 public class HospitalService {
     private final DoctorRepository doctorRepository;
     private final HospitalRepository hospitalRepository;
+
+    @Transactional(readOnly = true)
+    public Page<Hospital> findAll(int page){
+        Pageable pageable = PageRequest.of(page, 10);
+        return hospitalRepository.findAll(pageable);
+    }
 
     @Transactional(readOnly = true)
     public Optional<Hospital> findById(long id) {
@@ -54,6 +64,18 @@ public class HospitalService {
         return hospitalForm;
     }
 
+    @Transactional
+    public void create(CreateHospital.RequestDto hospitalDto, String doctorEmail) {
+        Doctor doctor = doctorRepository.findByEmail(doctorEmail)
+                .orElseThrow(() -> new RuntimeException("Doctor email " + doctorEmail + " can't found."));
+
+        // entity => dto
+        Hospital hospital = hospitalDto.toEntity();
+
+        Hospital saveHospital = hospitalRepository.save(hospital);
+
+        doctor.addHospital(hospital);
+    }
 
     public void update(UpdateDoctorMyPageHospitalInfoManage.RequestDto hospitalDto) {
         Hospital beforeHospital =  hospitalRepository.findById(hospitalDto.getId())

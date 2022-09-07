@@ -1,0 +1,157 @@
+<html layout:decorate="~{myPage/doctor/sampleLayout}">
+<div class="container" layout:fragment="content">
+    <nav class="navbar">
+        <a href="/usr/mypage/doctor/hospital-info-manage">뒤로</a>
+    </nav>
+    <h2 class="p-4">
+        병원 선택
+    </h2>
+    <div class="row">
+        <div class="col-2">
+            <div class="list-group">
+                <div th:each="hospital :${paging}">
+                    <button type="button" th:attr="onclick=|panToBy('${hospital?.id}')|" class="list-group-item list-group-item-action" >
+                        <div th:text="${hospital.name}"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-10">
+            <div id="map" style="width:100%; padding-bottom: 100%;"></div>
+        </div>
+
+        <!--TODO appkey 비밀키 사용  -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e11ec606a9ab5e56f6fcdae9c805b669&libraries=services"></script>
+        <script th:inline="javascript">
+            const mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+            // 현재 표시되는 마커
+            let infowindow;
+            const map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+            const hospitals = [[${paging}]].content;
+            // 마커를 표시할 위치입니다(예제)
+            // var positions = [
+            //     {
+            //         title: '카카오',
+            //         latlng: new kakao.maps.LatLng(33.450705, 126.570677)
+            //     },
+            //     {
+            //         title: '생태연못',
+            //         latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+            //     },
+            //     {
+            //         title: '텃밭',
+            //         latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+            //     },
+            //     {
+            //         title: '근린공원',
+            //         latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+            //     }
+            // ];
+            //
+
+            // paging된 값이 controller로 부터 넘어와야 한다.
+
+            hospitals.forEach((hospital) => {
+                // TODO latitude, longitude address로 바꾸기
+                const { address } = hospital;
+                // 위도, 경도 표시
+                // 없다면 주소로 위도 경도 제작.
+                const position = new kakao.maps.LatLng(address.latitude, address.longitude);
+                console.log(position);
+                // 마커를 생성합니다
+                const marker = new kakao.maps.Marker({
+                    map,
+                    // title:
+                    position,
+                });
+
+                // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+                const content =
+                    '<div class="card">' +
+                    '    <div class="info">' +
+                    '        <div class="card-header">' +
+                                    hospital.name  +
+                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                    '        </div>' +
+                    '        <div class="card-body">' +
+                    '            <div class="desc">' +
+                    '                <p>' + address.street + address.detail +'</p>' +
+                    '            </div>' +
+                    '            <div class="container">' +
+                    '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
+                    '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">가입하기</a>' +
+                    '           </div>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
+
+                // 마커에 클릭이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'click', function() {
+                    if(infowindow)
+                        infowindow.close();
+                    // 인포윈도우를 생성합니다
+                    infowindow = new kakao.maps.InfoWindow({
+                        content : content,
+                        removable : true // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+                    });
+                    // 마커 위에 인포윈도우를 표시합니다
+                    infowindow.open(map, marker);
+                });
+            })
+
+            // 지도 이동
+            function panToBy(id) {
+                console.log(hospitals);
+                const hospital = hospitals.find(hospital => hospital.id === Number(id));
+                const {latitude, longitude, street, detail} = hospital.address;
+
+                // 이동할 위도 경도 위치를 생성합니다
+                const position = new kakao.maps.LatLng(latitude,longitude);
+                // 지도 중심을 부드럽게 이동시킵니다
+                // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+                map.panTo(position);
+
+                // 마크 생성
+
+                // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+                const content =
+                    '<div class="card">' +
+                    '    <div class="info">' +
+                    '        <div class="card-header">' +
+                    hospital.name  +
+                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                    '        </div>' +
+                    '        <div class="card-body">' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis"></div>' +
+                    '                <div class="jibun ellipsis">' + street + ' '+ detail +'</div>' +
+                    '            </div>' +
+                    '            <div class="container">' +
+                    '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
+                    '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">가입하기</a>' +
+                    '           </div>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
+
+                iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+                // 인포윈도우를 생성합니다
+                const infowindow = new kakao.maps.InfoWindow({
+                    content : content,
+                    removable : iwRemoveable
+                });
+
+                infowindow.close(map, infowindowMarker);
+                // 마커 위에 인포윈도우를 표시합니다
+                infowindow.open(map, marker);
+                infowindowMarker = marker;
+            }
+        </script>
+    </div>
+</div>
+</html>
