@@ -49,7 +49,8 @@ public class UserInfo extends BaseEntity implements UserDetails {
 
     @Column()
     private Double latitude; // 위도
-    
+
+    // TODO latitude, longitude address에 넣기 바꾸기
     @Column()
     private Double longitude; // 경도
     // TODO : Adress, deleteAt 들어가야함

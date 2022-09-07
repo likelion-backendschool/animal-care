@@ -3,8 +3,10 @@ package com.codelion.animalcare.domain.hospital.controller;
 import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.dto.UpdateDoctorMyPageHospitalInfoManage;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +32,7 @@ public class HospitalMyPageDoctorController {
 
         try{
             hospitalDto = hospitalService.findByDoctorEmail(doctorEmail);
-        } catch(RuntimeException e){
+        } catch(RuntimeException e){ // 병원이 등록되지 않았다면
             return "myPage/doctor/hospital-create-or-select";
         }
 
@@ -41,8 +43,11 @@ public class HospitalMyPageDoctorController {
         return "myPage/doctor/hospital-info-manage";
     }
 
+
+    /**
+     * 병원 생성
+     */
     @GetMapping("create")
-    // 병원 생성
     public String loadDoctorMyPageHospitalCreate(
             Model model,
             CreateHospital.RequestDto requestDto
@@ -71,6 +76,21 @@ public class HospitalMyPageDoctorController {
 
         // TODO modify를 form으로 이름을 바꾼다.
         return "redirect:/usr/mypage/doctor/hospital-info-manage";
+    }
+
+    /**
+     * 병원 선택
+     */
+    @GetMapping("select")
+    public String loadDoctorMyPageHospitalList(
+        Model model,
+        @RequestParam(value="page", defaultValue = "0") int page
+    ){
+        // TODO dto 사용
+        Page<Hospital> paging = hospitalService.findAll(page);
+        model.addAttribute("paging", paging);
+        // TODO modify를 form으로 이름을 바꾼다.
+        return "myPage/doctor/hospital-info-manage-select";
     }
 
     // 병원 소개 수정 페이지

@@ -9,6 +9,9 @@ import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,12 @@ import java.util.Optional;
 public class HospitalService {
     private final DoctorRepository doctorRepository;
     private final HospitalRepository hospitalRepository;
+
+    @Transactional(readOnly = true)
+    public Page<Hospital> findAll(int page){
+        Pageable pageable = PageRequest.of(page, 10);
+        return hospitalRepository.findAll(pageable);
+    }
 
     @Transactional(readOnly = true)
     public Optional<Hospital> findById(long id) {
