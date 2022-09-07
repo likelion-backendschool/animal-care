@@ -1,6 +1,6 @@
-<html layout:decorate="~{doctorqna/doctorQnaLayout}">
+<html layout:decorate="~{global/layout}">
 
-<div layout:fragment="content" class="container my-3">
+<div layout:fragment="content" class="container my-5">
 
     <h5 class="my-3 border-bottom pb-2">답변수정</h5>
     <form th:action="@{|/usr/doctor-qna/${answer.question.id}/answers/${answer.id}/modify|}" th:object="${answerUpdateRequestDto}" method="post">
