@@ -9,8 +9,10 @@
     <div class="row">
         <div class="col-2">
             <div class="list-group">
-                <div class="list-group-item" th:each="hospital :${paging}">
-                    <div th:text="${hospital.name}"></div>
+                <div th:each="hospital :${paging}">
+                    <button type="button" th:attr="onclick=|panToBy('${hospital?.id}')|" class="list-group-item list-group-item-action" >
+                        <div th:text="${hospital.name}"></div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -26,9 +28,10 @@
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                     level: 3 // 지도의 확대 레벨
                 };
-
+            // 현재 표시되는 마커
+            let infowindow;
             const map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
+            const hospitals = [[${paging}]].content;
             // 마커를 표시할 위치입니다(예제)
             // var positions = [
             //     {
@@ -50,7 +53,7 @@
             // ];
             //
 
-            const hospitals = [[${paging}]].content;
+            // paging된 값이 controller로 부터 넘어와야 한다.
 
             hospitals.forEach((hospital) => {
                 // TODO latitude, longitude address로 바꾸기
@@ -58,34 +61,74 @@
                 // 위도, 경도 표시
                 // 없다면 주소로 위도 경도 제작.
                 const position = new kakao.maps.LatLng(address.latitude, address.longitude);
-                console.log( position);
+                console.log(position);
                 // 마커를 생성합니다
                 const marker = new kakao.maps.Marker({
                     map,
                     // title:
                     position,
-                    clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
                 });
-
-                // 아래 코드는 위의 마커를 생성하는 코드에서 clickable: true 와 같이
-                // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-                // marker.setClickable(true);
-
-                // // 마커를 지도에 표시합니다.
-                // marker.setMap(map);
 
                 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
                 const content =
                     '<div class="card">' +
                     '    <div class="info">' +
                     '        <div class="card-header">' +
-                    position.title +
+                                    hospital.name  +
                     '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
                     '        </div>' +
                     '        <div class="card-body">' +
                     '            <div class="desc">' +
-                    '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
-                    '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
+                    '                <p>' + address.street + address.detail +'</p>' +
+                    '            </div>' +
+                    '            <div class="container">' +
+                    '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
+                    '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">가입하기</a>' +
+                    '           </div>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
+
+                // 마커에 클릭이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'click', function() {
+                    if(infowindow)
+                        infowindow.close();
+                    // 인포윈도우를 생성합니다
+                    infowindow = new kakao.maps.InfoWindow({
+                        content : content,
+                        removable : true // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+                    });
+                    // 마커 위에 인포윈도우를 표시합니다
+                    infowindow.open(map, marker);
+                });
+            })
+
+            // 지도 이동
+            function panToBy(id) {
+                console.log(hospitals);
+                const hospital = hospitals.find(hospital => hospital.id === Number(id));
+                const {latitude, longitude, street, detail} = hospital.address;
+
+                // 이동할 위도 경도 위치를 생성합니다
+                const position = new kakao.maps.LatLng(latitude,longitude);
+                // 지도 중심을 부드럽게 이동시킵니다
+                // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+                map.panTo(position);
+
+                // 마크 생성
+
+                // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+                const content =
+                    '<div class="card">' +
+                    '    <div class="info">' +
+                    '        <div class="card-header">' +
+                    hospital.name  +
+                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                    '        </div>' +
+                    '        <div class="card-body">' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis"></div>' +
+                    '                <div class="jibun ellipsis">' + street + ' '+ detail +'</div>' +
                     '            </div>' +
                     '            <div class="container">' +
                     '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
@@ -103,12 +146,11 @@
                     removable : iwRemoveable
                 });
 
-                // 마커에 클릭이벤트를 등록합니다
-                kakao.maps.event.addListener(marker, 'click', function() {
-                    // 마커 위에 인포윈도우를 표시합니다
-                    infowindow.open(map, marker);
-                });
-            })
+                infowindow.close(map, infowindowMarker);
+                // 마커 위에 인포윈도우를 표시합니다
+                infowindow.open(map, marker);
+                infowindowMarker = marker;
+            }
         </script>
     </div>
 </div>
