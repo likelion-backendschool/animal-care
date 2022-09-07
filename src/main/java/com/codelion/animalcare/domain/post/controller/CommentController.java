@@ -31,7 +31,7 @@ public class CommentController {
 
     // 댓글 수정 화면
     @GetMapping("/comments/{commentId}/modify")
-    public String modifyForm(Model model, @PathVariable Long commentId, ModifyCommentRequestDto modifyCommentRequestDto) {
+    public String modifyForm(Model model, @PathVariable Long commentId) {
         model.addAttribute("comment", commentService.findCommentById(commentId));
 
         return "community/commentModifyForm";

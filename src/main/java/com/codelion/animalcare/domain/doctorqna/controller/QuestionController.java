@@ -3,8 +3,10 @@ package com.codelion.animalcare.domain.doctorqna.controller;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
+import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.Cookie;
@@ -92,8 +95,11 @@ public class QuestionController {
     }
     //전체 조회
     @GetMapping("/usr/doctor-qna")
-    public String findAllDesc(Model model) {
-        model.addAttribute("questionlist", questionService.findAllDesc());
+    public String findAll(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+
+        Page<Question> paging = questionService.findAll(page);
+
+        model.addAttribute("paging", paging);
 
         return "/doctorqna/doctorQnaList";
     }

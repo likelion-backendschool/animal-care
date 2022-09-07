@@ -2,36 +2,34 @@ package com.codelion.animalcare.domain.animal.dto;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 @Getter
 public class AnimalDto {
 
-        private Long animalId;
+        private Long id;
         @NotEmpty(message = "애완동물 이름은 필수 입니다")
         private String name;
 
         // @Temporal: 날짜 타입(java.util.Date, java.util.Calendar)을 매핑할 때 사용
         @Temporal(TemporalType.DATE)
-        private Date birthDay;
+        private Date birthday;
 
-        private String registration_num;
+        private String registrationNum;
 
-        private int gender_id;
+        private int genderId;
 
 
         public AnimalDto(Animal animal) {
-            animalId = animal.getId();
+            id = animal.getId();
             name = animal.getName();
-            birthDay = animal.getBirthday();
-            registration_num = animal.getRegistrationNum();
-            gender_id = animal.getGenderId();
+            birthday = animal.getBirthday();
+            registrationNum = animal.getRegistrationNum();
+            genderId = animal.getGenderId();
         }
 
 }

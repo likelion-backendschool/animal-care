@@ -1,0 +1,67 @@
+<html layout:decorate="~{global/layout}" xmlns:display="http://www.w3.org/1999/xhtml" xmlns="">
+
+<div layout:fragment="content" class="container my-5">
+    <body>
+
+    <div class="container">
+        <div class="page-header">
+            <h3>예약내역 수정하기</h3>
+        </div>
+
+        <form role="form" th:object="${appointmentDto}" th:method="post" >
+
+            <div id="hide" style="display:none">
+            <input name="appointmentId" id="appointment"
+                   th:value="*{appointmentId}" />
+            </div>
+
+            <div class="form-group">
+                <label>회원이름</label>
+                <option name="memberDtoId" id="memberDto"
+                        th:text="${appointmentDto.memberName}"
+                       class="form-control"/>
+                </option>
+            </div>
+
+
+            <div class="form-group">
+                <label for="animalDtos">애완동물이름</label>
+                <select name="animalDtosId" id="animalDtos" class="form-control">
+                    <option th:each="animalDto : ${animalDtos}"
+                            th:value="${animalDto.id}"
+                            th:text="${animalDto.name}"/>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="hospitalDtos">병원이름</label>
+                <select name="hospitalDtosId" id="hospitalDtos" class="form-control">
+                    <option th:each="hospitalDto : ${hospitalDtos}"
+                            th:value="${hospitalDto.id}"
+                            th:text="${hospitalDto.name}" />
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="doctorDtos">의사이름</label>
+                <select name="doctorDtosId" id="doctorDtos" class="form-control">
+                    <option th:each="doctorDto : ${doctorDtos}"
+                            th:value="${doctorDto.id}"
+                            th:text="${doctorDto.name}" />
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>예약날짜</label>
+                <input name="inputDateId" id="input_date" type="datetime-local" th:value="${appointmentDto.date}" class="form-control form-control-sm"/>
+            </div>
+
+            <button type="submit" value="수정하기" class="btn btn-primary">Modify</button>
+        </form>
+        <br/>
+
+    </div> <!-- /container -->
+
+    </body>
+</div>
+</html>
