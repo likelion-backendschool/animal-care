@@ -20,9 +20,12 @@
             <div id="map" style="width:100%; padding-bottom: 100%;"></div>
         </div>
 
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!--TODO appkey 비밀키 사용  -->
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e11ec606a9ab5e56f6fcdae9c805b669&libraries=services"></script>
         <script th:inline="javascript">
+
             const mapContainer = document.getElementById('map'), // 지도를 표시할 div
                 mapOption = {
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -82,8 +85,16 @@
                 loadHospitalUseAjax();
             }
 
-            function loadHospitalUseAjax(){
-                console.log('ajax')
+            async function loadHospitalUseAjax(){
+                try {
+                    const res = await $.ajax({
+                        url: "/usr/hospital",
+                        type: 'GET',
+                    });
+                    console.log(res);
+                } catch (err){
+                    console.error(err);
+                }
             }
 
             function addMarker() {
@@ -138,6 +149,7 @@
                     });
                 })
             }
+
             // 지도 이동
             function panToBy(index) {
                 const hospital = hospitals[index];
