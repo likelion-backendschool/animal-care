@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -41,10 +42,6 @@ public class DoctorService {
     }
 
 
-    public Doctor save(Doctor doctor) {
-        return doctorRepository.save(doctor);
-    }
-
     public Doctor save(DoctorSignUpDto doctorDto) {
         // TODO : @Bean 주입으로 바꾸기
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -54,8 +51,13 @@ public class DoctorService {
     }
 
     // 의사 전체 조회
-    public List<Doctor> findDoctors() {
-        return doctorRepository.findAll();
+    public List<LoadDoctorMyPageInfo.ResponseDto> findDoctors() {
+        List<Doctor> doctors = doctorRepository.findAll();
+        List<LoadDoctorMyPageInfo.ResponseDto> result = doctors.stream()
+                .map(o -> new LoadDoctorMyPageInfo.ResponseDto(o))
+                .collect(Collectors.toList());
+
+        return result;
     }
 
     // TODO 사용하는 곳 없다면 삭제

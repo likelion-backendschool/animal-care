@@ -1,31 +1,28 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="global/fragments/header :: header">
-    <title>Hello</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-<div class="container">
-    <div th:replace="global/fragments/bodyHeader :: bodyHeader" />
-    <div class="jumbotron">
-        <h1>회원 My Page</h1>
+<html layout:decorate="~{global/layout}">
 
-        <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/new">내 정보 입력하기</a>
+    <div layout:fragment="content" class="container my-5">
+        <body>
 
-            <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/info">내 정보</a></p>
+        <div class="container">
 
-        <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/appointment">임시 예약 하기</a>
+                <h1>MemberMyPage</h1>
 
-        <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/appointment-info">예약 내역</a></p>
+                <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/new">내 정보 수정</a>
 
-        <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/hospitalVisited-info">병원방문내역</a></p>
+                    <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/info">내 정보</a></p>
 
-        <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/delivery-info">약 배달 현황</a></p>
+                <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/appointment">임시 예약 하기</a>
 
-        <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/itemOrder/list">물품 구입 현황</a></p>
+                    <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/appointment-info">예약내역</a></p>
 
+                <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/hospitalVisited-info">병원방문내역</a></p>
+
+                <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/delivery-info">약 배달 현황</a></p>
+
+                <p> <a class="btn btn-lg btn-secondary" href="/usr/mypage/member/itemOrder/list">물품 구입 현황</a></p>
+
+            </div>
+
+        </body>
     </div>
-    <div th:replace="global/fragments/footer :: footer" />
-</div> <!-- /container -->
-</body>
 </html>

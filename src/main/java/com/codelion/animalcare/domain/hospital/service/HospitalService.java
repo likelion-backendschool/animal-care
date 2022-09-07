@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.hospital.service;
 
+import com.codelion.animalcare.domain.mypage.dto.HospitalVisitedDto;
 import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,8 +39,14 @@ public class HospitalService {
 
     //병원 전체 조회
     @Transactional(readOnly = true)
-    public List<Hospital> findHospitals() {
-        return hospitalRepository.findAll();
+    public List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> findHospitals() {
+        List<Hospital> hospitals = hospitalRepository.findAll();
+
+        List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> result = hospitals.stream()
+                .map(o -> new LoadDoctorMyPageHospitalInfoManage.ResponseDto(o))
+                .collect(Collectors.toList());
+
+        return result;
     }
 
     @Transactional(readOnly = true)
