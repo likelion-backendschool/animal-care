@@ -49,7 +49,7 @@ public class MemberService {
         // TODO save가 아닌 update 형식으로 구현해야함
         memberRepository.save(newMember);
     }
-
+    @Transactional
     public Member save(MemberSignUpDto memberSignUpDto) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         memberSignUpDto.setPassword(encoder.encode(memberSignUpDto.getPassword()));

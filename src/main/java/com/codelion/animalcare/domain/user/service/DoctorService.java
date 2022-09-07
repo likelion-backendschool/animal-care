@@ -42,10 +42,6 @@ public class DoctorService {
     }
 
 
-    public Doctor save(Doctor doctor) {
-        return doctorRepository.save(doctor);
-    }
-
     public Doctor save(DoctorSignUpDto doctorDto) {
         // TODO : @Bean 주입으로 바꾸기
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
