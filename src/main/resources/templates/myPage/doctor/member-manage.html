@@ -27,7 +27,7 @@
                 <td>
                     <form th:action="|/usr/mypage/doctor/member-manage/appointments/${appointment?.id}/refuse|" method="post">
                         <input class="btn btn-primary" type="submit"
-                               th:if="${appointment.appointmentStatus.name == 'COMPLETE' }"
+                               th:if="${appointment.appointmentStatus.name == 'READY' }"
                                onclick="return confirm('정말 거절하시겠습니까?')" value="환자 거절" />
                     </form>
                 </td>
