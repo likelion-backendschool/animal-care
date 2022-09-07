@@ -8,7 +8,7 @@
     </h2>
     <div class="row">
         <div class="col-2">
-            <div class="list-group">
+            <div id="hospital-list" class="list-group">
                 <div th:each="hospital, i :${paging}">
                     <button type="button" th:attr="onclick=|panToBy('${i.index}')|" class="list-group-item list-group-item-action" >
                         <div th:text="${hospital.name}"></div>
@@ -31,15 +31,13 @@
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                     level: 3 // 지도의 확대 레벨
                 };
-            // 현재 표시되는 지역 정보 창
-            let infowindow;
 
-            const markers = []; // 현재 표시되는 마커
+            let infowindow; // 현재 표시되는 지역 정보 창
+            let hospitals = [[${paging}]].content; // 현재 병원들
+            let markers = []; // 현재 표시되는 마커
             const map = new kakao.maps.Map(mapContainer, mapOption); // 지도
-            const hospitals = [[${paging}]].content; // 현재 병원들
-            let bounds = map.getBounds();
-            let beforeBounds = map.getBounds();
-            let beforeLevel = map.getLevel();
+            let bounds = map.getBounds(); // 남서 동북 저장.
+            let beforeBounds = map.getBounds(); // 지도 이동 이전 남서 동북 저장
             
             //Event
             // 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
@@ -52,6 +50,7 @@
             function dragendCB(){
                 console.log('displayMarker');
 
+                // 남서, 동북 정보 저장
                 bounds =  map.getBounds();
 
                 // 현재 정보
@@ -67,8 +66,6 @@
                 // ajax 전 지도의 영역정보의 북동쪽 정보를 얻어옵니다
                 const neLatlngBefore = beforeBounds.getNorthEast();
 
-                console.log(swLatlng, neLatlng);
-                console.log(centerLatlng);
                 // 현재 지도의 중앙이 변경 전 지도 안에 있다면 (지도를 조금만 움직였다면)
                 // ajax 실행 X
                 if(
@@ -76,28 +73,63 @@
                     swLatlngBefore.Ma < centerLatlng.Ma && centerLatlng.Ma < neLatlngBefore.Ma
                 ) return;
 
+                console.log(swLatlng, neLatlng);
+                console.log(centerLatlng);
+
                 beforeBounds = map.getBounds();
-                loadHospitalUseAjax();
+                updateHospitalsUseAjax();
             }
 
             function zoomChangedCB(){
-                console.log(map.getLevel());
-                loadHospitalUseAjax();
+                console.log('map Level : ', map.getLevel());
+                bounds =  map.getBounds();
+                updateHospitalsUseAjax();
             }
 
-            async function loadHospitalUseAjax(){
+            async function updateHospitalsUseAjax(){
                 try {
+                    // 영역정보의 남서쪽,  정보를 얻어옵니다
+                    const swLatlng = bounds.getSouthWest();
+                    // 영역정보의 북동쪽 정보를 얻어옵니다
+                    const neLatlng = bounds.getNorthEast();
+
+                    // url 파라미터
+                    const data = {
+                        minLatitude: swLatlng.Ma,
+                        maxLatitude: neLatlng.Ma,
+                        minLongitude: swLatlng.La,
+                        maxLongitude: neLatlng.La,
+                    };
+                    console.log(data);
+
+                    /**
+                     * hospitals 불러오기
+                     */
                     const res = await $.ajax({
                         url: "/usr/hospital",
                         type: 'GET',
+                        data
                     });
                     console.log(res);
+                    // Pageable라는 가정으로 content 사용
+                    hospitals = res.content;
+                    $("#hospital-list")
+                        .empty()
+                        .append(
+                            hospitals.map((hospital, index) =>
+                                `<button type="button" onclick=panToBy(${index}) class="list-group-item list-group-item-action">`+
+                                    hospital.name +
+                                '</button>'
+                            )
+                        );
+                    addMarker();
                 } catch (err){
                     console.error(err);
                 }
             }
 
             function addMarker() {
+                markers = [];
                 hospitals.forEach((hospital) => {
                     const {address} = hospital;
                     // 위도, 경도 표시
