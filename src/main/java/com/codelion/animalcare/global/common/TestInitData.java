@@ -2,6 +2,8 @@ package com.codelion.animalcare.global.common;
 
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
@@ -21,7 +23,7 @@ import java.time.LocalDateTime;
 public class TestInitData {
 
     @Bean
-    CommandLineRunner init(QuestionRepository questionRepository, MemberRepository memberRepository, DoctorRepository doctorRepository) {
+    CommandLineRunner init(QuestionRepository questionRepository, MemberRepository memberRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository) {
         return args -> {
             /*
             멤버 추가하는 부분입니다.
@@ -123,6 +125,27 @@ public class TestInitData {
                     .introduce("대동물의사 이의사입니다.")
                     .build());
             doctorRepository.save(doctor2);
+
+            // 병원
+            Hospital hospital1 = Hospital.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .name("제주 대학 병원")
+                    .openingHours("11:00~15:00/~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/")
+                    .phoneNum("01011112222")
+                    .address(new Address("","제주특별자치도 서귀포시 가가로 14", "63534","101동",33.2700064530738, 126.375422332008))
+                    .build();
+            hospitalRepository.save(hospital1);
+
+            Hospital hospital2 = Hospital.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .name("대박 병원")
+                    .openingHours("02:57~02:57/02:57~02:57/02:57~02:58/02:58~02:58/02:58~02:58/02:58~02:58/02:58~02:58/")
+                    .phoneNum("01033334444")
+                    .address(new Address("경기 용인시 기흥구 구갈동 593-3", "경기 용인시 기흥구 강남동로 7", "16979","101동",37.2716680153549, 127.128387356766))
+                    .build();
+            hospitalRepository.save(hospital2);
         };
     }
 }
