@@ -27,7 +27,8 @@ public class LoadDoctorMyPageHospitalInfoManage {
         private String openingHours;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-
+        private Double latitude; // 위도
+        private Double longitude; // 경도
         private List<Doctor> doctorList;
 
         public ResponseDto(Hospital hospital) {
@@ -42,6 +43,8 @@ public class LoadDoctorMyPageHospitalInfoManage {
                 this.street = address.getStreet();
                 this.zipcode = address.getZipcode();
                 this.detail = address.getDetail();
+                this.latitude = address.getLatitude();
+                this.longitude = address.getLongitude();
             }
             this.openingHours = hospital.getOpeningHours();
             this.createdAt = hospital.getCreatedAt();

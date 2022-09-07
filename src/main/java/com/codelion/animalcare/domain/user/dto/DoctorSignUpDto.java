@@ -54,19 +54,21 @@ public class DoctorSignUpDto {
     private Double longitude; // 경도
 
     public Doctor toEntity(DoctorSignUpDto doctorDto){
+        Address address = new Address(
+                doctorDto.getCity(), doctorDto.getStreet(),
+                doctorDto.getZipcode(), doctorDto.getDetail(),
+                doctorDto.getLatitude(),doctorDto.getLongitude());
         return Doctor.builder()
                 .email(doctorDto.getEmail())
                 .password(doctorDto.getPassword())
                 .name(doctorDto.getName())
                 .birthday((java.sql.Date) doctorDto.getBirthDay())
-                .address(new Address(doctorDto.getCity(), doctorDto.getStreet(), doctorDto.getZipcode(), doctorDto.getDetail()))
+                .address(address)
                 .phoneNum(doctorDto.getPhoneNum())
                 .genderId(doctorDto.getGenderId())
                 .major(doctorDto.getMajor())
                 .introduce(doctorDto.getIntroduce())
                 .auth("ROLE_DOCTOR")
-                .latitude(doctorDto.getLatitude())
-                .longitude(doctorDto.getLongitude())
                 .build();
     }
 }

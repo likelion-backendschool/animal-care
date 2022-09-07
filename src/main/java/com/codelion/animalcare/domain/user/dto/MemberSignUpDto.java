@@ -47,17 +47,19 @@ public class MemberSignUpDto {
     private Double longitude; // 경도
 
     public Member toEntity(MemberSignUpDto memberSignUpDto){
+        Address address = new Address(
+                memberSignUpDto.getCity(), memberSignUpDto.getStreet(),
+                memberSignUpDto.getZipcode(), memberSignUpDto.getDetail(),
+                memberSignUpDto.getLatitude(),memberSignUpDto.getLongitude());
         return Member.builder()
                 .email(memberSignUpDto.getEmail())
                 .password(memberSignUpDto.getPassword())
                 .name(memberSignUpDto.getName())
                 .birthday((java.sql.Date) memberSignUpDto.getBirthDay())
-                .address(new Address(memberSignUpDto.getCity(), memberSignUpDto.getStreet(), memberSignUpDto.getZipcode(), memberSignUpDto.getDetail()))
+                .address(address)
                 .phoneNum(memberSignUpDto.getPhoneNum())
                 .genderId(memberSignUpDto.getGenderId())
                 .auth("ROLE_MEMBER")
-                .latitude(memberSignUpDto.getLatitude())
-                .longitude(memberSignUpDto.getLongitude())
                 .build();
     }
 }

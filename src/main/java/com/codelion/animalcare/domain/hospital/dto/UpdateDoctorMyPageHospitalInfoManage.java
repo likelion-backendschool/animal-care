@@ -24,15 +24,16 @@ public class UpdateDoctorMyPageHospitalInfoManage {
         private String street;
         private String zipcode;
         private String detail;
-
         private String openingHours;
 
+        private Double latitude; // 위도
+        private Double longitude; // 경도
 //        public RequestDto(String openingHours) {
 //            super(openingHours);
 //        }
 
 
-        public RequestDto(String monStart, String monEnd, String tueStart, String tueEnd, String wedStart, String wedEnd, String thuStart, String thuEnd, String friStart, String friEnd, String satStart, String satEnd, String sunStart, String sunEnd, Long id, String name, String phoneNum, String city, String street, String zipcode, String detail, String openingHours) {
+        public RequestDto(String monStart, String monEnd, String tueStart, String tueEnd, String wedStart, String wedEnd, String thuStart, String thuEnd, String friStart, String friEnd, String satStart, String satEnd, String sunStart, String sunEnd, Long id, String name, String phoneNum, String city, String street, String zipcode, String detail, String openingHours, Double latitude, Double longitude) {
             super(monStart, monEnd, tueStart, tueEnd, wedStart, wedEnd, thuStart, thuEnd, friStart, friEnd, satStart, satEnd, sunStart, sunEnd);
             this.id = id;
             this.name = name;
@@ -42,13 +43,16 @@ public class UpdateDoctorMyPageHospitalInfoManage {
             this.zipcode = zipcode;
             this.detail = detail;
             this.openingHours = openingHours;
+            this.latitude = latitude;
+            this.longitude = longitude;
         }
 
         public Hospital toEntity(Hospital hospital){
+            Address address = new Address(city, street, zipcode, detail,latitude, longitude);
             return Hospital.builder()
                     .id(id)
                     .name(name)
-                    .address(new Address(city, street, zipcode, detail))
+                    .address(address)
                     .phoneNum(phoneNum)
                     .openingHours(openingHourToString())
                     .createdAt(hospital.getCreatedAt())
