@@ -36,18 +36,24 @@
                         </span>
                         </h4>
                     </div>
-                    <div class="mb-3">
-                        <label for="id">To create a new room enter your room number,
-                            or press 'Random #' button to get a random one</label>
-                        <input class="form-control" name="id" id="id" type="number" placeholder="Min: 0, max: 99"
-                               min="0" max="99" th:value="${id}" required>
-                    </div>
-                    <div>
-                        <a th:href="@{/room/random}">
-                            <button class="btn btn-outline-success" type="button">Random #</button>
-                        </a>
-                        <button name="action" value="create" type="submit" class="btn btn-outline-primary">
-                            Create Selected Room</button>
+
+<!--                    dto.auth가 닥터이면 진료실방을 만들 수 있도록함-->
+                    <div th:if="${dto.auth == 'ROLE_DOCTOR,ROLE_USER'}">
+
+                        <div class="mb-3">
+                            <label for="id">To create a new room enter your room number,
+                                or press 'Random #' button to get a random one</label>
+                            <input class="form-control" name="id" id="id" type="number" placeholder="Min: 0, max: 99"
+                                   min="0" max="99" th:value="${id}" required>
+                        </div>
+                        <div>
+                            <a th:href="@{/room/random}">
+                                <button class="btn btn-outline-success" type="button">Random #</button>
+                            </a>
+                            <button name="action" value="create" type="submit" class="btn btn-outline-primary">
+                                Create Selected Room</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
