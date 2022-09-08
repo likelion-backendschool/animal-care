@@ -17,7 +17,8 @@ public class WebrtcController {
         this.webrtcService = webrtcService;
     }
 
-    @GetMapping({"", "/", "/index", "/home", "/webrtc/webrtc_main"})
+//    @GetMapping({"", "/", "/index", "/home", "/webrtc/webrtc_main"})
+    @GetMapping({"/diagnosis", "/webrtc/webrtc_main"})
     public ModelAndView displayMainPage(final Long id, final String uuid) {
         return this.webrtcService.displayMainPage(id, uuid);
     }
