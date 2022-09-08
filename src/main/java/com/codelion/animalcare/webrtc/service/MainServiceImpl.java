@@ -1,8 +1,8 @@
 package com.codelion.animalcare.webrtc.service;
 
-import io.github.benkoff.webrtcss.domain.Room;
-import io.github.benkoff.webrtcss.domain.RoomService;
-import io.github.benkoff.webrtcss.util.Parser;
+import com.codelion.animalcare.webrtc.domain.Room;
+import com.codelion.animalcare.webrtc.domain.RoomService;
+import com.codelion.animalcare.webrtc.util.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class MainServiceImpl implements MainService {
 
     @Override
     public ModelAndView displayMainPage(final Long id, final String uuid) {
-        final ModelAndView modelAndView = new ModelAndView("main");
+        final ModelAndView modelAndView = new ModelAndView("webrtc_main");
         modelAndView.addObject("id", id);
         modelAndView.addObject("rooms", roomService.getRooms());
         modelAndView.addObject("uuid", uuid);

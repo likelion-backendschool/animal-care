@@ -1,6 +1,6 @@
 package com.codelion.animalcare.webrtc.controller;
 
-import io.github.benkoff.webrtcss.service.MainService;
+import com.codelion.animalcare.webrtc.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,7 +17,7 @@ public class MainController {
         this.mainService = mainService;
     }
 
-    @GetMapping({"", "/", "/index", "/home", "/main"})
+    @GetMapping({"", "/", "/index", "/home", "/webrtc_main"})
     public ModelAndView displayMainPage(final Long id, final String uuid) {
         return this.mainService.displayMainPage(id, uuid);
     }

@@ -1,9 +1,9 @@
 package com.codelion.animalcare.webrtc.socket;
 
+import com.codelion.animalcare.webrtc.domain.Room;
+import com.codelion.animalcare.webrtc.domain.RoomService;
+import com.codelion.animalcare.webrtc.domain.WebSocketMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.benkoff.webrtcss.domain.Room;
-import io.github.benkoff.webrtcss.domain.RoomService;
-import io.github.benkoff.webrtcss.domain.WebSocketMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
