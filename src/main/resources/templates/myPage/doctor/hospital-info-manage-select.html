@@ -68,10 +68,11 @@
 
                 // 현재 지도의 중앙이 변경 전 지도 안에 있다면 (지도를 조금만 움직였다면)
                 // ajax 실행 X
-                if(
-                    swLatlngBefore.La < centerLatlng.La && centerLatlng.La < neLatlngBefore.La &&
-                    swLatlngBefore.Ma < centerLatlng.Ma && centerLatlng.Ma < neLatlngBefore.Ma
-                ) return;
+                // 일단 보류
+                // if(
+                //     swLatlngBefore.La < centerLatlng.La && centerLatlng.La < neLatlngBefore.La &&
+                //     swLatlngBefore.Ma < centerLatlng.Ma && centerLatlng.Ma < neLatlngBefore.Ma
+                // ) return;
 
                 console.log(swLatlng, neLatlng);
                 console.log(centerLatlng);
