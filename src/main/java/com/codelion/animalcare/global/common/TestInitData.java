@@ -146,6 +146,46 @@ public class TestInitData {
                     .address(new Address("경기 용인시 기흥구 구갈동 593-3", "경기 용인시 기흥구 강남동로 7", "16979","101동",37.2716680153549, 127.128387356766))
                     .build();
             hospitalRepository.save(hospital2);
+
+            Hospital hospital3 = Hospital.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .name("제주 행복 병원")
+                    .openingHours("11:00~15:00/~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/")
+                    .phoneNum("01011112222")
+                    .address(new Address("제주특별자치도 서귀포시 서귀동 292-2", "제주특별자치도 서귀포시 중앙로48번길 8", "63591","101동", 33.2489347597471, 126.562437759077))
+                    .build();
+            hospitalRepository.save(hospital3);
+
+            Hospital hospital4 = Hospital.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .name("제주 인생 병원")
+                    .openingHours("11:00~15:00/~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/")
+                    .phoneNum("01011112222")
+                    .address(new Address("제주특별자치도 서귀포시 남원읍 위미리 1967-1", "제주특별자치도 서귀포시 남원읍 일주동로 7624", "63591","101동", 33.2782319182411, 126.665854414504))
+                    .build();
+            hospitalRepository.save(hospital4);
+
+            Hospital hospital5 = Hospital.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .name("제주 엄마 병원")
+                    .openingHours("11:00~15:00/~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/")
+                    .phoneNum("01011112222")
+                    .address(new Address("제주특별자치도 서귀포시 상예동 4580","제주특별자치도 서귀포시 가가로 28-25", "63591","101동", 33.2709012191365, 126.375638139271))
+                    .build();
+            hospitalRepository.save(hospital5);
+
+            Hospital hospital6 = Hospital.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .name("제주 아빠 병원")
+                    .openingHours("11:00~15:00/~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/10:00~10:00/")
+                    .phoneNum("01011112222")
+                    .address(new Address("제주특별자치도 서귀포시 표선면 가시리 3665-80","제주특별자치도 서귀포시 표선면 녹산로 679-257", "63591","101동", 33.4151646324555, 126.695960005462))
+                    .build();
+            hospitalRepository.save(hospital6);
         };
     }
 }
