@@ -17,7 +17,7 @@ public class MainController {
         this.mainService = mainService;
     }
 
-    @GetMapping({"", "/", "/index", "/home", "/webrtc_main"})
+    @GetMapping({"", "/", "/index", "/home", "/webrtc/webrtc_main"})
     public ModelAndView displayMainPage(final Long id, final String uuid) {
         return this.mainService.displayMainPage(id, uuid);
     }
@@ -44,11 +44,11 @@ public class MainController {
 
     @GetMapping("/offer")
     public ModelAndView displaySampleSdpOffer() {
-        return new ModelAndView("sdp_offer");
+        return new ModelAndView("webrtc/sdp_offer");
     }
 
     @GetMapping("/stream")
     public ModelAndView displaySampleStreaming() {
-        return new ModelAndView("streaming");
+        return new ModelAndView("webrtc/streaming");
     }
 }

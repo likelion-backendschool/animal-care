@@ -1,4 +1,4 @@
-//based on https://github.com/webrtc/samples/blob/gh-pages/src/content/peerconnection/create-offer/js/main.js
+//based on https://github.com/webrtc/samples/blob/gh-pages/src/content/peerconnection/create-offer/js/webrtc/webrtc_main.js
 
 'use strict';
 

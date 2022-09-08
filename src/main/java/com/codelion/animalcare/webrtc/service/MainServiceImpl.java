@@ -29,7 +29,7 @@ public class MainServiceImpl implements MainService {
 
     @Override
     public ModelAndView displayMainPage(final Long id, final String uuid) {
-        final ModelAndView modelAndView = new ModelAndView("webrtc_main");
+        final ModelAndView modelAndView = new ModelAndView("webrtc/webrtc_main");
         modelAndView.addObject("id", id);
         modelAndView.addObject("rooms", roomService.getRooms());
         modelAndView.addObject("uuid", uuid);
@@ -59,7 +59,7 @@ public class MainServiceImpl implements MainService {
             if(room != null && uuid != null && !uuid.isEmpty()) {
                 logger.debug("User {} is going to join Room #{}", uuid, sid);
                 // open the chat room
-                modelAndView = new ModelAndView("chat_room", "id", sid);
+                modelAndView = new ModelAndView("webrtc/chat_room", "id", sid);
                 modelAndView.addObject("uuid", uuid);
             }
         }
