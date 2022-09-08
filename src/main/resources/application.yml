@@ -44,5 +44,6 @@ spring:
             client-name: Kakao
 logging.level:
   org.hibernate.SQL: debug
+  io.github.benkoff.webrtcss: debug
   
 
