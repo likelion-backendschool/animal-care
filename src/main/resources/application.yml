@@ -1,7 +1,7 @@
 server:
   port: 80
 spring:
-
+  main.allow-bean-definition-overriding: true
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/animal_care?serverTimezone=UTC
     username: animalcare
@@ -44,6 +44,5 @@ spring:
             client-name: Kakao
 logging.level:
   org.hibernate.SQL: debug
-  io.github.benkoff.webrtcss: debug
   
 
