@@ -15,7 +15,7 @@
 
 <!-- Begin page content -->
 <main role="main" class="container">
-    <h1>Simple WebRTC Signaling Server</h1>
+    <h1>Online Medical Office</h1>
     <div id="container">
         <p>
             This part receives a room number (or generates new one), and redirects current user there.
@@ -37,7 +37,7 @@
                         </h4>
                     </div>
 
-<!--                    dto.auth가 닥터이면 진료실방을 만들 수 있도록함-->
+<!--                    dto.auth가 의사이면 온라인 진료실 생성 가능 -->
                     <div th:if="${dto.auth == 'ROLE_DOCTOR,ROLE_USER'}">
 
                         <div class="mb-3">
