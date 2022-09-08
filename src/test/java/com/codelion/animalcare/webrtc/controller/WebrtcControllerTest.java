@@ -1,8 +1,7 @@
 package com.codelion.animalcare.webrtc.controller;
 
 import com.codelion.animalcare.webrtc.domain.Room;
-import com.codelion.animalcare.webrtc.service.MainService;
-import org.aspectj.lang.annotation.Before;
+import com.codelion.animalcare.webrtc.service.WebrtcService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class WebrtcControllerTest {
     @Autowired private WebApplicationContext webApplicationContext;
-    @Autowired private MainService mainService;
+    @Autowired private WebrtcService webrtcService;
     private WebrtcController controller;
     private MockMvc mockMvc;
 
@@ -38,7 +37,7 @@ public class WebrtcControllerTest {
 
     @BeforeEach
     public void setup() {
-        controller = new WebrtcController(mainService);
+        controller = new WebrtcController(webrtcService);
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .build();

@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class MainServiceImpl implements MainService {
+public class WebrtcServiceImpl implements WebrtcService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final String REDIRECT = "redirect:/";
     
@@ -22,7 +22,7 @@ public class MainServiceImpl implements MainService {
     private final Parser parser;
 
     @Autowired
-    public MainServiceImpl(final RoomService roomService, final Parser parser) {
+    public WebrtcServiceImpl(final RoomService roomService, final Parser parser) {
         this.roomService = roomService;
         this.parser = parser;
     }
