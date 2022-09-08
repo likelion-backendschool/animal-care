@@ -9,11 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @ControllerAdvice
-public class MainController {    
+public class WebrtcController {
     private final MainService mainService;
     
     @Autowired
-    public MainController(final MainService mainService) {
+    public WebrtcController(final MainService mainService) {
         this.mainService = mainService;
     }
 
