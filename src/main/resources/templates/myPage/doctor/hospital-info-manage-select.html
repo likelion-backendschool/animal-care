@@ -25,20 +25,37 @@
         <!--TODO appkey 비밀키 사용  -->
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e11ec606a9ab5e56f6fcdae9c805b669&libraries=services"></script>
         <script th:inline="javascript">
-
+            // 현재 의사의 경도 위도
+            const {latitude, longitude} = [[${address}]];
+            // 의사의 경도 위도 카카오 객체로 인스턴스화
+            const myHomePosition = new kakao.maps.LatLng(latitude, longitude);
+            // 지도 초기 설정
             const mapContainer = document.getElementById('map'), // 지도를 표시할 div
                 mapOption = {
-                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    center: myHomePosition, // 지도의 중심좌표
                     level: 3 // 지도의 확대 레벨
                 };
+
+            const map = new kakao.maps.Map(mapContainer, mapOption); // 지도
+
+            const myHomeMarker = new kakao.maps.Marker({
+                map,
+                title: "우리 집",
+                position: myHomePosition ,
+            });
+            // TODO 우리 집 색상 바꾸기
+            // 의사집 글자 마커위에 표시
+            myHomeInfowindow = new kakao.maps.InfoWindow({
+                content: "<div style='text-align: center'>우리 집</div>",
+            });
+            myHomeInfowindow.open(map, myHomeMarker);
 
             let infowindow; // 현재 표시되는 지역 정보 창
             let hospitals = [[${paging}]].content; // 현재 병원들
             let markers = []; // 현재 표시되는 마커
-            const map = new kakao.maps.Map(mapContainer, mapOption); // 지도
             let bounds = map.getBounds(); // 남서 동북 저장.
             let beforeBounds = map.getBounds(); // 지도 이동 이전 남서 동북 저장
-            
+
             //Event
             // 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
             kakao.maps.event.addListener(map, 'dragend', dragendCB);
