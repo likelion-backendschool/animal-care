@@ -87,17 +87,13 @@ public class HospitalMyPageDoctorController {
     @GetMapping("select")
     public String loadDoctorMyPageHospitalList(
         Model model,
-        @RequestParam(value="page", defaultValue = "0") int page,
         Principal principal
     ){
         // 자신의 경도 위도
         String doctorEmail = principal.getName();
         LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(doctorEmail);
 
-        // TODO dto 사용
-        Page<Hospital> paging = hospitalService.findAll(page);
-        model.addAttribute("paging", paging);
-        model.addAttribute("address", doctorDto.getAddress());
+        model.addAttribute("doctorAddress", doctorDto.getAddress());
         // TODO modify를 form으로 이름을 바꾼다.
         return "myPage/doctor/hospital-info-manage-select";
     }
