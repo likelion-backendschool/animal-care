@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -127,7 +126,7 @@ public class AppointmentService {
 
     public LoadMyPageDoctorAppointment.ResponseDto findById(long appointmentId) {
         Appointment appointment = appointmentRepository
-                .findByIdWithMemberAndAnimalAndHospitalAndDoctorAndDiagnosis(appointmentId)
+                .findByIdWithMemberAndAnimalAndHospitalAndDoctor(appointmentId)
                         .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " is not found."));
 
         return new LoadMyPageDoctorAppointment.ResponseDto(appointment);

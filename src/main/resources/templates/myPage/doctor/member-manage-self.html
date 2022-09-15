@@ -1,7 +1,7 @@
-<html layout:decorate="~{myPage/doctor/sampleLayout}">
-<div class="container" layout:fragment="content" >
-    <nav class="navbar">
-        <a href="/usr/mypage/doctor/member-manage/appointments">뒤로</a>
+<html layout:decorate="~{global/layout}">
+<div class="container my-5" layout:fragment="content">
+    <nav>
+        <a href="/usr/mypage/doctor/member-manage/appointments" class="btn">뒤로</a>
     </nav>
     <h2 class="p-4">
         환자 관리
@@ -48,95 +48,94 @@
                             진단서 확인
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal fade" id="staticBackdrop"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title" id="staticBackdropLabel">진단서</h3>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table class="table caption-top table-bordered">
-                                            <tr>
-                                                <th rowspan="2" class="col-2">동물보호자</th>
-                                                <th class="col-2" >성명</th>
-                                                <td colspan="3" th:text="${member.name}"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>주소</th>
-                                                <td colspan="3">
-                                                    (도로명)
-                                                    <br />
-                                                    (지번)
-                                                    <br />
-                                                    (지역 번호)
-                                                </td>
-                                            <tr>
-                                                <th>사육 장소</th>
-                                                <td colspan="4">X</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-2" rowspan="4" >동물의 표시</th>
-                                                <th class="col-2">종류</th>
-                                                <td class="col-3">X</td>
-                                                <th class="col-2">품종</th>
-                                                <td>X</td>
-                                            </tr>
-                                            <tr>
-                                                <th>동물명</th>
-                                                <td th:text="${animal.name}"></td>
-                                                <th>성별</th>
-                                                <td th:text="${animal.genderId == 0 ? '암컷' : '수컷'}"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>연령</th>
-                                                <td>X</td>
-                                                <th>모색</th>
-                                                <td>X</td>
-                                            </tr>
-                                            <tr>
-                                                <th>특징</th>
-                                                <td colspan="4">X</td>
-                                            </tr>
-                                            <tr>
-                                                <th>병명</th>
-                                                <td colspan="4">X</td>
-                                            </tr>
-                                            <tr>
-                                                <th>발병 연월일<br />(임신 연월일)</th>
-                                                <td colspan="4">X</td>
-                                            </tr>
-                                            <tr>
-                                                <th>진단 연월일</th>
-                                                <td colspan="4"  th:text="${#temporals.format(diagnosis?.createdAt, 'yyyy년 MM월 dd일')}">X</td>
-                                            </tr>
-                                            <tr>
-                                                <th>예후 소견</th>
-                                                <td colspan="4" th:text="${diagnosis?.content}"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>그 밖의 사항</th>
-                                                <td colspan="4">X</td>
-                                            </tr>
-                                        </table>
-                                        <div class="text-center container">
-                                            <p>수의사법 제12조 및  도법 시행규칙 제9조에 따라 위와 같이 증명합니다.</p>
-                                            <p th:text="${#temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일')}"></p>
+                                <div  class="modal-content">
+                                    <div id="printPlace">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title text-center" id="staticBackdropLabel">진단서</h3>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="container">
-                                            <p>동물병원 명칭 : [[${hospital.name}]]</p>
-                                            <p>동물병원 주소 : </p>
-                                            <p>수의사 면허 : </p>
-                                        </div>
-                                        <div class="text-center container">
-                                            <p> 수의사 : [[${doctor.name}]] (인)</p>
-                                            <h2 th:text="${hospital.name}"></h2>
+                                        <div class="modal-body">
+                                            <table class="table caption-top table-bordered">
+                                                <tr>
+                                                    <th rowspan="2" class="col-2">동물보호자</th>
+                                                    <th class="col-2" >성명</th>
+                                                    <td colspan="3" th:text="${diagnosis?.memberName}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>주소</th>
+                                                    <td colspan="3">
+                                                        <p th:text="|(도로명)${diagnosis?.addressStreet}|"></p>
+                                                        <p th:text="|(지번)${diagnosis?.addressCity}|"></p>
+                                                    </td>
+                                                <tr>
+                                                    <th>사육 장소</th>
+                                                    <td colspan="4" th:text="${diagnosis?.breedingPlace}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-2" rowspan="4" >동물의 표시</th>
+                                                    <th class="col-2">종류</th>
+                                                    <td class="col-3" th:text="${diagnosis?.animalType}"></td>
+                                                    <th class="col-2">품종</th>
+                                                    <td th:text="${diagnosis?.animalBreed}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>동물명</th>
+                                                    <td th:text="${diagnosis?.animalName}"></td>
+                                                    <th>성별</th>
+                                                    <td th:text="${diagnosis?.animalGenderId == 0 ? '암컷' : '수컷'}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>연령</th>
+                                                    <td th:text="|${diagnosis?.animalAge}세|">X</td>
+                                                    <th>모색</th>
+                                                    <td th:text="${diagnosis?.animalCoatColor}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>특징</th>
+                                                    <td colspan="4" th:text="${diagnosis?.animalSpecial}">X</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>병명</th>
+                                                    <td colspan="4" th:text="${diagnosis?.diseaseName}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>발병 연월일<br />(임신 연월일)</th>
+                                                    <td colspan="4" th:text="${#dates.format(diagnosis?.diseaseDate, 'yyyy년 MM월 dd일')}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>진단 연월일</th>
+                                                    <td colspan="4"  th:text="${#dates.format(diagnosis?.diagnosisDate, 'yyyy년 MM월 dd일')}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>예후 소견</th>
+                                                    <td colspan="4" th:text="${diagnosis?.opinion}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>그 밖의 사항</th>
+                                                    <td colspan="4" th:text="${diagnosis?.otherMatter}"></td>
+                                                </tr>
+                                            </table>
+                                            <div class="text-center container">
+                                                <p>수의사법 제12조 및  도법 시행규칙 제9조에 따라 위와 같이 증명합니다.</p>
+                                                <p th:text="${#temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일')}"></p>
+                                            </div>
+                                            <div class="container">
+                                                <p th:text="|동물병원 명칭 : ${diagnosis?.hospitalName}|"></p>
+                                                <p th:text="|동물병원 주소 : ${diagnosis?.hospitalStreet}|"></p>
+                                                <p th:text="|동물병원 면허 : ${diagnosis?.doctorLicense}|"></p>
+                                            </div>
+                                            <div class="text-center container">
+                                                <p th:text="|수의사 : ${diagnosis?.doctorName} (인)|"> </p>
+                                                <h2 th:text="${diagnosis?.hospitalName}"></h2>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <!-- TODO 진단서 출력기능 추가 -->
-                                        <button type="button" class="btn btn-primary">출력</button>
+                                        <button type="button" class="btn btn-primary" onclick="printDiagnosis()">출력</button>
                                     </div>
                                 </div>
                             </div>
@@ -202,5 +201,19 @@
             </table>
         </div>
     </div>
+    <script>
+        // 출력 스크립트
+        function printDiagnosis(){
+            window.onbeforeprint = function(){
+                initBody = document.body.innerHTML;
+                document.body.innerHTML = document.getElementById('printPlace').innerHTML;
+            };
+            window.onafterprint = function(){
+                window.location.reload()
+            };
+            window.print();
+            return false;
+        }
+    </script>
 </div>
 </html>
