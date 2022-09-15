@@ -15,10 +15,6 @@ import java.util.List;
 public class DiagnosisService {
     private final DiagnosisRepository diagnosisRepository;
 
-    public List<Diagnosis> findByDoctorId(long id) {
-        return diagnosisRepository.findByDoctorId(id);
-    }
-
     public List<Diagnosis> findDiagnoses(DiagnosisSearch diagnosisSearch) {
         return diagnosisRepository.findAll();
     }

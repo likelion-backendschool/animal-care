@@ -50,7 +50,7 @@ public class Diagnosis extends BaseEntity{
     private short animalGenderId;
     // 연령
     @Column(nullable = false, length=50)
-    private short animal_Age;
+    private short animalAge;
     // 모색
     @Column(nullable = false, length=50)
     private String animalCoatColor;
@@ -85,7 +85,7 @@ public class Diagnosis extends BaseEntity{
     private String doctorLicense;
     // 수의사 이름
     @Column(nullable=false)
-    private String name;
+    private String doctorName;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Appointment appointment;
