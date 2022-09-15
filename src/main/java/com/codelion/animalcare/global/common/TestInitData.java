@@ -1,5 +1,7 @@
 package com.codelion.animalcare.global.common;
 
+import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
+import com.codelion.animalcare.domain.diagnosis.repository.DiagnosisRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
@@ -22,7 +24,7 @@ import java.time.LocalDateTime;
 public class TestInitData {
 
     @Bean
-    CommandLineRunner init(QuestionRepository questionRepository, MemberRepository memberRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository) {
+    CommandLineRunner init(QuestionRepository questionRepository, MemberRepository memberRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, DiagnosisRepository diagnosisRepository) {
         return args -> {
             /*
             멤버 추가하는 부분입니다.
@@ -145,6 +147,39 @@ public class TestInitData {
                     .address(new Address("경기 용인시 기흥구 구갈동 593-3", "경기 용인시 기흥구 강남동로 7", "16979","101동",37.2716680153549, 127.128387356766))
                     .build();
             hospitalRepository.save(hospital2);
+
+            // 예약서
+
+            // 진단서
+
+            Diagnosis diagnosis1 = Diagnosis.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .memberName("바다")
+                    .addressCity("경기도 강남시")
+                    .addressStreet("경기도 강남시 강남구 강남대로 1")
+                    .breedingPlace("주택")
+                    .animalType("강아지")
+                    .animalBreed("요크셔테리어")
+                    .animalName("야옹이")
+                    .animalGenderId((short) 1)
+                    .animalAge((short) 5)
+                    .animalCoatColor("검정")
+                    .animalSpecial("")
+                    .diseaseName("다리 통증")
+                    .diseaseDate(Date.valueOf("2022-09-14"))
+                    .diagnosisDate(Date.valueOf("2022-09-15"))
+                    .opinion("다리가 많이 아픔. 약 처방. 5일뒤에 또 방문 바람.")
+                    .otherMatter("없음")
+                    .hospitalName("제주 대박 병원")
+                    .hospitalStreet("제주특별자치도 서귀포시 가가로 14")
+                    .doctorName("경호")
+                    .doctorLicense("0101010101")
+                    // TODO .appointment() 필요하지만 아직 예약 테스트 안만들었음. 추가 예정
+                    .build();
+
+            diagnosisRepository.save(diagnosis1);
+
         };
     }
 }

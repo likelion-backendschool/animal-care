@@ -3,6 +3,8 @@ package com.codelion.animalcare.domain.appointment.controller;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
+import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
+import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AppointmentMyPageDoctorController {
     private final AppointmentService appointmentService;
-
+    private final DiagnosisService diagnosisService;
 
     // TODO page 설정
     /**
@@ -60,11 +62,14 @@ public class AppointmentMyPageDoctorController {
         LoadMyPageDoctorAppointment.ResponseDto appointment
                 = appointmentService.findById(appointmentId);
 
+        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
+
+
         model.addAttribute("appointment", appointment);
         model.addAttribute("member", appointment.getMember());
         model.addAttribute("animal", appointment.getAnimal());
         model.addAttribute("hospital", appointment.getHospital());
-        model.addAttribute("diagnosis", appointment.getDiagnosis());
+        model.addAttribute("diagnosis", diagnosis);
         model.addAttribute("doctor", appointment.getDoctor());
         return "myPage/doctor/member-manage-self";
     }
