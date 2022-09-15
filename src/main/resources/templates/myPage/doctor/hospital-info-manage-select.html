@@ -9,11 +9,6 @@
     <div class="row">
         <div class="col-2">
             <div id="hospital-list" class="list-group">
-                <div th:each="hospital, i :${paging}">
-                    <button type="button" th:attr="onclick=|panToBy('${i.index}')|" class="list-group-item list-group-item-action" >
-                        <div th:text="${hospital.name}"></div>
-                    </button>
-                </div>
             </div>
         </div>
         <div class="col-10">
@@ -61,7 +56,7 @@
             kakao.maps.event.addListener(map, 'dragend', dragendCB);
             kakao.maps.event.addListener(map, 'zoom_changed', zoomChangedCB);
             // 초기 설정
-            addMarker()
+            updateMarker()
 
             // paging된 값이 controller로 부터 넘어와야 한다.
             function dragendCB(){
@@ -104,7 +99,14 @@
                 updateHospitalsUseAjax();
             }
 
-            async function updateHospitalsUseAjax(){
+            function changeHospitalPage(page){
+                // 안내 창 삭제
+                if(infowindow)
+                    infowindow.close();
+                updateHospitalsUseAjax(page);
+            }
+
+            async function updateHospitalsUseAjax(page = 0){
                 try {
                     // 영역정보의 남서쪽,  정보를 얻어옵니다
                     const swLatlng = bounds.getSouthWest();
@@ -117,6 +119,7 @@
                         maxLatitude: neLatlng.Ma,
                         minLongitude: swLatlng.La,
                         maxLongitude: neLatlng.La,
+                        page
                     };
                     console.log(data);
 
@@ -135,19 +138,49 @@
                         .empty()
                         .append(
                             hospitals.map((hospital, index) =>
-                                `<button type="button" onclick=panToBy(${index}) class="list-group-item list-group-item-action">`+
-                                    hospital.name +
-                                '</button>'
+                                `<button type="button" onclick=panToBy(${index}) class="list-group-item list-group-item-action">
+                                    ${hospital.name}
+                                </button>`
                             )
+                        )
+                        .append(
+                            res.empty ? '' :
+                           ` <div>
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item ${res.first ? 'disabled' : ''}" ">
+                                        <button class="page-link"
+                                           th:href="@{|?page=${res.number- 1}|}"
+                                           onclick=changeHospitalPage(${res.number - 1})>
+                                            <span>이전</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        ${res.number + 1} / ${res.totalPages}
+                                    </li>
+                                    <li class="page-item ${res.last ? 'disabled' : ''}">
+                                        <button class="page-link"
+                                        onclick=changeHospitalPage(${res.number + 1})>
+                                            <span>다음</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>`
                         );
-                    addMarker();
+                    updateMarker();
                 } catch (err){
                     console.error(err);
                 }
             }
 
-            function addMarker() {
+            function updateMarker() {
+
+                // 배열에 추가된 마커들을 삭제한다.
+                for (const marker of markers) {
+                    marker.setMap(null);
+                }
                 markers = [];
+
+                // hospitals에 있는 장소들을 추가한다.
                 hospitals.forEach((hospital) => {
                     const {address} = hospital;
                     // 위도, 경도 표시
@@ -198,6 +231,7 @@
                         infowindow.open(map, marker);
                     });
                 })
+                console.log('updateMarker markers : ',markers)
             }
 
             // 지도 이동
