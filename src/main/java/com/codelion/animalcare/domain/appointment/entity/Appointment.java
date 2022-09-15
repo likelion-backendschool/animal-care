@@ -51,8 +51,8 @@ public class Appointment extends BaseEntity {
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
-    @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "diagnosis_id")
+    @OneToOne(mappedBy = "appointment", fetch = LAZY)
+    @JoinColumn( name = "diagnosis_id")
     private Diagnosis diagnosis;
 
 
