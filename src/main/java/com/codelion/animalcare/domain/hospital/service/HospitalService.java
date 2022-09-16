@@ -34,7 +34,7 @@ public class HospitalService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Hospital> findByLatitudeAndLongitude(LatitudeLongitudeDto latitudeLongitudeDto, int page){
+    public Page<Hospital> findByLatitudeAndLongitude(LatitudeLongitudeDto latitudeLongitudeDto, int page, String keyword){
         Pageable pageable = PageRequest.of(page, 10);
 
         Double minLatitude = latitudeLongitudeDto.getMinLatitude();
@@ -42,7 +42,7 @@ public class HospitalService {
         Double minLongitude = latitudeLongitudeDto.getMinLongitude();
         Double maxLongitude = latitudeLongitudeDto.getMaxLongitude();
 
-        return hospitalRepository.findByLatitudeAndLongitude(minLatitude, maxLatitude, minLongitude, maxLongitude, pageable);
+        return hospitalRepository.findByLatitudeAndLongitude(minLatitude, maxLatitude, minLongitude, maxLongitude, keyword, pageable);
     }
 
     @Transactional(readOnly = true)

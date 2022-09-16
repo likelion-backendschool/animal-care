@@ -6,10 +6,18 @@
     <h2 class="p-4">
         병원 선택
     </h2>
+    <div class="row my-3">
+        <div class="col-auto mb-3">
+            <input id="keyword" type="text" class="form-control" placeholder="검색">
+        </div>
+        <div class="col-auto mb-3">
+            <button class="btn" type="button" id="search-button" onclick="searchButton()">검색</button>
+            <button class="btn" type="button" id="reset-button" onclick="resetButton()">지도로 탐색</button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-2">
-            <div id="hospital-list" class="list-group">
-            </div>
+            <div id="hospital-list" class="list-group"></div>
         </div>
         <div class="col-10">
             <div id="map" style="width:100%; padding-bottom: 100%;"></div>
@@ -23,7 +31,7 @@
             // 현재 의사의 경도 위도
             const {latitude, longitude} = [[${doctorAddress}]];
             // 의사의 경도 위도 카카오 객체로 인스턴스화
-            const myHomePosition = new kakao.maps.LatLng(33.5040742710791, 126.536724239959);
+            const myHomePosition = new kakao.maps.LatLng(latitude, longitude);
             // 지도 초기 설정
             const mapContainer = document.getElementById('map'), // 지도를 표시할 div
                 mapOption = {
@@ -38,6 +46,9 @@
                 title: "우리 집",
                 position: myHomePosition ,
             });
+
+            let keyword = ""
+
             // TODO 우리 집 색상 바꾸기
             // 의사집 글자 마커위에 표시
             myHomeInfowindow = new kakao.maps.InfoWindow({
@@ -59,6 +70,36 @@
             kakao.maps.event.addListener(map, 'dragend', dragendCB);
 
             kakao.maps.event.addListener(map, 'zoom_changed', zoomChangedCB);
+
+            // 검색창
+            async function searchButton(page){
+                keyword = $('#keyword').val()
+                // bounds를 우리나라 전체 위도 경도로 초기화
+                const sw = new kakao.maps.LatLng(33, 124),
+                    ne = new kakao.maps.LatLng(43, 132);
+                bounds = new kakao.maps.LatLngBounds(sw, ne);
+
+                try{
+                    await updateHospitalsUseAjax(page);
+                } catch (err){
+                    console.error(err)
+                }
+
+                // 마크가 표시된 만큼 지도 최적화
+                bounds = new kakao.maps.LatLngBounds()
+                console.log('지도 최적화')
+                for(const marker of markers){
+                    bounds.extend(marker.getPosition())
+                    console.log(marker.getPosition())
+                }
+                map.setBounds(bounds)
+            }
+
+            function resetButton(){
+                $('#keyword').val("")
+                keyword = ""
+                updateHospitalsUseAjax();
+            }
 
             // paging된 값이 controller로 부터 넘어와야 한다.
             function dragendCB(){
@@ -92,20 +133,28 @@
                 console.log(centerLatlng);
 
                 beforeBounds = map.getBounds();
+                // 검색어가 있을 때는 업데이트 하지 않는다.
+                if (keyword.length > 0) return;
                 updateHospitalsUseAjax();
             }
 
             function zoomChangedCB(){
                 console.log('map Level : ', map.getLevel());
                 bounds =  map.getBounds();
+                // 검색어가 있을 때는 업데이트 하지 않는다.
+                if (keyword.length > 0) return;
                 updateHospitalsUseAjax();
             }
 
-            function changeHospitalPage(page){
+            function changeHospitalPage(page) {
                 // 안내 창 삭제
-                if(infowindow)
+                if (infowindow)
                     infowindow.close();
-                updateHospitalsUseAjax(page);
+                if(keyword.length == 0)
+                    updateHospitalsUseAjax(page);
+                else
+                    searchButton(page);
+
             }
 
             async function updateHospitalsUseAjax(page = 0){
@@ -121,7 +170,8 @@
                         maxLatitude: neLatlng.Ma,
                         minLongitude: swLatlng.La,
                         maxLongitude: neLatlng.La,
-                        page
+                        page,
+                        keyword
                     };
                     console.log(data);
 
@@ -149,20 +199,20 @@
                             res.empty ? '' :
                            ` <div>
                                 <ul class="pagination justify-content-center">
-                                    <li class="page-item ${res.first ? 'disabled' : ''}" ">
-                                        <button class="page-link"
+                                    <li class="page-item">
+                                        <button class="page-link ${res.first ? 'disabled' : 'btn'}"
                                            th:href="@{|?page=${res.number- 1}|}"
                                            onclick=changeHospitalPage(${res.number - 1})>
-                                            <span>이전</span>
+                                            <span><</span>
                                         </button>
                                     </li>
-                                    <li>
-                                        ${res.number + 1} / ${res.totalPages}
+                                    <li class="page-item disabled">
+                                        <button class="page-link">${res.number + 1} / ${res.totalPages}</button>
                                     </li>
-                                    <li class="page-item ${res.last ? 'disabled' : ''}">
-                                        <button class="page-link"
+                                    <li class="page-item">
+                                        <button class="page-link ${res.last ? 'disabled' : 'btn'}"
                                         onclick=changeHospitalPage(${res.number + 1})>
-                                            <span>다음</span>
+                                            <span>></span>
                                         </button>
                                     </li>
                                 </ul>
