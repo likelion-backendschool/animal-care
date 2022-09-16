@@ -104,16 +104,6 @@ public class DoctorService {
         doctorRepository.save(doctor);
     }
 
-    private Doctor findDoctorById(long doctorId) {
-        return doctorRepository.findById(doctorId)
-                .orElseThrow(() -> new RuntimeException("Doctor id:" + doctorId + " can't found."));
-    }
-
-    private Doctor findDoctorByEmail(String email) {
-        return doctorRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Doctor email:" + email + " can't found."));
-    }
-
     @Transactional
     public void addHospital(Long doctorId, Long hospitalId) {
         Doctor doctor = doctorRepository.findById(doctorId)
@@ -123,5 +113,23 @@ public class DoctorService {
                 .orElseThrow(() -> new RuntimeException("Hospital id:" + hospitalId + " can't found."));
 
         doctor.addHospital(hospital);
+    }
+
+    public List<LoadDoctorMyPageInfo.ResponseDto> findDoctorsByHospital(Long hospitalId) {
+        List<Doctor> doctors = doctorRepository.findAllByHospitalId(hospitalId);
+        // entity => dto
+        return doctors.stream()
+                .map(LoadDoctorMyPageInfo.ResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    private Doctor findDoctorById(long doctorId) {
+        return doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new RuntimeException("Doctor id:" + doctorId + " can't found."));
+    }
+
+    private Doctor findDoctorByEmail(String email) {
+        return doctorRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Doctor email:" + email + " can't found."));
     }
 }

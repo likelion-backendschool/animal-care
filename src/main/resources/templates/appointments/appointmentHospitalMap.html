@@ -21,13 +21,6 @@
         </div>
     </div>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            ...
-        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!--TODO appkey 비밀키 사용  -->
@@ -238,21 +231,29 @@
             }
         }
 
+        // 의사 고르는 창(오른쪽에서 나옴)
         async function chooseDoctor(hospitalId){
-            const data = {
-                hospitalId
-            }
             try {
                 const res = await $.ajax({
-                    url: "",
-                    type: 'POST',
-                    data,
+                    url: `/usr/doctor/hospital/${hospitalId}`,
+                    type: 'GET',
                 });
                 console.log(res);
-                window.location.replace('/usr/mypage/doctor/hospital-info-manage')
+                $('#offcanvasRight')
+                    .empty()
+                    .append(`
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">${hospitalId}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        ${res}
+                    </div>
+                    `)
             } catch (err) {
                 console.error(err)
             }
+
         }
 
         function updateMarker() {
