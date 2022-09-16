@@ -97,6 +97,18 @@ public class HospitalMyPageDoctorController {
         // TODO modify를 form으로 이름을 바꾼다.
         return "myPage/doctor/hospital-info-manage-select";
     }
+    @PostMapping("select")
+    public String loadDoctorMyPageHospitalList(
+            Principal principal,
+            Long hospitalId
+    ){
+        // 자신의 경도 위도
+        String doctorEmail = principal.getName();
+        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(doctorEmail);
+
+        doctorService.addHospital(doctorDto.getId(), hospitalId);
+        return "redirect:/usr/mypage/doctor/hospital-info-manage";
+    }
 
     // 병원 소개 수정 페이지
     @GetMapping("modify")
