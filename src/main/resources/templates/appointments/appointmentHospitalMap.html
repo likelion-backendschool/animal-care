@@ -92,7 +92,7 @@
         // 검색창
         async function searchButton(page){
             keyword = $('#keyword').val()
-            if(keyword.length == 0) {
+            if(keyword.length === 0) {
                 window.alert("문자열을 입력해주세요.");
                 return;
             }
@@ -187,7 +187,7 @@
             // 안내 창 삭제
             if (infowindow)
                 infowindow.close();
-            if(keyword.length == 0)
+            if(keyword.length === 0)
                 updateHospitalsUseAjax(page);
             else
                 searchButton(page);
@@ -227,7 +227,7 @@
                     .empty()
                     .append(
                         hospitals.map((hospital, index) =>
-                            `<button type="button" onclick=panToBy(${index}) class="list-group-item list-group-item-action">
+                            `<button type="button" onclick=setCenterByHospital(${index}) class="list-group-item list-group-item-action">
                                     ${hospital.name}
                                 </button>`
                         )
@@ -374,7 +374,7 @@
         }
 
         // 지도 이동
-        function panToBy(index) {
+        function setCenterByHospital(index) {
             const hospital = hospitals[index];
             const marker = markers[index];
             console.log(hospital)
@@ -384,7 +384,7 @@
             const position = new kakao.maps.LatLng(latitude,longitude);
             // 지도 중심을 부드럽게 이동시킵니다
             // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-            map.panTo(position);
+            map.setCenter(position);
 
             // 마크 생성
 

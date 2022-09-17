@@ -10,10 +10,9 @@
         <div class="col-auto mb-3">
             <input id="keyword" type="text" class="form-control" placeholder="검색">
         </div>
-        <div class="col-auto mb-3">
+        <nav id="search-button-nav" class="col-auto mb-3">
             <button class="btn" type="button" id="search-button" onclick="searchButton()">검색</button>
-            <button class="btn" type="button" id="reset-button" onclick="resetButton()">지도로 탐색</button>
-        </div>
+        </nav>
     </div>
     <div class="row">
         <div class="col-2">
@@ -27,33 +26,54 @@
     <!--TODO appkey 비밀키 사용  -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e11ec606a9ab5e56f6fcdae9c805b669&libraries=services"></script>
     <script th:inline="javascript">
-        // 현재 의사의 경도 위도
-        const {latitude, longitude} = [[${doctorAddress}]];
-        // 의사의 경도 위도 카카오 객체로 인스턴스화
-        const myHomePosition = new kakao.maps.LatLng(latitude, longitude);
+        let hasHome = true;
+        const latitude = [[${doctorAddress}]]?.latitude;
+        const longitude = [[${doctorAddress}]]?.longitude;
+        const street = [[${doctorAddress}]]?.street;
+        let myHomePosition = null;
+        // 위도, 경도가 없다면
+        if(!latitude || !longitude){
+            // street는 있다면
+            if(street){
+                const geocoder = new kakao.maps.services.Geocoder();
+                geocoder.addressSearch(street, (result, status) =>{
+                    if(status === kakao.maps.services.Status.OK){
+                        myHomePosition = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    }
+                });
+            } else{
+                hasHome = false;
+            }
+        } // 위도 경도 있다면
+        else{
+            // 의사의 경도 위도 카카오 객체로 인스턴스화
+            myHomePosition = new kakao.maps.LatLng(latitude, longitude);
+        }
         // 지도 초기 설정
         const mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
-                center: myHomePosition, // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
+                center: hasHome ? myHomePosition : new kakao.maps.LatLng(37, 127), // 지도의 중심좌표
+                level: hasHome ? 3 : 10 // 지도의 확대 레벨
             };
 
         const map = new kakao.maps.Map(mapContainer, mapOption); // 지도
 
-        const myHomeMarker = new kakao.maps.Marker({
-            map,
-            title: "우리 집",
-            position: myHomePosition ,
-        });
-
         let keyword = ""
 
-        // TODO 우리 집 색상 바꾸기
-        // 의사집 글자 마커위에 표시
-        myHomeInfowindow = new kakao.maps.InfoWindow({
-            content: "<div style='text-align: center'>우리 집</div>",
-        });
-        myHomeInfowindow.open(map, myHomeMarker);
+        if(hasHome){
+            const myHomeMarker = new kakao.maps.Marker({
+                map,
+                title: "우리 집",
+                position: myHomePosition ,
+            });
+
+            // TODO 우리 집 색상 바꾸기
+            // 고객집 글자 마커위에 표시
+            myHomeInfowindow = new kakao.maps.InfoWindow({
+                content: "<div style='text-align: center'>우리 집</div>",
+            });
+            myHomeInfowindow.open(map, myHomeMarker);
+        }
 
         let infowindow; // 현재 표시되는 지역 정보 창
         let hospitals = []; // 현재 병원들
@@ -73,7 +93,7 @@
         // 검색창
         async function searchButton(page){
             keyword = $('#keyword').val()
-            if(keyword.length == 0) {
+            if(keyword.length === 0) {
                 window.alert("문자열을 입력해주세요.");
                 return;
             }
@@ -100,11 +120,23 @@
                 console.log(marker.getPosition())
             }
             map.setBounds(bounds)
+            $('#search-button-nav')
+                .empty()
+                .append(`
+                <button class="btn" type="button" id="search-button" onclick="searchButton()">검색</button>
+                <button class="btn" type="button" id="reset-button" onclick="resetButton()">지도로 탐색</button>
+            `);
         }
 
         function resetButton(){
             $('#keyword').val("")
             keyword = ""
+            $('#search-button-nav')
+                .empty()
+                .append(`
+                <button class="btn" type="button" id="search-button" onclick="searchButton()">검색</button>
+                <button class="btn" type="button" id="reset-button" onclick="resetButton()">지도로 탐색</button>
+            `);
             updateHospitalsUseAjax();
         }
 
@@ -157,7 +189,7 @@
             // 안내 창 삭제
             if (infowindow)
                 infowindow.close();
-            if(keyword.length == 0)
+            if(keyword.length === 0)
                 updateHospitalsUseAjax(page);
             else
                 searchButton(page);
@@ -197,7 +229,7 @@
                     .empty()
                     .append(
                         hospitals.map((hospital, index) =>
-                            `<button type="button" onclick=panToBy(${index}) class="list-group-item list-group-item-action">
+                            `<button type="button" onclick=setCenterByHospital(${index}) class="list-group-item list-group-item-action">
                                     ${hospital.name}
                                 </button>`
                         )
@@ -315,7 +347,7 @@
         }
 
         // 지도 이동
-        function panToBy(index) {
+        function setCenterByHospital(index) {
             const hospital = hospitals[index];
             const marker = markers[index];
             console.log(hospital)
