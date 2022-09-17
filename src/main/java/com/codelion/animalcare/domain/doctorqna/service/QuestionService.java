@@ -4,6 +4,7 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestD
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.repository.QuestionLikeRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.UserService;
@@ -25,8 +26,9 @@ import java.util.List;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-
     private final UserService userService;
+
+    private final QuestionLikeRepository questionLikeRepository;
 
     @Transactional
     public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
@@ -98,6 +100,10 @@ public class QuestionService {
 
         return true;
 
+    }
+
+    public boolean findLike(Long id, Member member) {
+        return questionLikeRepository.existsByQuestion_IdAndMember_Id(id, member.getId());
     }
 
     //delete flag
