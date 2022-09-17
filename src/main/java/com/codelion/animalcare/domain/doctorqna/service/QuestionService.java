@@ -58,12 +58,29 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Question> findAll(int page) {
+    public Page<Question> findAll(int page, String type, String kw) {
 
         List<Sort.Order> sortsList = new ArrayList<>();
         sortsList.add(Sort.Order.desc("createdAt"));
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sortsList));
+
+        if ( kw == null || kw.trim().length() == 0 ) {
+            return questionRepository.findAll(pageable);
+        }
+
+        if(type.equals("title")) {
+            return questionRepository.findByTitleContaining(kw, pageable);
+        }
+
+        if(type.equals("content")) {
+            return questionRepository.findByContentContaining(kw, pageable);
+        }
+
+        if(type.equals("member")) {
+            return questionRepository.findByMemberContaining(kw, pageable);
+        }
+
 
         return questionRepository.findAll(pageable);
     }

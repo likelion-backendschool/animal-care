@@ -95,11 +95,12 @@ public class QuestionController {
     }
     //전체 조회
     @GetMapping("/usr/doctor-qna")
-    public String findAll(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+    public String findAll(Model model, @RequestParam(value="page", defaultValue="0") int page, String type, String kw) {
 
-        Page<Question> paging = questionService.findAll(page);
+        Page<Question> paging = questionService.findAll(page, type, kw);
 
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
 
 
         return "/doctorqna/doctorQnaList";
