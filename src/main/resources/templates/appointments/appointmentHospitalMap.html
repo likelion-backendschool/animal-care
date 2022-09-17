@@ -26,34 +26,54 @@
     <!--TODO appkey 비밀키 사용  -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e11ec606a9ab5e56f6fcdae9c805b669&libraries=services"></script>
     <script th:inline="javascript">
-        // TODO 위도 경도가 없을 경우 처리
         // 현재 고객의 경도 위도
-        const {latitude, longitude} = [[${memberAddress}]];
-        // 고객의 경도 위도 카카오 객체로 인스턴스화
-        const myHomePosition = new kakao.maps.LatLng(latitude, longitude);
+        let hasHome = true;
+        const latitude = [[${memberAddress}]]?.latitude;
+        const longitude = [[${memberAddress}]]?.longitude;
+        const street = [[${memberAddress}]]?.street;
+        let myHomePosition = null;
+        // 위도, 경도가 없다면
+        if(!latitude || !longitude){
+            // street는 있다면
+            if(street){
+                const geocoder = new kakao.maps.services.Geocoder();
+                geocoder.addressSearch(street, (result, status) =>{
+                    if(status === kakao.maps.services.Status.OK){
+                        myHomePosition = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    }
+                });
+            } else{
+                hasHome = false;
+            }
+        } // 위도 경도 있다면
+        else{
+            // 고객의 경도 위도 카카오 객체로 인스턴스화
+            myHomePosition = new kakao.maps.LatLng(latitude, longitude);
+        }
         // 지도 초기 설정
         const mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
-                center: myHomePosition, // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
+                center: hasHome ? myHomePosition : new kakao.maps.LatLng(37, 127), // 지도의 중심좌표
+                level: hasHome ? 3 : 10 // 지도의 확대 레벨
             };
 
         const map = new kakao.maps.Map(mapContainer, mapOption); // 지도
 
-        const myHomeMarker = new kakao.maps.Marker({
-            map,
-            title: "우리 집",
-            position: myHomePosition ,
-        });
-
         let keyword = ""
+        if(hasHome){
+            const myHomeMarker = new kakao.maps.Marker({
+                map,
+                title: "우리 집",
+                position: myHomePosition ,
+            });
 
-        // TODO 우리 집 색상 바꾸기
-        // 고객집 글자 마커위에 표시
-        myHomeInfowindow = new kakao.maps.InfoWindow({
-            content: "<div style='text-align: center'>우리 집</div>",
-        });
-        myHomeInfowindow.open(map, myHomeMarker);
+            // TODO 우리 집 색상 바꾸기
+            // 고객집 글자 마커위에 표시
+            myHomeInfowindow = new kakao.maps.InfoWindow({
+                content: "<div style='text-align: center'>우리 집</div>",
+            });
+            myHomeInfowindow.open(map, myHomeMarker);
+        }
 
         let infowindow; // 현재 표시되는 지역 정보 창
         let hospitals = []; // 현재 병원들
@@ -232,22 +252,45 @@
         }
 
         // 의사 고르는 창(오른쪽에서 나옴)
-        async function chooseDoctor(hospitalId){
+        async function chooseDoctor(hospitalId,hospitalName){
             try {
-                const res = await $.ajax({
+                const doctors = await $.ajax({
                     url: `/usr/doctor/hospital/${hospitalId}`,
                     type: 'GET',
                 });
-                console.log(res);
-                $('#offcanvasRight')
-                    .empty()
+                console.log(doctors);
+                const cards = doctors.map(doctor =>
+                    `<div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">${doctor.name}</h5>
+                        <p class="card-text">전공 : ${doctor.major || ""}</p>
+                        <p class="card-text">소개 : ${doctor.introduce || ""}</p>
+                        <a href="#" class="btn btn-primary disabled">오프라인 예약</a>
+                        <span class="dropdown">
+                          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="false" >
+                            온라인 예약
+                          </button>
+                          <form action="/usr/member/appointment/others" method="get" class="dropdown-menu p-4">
+                            <div class="mb-3">
+                              <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
+                              <input type="hidden" name="hospitalId" value="${hospitalId}">
+                              <input type="hidden" name="doctorId" value="${doctor.id}">
+                              <input type="datetime-local" class="form-control" id="appointmentDateTime" name="date" value="${new Date().toISOString().slice(0, 16)}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">날짜 결정</button>
+                          </form>
+                        </span>
+                      </div>
+                    </div>`)
+                    .reduce( (previousValue, currentValue) => previousValue + currentValue, "");
+                $('#offcanvasRight').empty()
                     .append(`
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">${hospitalId}</h5>
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">${hospitalName}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        ${res}
+                        ${cards}
                     </div>
                     `)
             } catch (err) {
@@ -297,7 +340,7 @@
                     '            </div>' +
                     '            <div class="container">' +
                     '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
-                    `               <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id})" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
+                    `               <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id}, '${hospital.name}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
                     '           </div>' +
                     '        </div>' +
                     '    </div>' +
@@ -350,7 +393,7 @@
                 '            </div>' +
                 '            <div class="container">' +
                 '                 <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
-                `                 <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id})" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
+                `                 <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id},'${hospital.name}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
                 '           </div>' +
                 '        </div>' +
                 '    </div>' +

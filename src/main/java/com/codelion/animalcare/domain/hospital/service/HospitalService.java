@@ -46,8 +46,10 @@ public class HospitalService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Hospital> findById(long id) {
-        return hospitalRepository.findById(id);
+    public LoadDoctorMyPageHospitalInfoManage.ResponseDto findById(long id){
+        Hospital hospital =  hospitalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Hospital " + id + " can't found."));
+        return new LoadDoctorMyPageHospitalInfoManage.ResponseDto(hospital);
     }
 
     //병원 전체 조회

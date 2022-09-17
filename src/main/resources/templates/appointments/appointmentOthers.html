@@ -1,0 +1,66 @@
+<html layout:decorate="~{global/layout}">
+
+<div layout:fragment="content" class="container my-5">
+    <body>
+
+    <div class="container">
+        <div class="page-header">
+            <h3>예약서 작성</h3>
+        </div>
+        <br />
+        <div class="container">
+            <form th:object="${appointmentFormDto}" role="form" action="/usr/member/appointment" method="post">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+
+                        <h5>이전 선택 내역</h5>
+                        <div class="form-group">
+                            <label>회원이름</label>
+                            <p class="lead" th:text="${memberDto.name}"></p>
+                            <input type="hidden" name="memberId" th:value="${memberDto.id}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>병원이름</label>
+                            <p class="lead" th:text="${hospitalDto.name}"></p>
+                            <input type="hidden" th:field="*{hospitalId}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>의사이름</label>
+                            <p class="lead" th:text="${doctorDto.name}"></p>
+                            <input type="hidden" th:field="*{doctorId}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>예약날짜</label>
+                            <p class="lead" th:text="|${appointmentFormDto.date.substring(0,10) + ' ' + appointmentFormDto.date.substring(11)}|"></p>
+                            <input type="hidden" th:field="*{date}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <h5>추가 내용</h5>
+                        <div class="form-group">
+                            <label >애완동물이름 *</label>
+                            <select th:field="*{animalId}" class="form-control">
+                                <option value="">애완동물 선택</option>
+                                <option th:each="animalDto : ${animalDtoList}"
+                                        th:value="${animalDto.id}"
+                                        th:text="${animalDto.name}"/>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label >메세지 남기기</label>
+                            <textarea type="textarea" th:field="*{content}" class="form-control" rows="3"> </textarea>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-primary">예약 완료</button>
+            </form>
+        </div>
+        <br/>
+    </div> <!-- /container -->
+    </body>
+</div>
+</html>
