@@ -101,6 +101,7 @@ public class QuestionController {
 
         model.addAttribute("paging", paging);
 
+
         return "/doctorqna/doctorQnaList";
     }
 
