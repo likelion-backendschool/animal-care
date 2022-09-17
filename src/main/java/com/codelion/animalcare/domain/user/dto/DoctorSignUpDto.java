@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.sql.Date;
 
@@ -19,13 +20,16 @@ public class DoctorSignUpDto {
 
     private Long id;
 
+    @NotEmpty(message = "이메일은 필수항목입니다")
     private String email;
 
+    @NotEmpty(message = "비밀번호는 필수항목입니다.")
     private String password;
 
+    @NotEmpty(message = "이름은 필수항목입니다.")
     private String name;
 
-
+//    @NotEmpty(message = "생일은 필수항목입니다.")
     private Date birthDay;
 
     private String city;
