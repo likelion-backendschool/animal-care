@@ -60,7 +60,7 @@
         <div class="col-6">
             <a th:href="@{/usr/doctor-qna/write}" class="btn btn-primary">질문 등록하기</a>
         </div>
-        <div class="col-6">
+        <div class="row col-6">
             <form class="input-group col-xl-1">
                 <select onchange="$(this).closest('form').submit();" class="form-select" name="type" th:value="${param.kr}">
                     <option value="title">제목</option>
