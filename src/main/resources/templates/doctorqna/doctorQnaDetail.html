@@ -11,6 +11,7 @@
                 </div>
             </div>
             <div class="my-3">
+                </div>
                 <a th:href="@{|/usr/doctor-qna/${question.id}/modify|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
                    th:if="${question.member != null and #authentication.getPrincipal().getEmail() == question.member.email}"
