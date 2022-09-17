@@ -8,7 +8,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,9 +26,16 @@ public class SecurityConfig {
     private final UserService userService;
 
     @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**");
+    }
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/user/login", "/signup", "/user", "/test", "/", "/usr/doctor/signup", "/usr/member/signup").permitAll() // 누구나 접근 허용
+
+//                .antMatchers("/**").permitAll()
+                .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
                 .and() // 문맥의 끝
                     .csrf().ignoringAntMatchers("/h2-console/**")
                 .and() // 문맥의 끝
@@ -41,7 +50,8 @@ public class SecurityConfig {
                     .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                     .logoutSuccessUrl("/")
                     .invalidateHttpSession(true);
- 
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
         return http.build();
     }
 
