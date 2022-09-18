@@ -2,20 +2,19 @@
 
 <div layout:fragment="content" class="container my-5">
     <body>
-    <table class = "table">
-        <thead class = "table-dark">
+    <table class = "table" style="text-align: center">
+        <thead class = "table-dark" >
         <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일시</th>
-            <th>추천수</th>
-            <th>조회수</th>
+            <th class="col-md-1">번호</th>
+            <th class="col-md-5">제목</th>
+            <th class="col-md-2">작성자</th>
+            <th class="col-md-2">작성일시</th>
+            <th class="col-md-1">추천수</th>
+            <th class="col-md-1">조회수</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="question, loop : ${paging}">
-
+        <tr th:each="question, loop : ${paging}" >
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td>
                 <a th:href="@{|/usr/doctor-qna/${question.id}|}" th:text="${question.title}"></a>

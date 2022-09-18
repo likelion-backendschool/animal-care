@@ -4,6 +4,7 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestD
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.repository.QuestionLike;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionLikeRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Member;
@@ -104,6 +105,24 @@ public class QuestionService {
 
     public boolean findLike(Long id, Member member) {
         return questionLikeRepository.existsByQuestion_IdAndMember_Id(id, member.getId());
+    }
+
+    public boolean saveLike(Long id, Member member){
+
+        if(!findLike(id, member)) {
+
+            Question question = questionRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+            QuestionLike questionLike = new QuestionLike(member, question);
+            questionLikeRepository.save(questionLike);
+            questionRepository.plusLike(id);
+
+            return true;
+        }
+
+        questionLikeRepository.deleteByQuestion_IdAndMember_Id(id, member.getId());
+        questionRepository.minusLike(id);
+
+        return false;
     }
 
     //delete flag
