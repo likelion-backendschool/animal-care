@@ -5,6 +5,10 @@
     <h1>Member Sign Up</h1>
     <hr>
     <form th:action="@{/usr/member/signup}" th:object="${memberSignUpDto}" method="post">
+        <div th:fragment="formErrorsFragment" class="alert alert-danger"
+             role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+        </div>
         <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
             <input type="email" th:field="*{email}" class="form-control">
