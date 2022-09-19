@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RequiredArgsConstructor
-@RequestMapping(("/usr/doctor-qna"))
+@RequestMapping
 @RestController
 public class QuestionRestController {
 
     private final QuestionService questionService;
     private final UserService userService;
 
-    @PostMapping("/like/{id}")
+    @PostMapping("/usr/doctor-qna/like/{id}")
     public boolean like(@PathVariable Long id, Principal principal) {
 
         Member member = userService.getMember(principal.getName());

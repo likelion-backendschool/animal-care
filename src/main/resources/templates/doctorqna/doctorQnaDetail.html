@@ -1,4 +1,8 @@
 <html layout:decorate="~{global/layout}">
+<head>
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+</head>
 <div layout:fragment="content" class="container my-5">
 
     <h2 class="border-bottom py-2" th:text="${question.title}"></h2>
@@ -75,6 +79,10 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script th:inline="javascript">
+
+        const header = $("meta[name='_csrf_header']").attr('content');
+        const token = $("meta[name='_csrf']").attr('content');
+        $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
 
         const clickLikeUrl = "/img/doctorQna/like_click.png";
         const emptyLikeUrl = "/img/doctorQna/like_empty.png";

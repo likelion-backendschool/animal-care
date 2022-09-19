@@ -107,6 +107,7 @@ public class QuestionService {
         return questionLikeRepository.existsByQuestion_IdAndMember_Id(id, member.getId());
     }
 
+    @Transactional(readOnly = false)
     public boolean saveLike(Long id, Member member){
 
         if(!findLike(id, member)) {
@@ -130,3 +131,4 @@ public class QuestionService {
 
 
 }
+
