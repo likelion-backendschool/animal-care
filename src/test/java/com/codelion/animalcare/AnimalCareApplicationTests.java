@@ -3,7 +3,6 @@ package com.codelion.animalcare;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
@@ -15,7 +14,8 @@ import javax.transaction.Transactional;
 class AnimalCareApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void 전체_디비_생성(){
+		// 실행시 원래 디비에 있던 내용 다 없어집니다.
 	}
 
 }

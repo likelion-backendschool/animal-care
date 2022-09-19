@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.hospital.service;
 
+import com.codelion.animalcare.domain.hospital.dto.LatitudeLongitudeDto;
 import com.codelion.animalcare.domain.mypage.dto.HospitalVisitedDto;
 import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
 import com.codelion.animalcare.domain.user.entity.Doctor;
@@ -33,8 +34,22 @@ public class HospitalService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Hospital> findById(long id) {
-        return hospitalRepository.findById(id);
+    public Page<Hospital> findByLatitudeAndLongitude(LatitudeLongitudeDto latitudeLongitudeDto, int page, String keyword){
+        Pageable pageable = PageRequest.of(page, 10);
+
+        Double minLatitude = latitudeLongitudeDto.getMinLatitude();
+        Double maxLatitude = latitudeLongitudeDto.getMaxLatitude();
+        Double minLongitude = latitudeLongitudeDto.getMinLongitude();
+        Double maxLongitude = latitudeLongitudeDto.getMaxLongitude();
+
+        return hospitalRepository.findByLatitudeAndLongitude(minLatitude, maxLatitude, minLongitude, maxLongitude, keyword, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public LoadDoctorMyPageHospitalInfoManage.ResponseDto findById(long id){
+        Hospital hospital =  hospitalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Hospital " + id + " can't found."));
+        return new LoadDoctorMyPageHospitalInfoManage.ResponseDto(hospital);
     }
 
     //병원 전체 조회
