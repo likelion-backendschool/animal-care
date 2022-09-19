@@ -42,7 +42,7 @@ public class WebrtcServiceImpl implements WebrtcService {
         modelAndView.addObject("rooms", roomService.getRooms());
         modelAndView.addObject("uuid", uuid);
 
-        Optional<MemberDto> memberDto = findMemberDto(principal);
+        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
 
         if(memberDto.isPresent()) {
             modelAndView.addObject("dto", memberDto.get());
@@ -104,9 +104,4 @@ public class WebrtcServiceImpl implements WebrtcService {
         return ThreadLocalRandom.current().nextLong(0, 100);
     }
 
-
-    private Optional<MemberDto> findMemberDto(Principal principal) {
-
-        return memberService.findByEmail(principal.getName());
-    }
 }
