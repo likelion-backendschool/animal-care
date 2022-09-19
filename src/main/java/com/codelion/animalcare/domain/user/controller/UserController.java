@@ -2,7 +2,6 @@ package com.codelion.animalcare.domain.user.controller;
 
 
 import com.codelion.animalcare.domain.user.dto.UserInfoDto;
-import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,9 +29,14 @@ public class UserController {
     @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/login";
+        return "redirect:/";
     }
 
+    @GetMapping("/user/login")
+    public String signIn(){
+
+        return "login/signin";
+    }
 
 
 //    @GetMapping("test")

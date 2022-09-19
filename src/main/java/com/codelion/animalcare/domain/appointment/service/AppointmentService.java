@@ -3,6 +3,7 @@ package com.codelion.animalcare.domain.appointment.service;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentFormDto;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
@@ -21,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -67,6 +67,37 @@ public class AppointmentService {
 
         //예약 생성
         Appointment appointment = Appointment.createAppointment(member, animal, hospital, doctor, appointmentDate);
+
+        appointmentRepository.save(appointment);
+
+        return appointment.getId();
+    }
+
+    /**
+     * 예약(메세지 추가)
+     */
+    @Transactional
+    public Long appointment(MemberDto memberDto, AppointmentFormDto appointmentFormDto) {
+
+        //엔티티 조회
+        Member member = memberRepository.findById(memberDto.getId()).get();
+        Animal animal = animalRepository.findById(appointmentFormDto.getAnimalId()).get();
+        Hospital hospital = hospitalRepository.findById(appointmentFormDto.getHospitalId()).get();
+        Doctor doctor = doctorRepository.findById(appointmentFormDto.getDoctorId()).get();
+
+        //예약 생성
+        // TODO builder 숨기기
+        Appointment appointment = Appointment.builder()
+                .animal(animal)
+                .member(member)
+                .hospital(hospital)
+                .doctor(doctor)
+                .content(appointmentFormDto.getContent())
+                .date(appointmentFormDto.getDateToLocalDateTime())
+                .status(AppointmentStatus.READY)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
 
         appointmentRepository.save(appointment);
 
@@ -127,7 +158,7 @@ public class AppointmentService {
 
     public LoadMyPageDoctorAppointment.ResponseDto findById(long appointmentId) {
         Appointment appointment = appointmentRepository
-                .findByIdWithMemberAndAnimalAndHospitalAndDoctorAndDiagnosis(appointmentId)
+                .findByIdWithMemberAndAnimalAndHospitalAndDoctor(appointmentId)
                         .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " is not found."));
 
         return new LoadMyPageDoctorAppointment.ResponseDto(appointment);

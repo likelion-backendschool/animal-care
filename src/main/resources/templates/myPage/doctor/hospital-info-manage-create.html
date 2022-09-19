@@ -1,7 +1,7 @@
-<html layout:decorate="~{myPage/doctor/sampleLayout}">
-<div class="container" layout:fragment="content">
-    <nav class="navbar">
-        <a href="/usr/mypage/doctor/hospital-info-manage">뒤로</a>
+<html layout:decorate="~{global/layout}">
+<div class="container my-5" layout:fragment="content">
+    <nav>
+        <a href="/usr/mypage/doctor/hospital-info-manage" class="btn">뒤로</a>
     </nav>
     <h2 class="p-4">
         병원 생성
@@ -244,6 +244,8 @@
                         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
                         document.getElementById('latitude').value = result[0].y;
                         document.getElementById('longitude').value = result[0].x;
+                        console.log(`latitude ${result[0].y}`)
+                        console.log(`longitude ${result[0].x}`)
                     }
                 });
             }

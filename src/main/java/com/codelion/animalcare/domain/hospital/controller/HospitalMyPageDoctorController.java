@@ -1,10 +1,12 @@
 package com.codelion.animalcare.domain.hospital.controller;
 
+import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.dto.UpdateDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
+import com.codelion.animalcare.domain.user.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class HospitalMyPageDoctorController {
     private final HospitalService hospitalService;
+    private final DoctorService doctorService;
 
     // 병원 소개
     @GetMapping()
@@ -84,13 +87,27 @@ public class HospitalMyPageDoctorController {
     @GetMapping("select")
     public String loadDoctorMyPageHospitalList(
         Model model,
-        @RequestParam(value="page", defaultValue = "0") int page
+        Principal principal
     ){
-        // TODO dto 사용
-        Page<Hospital> paging = hospitalService.findAll(page);
-        model.addAttribute("paging", paging);
+        // 자신의 경도 위도
+        String doctorEmail = principal.getName();
+        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(doctorEmail);
+
+        model.addAttribute("doctorAddress", doctorDto.getAddress());
         // TODO modify를 form으로 이름을 바꾼다.
         return "myPage/doctor/hospital-info-manage-select";
+    }
+    @PostMapping("select")
+    public String loadDoctorMyPageHospitalList(
+            Principal principal,
+            Long hospitalId
+    ){
+        // 자신의 경도 위도
+        String doctorEmail = principal.getName();
+        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(doctorEmail);
+
+        doctorService.addHospital(doctorDto.getId(), hospitalId);
+        return "redirect:/usr/mypage/doctor/hospital-info-manage";
     }
 
     // 병원 소개 수정 페이지
