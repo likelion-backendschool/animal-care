@@ -31,10 +31,10 @@ public class ChatRoomService {
     }
 
     // 채팅방 생성
-    public ChatRoom createRoom(String name) {
+    public String createRoom(String name) {
         ChatRoom chatRoom = ChatRoom.create(name);
         chatRoomMap.put(chatRoom.getRoomId(), chatRoom);
 
-        return chatRoom;
+        return chatRoom.getRoomName();
     }
 }
