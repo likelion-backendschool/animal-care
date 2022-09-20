@@ -388,9 +388,35 @@ public class TestInitData {
                     // TODO .appointment() 필요하지만 아직 예약 테스트 안만들었음. 추가 예정
                     .build();
 
-
-
             diagnosisRepository.save(diagnosis1);
+
+            Diagnosis diagnosis2 = Diagnosis.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .memberName(member1.getName())
+                    .addressCity(member1.getAddress().getCity())
+                    .addressStreet(member1.getAddress().getStreet())
+                    .breedingPlace("주택")
+                    .animalType("강아지")
+                    .animalBreed("요크셔테리어")
+                    .animalName(animal1.getName())
+                    .animalGenderId((short) 1)
+                    .animalAge((short) 5)
+                    .animalCoatColor("검정")
+                    .animalSpecial("")
+                    .diseaseName("다리 통증")
+                    .diseaseDate(Date.valueOf("2022-09-14"))
+                    .diagnosisDate(Date.valueOf("2022-09-15"))
+                    .opinion("다리가 많이 아픔. 약 처방. 5일뒤에 또 방문 바람.")
+                    .otherMatter("없음")
+                    .hospitalName(hospital1.getName())
+                    .hospitalStreet(hospital1.getAddress().getStreet())
+                    .doctorName(doctor1.getName())
+                    .doctorLicense("0101010101")
+                    .appointment(appointment1)
+                    .build();
+
+            diagnosisRepository.save(diagnosis2);
 
         };
     }
