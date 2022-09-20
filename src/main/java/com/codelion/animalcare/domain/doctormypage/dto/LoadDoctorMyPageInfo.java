@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.doctormypage.dto;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import com.codelion.animalcare.domain.user.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,8 @@ public class LoadDoctorMyPageInfo {
         private LocalDateTime updatedAt;
         private Hospital hospital;
 
+        private Address address;
+
         public ResponseDto(Doctor doctor) {
             this.id = doctor.getId();
             this.loginEmail = doctor.getEmail();
@@ -50,6 +53,7 @@ public class LoadDoctorMyPageInfo {
             this.updatedAt = doctor.getUpdatedAt();
             this.hospital = doctor.getHospital();
             this.auth = doctor.getAuth();
+            this.address =doctor.getAddress();
         }
     }
 }

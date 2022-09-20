@@ -1,5 +1,7 @@
 package com.codelion.animalcare.domain.diagnosis.entity;
 
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
+import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
@@ -10,10 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,40 +21,72 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 public class Diagnosis extends BaseEntity{
-
+    // 동물 보호자
+    // 성명
     @Column(nullable = false, length = 30)
-    private String title;
+    private String memberName;
+    // 주소
+    @Column(nullable = false, length=70)
+    private String addressCity;
+    @Column(nullable = false, length=70)
+    private String addressStreet;
 
+    //사육 장소
+    @Column(nullable = false, length=70)
+    private String breedingPlace;
+
+    // 동물의 표시
+    // 종류
+    @Column(nullable = false, length=50)
+    private String animalType;
+    // 품종
+    @Column(nullable = false, length=50)
+    private String animalBreed;
+    // 동물명
+    @Column(nullable = false, length=50)
+    private String animalName;
+    // 성별
+    @Column(nullable = false, length=50)
+    private short animalGenderId;
+    // 연령
+    @Column(nullable = false, length=50)
+    private short animalAge;
+    // 모색
+    @Column(nullable = false, length=50)
+    private String animalCoatColor;
+    // 특징
+    @Column(nullable = false, length=200)
+    private String animalSpecial;
+
+    // 병명
+    @Column(nullable = false, length=50)
+    private String diseaseName;
+    // 발병 연월일
+    @Column(nullable = false)
+    private Date diseaseDate;
+    // 진단 연월일
+    @Column(nullable = false)
+    private Date diagnosisDate;
+    // 예후 소견
     @Column(columnDefinition = "TEXT",nullable = false)
-    private String content;
+    private String opinion;
+    // 그 밖의 사항
+    @Column(columnDefinition = "TEXT",nullable = false)
+    private String otherMatter;
 
+    // 동물병언 명칭
     @Column(nullable = false, length = 20)
-    private String cost;
+    private String hospitalName;
+    // 동물병원 주소
+    @Column(nullable = false, length = 70)
+    private String hospitalStreet;
+    // 수의사 면허
+    @Column(nullable = false, length = 50)
+    private String doctorLicense;
+    // 수의사 이름
+    @Column(nullable=false)
+    private String doctorName;
 
-    @Column(nullable = false, length = 45)
-    private String diagnosisName;
-
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
-
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @ManyToOne
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
-
-//    @Builder
-//    private Diagnosis(Long id, LocalDateTime createdAt, String title, String content, String cost, String diagnosisName, Doctor doctor, Member member, Animal animal) {
-//        super(id, createdAt);
-//        this.title = title;
-//        this.content = content;
-//        this.cost = cost;
-//        this.diagnosisName = diagnosisName;
-//        this.doctor = doctor;
-//        this.member = member;
-//        this.animal = animal;
-//    }
+    @OneToOne(fetch = FetchType.LAZY)
+    private Appointment appointment;
 }

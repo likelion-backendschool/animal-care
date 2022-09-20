@@ -5,6 +5,10 @@
     <h1>Doctor Sign Up</h1>
     <hr>
     <form th:action="@{/usr/doctor/signup}" th:object="${doctorSignUpDto}" method="post">
+        <div th:fragment="formErrorsFragment" class="alert alert-danger"
+             role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+        </div>
         <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
             <input type="email" th:field="*{email}" class="form-control">
@@ -17,11 +21,11 @@
             <label for="name" class="form-label">이름</label>
             <input type="text" th:field="*{name}" class="form-control">
         </div>
-<!--        <div class="mb-3">-->
-<!--            <label for="birthDay" class="form-label">생일</label>-->
-<!--            <input type="date" th:name="birthDay" th:field="*{birthDay}"  class="form-control">-->
-<!--&lt;!&ndash;            <input type="text"  placeholder="생년월일(yyMMdd)" autocomplete="off" th:name="birthDay" th:field="*{birthDay} class="form-control"/>&ndash;&gt;-->
-<!--        </div>-->
+        <div class="mb-3">
+            <label for="birthDay" class="form-label">생일</label>
+            <input type="date" th:name="birthDay" th:field="*{birthDay}"  class="form-control">
+<!--            <input type="text"  placeholder="생년월일(yyMMdd)" autocomplete="off" th:name="birthDay" th:field="*{birthDay} class="form-control"/>-->
+        </div>
 
         <div class="mb-3">
             <label for="zipCode" class="form-label">우편번호</label>

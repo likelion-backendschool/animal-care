@@ -69,8 +69,11 @@ public class MemberController {
     }
 
     @PostMapping("/usr/member/signup")
-    public String signup(MemberSignUpDto memberSignUpDto){
+    public String signup(@Valid MemberSignUpDto memberSignUpDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "login/memberSignup";
+        }
         memberService.save(memberSignUpDto);
-        return "main";
+        return "redirect:/";
     }
 }

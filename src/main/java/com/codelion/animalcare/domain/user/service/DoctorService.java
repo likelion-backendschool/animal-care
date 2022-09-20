@@ -3,6 +3,8 @@ package com.codelion.animalcare.domain.user.service;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfoPassword;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.user.dto.DoctorSignUpDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class DoctorService {
     private final DoctorRepository doctorRepository;
+    private final HospitalRepository hospitalRepository;
 
     @Transactional(readOnly = true)
     public LoadDoctorMyPageInfo.ResponseDto findById(long id) {
@@ -99,6 +102,25 @@ public class DoctorService {
         doctor.updateLoginPwd(encoder.encode(requestDto.getNewPassword()));
 
         doctorRepository.save(doctor);
+    }
+
+    @Transactional
+    public void addHospital(Long doctorId, Long hospitalId) {
+        Doctor doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new RuntimeException("Doctor id:" + doctorId + " can't found."));
+
+        Hospital hospital = hospitalRepository.findById(hospitalId)
+                .orElseThrow(() -> new RuntimeException("Hospital id:" + hospitalId + " can't found."));
+
+        doctor.addHospital(hospital);
+    }
+
+    public List<LoadDoctorMyPageInfo.ResponseDto> findDoctorsByHospital(Long hospitalId) {
+        List<Doctor> doctors = doctorRepository.findAllByHospitalId(hospitalId);
+        // entity => dto
+        return doctors.stream()
+                .map(LoadDoctorMyPageInfo.ResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     private Doctor findDoctorById(long doctorId) {

@@ -33,7 +33,6 @@ public class LoadMyPageDoctorAppointment {
 
         private Hospital hospital; // 예약 병원
 
-        private Diagnosis diagnosis;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -46,7 +45,6 @@ public class LoadMyPageDoctorAppointment {
             this.member = appointment.getMember();
             this.animal = appointment.getAnimal();
             this.hospital = appointment.getHospital();
-            this.diagnosis = appointment.getDiagnosis();
             this.createdAt = appointment.getCreatedAt();
             this.updatedAt = appointment.getUpdatedAt();
         }
