@@ -1,6 +1,6 @@
-package com.codelion.animalcare.domain.chat.controller;
+package com.codelion.animalcare.chat.controller;
 
-import com.codelion.animalcare.domain.chat.service.ChatRoomService;
+import com.codelion.animalcare.chat.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

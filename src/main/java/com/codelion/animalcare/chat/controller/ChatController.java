@@ -1,6 +1,6 @@
-package com.codelion.animalcare.domain.chat.controller;
+package com.codelion.animalcare.chat.controller;
 
-import com.codelion.animalcare.domain.chat.model.ChatMessage;
+import com.codelion.animalcare.chat.model.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

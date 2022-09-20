@@ -1,6 +1,6 @@
-package com.codelion.animalcare.domain.chat.service;
+package com.codelion.animalcare.chat.service;
 
-import com.codelion.animalcare.domain.chat.model.ChatRoom;
+import com.codelion.animalcare.chat.model.ChatRoom;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

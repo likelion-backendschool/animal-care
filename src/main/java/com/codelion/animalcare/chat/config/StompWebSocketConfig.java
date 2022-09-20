@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.chat.config;
+package com.codelion.animalcare.chat.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

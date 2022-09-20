@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.chat.model;
+package com.codelion.animalcare.chat.model;
 
 import lombok.Getter;
 import lombok.Setter;
