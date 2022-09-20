@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/usr/mypage/member/hospitalVisited/info")
 public class HospitalVisitedController {
 
     private final MemberService memberService;
@@ -25,7 +28,7 @@ public class HospitalVisitedController {
     /**
      * 회원마이페이지 병원방문내역
      */
-    @GetMapping("/usr/mypage/member/hospitalVisited-info")
+    @GetMapping()
     public String hospitalVisitedList(Model model, Principal principal) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
