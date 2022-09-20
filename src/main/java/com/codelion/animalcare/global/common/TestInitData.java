@@ -355,6 +355,7 @@ public class TestInitData {
                     .member(member1)
                     .animal(animal1)
                     .doctor(doctor1)
+                    .hospital(hospital1)
                     .build();
 
             appointmentRepository.save(appointment1);
