@@ -30,14 +30,14 @@ public class MemberController {
     public String createForm(Model model) {
 
         model.addAttribute("memberForm", new MemberForm());
-        return "member/memberForm";
+        return "myPage/member/memberForm";
     }
 
     @PostMapping("/usr/mypage/member/new")
     public String create(@Valid MemberForm form, BindingResult result, Principal principal) {
 
         if (result.hasErrors()) {
-            return "member/memberForm";
+            return "myPage/member/memberForm";
         }
 
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode(), form.getDetail());
@@ -59,7 +59,7 @@ public class MemberController {
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
 
         model.addAttribute("memberDto", memberDto.get());
-        return "member/memberInfo";
+        return "myPage/member/memberInfo";
     }
 
     @GetMapping("/usr/member/signup")

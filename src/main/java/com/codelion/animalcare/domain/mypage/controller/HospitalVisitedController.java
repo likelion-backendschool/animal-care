@@ -33,7 +33,7 @@ public class HospitalVisitedController {
 
         model.addAttribute("appointmentDto", appointmentDto);
 
-        return  "member/hospitalVisited";
+        return  "myPage/member/hospitalVisited";
     }
 
 }
