@@ -4,6 +4,7 @@ import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
+import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.diagnosis.repository.DiagnosisRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
@@ -28,7 +29,7 @@ import java.time.LocalDateTime;
 public class TestInitData {
 
     @Bean
-    CommandLineRunner init(MemberRepository memberRepository, AnimalRepository animalRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, DiagnosisRepository diagnosisRepository) {
+    CommandLineRunner init(MemberRepository memberRepository, AnimalRepository animalRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, AppointmentRepository appointmentRepository, DiagnosisRepository diagnosisRepository) {
         return args -> {
             /*
             멤버 추가하는 부분입니다.
@@ -345,14 +346,18 @@ public class TestInitData {
 
 
             // 예약서
-            Appointment appointment = Appointment.builder()
+            Appointment appointment1 = Appointment.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .content("강아지가 많이 기침합니다.")
                     .date(LocalDateTime.of(2022,9,30, 14,30,00))
                     .status(AppointmentStatus.READY)
+                    .member(member1)
+                    .animal(animal1)
+                    .doctor(doctor1)
                     .build();
 
+            appointmentRepository.save(appointment1);
 
             // 진단서
 
