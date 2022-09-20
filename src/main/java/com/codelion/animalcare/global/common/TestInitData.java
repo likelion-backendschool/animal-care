@@ -1,6 +1,7 @@
 package com.codelion.animalcare.global.common;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
+import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
@@ -27,7 +28,7 @@ import java.time.LocalDateTime;
 public class TestInitData {
 
     @Bean
-    CommandLineRunner init(MemberRepository memberRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, DiagnosisRepository diagnosisRepository) {
+    CommandLineRunner init(MemberRepository memberRepository, AnimalRepository animalRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, DiagnosisRepository diagnosisRepository) {
         return args -> {
             /*
             멤버 추가하는 부분입니다.
@@ -51,9 +52,30 @@ public class TestInitData {
 
             memberRepository.save(member1);
 
+            //member1에 대한 애완동물 추가
+            Animal animal1 = Animal.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .birthday(new Date(2022, 8, 10))
+                    .genderId(1)
+                    .name("멍멍이")
+                    .registrationNum("410000000000001")
+                    .member(member1)
+                    .build();
 
-//            Animal animal1 = animalRepository.save()
+            animalRepository.save(animal1);
 
+            Animal animal2 = Animal.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .birthday(new Date(2021, 1, 1))
+                    .genderId(1)
+                    .name("땅콩")
+                    .registrationNum("410000000000002")
+                    .member(member1)
+                    .build();
+
+            animalRepository.save(animal2);
 
             Member member2 = memberRepository.save(Member.builder()
                     .createdAt(LocalDateTime.now())
@@ -70,6 +92,43 @@ public class TestInitData {
                     .build());
             memberRepository.save(member2);
 
+            //member2 애완동물 추가
+            Animal animal3 = Animal.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .birthday(new Date(2020, 4, 12))
+                    .genderId(1)
+                    .name("냥냥이")
+                    .registrationNum("410000000000003")
+                    .member(member2)
+                    .build();
+
+            animalRepository.save(animal3);
+
+            Animal animal4 = Animal.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .birthday(new Date(2010, 9, 9))
+                    .genderId(1)
+                    .name("슈퍼도그")
+                    .registrationNum("410000000000004")
+                    .member(member2)
+                    .build();
+
+            animalRepository.save(animal4);
+
+            Animal animal5 = Animal.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .birthday(new Date(2014, 10, 3))
+                    .genderId(1)
+                    .name("슈카")
+                    .registrationNum("410000000000005")
+                    .member(member2)
+                    .build();
+
+            animalRepository.save(animal5);
+
             Member member3 = memberRepository.save(Member.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
@@ -85,6 +144,31 @@ public class TestInitData {
                     .build());
             memberRepository.save(member3);
 
+            //member3 애완동물 추가
+            Animal animal6 = Animal.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .birthday(new Date(2021, 5, 5))
+                    .genderId(1)
+                    .name("복덩이")
+                    .registrationNum("410000000000006")
+                    .member(member3)
+                    .build();
+
+            animalRepository.save(animal6);
+
+            Animal animal7 = Animal.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .birthday(new Date(2021, 8, 20))
+                    .genderId(1)
+                    .name("별이")
+                    .registrationNum("410000000000007")
+                    .member(member3)
+                    .build();
+
+            animalRepository.save(animal7);
+
             Member member4 = memberRepository.save(Member.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
@@ -99,6 +183,19 @@ public class TestInitData {
                     .genderId(0)
                     .build());
             memberRepository.save(member4);
+
+            //member4 에완동물 추가
+            Animal animal8 = Animal.builder()
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .birthday(new Date(2021, 7, 10))
+                    .genderId(1)
+                    .name("호이")
+                    .registrationNum("410000000000008")
+                    .member(member4)
+                    .build();
+
+            animalRepository.save(animal8);
 
             Doctor doctor1 = doctorRepository.save(Doctor.builder()
                     .createdAt(LocalDateTime.now())
