@@ -1,5 +1,7 @@
 package com.codelion.animalcare.webrtc.service;
 
+import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
+import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
@@ -11,10 +13,14 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -29,6 +35,7 @@ public class WebrtcServiceImpl implements WebrtcService {
     private final MemberService memberService;
     private final DoctorService doctorService;
 
+
 //    @Autowired
 //    public WebrtcServiceImpl(final RoomService roomService, final Parser parser) {
 //        this.roomService = roomService;
@@ -42,15 +49,15 @@ public class WebrtcServiceImpl implements WebrtcService {
         modelAndView.addObject("rooms", roomService.getRooms());
         modelAndView.addObject("uuid", uuid);
 
-        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-
-        if(memberDto.isPresent()) {
-            modelAndView.addObject("dto", memberDto.get());
-        }
-        else{
-            LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
-            modelAndView.addObject("dto", doctorDto);
-        }
+//        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
+//
+//        if(memberDto.isPresent()) {
+//            modelAndView.addObject("dto", memberDto.get());
+//        }
+//        else{
+//            LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
+//            modelAndView.addObject("dto", doctorDto);
+//        }
 
         return modelAndView;
     }
@@ -68,6 +75,7 @@ public class WebrtcServiceImpl implements WebrtcService {
         return this.displayMainPage(optionalId.orElse(null), uuid, principal);
     }
 
+
     @Override
     public ModelAndView displaySelectedRoom(final String sid, final String uuid, Principal principal) {
         // redirect to main page if provided data is invalid
@@ -80,6 +88,7 @@ public class WebrtcServiceImpl implements WebrtcService {
                 // open the chat room
                 modelAndView = new ModelAndView("webrtc/chat_room", "id", sid);
                 modelAndView.addObject("uuid", uuid);
+
             }
         }
 

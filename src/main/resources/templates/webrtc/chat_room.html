@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,7 +34,7 @@
 
 <!-- Begin page content -->
 <main role="main" class="container-fluid">
-    <h1>Simple WebRTC Signalling Server</h1>
+    <h1>Online Medical Office</h1>
     <input type="hidden" id="id" name="id" th:value="${id}"/>
     <div class="col-lg-12 mb-3">
         <div class="mb-3" th:text="'User: ' + ${uuid} + ' @ Room #' + ${id}">
@@ -84,5 +84,16 @@
 </main>
 
 <script src="/js/webrtc/webrtc_client.js"></script>
+
+
+<li class="member-manage">
+    <a sec:authorize="hasRole('DOCTOR')">
+        <a href="javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments', '회원관리', 'width=#','height=#'))">
+        <button type="submit" class="btn btn-primary">회원관리</button>
+        </a>
+    </a>
+</li>
+
+
 </body>
 </html>
