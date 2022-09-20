@@ -26,6 +26,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/usr/mypage/member/appointment")
 public class AppointmentController {
 
     private final AppointmentQueryService appointmentQueryService;
@@ -37,7 +38,7 @@ public class AppointmentController {
 
 
     // 임시 예약하기
-    @GetMapping("/usr/mypage/member/appointment")
+    @GetMapping()
     public String createAppointmentForm(Model model, Principal principal) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
@@ -56,7 +57,7 @@ public class AppointmentController {
 
 
     // 임시 예약하기
-    @PostMapping("/usr/mypage/member/appointment")
+    @PostMapping()
     public String appointment(
             Principal principal,
             @RequestParam("animalDtosId") Long animalDtosId,
@@ -67,13 +68,13 @@ public class AppointmentController {
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
         appointmentService.appointment(memberDto.get(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
-        return "redirect:/usr/mypage/member/appointment-info";
+        return "redirect:/usr/mypage/member/appointment/info";
     }
 
     /**
      * 회원마이페이지 예약내역
      */
-    @GetMapping("/usr/mypage/member/appointment-info")
+    @GetMapping("/info")
     public String appointmentList(Model model, Principal principal) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
@@ -89,16 +90,16 @@ public class AppointmentController {
      * 회원마이페이지 예약내역 취소 CANCEL
      */
     // 마이페이지 회원 예약정보 취소
-    @PostMapping("/usr/mypage/member/appointment-info/{appointmentId}/cancel")
+    @PostMapping("/info/{appointmentId}/cancel")
     public String cancelAppointment(@PathVariable("appointmentId") Long appointmentId) {
         appointmentService.cancelAppointment(appointmentId);
-        return "redirect:/usr/mypage/member/appointment-info";
+        return "redirect:/usr/mypage/member/appointment/info";
     }
 
     /**
      * 회원마이페이지 예약내역 수정 MODIFY
      */
-    @GetMapping("/usr/mypage/member/appointment-info/{appointmentId}/modify")
+    @GetMapping("/info/{appointmentId}/modify")
     public String updateAppointmentForm(@PathVariable("appointmentId") Long appointmentId,
                                         Model model,
                                         Principal principal) {
@@ -125,7 +126,7 @@ public class AppointmentController {
     /**
      * 회원마이페이지 수정 MODIFY
      */
-    @PostMapping("/usr/mypage/member/appointment-info/{appointmentId}/modify")
+    @PostMapping("/info/{appointmentId}/modify")
     public String updateAppointment(
             @PathVariable("appointmentId") Long appointmentId,
             Principal principal,
@@ -137,7 +138,7 @@ public class AppointmentController {
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
         appointmentService.updateAppointment(appointmentId, memberDto.get(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
-            return "redirect:/usr/mypage/member/appointment-info";
+            return "redirect:/usr/mypage/member/appointment/info";
     }
 
 }
