@@ -4,10 +4,13 @@ import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
+import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,15 +21,16 @@ import java.util.stream.Collectors;
 public class AnimalService {
     private final AnimalRepository animalRepository;
 
+    private final UserService userService;
     /**
      * 애완 동물 등록
      */
-    @Transactional
-    public Long join(Animal animal) {
 
-        validateDuplicateAnimal(animal); //중복 애완동물 검증
-        animalRepository.save(animal);
-        return animal.getId();
+
+    public void save(AnimalDto animalDto, Principal principal) {
+        Member member = userService.getMember(principal.getName());
+
+        return animalRepository.save(animalDto.toEntity(member).getId());
     }
 
     private void validateDuplicateAnimal(Animal animal) {
@@ -61,4 +65,6 @@ public class AnimalService {
 
         return result;
     }
+
+
 }

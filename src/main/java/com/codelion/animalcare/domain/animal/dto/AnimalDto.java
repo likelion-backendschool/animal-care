@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.animal.dto;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
+import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.Getter;
 
 import javax.persistence.Temporal;
@@ -31,5 +32,8 @@ public class AnimalDto {
             registrationNum = animal.getRegistrationNum();
             genderId = animal.getGenderId();
         }
-
+        public Animal toEntity(Member member){
+            return Animal.builder()
+                    .
+        }
 }
