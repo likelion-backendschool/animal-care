@@ -88,6 +88,7 @@
 
 <li class="member-manage">
     <a sec:authorize="hasRole('DOCTOR')" th:object="${appointment}">
+
         <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments', '회원관리', 'width=#','height=#'))|">
         <button type="submit" class="btn btn-primary">회원관리</button>
         </a>
@@ -106,10 +107,14 @@
 <!--            </a>-->
 <!--        </td>-->
 
+        <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments/all', '예약내역', 'width=#','height=#'))|">
+            <button type="submit" class="btn btn-primary">예약내역</button>
+        </a>
+
 
         <td>
-            <a th:href="|javascript:void(window.open('/usr/mypage/doctor/diagnosis/info/new', '진단서 확인', 'width=#','height=#'))|">
-                <button type="submit" class="btn btn-primary">진단서 작성하기</button>
+            <a th:href="|javascript:void(window.open('/usr/mypage/doctor/diagnosis/info/new', '진단서 작성', 'width=#','height=#'))|">
+                <button type="submit" class="btn btn-primary">진단서 작성</button>
             </a>
         </td>
 

@@ -6,6 +6,8 @@ import com.codelion.animalcare.domain.diagnosis.DiagnosisSearch;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
+import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,7 +28,7 @@ public class DiagnosisController {
 
     private final DiagnosisService diagnosisService;
     private final AppointmentService appointmentService;
-
+    private final MemberService memberService;
 
     // 닥터페이지 진단서
     @GetMapping("/new")
@@ -79,21 +83,28 @@ public class DiagnosisController {
 
 
 // TODO 진단서, 예약서 매핑하기
-//    @GetMapping("/new2")
-//    public String createDiagnosisForm2(Model model) {
-//        model.addAttribute("diagnosisForm", new FindOneDiagnosis());
-//        return "diagnosis/diagnosisForm";
-//    }
-//
-//    @PostMapping("/new2/{appointmentId}/diagnosis-tmp")
+    @GetMapping("/new2")
+    public String createDiagnosisForm2(Model model) {
+        model.addAttribute("diagnosisForm", new FindOneDiagnosis());
+        return "diagnosis/diagnosisForm";
+    }
+
+//    @PostMapping("/new2/diagnosis-tmp")
 //    public String writeDiagnosis2(@Valid FindOneDiagnosis writtenForm
 //            , BindingResult result
 //            , Model model
-//            , @PathVariable long appointmentId) {
-//
+//            , Principal principal
+////            , @PathVariable long appointmentId
+//    ) {
+
 //        if (result.hasErrors()) {
 //            return "diagnosis/diagnosisForm";
 //        }
+//
+//        String email = principal.getName();
+//        Optional<MemberDto> memberOptionalDto = memberService.findByEmail(email);
+//        MemberDto memberDto = memberOptionalDto.get();
+//
 //
 //        LoadMyPageDoctorAppointment.ResponseDto appointment
 //                = appointmentService.findById(appointmentId);
@@ -143,27 +154,27 @@ public class DiagnosisController {
 //        diagnosisService.diagnosis(newForm);
 //
 //        return "redirect:/usr/mypage/doctor/member-manage/appointments";
-//
+
 //    }
-//
-//    @GetMapping("/new/{appointmentId}/diagnosis-tmp")
-//    public String loadMyPageDoctorDiagnosis(
-//            Model model,
-//            @PathVariable long appointmentId
-//    ){
-//        LoadMyPageDoctorAppointment.ResponseDto appointment
-//                = appointmentService.findById(appointmentId);
-//
-//        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
-//
-//
-//        model.addAttribute("appointment", appointment);
-//        model.addAttribute("member", appointment.getMember());
-//        model.addAttribute("animal", appointment.getAnimal());
-//        model.addAttribute("hospital", appointment.getHospital());
-//        model.addAttribute("diagnosis", diagnosis);
-//        model.addAttribute("doctor", appointment.getDoctor());
-//        return "myPage/doctor/member-manage-diagnosis";
-//    }
+
+    @GetMapping("/new/{appointmentId}/diagnosis-tmp")
+    public String loadMyPageDoctorDiagnosis(
+            Model model,
+            @PathVariable long appointmentId
+    ){
+        LoadMyPageDoctorAppointment.ResponseDto appointment
+                = appointmentService.findById(appointmentId);
+
+        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
+
+
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("member", appointment.getMember());
+        model.addAttribute("animal", appointment.getAnimal());
+        model.addAttribute("hospital", appointment.getHospital());
+        model.addAttribute("diagnosis", diagnosis);
+        model.addAttribute("doctor", appointment.getDoctor());
+        return "myPage/doctor/member-manage-diagnosis";
+    }
 
 }

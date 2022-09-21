@@ -1,10 +1,16 @@
 package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
+import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
+import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
+import com.codelion.animalcare.domain.user.service.DoctorService;
+import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +18,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/usr/mypage/doctor/member-manage/appointments")
 @RequiredArgsConstructor
 public class AppointmentMyPageDoctorController {
     private final AppointmentService appointmentService;
+    private final AppointmentQueryService appointmentQueryService;
     private final DiagnosisService diagnosisService;
+    private final DoctorService doctorService;
 
     // TODO page 설정
     /**
@@ -93,6 +102,22 @@ public class AppointmentMyPageDoctorController {
         model.addAttribute("diagnosis", diagnosis);
         model.addAttribute("doctor", appointment.getDoctor());
         return "myPage/doctor/member-manage-diagnosis";
+    }
+
+
+    /**
+     * 비대면 진료에서 예약명단 확인
+     */
+    @GetMapping("/all")
+    public String loadByDoctorAppointments(Model model, Principal principal) {
+
+        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
+
+        List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(doctorDto);
+
+        model.addAttribute("appointmentDto", appointmentDto);
+
+        return "appointments/appointmentByDoctorList";
     }
 
 }

@@ -1,0 +1,63 @@
+<html layout:decorate="~{global/layout}">
+
+<div layout:fragment="content" class="container my-5">
+    <body>
+
+    <div class="container">
+        <div class="page-header">
+            <h3>예약내역</h3>
+        </div>
+
+        <div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>회원</th>
+                    <th>애완동물</th>
+                    <th>병원</th>
+                    <th>닥터</th>
+                    <th>예약 날짜</th>
+                    <th>예약 상태</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ad : ${appointmentDto}">
+                    <td th:text="${ad.appointmentId}"></td>
+                    <td th:text="${ad.memberName}"></td>
+                    <td th:text="${ad.animalName}"></td>
+                    <td th:text="${ad.hospitalName}"></td>
+                    <td th:text="${ad.doctorName}"></td>
+                    <td th:text="${ad.date}"></td>
+                    <td th:text="${ad.status}"></td>
+<!--                    <td>-->
+<!--                        <a th:if="${ad.status.name() == 'READY'}"-->
+<!--                           href="#" th:href="@{/usr/mypage/member/appointment/info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">MODIFY</a>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <a th:if="${ad.status.name() == 'READY'}" href="#" th:href="'javascript:cancel('+${ad.appointmentId}+')'"-->
+<!--                           class="btn btn-danger">CANCEL</a>-->
+<!--                    </td>-->
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div> <!-- /container -->
+
+    </body>
+
+
+    <script>
+        function cancel(id) {
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "/usr/mypage/member/appointment/info/" + id + "/cancel");
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</div>
+</html>
