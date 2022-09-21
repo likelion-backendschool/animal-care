@@ -40,10 +40,10 @@ public class AnimalService {
         return animalRepository.findById(id);
     }
 
-    public Optional<Animal> findByMemberId(Long id) {
-        return animalRepository.findByMemberId(id);
+    //memberEmail로 member가 갖고있는 동물 출력
+    public List<Animal> findByMemberEmail(String email){
+        return animalRepository.findByMemberEmail(email);
     }
-
 
 
     //애완동물 전체 조회
@@ -53,8 +53,7 @@ public class AnimalService {
 
 
     public List<AnimalDto> findByMember(MemberDto memberDto) {
-
-        List<Animal> animals = animalRepository.findListAnimalByMemberId(memberDto.getId());
+        List<Animal> animals = animalRepository.findByMemberEmail(memberDto.getEmail());
         List<AnimalDto> result = animals.stream()
                 .map(o -> new AnimalDto(o))
                 .collect(Collectors.toList());
