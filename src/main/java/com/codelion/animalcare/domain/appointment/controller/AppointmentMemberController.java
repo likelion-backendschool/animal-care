@@ -14,11 +14,14 @@ import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -72,8 +75,19 @@ public class AppointmentMemberController {
     public String createAppointment(
             Model model,
             Principal principal,
-            AppointmentFormDto appointmentFormDto
+//            MemberDto memberDto,
+//            LoadDoctorMyPageInfo.ResponseDto doctorDto,
+//            LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto,
+//            List<AnimalDto> animalDtoList,
+            HttpServletRequest request,
+            @Valid AppointmentFormDto appointmentFormDto,
+            BindingResult bindingResult
     ){
+            if(bindingResult.hasErrors()){
+                String referer = request.getHeader("Referer");
+                return "redirect:"+ referer;
+            }
+
             String email = principal.getName();
             MemberDto memberDto = memberService.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));

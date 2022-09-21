@@ -22,7 +22,7 @@ public class MvcConfig implements WebMvcConfigurer {
 //        registry.addViewController("/test").setViewName("test");
 
         //error
-        //registry.addViewController("/error/not-animals").setViewName("error/not-animals");
+        registry.addViewController("/error/not-animals").setViewName("error/not-animals");
     }
 
     @Override

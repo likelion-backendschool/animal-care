@@ -10,6 +10,12 @@
         <br />
         <div class="container">
             <form th:object="${appointmentFormDto}" role="form" action="/usr/member/appointment" method="post">
+<!--                <input type="hidden" th:field="*{memberDto}">-->
+<!--                <input type="hidden" th:field="*{hospitalDto}">-->
+<!--                <input type="hidden" th:field="*{doctorDto}">-->
+<!--                <input type="hidden" th:field="*{animalDtoList}">-->
+<!--                <input type="hidden" th:field="*{memberDto}">-->
+                <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
 
