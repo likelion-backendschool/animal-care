@@ -1,25 +1,26 @@
 package com.codelion.animalcare.domain.diagnosis.entity;
 
+import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
+import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
+@Setter
 public class Diagnosis extends BaseEntity{
     // 동물 보호자
     // 성명
@@ -61,12 +62,23 @@ public class Diagnosis extends BaseEntity{
     // 병명
     @Column(nullable = false, length=50)
     private String diseaseName;
+
+//    // 발병 연월일
+//    @Column(nullable = false)
+//    private Date diseaseDate;
+//    // 진단 연월일
+//    @Column(nullable = false)
+//    private Date diagnosisDate;
+
+//    임시로 바꿔봄 Date -> LocalDateTime
     // 발병 연월일
     @Column(nullable = false)
-    private Date diseaseDate;
+    private LocalDateTime diseaseDate;
     // 진단 연월일
     @Column(nullable = false)
-    private Date diagnosisDate;
+    private LocalDateTime diagnosisDate;
+
+
     // 예후 소견
     @Column(columnDefinition = "TEXT",nullable = false)
     private String opinion;
@@ -88,5 +100,37 @@ public class Diagnosis extends BaseEntity{
     private String doctorName;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "appointment_id")
     private Appointment appointment;
+
+    public static Diagnosis createDiagnosis(FindOneDiagnosis findOneDiagnosis) {
+
+        Diagnosis diagnosis = new Diagnosis();
+
+        diagnosis.setMemberName(findOneDiagnosis.getMemberName());
+        diagnosis.setAddressCity(findOneDiagnosis.getAddressCity());
+        diagnosis.setAddressStreet(findOneDiagnosis.getAddressStreet());
+
+        diagnosis.setBreedingPlace(findOneDiagnosis.getBreedingPlace());
+        diagnosis.setAnimalType(findOneDiagnosis.getAnimalType());
+        diagnosis.setAnimalBreed(findOneDiagnosis.getAnimalBreed());
+        diagnosis.setAnimalName(findOneDiagnosis.getAnimalName());
+        diagnosis.setAnimalGenderId(findOneDiagnosis.getAnimalGenderId());
+        diagnosis.setAnimalAge(findOneDiagnosis.getAnimalAge());
+        diagnosis.setAnimalCoatColor(findOneDiagnosis.getAnimalCoatColor());
+        diagnosis.setAnimalSpecial(findOneDiagnosis.getAnimalSpecial());
+        diagnosis.setDiseaseName(findOneDiagnosis.getDiseaseName());
+
+        diagnosis.setDiseaseDate(findOneDiagnosis.getDiseaseDate());
+        diagnosis.setDiagnosisDate(findOneDiagnosis.getDiagnosisDate());
+        diagnosis.setOpinion(findOneDiagnosis.getOpinion());
+        diagnosis.setOtherMatter(findOneDiagnosis.getOtherMatter());
+
+        diagnosis.setHospitalName(findOneDiagnosis.getHospitalName());
+        diagnosis.setHospitalStreet(findOneDiagnosis.getHospitalStreet());
+        diagnosis.setDoctorLicense(findOneDiagnosis.getDoctorLicense());
+        diagnosis.setDoctorName(findOneDiagnosis.getDoctorName());
+
+        return diagnosis;
+    }
 }

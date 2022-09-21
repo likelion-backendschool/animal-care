@@ -87,13 +87,37 @@
 
 
 <li class="member-manage">
-    <a sec:authorize="hasRole('DOCTOR')">
-        <a href="javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments', '회원관리', 'width=#','height=#'))">
+    <a sec:authorize="hasRole('DOCTOR')" th:object="${appointment}">
+        <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments', '회원관리', 'width=#','height=#'))|">
         <button type="submit" class="btn btn-primary">회원관리</button>
         </a>
+
+<!--        th:href="@{/usr/mypage/doctor/member-manage/appointments/{appointmentId} (appointmentId=${ad.appointmentId})}"-->
+<!--        <form th:action="|/usr/mypage/doctor/member-manage/appointments/${appointment?.id}/refuse|" method="post">-->
+<!--        <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments/${appointment?.id}', '진단서 확인', 'width=#','height=#'))|">-->
+<!--            &lt;!&ndash;            <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments/1', '진단서 확인', 'width=#','height=#'))|">&ndash;&gt;-->
+<!--            <button type="submit" class="btn btn-primary">진단서 임시확인</button>-->
+<!--        </a>-->
+
+
+<!--        <td>-->
+<!--            <a href="javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments/${appointment?.id}', '진단서 확인', 'width=#','height=#'))">-->
+<!--                <button type="submit" class="btn btn-primary">진단서 임시확인2</button>-->
+<!--            </a>-->
+<!--        </td>-->
+
+
+        <td>
+            <a th:href="|javascript:void(window.open('/usr/mypage/doctor/diagnosis/info/new', '진단서 확인', 'width=#','height=#'))|">
+                <button type="submit" class="btn btn-primary">진단서 작성하기</button>
+            </a>
+        </td>
+
+
+
+
     </a>
 </li>
-
 
 </body>
 </html>

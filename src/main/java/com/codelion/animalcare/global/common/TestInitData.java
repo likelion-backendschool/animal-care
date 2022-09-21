@@ -362,61 +362,61 @@ public class TestInitData {
 
             // 진단서
 
-            Diagnosis diagnosis1 = Diagnosis.builder()
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
-                    .memberName("바다")
-                    .addressCity("경기도 강남시")
-                    .addressStreet("경기도 강남시 강남구 강남대로 1")
-                    .breedingPlace("주택")
-                    .animalType("강아지")
-                    .animalBreed("요크셔테리어")
-                    .animalName("야옹이")
-                    .animalGenderId((short) 1)
-                    .animalAge((short) 5)
-                    .animalCoatColor("검정")
-                    .animalSpecial("")
-                    .diseaseName("다리 통증")
-                    .diseaseDate(Date.valueOf("2022-09-14"))
-                    .diagnosisDate(Date.valueOf("2022-09-15"))
-                    .opinion("다리가 많이 아픔. 약 처방. 5일뒤에 또 방문 바람.")
-                    .otherMatter("없음")
-                    .hospitalName("제주 대박 병원")
-                    .hospitalStreet("제주특별자치도 서귀포시 가가로 14")
-                    .doctorName("경호")
-                    .doctorLicense("0101010101")
-                    // TODO .appointment() 필요하지만 아직 예약 테스트 안만들었음. 추가 예정
-                    .build();
-
-            diagnosisRepository.save(diagnosis1);
-
-            Diagnosis diagnosis2 = Diagnosis.builder()
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
-                    .memberName(member1.getName())
-                    .addressCity(member1.getAddress().getCity())
-                    .addressStreet(member1.getAddress().getStreet())
-                    .breedingPlace("주택")
-                    .animalType("강아지")
-                    .animalBreed("요크셔테리어")
-                    .animalName(animal1.getName())
-                    .animalGenderId((short) 1)
-                    .animalAge((short) 5)
-                    .animalCoatColor("검정")
-                    .animalSpecial("")
-                    .diseaseName("다리 통증")
-                    .diseaseDate(Date.valueOf("2022-09-14"))
-                    .diagnosisDate(Date.valueOf("2022-09-15"))
-                    .opinion("다리가 많이 아픔. 약 처방. 5일뒤에 또 방문 바람.")
-                    .otherMatter("없음")
-                    .hospitalName(hospital1.getName())
-                    .hospitalStreet(hospital1.getAddress().getStreet())
-                    .doctorName(doctor1.getName())
-                    .doctorLicense("0101010101")
-                    .appointment(appointment1)
-                    .build();
-
-            diagnosisRepository.save(diagnosis2);
+//            Diagnosis diagnosis1 = Diagnosis.builder()
+//                    .createdAt(LocalDateTime.now())
+//                    .updatedAt(LocalDateTime.now())
+//                    .memberName("바다")
+//                    .addressCity("경기도 강남시")
+//                    .addressStreet("경기도 강남시 강남구 강남대로 1")
+//                    .breedingPlace("주택")
+//                    .animalType("강아지")
+//                    .animalBreed("요크셔테리어")
+//                    .animalName("야옹이")
+//                    .animalGenderId((short) 1)
+//                    .animalAge((short) 5)
+//                    .animalCoatColor("검정")
+//                    .animalSpecial("")
+//                    .diseaseName("다리 통증")
+//                    .diseaseDate(Date.valueOf("2022-09-14"))
+//                    .diagnosisDate(Date.valueOf("2022-09-15"))
+//                    .opinion("다리가 많이 아픔. 약 처방. 5일뒤에 또 방문 바람.")
+//                    .otherMatter("없음")
+//                    .hospitalName("제주 대박 병원")
+//                    .hospitalStreet("제주특별자치도 서귀포시 가가로 14")
+//                    .doctorName("경호")
+//                    .doctorLicense("0101010101")
+//                    // TODO .appointment() 필요하지만 아직 예약 테스트 안만들었음. 추가 예정
+//                    .build();
+//
+//            diagnosisRepository.save(diagnosis1);
+//
+//            Diagnosis diagnosis2 = Diagnosis.builder()
+//                    .createdAt(LocalDateTime.now())
+//                    .updatedAt(LocalDateTime.now())
+//                    .memberName(member1.getName())
+//                    .addressCity(member1.getAddress().getCity())
+//                    .addressStreet(member1.getAddress().getStreet())
+//                    .breedingPlace("주택")
+//                    .animalType("강아지")
+//                    .animalBreed("리트리버")
+//                    .animalName(animal1.getName())
+//                    .animalGenderId((short) 1)
+//                    .animalAge((short) 5)
+//                    .animalCoatColor("황색")
+//                    .animalSpecial("")
+//                    .diseaseName("기침 많이함")
+//                    .diseaseDate(Date.valueOf("2022-09-29"))
+//                    .diagnosisDate(Date.valueOf("2022-09-30"))
+//                    .opinion("기침을 많이함. 약 처방. 5일뒤에 또 방문 바람.")
+//                    .otherMatter("없음")
+//                    .hospitalName(hospital1.getName())
+//                    .hospitalStreet(hospital1.getAddress().getStreet())
+//                    .doctorName(doctor1.getName())
+//                    .doctorLicense("0101010102")
+//                    .appointment(appointment1)
+//                    .build();
+//
+//            diagnosisRepository.save(diagnosis2);
 
         };
     }

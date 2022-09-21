@@ -1,15 +1,13 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="global/fragments/header :: header" />
-<style>
-    .fieldError {
-        border-color: #bd2130;
-    }
-</style>
-<body>
+<html layout:decorate="~{global/layout}">
+
+<div layout:fragment="content" class="container my-5">
+    <body>
+
 
 <div class="container">
-    <div th:replace="global/fragments/bodyHeader :: bodyHeader"/>
+    <div class="page-header">
+        <h3>진단서 내역</h3>
+    </div>
 
     <div>
         <table class="table table-striped">
@@ -32,10 +30,7 @@
         </table>
     </div>
 
-    <div th:replace="global/fragments/footer :: footer" />
 </div> <!-- /container -->
-
-</body>
-
-
+    </body>
+</div>
 </html>

@@ -1,57 +1,128 @@
-<!--<!DOCTYPE HTML>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head th:replace="fragments/header :: header" />-->
-<!--<body>-->
+<html layout:decorate="~{global/layout}">
 
-<!--<div class="container">-->
-<!--    <div th:replace="fragments/bodyHeader :: bodyHeader"/>-->
+<div layout:fragment="content" class="container my-5">
+    <body>
 
-<!--    <form role="form" action="/diagnosis" method="post">-->
+<div class="container">
+    <div class="page-header">
+        <h3>진단서 작성하기</h3>
+    </div>
+
+    <form role="form" action="/usr/mypage/doctor/diagnosis/info/new" th:object="${diagnosisForm}" method="post">
+
+
+
+        <div class="form-group">
+            <label th:for="memberName">이름</label>
+
+            <input type="text" th:field="*{memberName}" class="form-control" placeholder="이름을 입력하세요"
+                   th:class="${#fields.hasErrors('memberName')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}">Incorrect date</p>
+
+        </div>
+
+        <!--        주소-->
+        <div class="form-group">
+            <label th:for="addressCity">도시</label>
+            <input type="text" th:field="*{addressCity}" class="form-control" placeholder="도시를 입력하세요">
+        </div>
+
+        <div class="form-group">
+            <label th:for="addressStreet">거리</label>
+            <input type="text" th:field="*{addressStreet}" class="form-control" placeholder="거리를 입력하세요">
+        </div>
+
+<!--        사육 장소-->
+        <div class="form-group">
+            <label th:for="breedingPlace">사육장소</label>
+            <input type="text" th:field="*{breedingPlace}" class="form-control" placeholder="사육장소를 입력하세요">
+        </div>
+
+<!--        동물의 표시-->
+        <div class="form-group">
+            <label th:for="animalType">동물종류</label>
+            <input type="text" th:field="*{animalType}" class="form-control" placeholder="동물종류를 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="animalBreed">동물품종</label>
+            <input type="text" th:field="*{animalBreed}" class="form-control" placeholder="동물품종을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="animalName">동물명</label>
+            <input type="text" th:field="*{animalName}" class="form-control" placeholder="동물명을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="animalGenderId">동물성별</label>
+            <input type="text" th:field="*{animalGenderId}" class="form-control" placeholder="동물성별을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="animalAge">동물연령</label>
+            <input type="text" th:field="*{animalAge}" class="form-control" placeholder="동물연령을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="animalCoatColor">동물모색</label>
+            <input type="text" th:field="*{animalCoatColor}" class="form-control" placeholder="동물모색을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="animalSpecial">동물특징</label>
+            <input type="text" th:field="*{animalSpecial}" class="form-control" placeholder="동물특징을 입력하세요">
+        </div>
+
+
+<!--        병명-->
+        <div class="form-group">
+            <label th:for="diseaseName">병명</label>
+            <input type="text" th:field="*{diseaseName}" class="form-control" placeholder="병명을 입력하세요">
+        </div>
 
 <!--        <div class="form-group">-->
-<!--            <label>진료날짜</label>-->
-<!--            &lt;!&ndash;            <input type="number" name="count" class="form-control" id="count" placeholder="예약날짜를 입력하세요">&ndash;&gt;-->
+<!--            <label th:for="diseaseDate">발병 연월일</label>-->
+<!--            <input type="text" th:field="*{diseaseDate}" class="form-control" placeholder="발병연월일을 입력하세요">-->
 <!--        </div>-->
-
-
 <!--        <div class="form-group">-->
-<!--            <label for="member">예약회원</label>-->
-<!--            <select name="memberId" id="member" class="form-control">-->
-<!--                <option value="">회원선택</option>-->
-<!--                <option th:each="member : ${members}"-->
-<!--                        th:value="${member.id}"-->
-<!--                        th:text="${member.name}" />-->
-<!--            </select>-->
+<!--            <label th:for="diagnosisDate">진단 연월일</label>-->
+<!--            <input type="text" th:field="*{diagnosisDate}" class="form-control" placeholder="진단연월일을 입력하세요">-->
 <!--        </div>-->
 
+        <div class="form-group">
+            <label th:for="opinion">예후 소견</label>
+            <input type="text" th:field="*{opinion}" class="form-control" placeholder="예후소견을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="otherMatter">그 밖의 사항</label>
+            <input type="text" th:field="*{otherMatter}" class="form-control" placeholder="그 밖의 사항을 입력하세요">
+        </div>
+
+<!--        동물병원 명칭-->
+        <div class="form-group">
+            <label th:for="hospitalName">동물병원 명칭</label>
+            <input type="text" th:field="*{hospitalName}" class="form-control" placeholder="동물병원 명칭을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="hospitalStreet">동물병원 주소</label>
+            <input type="text" th:field="*{hospitalStreet}" class="form-control" placeholder="동물병원 주소를 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="doctorLicense">수의사 면허</label>
+            <input type="text" th:field="*{doctorLicense}" class="form-control" placeholder="수의사 면허를 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="doctorName">수의사 이름</label>
+            <input type="text" th:field="*{doctorName}" class="form-control" placeholder="수의사 이름을 입력하세요">
+        </div>
+
+<!--        Appointment appointment;-->
 <!--        <div class="form-group">-->
-<!--            <label for="animal">애완동물이름</label>-->
-<!--            <select name="animalId" id="animal" class="form-control">-->
-<!--                <option value="">애완동물선택</option>-->
-<!--                <option th:each="animal : ${animals}"-->
-<!--                        th:value="${animal.id}"-->
-<!--                        th:text="${animal.name}" />-->
-<!--            </select>-->
+<!--            <label th:for="doctorName">수의사 이름</label>-->
+<!--            <input type="text" th:field="*{doctorName}" class="form-control" placeholder="거리를 입력하세요">-->
 <!--        </div>-->
 
-<!--        <div class="form-group">-->
-<!--            <label for="doctor">의사이름</label>-->
-<!--            <select name="doctorId" id="doctor" class="form-control">-->
-<!--                <option value="">의사</option>-->
-<!--                <option th:each="doctor : ${doctors}"-->
-<!--                        th:value="${doctor.id}"-->
-<!--                        th:text="${doctor.name}" />-->
-<!--            </select>-->
-<!--        </div>-->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
 
+</div> <!-- /container -->
 
-
-<!--        <button type="submit" class="btn btn-primary">Submit</button>-->
-<!--    </form>-->
-<!--    <br/>-->
-<!--    <div th:replace="fragments/footer :: footer" />-->
-
-<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
-
-<!--</body>-->
-<!--</html>-->
+</body>
+</div>
+</html>

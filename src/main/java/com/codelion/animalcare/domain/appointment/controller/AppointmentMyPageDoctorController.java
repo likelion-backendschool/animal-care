@@ -75,5 +75,24 @@ public class AppointmentMyPageDoctorController {
     }
 
     // TODO 진단서 확인
+    @GetMapping("{appointmentId}/diagnosis-tmp")
+    public String loadMyPageDoctorDiagnosis(
+            Model model,
+            @PathVariable long appointmentId
+    ){
+        LoadMyPageDoctorAppointment.ResponseDto appointment
+                = appointmentService.findById(appointmentId);
+
+        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
+
+
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("member", appointment.getMember());
+        model.addAttribute("animal", appointment.getAnimal());
+        model.addAttribute("hospital", appointment.getHospital());
+        model.addAttribute("diagnosis", diagnosis);
+        model.addAttribute("doctor", appointment.getDoctor());
+        return "myPage/doctor/member-manage-diagnosis";
+    }
 
 }

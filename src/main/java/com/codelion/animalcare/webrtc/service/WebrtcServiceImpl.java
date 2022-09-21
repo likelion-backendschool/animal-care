@@ -1,7 +1,12 @@
 package com.codelion.animalcare.webrtc.service;
 
+import com.codelion.animalcare.domain.appointment.controller.AppointmentMyPageDoctorController;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
+import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
+import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,8 +40,8 @@ public class WebrtcServiceImpl implements WebrtcService {
     private final Parser parser;
     private final MemberService memberService;
     private final DoctorService doctorService;
-
-
+    private final AppointmentService appointmentService;
+    private final DiagnosisService diagnosisService;
 //    @Autowired
 //    public WebrtcServiceImpl(final RoomService roomService, final Parser parser) {
 //        this.roomService = roomService;
@@ -75,6 +81,29 @@ public class WebrtcServiceImpl implements WebrtcService {
         return this.displayMainPage(optionalId.orElse(null), uuid, principal);
     }
 
+    /**
+     * 환자 정보 확인
+     */
+    @GetMapping("{appointmentId}")
+    public String loadMyPageDoctorAppointment(
+            Model model,
+            @PathVariable long appointmentId
+    ){
+        LoadMyPageDoctorAppointment.ResponseDto appointment
+                = appointmentService.findById(appointmentId);
+
+        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
+
+
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("member", appointment.getMember());
+        model.addAttribute("animal", appointment.getAnimal());
+        model.addAttribute("hospital", appointment.getHospital());
+        model.addAttribute("diagnosis", diagnosis);
+        model.addAttribute("doctor", appointment.getDoctor());
+        return "myPage/doctor/member-manage-self";
+    }
+
 
     @Override
     public ModelAndView displaySelectedRoom(final String sid, final String uuid, Principal principal) {
@@ -88,9 +117,11 @@ public class WebrtcServiceImpl implements WebrtcService {
                 // open the chat room
                 modelAndView = new ModelAndView("webrtc/chat_room", "id", sid);
                 modelAndView.addObject("uuid", uuid);
-
             }
         }
+
+
+
 
         return modelAndView;
     }
