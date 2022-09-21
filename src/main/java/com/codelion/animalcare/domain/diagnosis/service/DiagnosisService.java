@@ -37,7 +37,7 @@ public class DiagnosisService {
     }
 
     @Transactional
-    public Long diagnosis(FindOneDiagnosis newForm) {
+    public Long diagnosis(FindOneDiagnosis newDiagnosisForm) {
 
 //        //엔티티 조회
 //        Member member = memberRepository.findById(memberDto.getId()).get();
@@ -46,7 +46,7 @@ public class DiagnosisService {
 //        Doctor doctor = doctorRepository.findById(doctorDtosId).get();
 
         //진단서 생성
-        Diagnosis diagnosis = Diagnosis.createDiagnosis(newForm);
+        Diagnosis diagnosis = Diagnosis.createDiagnosis(newDiagnosisForm);
 
         diagnosisRepository.save(diagnosis);
 
