@@ -24,6 +24,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final UserService userService;
+    private final AuthorizationAccessDeniedHandler authorizationAccessDeniedHandler;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -33,7 +34,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/user/login", "/signup", "/user", "/test", "/", "/usr/doctor/signup", "/usr/member/signup").permitAll() // 누구나 접근 허용
-
+                .antMatchers("/usr/member/appointment/**").hasRole("MEMBER")
 //                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
                 .and() // 문맥의 끝
@@ -49,9 +50,19 @@ public class SecurityConfig {
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                     .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true);
+                    .invalidateHttpSession(true)
+                .and()
+                    .exceptionHandling()
+                // 이부분 하기
+                    .accessDeniedHandler(authorizationAccessDeniedHandler);
+
+        ;
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+
+        // 403 에러로 인한 ignore 처리
+        http.csrf().ignoringAntMatchers("/usr/**");
+
         return http.build();
     }
 

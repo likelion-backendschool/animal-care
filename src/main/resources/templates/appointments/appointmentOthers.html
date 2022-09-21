@@ -10,6 +10,7 @@
         <br />
         <div class="container">
             <form th:object="${appointmentFormDto}" role="form" action="/usr/member/appointment" method="post">
+                <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
 
@@ -42,7 +43,7 @@
                         <h5>추가 내용</h5>
                         <div class="form-group">
                             <label >애완동물이름 *</label>
-                            <select th:field="*{animalId}" class="form-control">
+                            <select th:field="*{animalId}" class="form-control" required>
                                 <option value="">애완동물 선택</option>
                                 <option th:each="animalDto : ${animalDtoList}"
                                         th:value="${animalDto.id}"
