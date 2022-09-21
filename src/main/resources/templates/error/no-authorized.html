@@ -11,18 +11,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script>
     function confirmAction (){
-        location = "/"
+        history.back();
     }
     function cancelAction (){
-        location = "/"
+        location = "/";
     }
 
     $.confirm({
         title: '안내',
-        content: '등록된 동물이 없습니다. 등록하시겠습니까?',
+        content: '해당 페이지의 권한이 없습니다.',
         buttons: {
             confirm: {
-                text: '등록하기',
+                text: '이전으로',
                 class: 'btn-primary',
                 action: confirmAction
             },

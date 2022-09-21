@@ -23,6 +23,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
         //error
         registry.addViewController("/error/not-animals").setViewName("error/not-animals");
+        registry.addViewController("/error/no-authorized").setViewName("error/no-authorized");
     }
 
     @Override

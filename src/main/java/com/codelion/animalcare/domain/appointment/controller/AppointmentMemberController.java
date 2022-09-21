@@ -75,10 +75,6 @@ public class AppointmentMemberController {
     public String createAppointment(
             Model model,
             Principal principal,
-//            MemberDto memberDto,
-//            LoadDoctorMyPageInfo.ResponseDto doctorDto,
-//            LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto,
-//            List<AnimalDto> animalDtoList,
             HttpServletRequest request,
             @Valid AppointmentFormDto appointmentFormDto,
             BindingResult bindingResult
