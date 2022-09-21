@@ -7,8 +7,9 @@ import java.util.Optional;
 
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
-    Optional<Animal> findByMemberId(Long id);
+    List<Animal> findByMemberId(Long id);
 
     List<Animal> findListAnimalByMemberId(Long memberId);
 
+    List<Animal> findByMemberEmail(String email);
 }

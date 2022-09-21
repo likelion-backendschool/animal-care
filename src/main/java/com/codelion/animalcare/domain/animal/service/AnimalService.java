@@ -40,10 +40,15 @@ public class AnimalService {
         return animalRepository.findById(id);
     }
 
-    public Optional<Animal> findByMemberId(Long id) {
-        return animalRepository.findByMemberId(id);
+    //memberId로 member가 갖고있는 동물 출력
+    public List<Animal> findByMemberId(Long memberId){
+        return animalRepository.findByMemberId(memberId);
     }
 
+    //memberEmail로 member가 갖고있는 동물 출력
+    public List<Animal> findByMemberEmail(String email){
+        return animalRepository.findByMemberEmail(email);
+    }
 
 
     //애완동물 전체 조회
