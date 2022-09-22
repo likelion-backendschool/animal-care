@@ -86,15 +86,15 @@ public class FindOneDiagnosis {
         this.animalCoatColor = diagnosis.getAnimalCoatColor();
         this.animalSpecial = diagnosis.getAnimalSpecial();
         this.diseaseName = diagnosis.getDiseaseName();
-//        this.diseaseDate = diagnosis.getDiseaseDate();
-//        this.diagnosisDate = diagnosis.getDiagnosisDate();
+        this.diseaseDate = diagnosis.getDiseaseDate();
+        this.diagnosisDate = diagnosis.getDiagnosisDate();
         this.opinion = diagnosis.getOpinion();
         this.otherMatter = diagnosis.getOtherMatter();
         this.hospitalName = diagnosis.getHospitalName();
         this.hospitalStreet = diagnosis.getHospitalStreet();
         this.doctorLicense = diagnosis.getDoctorLicense();
         this.doctorName = diagnosis.getDoctorName();
-//        this.appointment = diagnosis.getAppointment();
+        this.appointment = diagnosis.getAppointment();
     }
 
     public Diagnosis toEntity(Diagnosis diagnosis) {
@@ -120,7 +120,7 @@ public class FindOneDiagnosis {
                 .hospitalStreet(diagnosis.getHospitalStreet())
                 .doctorLicense(diagnosis.getDoctorLicense())
                 .doctorName(diagnosis.getDoctorName())
-//                .appointment(diagnosis.getAppointment())
+                .appointment(diagnosis.getAppointment())
                 .build();
     }
 }

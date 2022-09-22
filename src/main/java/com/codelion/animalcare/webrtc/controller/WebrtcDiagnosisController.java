@@ -1,30 +1,25 @@
-package com.codelion.animalcare.domain.diagnosis.controller;
+package com.codelion.animalcare.webrtc.controller;
 
-import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
+
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
-import com.codelion.animalcare.domain.diagnosis.DiagnosisSearch;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
-import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
-import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/usr/mypage/doctor/diagnosis/info")
-public class DiagnosisController {
+public class WebrtcDiagnosisController {
 
     private final DiagnosisService diagnosisService;
     private final AppointmentService appointmentService;
@@ -81,7 +76,7 @@ public class DiagnosisController {
     }
 
 
-// TODO 진단서, 예약서 매핑하기
+    // TODO 진단서, 예약서 매핑하기
     @GetMapping("/new2")
     public String createDiagnosisForm2(Model model) {
         model.addAttribute("diagnosisForm", new FindOneDiagnosis());
@@ -156,24 +151,24 @@ public class DiagnosisController {
 
 //    }
 
-    @GetMapping("/new/{appointmentId}/diagnosis-tmp")
-    public String loadMyPageDoctorDiagnosis(
-            Model model,
-            @PathVariable long appointmentId
-    ){
-        LoadMyPageDoctorAppointment.ResponseDto appointment
-                = appointmentService.findById(appointmentId);
-
-        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
-
-
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("member", appointment.getMember());
-        model.addAttribute("animal", appointment.getAnimal());
-        model.addAttribute("hospital", appointment.getHospital());
-        model.addAttribute("diagnosis", diagnosis);
-        model.addAttribute("doctor", appointment.getDoctor());
-        return "myPage/doctor/member-manage-diagnosis";
-    }
+//    @GetMapping("/new/{appointmentId}/diagnosis-tmp")
+//    public String loadMyPageDoctorDiagnosis(
+//            Model model,
+//            @PathVariable long appointmentId
+//    ){
+//        LoadMyPageDoctorAppointment.ResponseDto appointment
+//                = appointmentService.findById(appointmentId);
+//
+//        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
+//
+//
+//        model.addAttribute("appointment", appointment);
+//        model.addAttribute("member", appointment.getMember());
+//        model.addAttribute("animal", appointment.getAnimal());
+//        model.addAttribute("hospital", appointment.getHospital());
+//        model.addAttribute("diagnosis", diagnosis);
+//        model.addAttribute("doctor", appointment.getDoctor());
+//        return "myPage/doctor/member-manage-diagnosis";
+//    }
 
 }

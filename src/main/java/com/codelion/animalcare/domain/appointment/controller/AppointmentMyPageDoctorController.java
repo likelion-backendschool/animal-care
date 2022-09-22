@@ -28,7 +28,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AppointmentMyPageDoctorController {
     private final AppointmentService appointmentService;
-    private final AppointmentQueryService appointmentQueryService;
     private final DiagnosisService diagnosisService;
     private final DoctorService doctorService;
 
@@ -87,65 +86,5 @@ public class AppointmentMyPageDoctorController {
     }
 
     // TODO 진단서 확인
-    @GetMapping("{appointmentId}/diagnosis-tmp")
-    public String loadMyPageDoctorDiagnosis(
-            Model model,
-            @PathVariable long appointmentId
-    ){
-        LoadMyPageDoctorAppointment.ResponseDto appointment
-                = appointmentService.findById(appointmentId);
-
-        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
-
-
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("member", appointment.getMember());
-        model.addAttribute("animal", appointment.getAnimal());
-        model.addAttribute("hospital", appointment.getHospital());
-        model.addAttribute("diagnosis", diagnosis);
-        model.addAttribute("doctor", appointment.getDoctor());
-        return "myPage/doctor/member-manage-diagnosis";
-    }
-
-
-    /**
-     * 비대면 진료에서 예약명단 확인
-     */
-    @GetMapping("/all")
-    public String loadByDoctorAppointments(Model model, Principal principal) {
-
-        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
-
-        List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(doctorDto);
-
-        model.addAttribute("appointmentDto", appointmentDto);
-
-        return "appointments/appointmentByDoctorList";
-    }
-
-    // TODO 예약내역을 날짜에 따라서 분류하기
-    @GetMapping("/all2")
-    public String loadByDoctorAppointments2(@ModelAttribute("appointmentSearch") AppointmentSearch appointmentSearch, Model model, Principal principal) {
-
-        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
-
-//        List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(doctorDto);
-
-        List<Appointment> appointmentDto = appointmentQueryService.findAppointments(appointmentSearch);
-        model.addAttribute("appointmentDto", appointmentDto);
-
-        return "appointments/appointmentByDoctorList";
-//        return "redirect:/allSearch";
-    }
-
-
-    @GetMapping("/allSearch")
-    public String loadByDoctorAppointments(@ModelAttribute("appointmentSearch") AppointmentSearch appointmentSearch, Model model, Principal principal) {
-
-        List<Appointment> appointments = appointmentService.findAppointments(appointmentSearch);
-        model.addAttribute("appointments", appointments);
-
-        return "appointments/appointmentByDoctorList";
-    }
 
 }
