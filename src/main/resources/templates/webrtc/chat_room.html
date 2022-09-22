@@ -89,24 +89,15 @@
 
 </body>
 
-<!-- 화면 나누기 -->
-
+<!-- iframe 사용: 화면 나누기 -->
+<!--채팅 기능 -->
 <iframe th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" width="49%" height="600"></iframe>
 
+<!--    권한: Doctor -->
 <a sec:authorize="hasRole('DOCTOR')">
-<!--    예약내역 -->
+<!--    예약내역. 예약내역에서 진단서 작성 가능-->
     <iframe src = "/usr/mypage/doctor/member-manage/appointments/all" width="50%" height = "600"> </iframe>
 </a>
-
-
-<!--<div class="row">-->
-<!--&lt;!&ndash;    <a sec:authorize="hasRole('DOCTOR')">&ndash;&gt;-->
-<!--    <div class="col-6" th:src="@{|/usr/mypage/doctor/member-manage/appointments/all|}" ></div>-->
-<!--&lt;!&ndash;    </a>&ndash;&gt;-->
-<!--&lt;!&ndash;    <iframe class="col-6" src="" frameborder="0"></iframe>&ndash;&gt;-->
-
-<!--    <div class="col-6" th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" ></div>-->
-<!--</div>-->
 
 
 </html>
