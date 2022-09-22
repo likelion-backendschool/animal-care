@@ -30,6 +30,26 @@
     </style>
     <link rel="stylesheet" type="text/css" href="/css/webrtc/webrtc_main.css"/>
 </head>
+
+<!-- 화면 나누기 -->
+<a sec:authorize="hasRole('DOCTOR')" th:object="${appointment}">
+
+
+    <frameset rows = "70%, *">
+        <frameset cols = "50%, *">
+<!--            비대면 화상 진료 화면-->
+            <frame src = "/room/{sid}/user/{uuid}" name = "left">
+
+<!--            진단서 작성 화면-->
+            <frame src = "/usr/mypage/doctor/diagnosis/info/new" name = "right">
+        </frameset>
+
+<!--            예약내역 화면-->
+        <frame src = "/usr/mypage/doctor/member-manage/appointments/all" name = "bottom">
+    </frameset>
+
+</a>
+
 <body class="text-center">
 
 <!-- Begin page content -->

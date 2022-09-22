@@ -1,6 +1,6 @@
-<html layout:decorate="~{global/layout}">
+<html layout:decorate="~{appointments/appointment-doctor-layout}">
+<div layout:fragment="content" class="container my-0">
 
-<div layout:fragment="content" class="container my-5">
     <body>
 
     <div class="container">
@@ -71,14 +71,14 @@
     </body>
 
 
-    <script>
-        function cancel(id) {
-            var form = document.createElement("form");
-            form.setAttribute("method", "post");
-            form.setAttribute("action", "/usr/mypage/member/appointment/info/" + id + "/cancel");
-            document.body.appendChild(form);
-            form.submit();
-        }
-    </script>
+<!--    <script>-->
+<!--        function cancel(id) {-->
+<!--            var form = document.createElement("form");-->
+<!--            form.setAttribute("method", "post");-->
+<!--            form.setAttribute("action", "/usr/mypage/member/appointment/info/" + id + "/cancel");-->
+<!--            document.body.appendChild(form);-->
+<!--            form.submit();-->
+<!--        }-->
+<!--    </script>-->
 </div>
 </html>
