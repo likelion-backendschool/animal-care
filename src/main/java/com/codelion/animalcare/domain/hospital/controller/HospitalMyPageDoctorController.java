@@ -122,7 +122,7 @@ public class HospitalMyPageDoctorController {
 
         model.addAttribute("requestDto", hospitalDto);
 
-        return "doctor/mypage/hospital-info-manage-modify";
+        return "myPage/doctor/hospital-info-manage-modify";
     }
 
     // 병원 소개 수정 요청
