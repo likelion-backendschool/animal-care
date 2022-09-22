@@ -1,5 +1,5 @@
 'use strict';
-const socket = new WebSocket('ws://' + window.location.host + '/signal:6503');
+const socket = new WebSocket('wss://' + window.location.host + '/signal:6503');
 const peerConnectionConfig = {
     'iceServers': [
         {'urls': 'stun:stun.stunprotocol.org:3478'},
