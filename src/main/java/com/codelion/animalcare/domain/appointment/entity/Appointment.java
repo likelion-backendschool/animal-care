@@ -52,8 +52,8 @@ public class Appointment extends BaseEntity {
     private Hospital hospital;
 
 
-    @OneToOne(mappedBy = "appointment")
-    private Diagnosis diagnosis;
+//    @OneToOne(mappedBy = "appointment")
+//    private Diagnosis diagnosis;
 
     // == 연관관계 메서드 == //
     public void addMember(Member member) {

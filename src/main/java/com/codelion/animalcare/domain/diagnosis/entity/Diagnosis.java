@@ -8,6 +8,7 @@ import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.codelion.animalcare.domain.animal.entity.Animal;
+import groovy.lang.Lazy;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -15,6 +16,8 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+
+import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
@@ -48,10 +51,10 @@ public class Diagnosis extends BaseEntity{
     private String animalName;
     // 성별
     @Column(nullable = false, length=50)
-    private short animalGenderId;
+    private int animalGenderId;
     // 연령
     @Column(nullable = false, length=50)
-    private short animalAge;
+    private int animalAge;
     // 모색
     @Column(nullable = false, length=50)
     private String animalCoatColor;
@@ -99,7 +102,7 @@ public class Diagnosis extends BaseEntity{
     @Column(nullable=false)
     private String doctorName;
 
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
@@ -130,6 +133,10 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setHospitalStreet(findOneDiagnosis.getHospitalStreet());
         diagnosis.setDoctorLicense(findOneDiagnosis.getDoctorLicense());
         diagnosis.setDoctorName(findOneDiagnosis.getDoctorName());
+
+        System.out.println("findOneDiagnosis.getAppointment(): " + findOneDiagnosis.getAppointment());
+        System.out.println("findOneDiagnosis.getAppointment().getId(): " + findOneDiagnosis.getAppointment().getId());
+
         diagnosis.setAppointment(findOneDiagnosis.getAppointment());
 
         return diagnosis;

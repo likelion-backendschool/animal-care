@@ -34,9 +34,9 @@ public class FindOneDiagnosis {
     // 동물명
     private String animalName;
     // 성별
-    private short animalGenderId;
+    private int animalGenderId;
     // 연령
-    private short animalAge;
+    private int animalAge;
     // 모색
     private String animalCoatColor;
     // 특징

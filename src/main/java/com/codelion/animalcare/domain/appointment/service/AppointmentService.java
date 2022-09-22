@@ -186,7 +186,7 @@ public class AppointmentService {
         return appointmentDto;
     }
 
-    // TODO 수정할거임. 잠시 테스트하기 위함
+    // TODO 수정. 잠시 테스트하기 위함
     public Appointment findAppointmentById(Long appointmentId) {
 //        Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
 //        Optional<AppointmentDto> appointmentDto = appointmentOptional.map(o -> new AppointmentDto(o));

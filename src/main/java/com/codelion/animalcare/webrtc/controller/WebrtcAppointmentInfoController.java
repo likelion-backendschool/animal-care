@@ -1,6 +1,7 @@
 package com.codelion.animalcare.webrtc.controller;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
+import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
@@ -10,8 +11,10 @@ import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
+import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
+import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +33,15 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/usr/mypage/doctor/member-manage/appointments")
 @RequiredArgsConstructor
-public class WebrtcAppointmentListController {
+public class WebrtcAppointmentInfoController {
 
     private final DoctorService doctorService;
     private final AppointmentQueryService appointmentQueryService;
     private final AppointmentService appointmentService;
     private final DiagnosisService diagnosisService;
+    private final MemberService memberService;
+    private final AnimalService animalService;
+    private final HospitalService hospitalService;
 
     /**
      * 비대면 진료에서 예약명단 확인
@@ -52,86 +58,41 @@ public class WebrtcAppointmentListController {
         return "appointments/appointmentByDoctorList";
     }
 
-//    곧 지울거임
-    @GetMapping("/new")
-    public String createDiagnosisForm(Model model) {
+
+    /**
+     *
+     * 예약명단에서 바로 진단서 작성
+     */
+    @GetMapping("/all/{appointmentId}")
+    public String createDiagnosisNewForm(@PathVariable("appointmentId") long appointmentId, Model model) {
+
+        LoadMyPageDoctorAppointment.ResponseDto appointment
+                = appointmentService.findById(appointmentId);
+
+        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
+
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("member", appointment.getMember());
+        model.addAttribute("animal", appointment.getAnimal());
+        model.addAttribute("hospital", appointment.getHospital());
+        model.addAttribute("diagnosis", diagnosis);
+        model.addAttribute("doctor", appointment.getDoctor());
+
         model.addAttribute("diagnosisForm", new FindOneDiagnosis());
+
         return "diagnosis/diagnosisForm";
     }
 
-//  이제 이거 넣어야함. 넣었는데 왜 appointmentId가 안들어갈까
-    @PostMapping("/new")
-    public String writeDiagnosis(@Valid FindOneDiagnosis writtenDiagnosisForm, BindingResult result, Principal principal) {
-
-        if (result.hasErrors()) {
-            return "diagnosis/diagnosisForm";
-        }
-        FindOneDiagnosis newDiagnosisForm = new FindOneDiagnosis();
-
-        newDiagnosisForm.setMemberName(writtenDiagnosisForm.getMemberName());
-        newDiagnosisForm.setAddressCity(writtenDiagnosisForm.getAddressCity());
-        newDiagnosisForm.setAddressStreet(writtenDiagnosisForm.getAddressStreet());
-
-        newDiagnosisForm.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
-        newDiagnosisForm.setAnimalType(writtenDiagnosisForm.getAnimalType());
-        newDiagnosisForm.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
-        newDiagnosisForm.setAnimalName(writtenDiagnosisForm.getAnimalName());
-        newDiagnosisForm.setAnimalGenderId(writtenDiagnosisForm.getAnimalGenderId());
-        newDiagnosisForm.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
-        newDiagnosisForm.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
-        newDiagnosisForm.setAnimalSpecial(writtenDiagnosisForm.getAnimalSpecial());
-        newDiagnosisForm.setDiseaseName(writtenDiagnosisForm.getDiseaseName());
-
-//        newDiagnosisForm.setDiseaseDate(writtenDiagnosisForm.getDiseaseDate());
-//        newDiagnosisForm.setDiagnosisDate(writtenDiagnosisForm.getDiagnosisDate());
-//      날짜는 임시로 넣어둠
-        newDiagnosisForm.setDiseaseDate(LocalDateTime.now());
-        newDiagnosisForm.setDiagnosisDate(LocalDateTime.now());
-
-        newDiagnosisForm.setOpinion(writtenDiagnosisForm.getOpinion());
-        newDiagnosisForm.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
-
-        newDiagnosisForm.setHospitalName(writtenDiagnosisForm.getHospitalName());
-        newDiagnosisForm.setHospitalStreet(writtenDiagnosisForm.getHospitalStreet());
-        newDiagnosisForm.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
-        newDiagnosisForm.setDoctorName(writtenDiagnosisForm.getDoctorName());
-
-
-
-//        String email = principal.getName();
-//        List<LoadMyPageDoctorAppointment.ResponseDto> appointments = appointmentService.findAllByDoctorEmail(email);
-//
-////        하나를 가져와야하는데
-////        model.addAttribute("appointments", appointments);
-////        return "myPage/doctor/member-manage";
-//        appointments.get(0).getId();
-////
-//        //appointmentId 추가하기
-//        newDiagnosisForm.setAppointment(appointments.get(0));
-
-        diagnosisService.diagnosis(newDiagnosisForm);
-
-        return "redirect:/";
-
-    }
-
-    //위 두개 메서드를 아래에 추가 구현해야함
-    //예약명단에서 바로 진단서 작성하게 구현하기
-    @GetMapping("/all/{appointmentId}")
-    public String createDiagnosisNewForm(@PathVariable("appointmentId") Long appointmentId,
-                                        Model model,
-                                        Principal principal) {
-
-            model.addAttribute("diagnosisForm", new FindOneDiagnosis());
-            return "diagnosis/diagnosisForm";
-    }
-
     @PostMapping("/all/{appointmentId}")
-    public String writeNewDiagnosis(@PathVariable("appointmentId") Long appointmentId, @Valid FindOneDiagnosis writtenDiagnosisForm, BindingResult result, Principal principal) {
+    public String writeNewDiagnosis(@PathVariable("appointmentId") long appointmentId,
+                                    @Valid FindOneDiagnosis writtenDiagnosisForm,
+                                    BindingResult result,
+                                    Principal principal) {
 
         if (result.hasErrors()) {
             return "diagnosis/diagnosisForm";
         }
+
         FindOneDiagnosis newDiagnosisForm = new FindOneDiagnosis();
 
         newDiagnosisForm.setMemberName(writtenDiagnosisForm.getMemberName());
@@ -162,28 +123,10 @@ public class WebrtcAppointmentListController {
         newDiagnosisForm.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
         newDiagnosisForm.setDoctorName(writtenDiagnosisForm.getDoctorName());
 
-
-
-//        String email = principal.getName();
-//        List<LoadMyPageDoctorAppointment.ResponseDto> appointments = appointmentService.findAllByDoctorEmail(email);
-//
-////        하나를 가져와야하는데
-////        model.addAttribute("appointments", appointments);
-////        return "myPage/doctor/member-manage";
-//        appointments.get(0).getId();
-////
-//        //appointmentId 추가하기
-//        newDiagnosisForm.setAppointment(appointments.get(0));
-
-//        appointmentId
-//        Optional<AppointmentDto> appointmentDto = appointmentService.findById(appointmentId);
-//        AppointmentDto appointmentDto1 = appointmentDto.get();
 
         Appointment appointment = appointmentService.findAppointmentById(appointmentId);
 
         newDiagnosisForm.setAppointment(appointment);
-
-//        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
 
         diagnosisService.diagnosis(newDiagnosisForm);
 
