@@ -111,8 +111,6 @@ public class AppointmentService {
                 .content(appointmentFormDto.getContent())
                 .date(appointmentFormDto.getDateToLocalDateTime())
                 .status(AppointmentStatus.READY)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build();
 
         appointmentRepository.save(appointment);
