@@ -32,14 +32,6 @@
     <link rel="stylesheet" type="text/css" href="/css/webrtc/webrtc_main.css"/>
 </head>
 
-<!-- 화면 나누기 -->
-<a sec:authorize="hasRole('DOCTOR')">
-
-    <iframe src = "/usr/mypage/doctor/member-manage/appointments/all" width="50%" height = "300"> </iframe>
-    <iframe src = "/usr/mypage/doctor/diagnosis/info/new" width="49%" height = "300"> </iframe>
-
-</a>
-
 <body class="text-center">
 
 <!-- Begin page content -->
@@ -96,4 +88,13 @@
 <script src="/js/webrtc/webrtc_client.js"></script>
 
 </body>
+
+<!-- 화면 나누기 -->
+<a sec:authorize="hasRole('DOCTOR')">
+
+    <iframe src = "/usr/mypage/doctor/member-manage/appointments/all" width="49%" height = "600"> </iframe>
+    <iframe src = "/usr/mypage/doctor/diagnosis/info/new" width="50%" height = "600"> </iframe>
+
+</a>
+
 </html>
