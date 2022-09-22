@@ -124,6 +124,13 @@ public class AppointmentService {
     public void updateAppointmentStatus(Long appointmentId, AppointmentStatus status) {
         // 예약 엔티티 조회
         Appointment appointment = appointmentRepository.getReferenceById(appointmentId);
+
+        // ready인 상태에서만 의사가 거절을 할 수 있다.
+        if (status == AppointmentStatus.REFUSE) {
+            if (appointment.getStatus() != AppointmentStatus.READY)
+                throw new RuntimeException("의사가 거절할 수 없습니다.");
+        }
+
         // 예약 변경.
         appointment.updateStatus(status);
     }

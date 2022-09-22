@@ -46,7 +46,7 @@ public class AppointmentMyPageDoctorController {
     ){
         appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.REFUSE);
 
-        return "redirect:/usr/doctor/mypage/appointments";
+        return String.format("redirect:/usr/doctor/mypage/appointments/%d",appointmentId);
     }
 
     /**
