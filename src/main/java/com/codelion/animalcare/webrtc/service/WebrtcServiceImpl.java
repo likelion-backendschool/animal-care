@@ -1,6 +1,6 @@
 package com.codelion.animalcare.webrtc.service;
 
-<<<<<<< HEAD
+
 import com.codelion.animalcare.domain.appointment.controller.AppointmentMyPageDoctorController;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
@@ -8,9 +8,8 @@ import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
-=======
+
 import com.codelion.animalcare.chat.service.ChatRoomService;
->>>>>>> c58b0ac0921492adeb4972a578a5781e205d74bc
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
@@ -42,18 +41,8 @@ public class WebrtcServiceImpl implements WebrtcService {
 
     private final RoomService roomService;
     private final Parser parser;
-<<<<<<< HEAD
-=======
-    private final MemberService memberService;
-    private final DoctorService doctorService;
     private final ChatRoomService chatRoomService;
 
-//    @Autowired
-//    public WebrtcServiceImpl(final RoomService roomService, final Parser parser) {
-//        this.roomService = roomService;
-//        this.parser = parser;
-//    }
->>>>>>> c58b0ac0921492adeb4972a578a5781e205d74bc
 
     @Override
     public ModelAndView displayMainPage(final Long id, final String uuid) {

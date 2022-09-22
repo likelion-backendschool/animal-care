@@ -88,20 +88,25 @@
 <script src="/js/webrtc/webrtc_client.js"></script>
 
 </body>
-<<<<<<< HEAD
 
 <!-- 화면 나누기 -->
+
+<iframe th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" width="49%" height="600"></iframe>
+
 <a sec:authorize="hasRole('DOCTOR')">
-
 <!--    예약내역 -->
-    <iframe src = "/usr/mypage/doctor/member-manage/appointments/all" width="100%" height = "600"> </iframe>
-
-<!--    진단서 작성 -> 지울예정 -->
-<!--    <iframe src = "/usr/mypage/doctor/diagnosis/info/new" width="50%" height = "600"> </iframe>-->
-
+    <iframe src = "/usr/mypage/doctor/member-manage/appointments/all" width="50%" height = "600"> </iframe>
 </a>
-=======
-<iframe th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" width="100%" height="550"></iframe>
->>>>>>> c58b0ac0921492adeb4972a578a5781e205d74bc
+
+
+<!--<div class="row">-->
+<!--&lt;!&ndash;    <a sec:authorize="hasRole('DOCTOR')">&ndash;&gt;-->
+<!--    <div class="col-6" th:src="@{|/usr/mypage/doctor/member-manage/appointments/all|}" ></div>-->
+<!--&lt;!&ndash;    </a>&ndash;&gt;-->
+<!--&lt;!&ndash;    <iframe class="col-6" src="" frameborder="0"></iframe>&ndash;&gt;-->
+
+<!--    <div class="col-6" th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" ></div>-->
+<!--</div>-->
+
 
 </html>
