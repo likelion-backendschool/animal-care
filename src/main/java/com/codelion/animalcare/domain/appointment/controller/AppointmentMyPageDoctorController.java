@@ -1,8 +1,10 @@
 package com.codelion.animalcare.domain.appointment.controller;
 
+import com.codelion.animalcare.domain.appointment.AppointmentSearch;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.desktop.PreferencesEvent;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -116,6 +119,31 @@ public class AppointmentMyPageDoctorController {
         List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(doctorDto);
 
         model.addAttribute("appointmentDto", appointmentDto);
+
+        return "appointments/appointmentByDoctorList";
+    }
+
+    // TODO 예약내역을 날짜에 따라서 분류하기
+    @GetMapping("/all2")
+    public String loadByDoctorAppointments2(@ModelAttribute("appointmentSearch") AppointmentSearch appointmentSearch, Model model, Principal principal) {
+
+        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
+
+//        List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(doctorDto);
+
+        List<Appointment> appointmentDto = appointmentQueryService.findAppointments(appointmentSearch);
+        model.addAttribute("appointmentDto", appointmentDto);
+
+        return "appointments/appointmentByDoctorList";
+//        return "redirect:/allSearch";
+    }
+
+
+    @GetMapping("/allSearch")
+    public String loadByDoctorAppointments(@ModelAttribute("appointmentSearch") AppointmentSearch appointmentSearch, Model model, Principal principal) {
+
+        List<Appointment> appointments = appointmentService.findAppointments(appointmentSearch);
+        model.addAttribute("appointments", appointments);
 
         return "appointments/appointmentByDoctorList";
     }

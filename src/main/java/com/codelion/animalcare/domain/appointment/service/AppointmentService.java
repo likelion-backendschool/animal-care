@@ -2,8 +2,10 @@ package com.codelion.animalcare.domain.appointment.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
+import com.codelion.animalcare.domain.appointment.AppointmentSearch;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentFormDto;
+import com.codelion.animalcare.domain.appointment.repository.AppointmentRepositoryImpl;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
@@ -30,6 +32,7 @@ import java.util.Optional;
 public class AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
+    private final AppointmentRepositoryImpl appointmentRepositoryImpl;
     private final MemberRepository memberRepository;
     private final AnimalRepository animalRepository;
     private final DoctorRepository doctorRepository;
@@ -183,5 +186,10 @@ public class AppointmentService {
         Optional<AppointmentDto> appointmentDto = appointmentOptional.map(o -> new AppointmentDto(o));
 
         return appointmentDto;
+    }
+
+    public List<Appointment> findAppointments(AppointmentSearch appointmentSearch) {
+
+        return appointmentRepositoryImpl.findAllByString(appointmentSearch);
     }
 }
