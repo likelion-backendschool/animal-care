@@ -88,6 +88,7 @@
 <script src="/js/webrtc/webrtc_client.js"></script>
 
 </body>
+<<<<<<< HEAD
 
 <!-- 화면 나누기 -->
 <a sec:authorize="hasRole('DOCTOR')">
@@ -99,5 +100,8 @@
 <!--    <iframe src = "/usr/mypage/doctor/diagnosis/info/new" width="50%" height = "600"> </iframe>-->
 
 </a>
+=======
+<iframe th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" width="100%" height="550"></iframe>
+>>>>>>> c58b0ac0921492adeb4972a578a5781e205d74bc
 
 </html>
