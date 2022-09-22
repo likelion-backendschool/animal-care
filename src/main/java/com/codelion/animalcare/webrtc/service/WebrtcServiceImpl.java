@@ -38,38 +38,19 @@ public class WebrtcServiceImpl implements WebrtcService {
 
     private final RoomService roomService;
     private final Parser parser;
-    private final MemberService memberService;
-    private final DoctorService doctorService;
-    private final AppointmentService appointmentService;
-    private final DiagnosisService diagnosisService;
-//    @Autowired
-//    public WebrtcServiceImpl(final RoomService roomService, final Parser parser) {
-//        this.roomService = roomService;
-//        this.parser = parser;
-//    }
 
     @Override
-    public ModelAndView displayMainPage(final Long id, final String uuid, final Principal principal) {
+    public ModelAndView displayMainPage(final Long id, final String uuid) {
         final ModelAndView modelAndView = new ModelAndView("webrtc/webrtc_main");
         modelAndView.addObject("id", id);
         modelAndView.addObject("rooms", roomService.getRooms());
         modelAndView.addObject("uuid", uuid);
 
-//        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-//
-//        if(memberDto.isPresent()) {
-//            modelAndView.addObject("dto", memberDto.get());
-//        }
-//        else{
-//            LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
-//            modelAndView.addObject("dto", doctorDto);
-//        }
-
         return modelAndView;
     }
 
     @Override
-    public ModelAndView processRoomSelection(final String sid, final String uuid, final BindingResult bindingResult, Principal principal) {
+    public ModelAndView processRoomSelection(final String sid, final String uuid, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             // simplified version, no errors processing
             return new ModelAndView(REDIRECT);
@@ -78,35 +59,12 @@ public class WebrtcServiceImpl implements WebrtcService {
         optionalId.ifPresent(id -> Optional.ofNullable(uuid).ifPresent(name -> roomService.addRoom(new Room(id))));
 
 
-        return this.displayMainPage(optionalId.orElse(null), uuid, principal);
-    }
-
-    /**
-     * 환자 정보 확인
-     */
-    @GetMapping("{appointmentId}")
-    public String loadMyPageDoctorAppointment(
-            Model model,
-            @PathVariable long appointmentId
-    ){
-        LoadMyPageDoctorAppointment.ResponseDto appointment
-                = appointmentService.findById(appointmentId);
-
-        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
-
-
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("member", appointment.getMember());
-        model.addAttribute("animal", appointment.getAnimal());
-        model.addAttribute("hospital", appointment.getHospital());
-        model.addAttribute("diagnosis", diagnosis);
-        model.addAttribute("doctor", appointment.getDoctor());
-        return "myPage/doctor/member-manage-self";
+        return this.displayMainPage(optionalId.orElse(null), uuid);
     }
 
 
     @Override
-    public ModelAndView displaySelectedRoom(final String sid, final String uuid, Principal principal) {
+    public ModelAndView displaySelectedRoom(final String sid, final String uuid) {
         // redirect to main page if provided data is invalid
         ModelAndView modelAndView = new ModelAndView(REDIRECT);
 
@@ -120,14 +78,11 @@ public class WebrtcServiceImpl implements WebrtcService {
             }
         }
 
-
-
-
         return modelAndView;
     }
 
     @Override
-    public ModelAndView processRoomExit(final String sid, final String uuid, Principal principal) {
+    public ModelAndView processRoomExit(final String sid, final String uuid) {
         if(sid != null && uuid != null) {
             logger.debug("User {} has left Room #{}", uuid, sid);
             // implement any logic you need
@@ -136,8 +91,8 @@ public class WebrtcServiceImpl implements WebrtcService {
     }
 
     @Override
-    public ModelAndView requestRandomRoomNumber(final String uuid, Principal principal) {
-        return this.displayMainPage(randomValue(), uuid, principal);
+    public ModelAndView requestRandomRoomNumber(final String uuid) {
+        return this.displayMainPage(randomValue(), uuid);
     }
 
     private Long randomValue() {

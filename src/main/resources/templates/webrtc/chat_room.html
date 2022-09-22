@@ -32,8 +32,7 @@
 </head>
 
 <!-- 화면 나누기 -->
-<a sec:authorize="hasRole('DOCTOR')" th:object="${appointment}">
-
+<a sec:authorize="hasRole('DOCTOR')">
 
     <frameset rows = "70%, *">
         <frameset cols = "50%, *">
