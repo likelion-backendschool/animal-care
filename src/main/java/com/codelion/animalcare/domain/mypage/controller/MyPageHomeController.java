@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MyPageHomeController {
 
 
-    @GetMapping("/usr/mypage/member")
+    @GetMapping("/usr/member/mypage")
     public String myPageHome() {
         log.info("myPageHome controller");
 
         return "myPage";
     }
 
-    @GetMapping("/usr/mypage/doctor")
+    @GetMapping("/usr/doctor/mypage")
     public String loadDoctorMyPage(){
         return "myPage/doctor/index";
     }

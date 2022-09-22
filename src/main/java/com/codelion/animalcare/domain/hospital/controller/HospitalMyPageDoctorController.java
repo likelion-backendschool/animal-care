@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/usr/mypage/doctor/hospital-info-manage")
+@RequestMapping("usr/doctor/mypage/hospital")
 @RequiredArgsConstructor
 public class HospitalMyPageDoctorController {
     private final HospitalService hospitalService;
@@ -78,7 +78,7 @@ public class HospitalMyPageDoctorController {
         hospitalService.create(requestDto, doctorEmail);
 
         // TODO modify를 form으로 이름을 바꾼다.
-        return "redirect:/usr/mypage/doctor/hospital-info-manage";
+        return "redirect:/usr/doctor/mypage/hospital";
     }
 
     /**
@@ -97,6 +97,7 @@ public class HospitalMyPageDoctorController {
         // TODO modify를 form으로 이름을 바꾼다.
         return "myPage/doctor/hospital-info-manage-select";
     }
+
     @PostMapping("select")
     public String loadDoctorMyPageHospitalList(
             Principal principal,
@@ -107,7 +108,7 @@ public class HospitalMyPageDoctorController {
         LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(doctorEmail);
 
         doctorService.addHospital(doctorDto.getId(), hospitalId);
-        return "redirect:/usr/mypage/doctor/hospital-info-manage";
+        return "redirect:/usr/doctor/mypage/hospital";
     }
 
     // 병원 소개 수정 페이지
@@ -121,7 +122,7 @@ public class HospitalMyPageDoctorController {
 
         model.addAttribute("requestDto", hospitalDto);
 
-        return "myPage/doctor/hospital-info-manage-modify";
+        return "doctor/mypage/hospital-info-manage-modify";
     }
 
     // 병원 소개 수정 요청
@@ -137,6 +138,6 @@ public class HospitalMyPageDoctorController {
 
             hospitalService.update(requestDto);
 
-        return "redirect:/usr/mypage/doctor/hospital-info-manage";
+        return "redirect:/usr/doctor/mypage/hospital";
     }
 }

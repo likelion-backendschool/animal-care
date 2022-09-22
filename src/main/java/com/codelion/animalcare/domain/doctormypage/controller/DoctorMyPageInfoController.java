@@ -1,28 +1,24 @@
 package com.codelion.animalcare.domain.doctormypage.controller;
 
-import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfoPassword;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfo;
+import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfoPassword;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.global.error.exception.DoctorModifyAfterPasswordNotSameException;
 import com.codelion.animalcare.global.error.exception.DoctorModifyBeforePasswordNotSameException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/usr/mypage/doctor/info")
+@RequestMapping("usr/doctor/mypage/info")
 @RequiredArgsConstructor
 public class DoctorMyPageInfoController {
     private final DoctorService doctorService;
@@ -67,7 +63,7 @@ public class DoctorMyPageInfoController {
 
         doctorService.update(requestDto);
 
-        return "redirect:/usr/mypage/doctor/info";
+        return "redirect:/usr/doctor/mypage/info";
     }
 
     @GetMapping("modify/password")
@@ -105,6 +101,6 @@ public class DoctorMyPageInfoController {
             return "myPage/doctor/info-modify-password";
         }
 
-        return "redirect:/usr/mypage/doctor/info";
+        return "redirect:/usr/doctor/mypage/info";
     }
 }

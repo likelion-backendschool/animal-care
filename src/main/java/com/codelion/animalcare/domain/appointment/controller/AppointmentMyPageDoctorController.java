@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/usr/mypage/doctor/member-manage/appointments")
+@RequestMapping("usr/doctor/mypage/appointments")
 @RequiredArgsConstructor
 public class AppointmentMyPageDoctorController {
     private final AppointmentService appointmentService;
@@ -46,10 +46,8 @@ public class AppointmentMyPageDoctorController {
     ){
         appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.REFUSE);
 
-        return "redirect:/usr/mypage/doctor/member-manage/appointments";
+        return "redirect:/usr/doctor/mypage/appointments";
     }
-
-    // TODO 환자정보 확인
 
     /**
      * 환자 정보 확인
@@ -73,7 +71,4 @@ public class AppointmentMyPageDoctorController {
         model.addAttribute("doctor", appointment.getDoctor());
         return "myPage/doctor/member-manage-self";
     }
-
-    // TODO 진단서 확인
-
 }
