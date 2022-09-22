@@ -30,7 +30,6 @@ public class DiagnosisController {
     private final AppointmentService appointmentService;
     private final MemberService memberService;
 
-    // 닥터페이지 진단서
     @GetMapping("/new")
     public String createDiagnosisForm(Model model) {
         model.addAttribute("diagnosisForm", new FindOneDiagnosis());
