@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Chat Room</title>
@@ -34,18 +35,8 @@
 <!-- 화면 나누기 -->
 <a sec:authorize="hasRole('DOCTOR')">
 
-    <frameset rows = "70%, *">
-        <frameset cols = "50%, *">
-<!--            비대면 화상 진료 화면-->
-            <frame src = "/room/{sid}/user/{uuid}" name = "left">
-
-<!--            진단서 작성 화면-->
-            <frame src = "/usr/mypage/doctor/diagnosis/info/new" name = "right">
-        </frameset>
-
-<!--            예약내역 화면-->
-        <frame src = "/usr/mypage/doctor/member-manage/appointments/all" name = "bottom">
-    </frameset>
+    <iframe src = "/usr/mypage/doctor/member-manage/appointments/all" width="50%" height = "300"> </iframe>
+    <iframe src = "/usr/mypage/doctor/diagnosis/info/new" width="49%" height = "300"> </iframe>
 
 </a>
 
@@ -103,45 +94,6 @@
 </main>
 
 <script src="/js/webrtc/webrtc_client.js"></script>
-
-
-<li class="member-manage">
-    <a sec:authorize="hasRole('DOCTOR')" th:object="${appointment}">
-
-        <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments', '회원관리', 'width=#','height=#'))|">
-        <button type="submit" class="btn btn-primary">회원관리</button>
-        </a>
-
-<!--        th:href="@{/usr/mypage/doctor/member-manage/appointments/{appointmentId} (appointmentId=${ad.appointmentId})}"-->
-<!--        <form th:action="|/usr/mypage/doctor/member-manage/appointments/${appointment?.id}/refuse|" method="post">-->
-<!--        <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments/${appointment?.id}', '진단서 확인', 'width=#','height=#'))|">-->
-<!--            &lt;!&ndash;            <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments/1', '진단서 확인', 'width=#','height=#'))|">&ndash;&gt;-->
-<!--            <button type="submit" class="btn btn-primary">진단서 임시확인</button>-->
-<!--        </a>-->
-
-
-<!--        <td>-->
-<!--            <a href="javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments/${appointment?.id}', '진단서 확인', 'width=#','height=#'))">-->
-<!--                <button type="submit" class="btn btn-primary">진단서 임시확인2</button>-->
-<!--            </a>-->
-<!--        </td>-->
-
-        <a th:href="|javascript:void(window.open('/usr/mypage/doctor/member-manage/appointments/all', '예약내역', 'width=#','height=#'))|">
-            <button type="submit" class="btn btn-primary">예약내역</button>
-        </a>
-
-
-        <td>
-            <a th:href="|javascript:void(window.open('/usr/mypage/doctor/diagnosis/info/new', '진단서 작성', 'width=#','height=#'))|">
-                <button type="submit" class="btn btn-primary">진단서 작성</button>
-            </a>
-        </td>
-
-
-
-
-    </a>
-</li>
 
 </body>
 </html>
