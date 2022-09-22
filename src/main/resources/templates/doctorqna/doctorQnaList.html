@@ -1,20 +1,20 @@
-<html layout:decorate="~{global/layout}">
+<html layout:decorate="~{global/layout}" xmlns="http://www.w3.org/1999/html">
 
 <div layout:fragment="content" class="container my-5">
     <body>
-    <table class = "table">
-        <thead class = "table-dark">
+    <table class = "table" style="text-align: center">
+        <thead class = "table-dark" >
         <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일시</th>
-            <th>조회수</th>
+            <th class="col-md-1">번호</th>
+            <th class="col-md-5">제목</th>
+            <th class="col-md-2">작성자</th>
+            <th class="col-md-2">작성일시</th>
+            <th class="col-md-1">추천수</th>
+            <th class="col-md-1">조회수</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="question, loop : ${paging}">
-
+        <tr th:each="question, loop : ${paging}" >
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td>
                 <a th:href="@{|/usr/doctor-qna/${question.id}|}" th:text="${question.title}"></a>
@@ -23,8 +23,9 @@
                       th:text="${#lists.size(question.answerList)}">
                 </span>
             </td>
-            <td><a th:text="${question.member?.email}"></a></td>
+            <td><a th:text="${question.member?.name}"></a></td>
             <td th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            <td><a th:text="${question.likeCount}"></a></td>
             <td><a th:text="${question.view}"></a></td>
 
         </tr>
@@ -36,7 +37,7 @@
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{|?page=${paging.number-1}|}">
+                   th:href="@{|?page=${paging.number-1}&kw=${kw}|}">
                     <span>이전</span>
                 </a>
             </li>
@@ -44,10 +45,10 @@
                 th:if="${page >= paging.number-2 and page <= paging.number+2}"
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
-                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}&kw=${kw}|}"></a>
             </li>
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}&kw=${kw}|}">
                     <span>다음</span>
                 </a>
             </li>
@@ -55,7 +56,26 @@
     </div>
     <!-- 페이징처리 끝 -->
 
-    <a th:href="@{/usr/doctor-qna/write}" class="btn btn-primary">질문 등록하기</a>
+
+    <div class="row">
+        <div class="col-6">
+            <a th:href="@{/usr/doctor-qna/write}" class="btn btn-primary">질문 등록하기</a>
+        </div>
+        <div class="col-6">
+            <form class="input-group input-group-sm mb-3">
+                <select onchange="$(this).closest('form').submit();" class="form-select m-0" name="type" th:value="${param.kr}">
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                    <option value="member">작성자</option>
+                </select>
+                <input class="form-control m-0" type="text" name="kw" style="width: auto; text-align: center" placeholder="검색어를 입력해주세요.">
+                <button type="submit" class="btn btn-primary btn-sm m-0">검색</button>
+            </form>
+
+        </div>
+    </div>
+
+
     </body>
 </div>
 

@@ -12,9 +12,23 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Page<Question> findAll(Pageable pageable);
 
+    Page<Question> findByTitleContaining(String kw, Pageable pageable);
+
+    Page<Question> findByContentContaining(String kw, Pageable pageable);
+
+    @Query("select q from Question q where q.member.name like concat('%',UPPER(:kw),'%')")
+    Page<Question> findByMemberContaining(@Param("kw")String kw, Pageable pageable);
     @Modifying
     @Query("update Question q set q.view = q.view + 1 where q.id = :id")
     int updateView(@Param("id") Long id);
+
+    @Modifying
+    @Query("update Question q set q.likeCount = q.likeCount + 1 where q.id = :id")
+    int plusLike(@Param("id") Long id);
+
+    @Modifying
+    @Query("update Question q set q.likeCount = q.likeCount - 1 where q.id = :id")
+    int minusLike(@Param("id") Long id);
 
     //test용 코드
     @Transactional

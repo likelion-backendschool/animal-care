@@ -31,15 +31,20 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList = new ArrayList<>();
 
+    @Column(columnDefinition = "Integer default 0", nullable = false)
+    private int likeCount;
     @ManyToOne
     private Member member;
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<QuestionLike> QuestionLike;
     @Builder
-    public Question(String title, String content, int view, Member member) {
+    public Question(String title, String content, int view, int likeCount, Member member) {
         this.title = title;
         this.content = content;
         this.view = view;
         this.member = member;
+        this.likeCount = likeCount;
     }
 
     public void update(String title, String content){
