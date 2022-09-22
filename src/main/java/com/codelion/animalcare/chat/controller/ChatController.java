@@ -13,7 +13,7 @@ public class ChatController {
 
     @MessageMapping("/chat/enter")
     public void enterRoom(ChatMessage message) {
-        message.setMessage(message.getSender() + "님이 채팅방에 참여했습니다");
+        message.setMessage(message.getSender() + "님이 참여했습니다");
         template.convertAndSend("/sub/chat/room/enter/" + message.getRoomId(), message);
     }
 

@@ -9,12 +9,10 @@ import java.util.UUID;
 @Setter
 public class ChatRoom {
     private String roomId;
-    private String roomName;
 
-    public static ChatRoom create(String name) {
+    public static ChatRoom create(String sid) {
         ChatRoom chatRoom = new ChatRoom();
-        chatRoom.roomId = UUID.randomUUID().toString();
-        chatRoom.roomName = name;
+        chatRoom.roomId = sid;
         return chatRoom;
     }
 }

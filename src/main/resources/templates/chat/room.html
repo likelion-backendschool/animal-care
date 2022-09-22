@@ -1,21 +1,26 @@
-<html layout:decorate="~{global/layout}" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-<div layout:fragment="content" class="container my-5">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<div class="container my-5">
     <body>
         <div class="container">
-            <div class="col-6">
-                <h3 th:text="${room.roomName}"></h3>
-            </div>
-
-            <div id="chatArea" class="col-6" style="height: 300px; overflow: auto"></div>
-            <div class="col-6">
-                <div class="input-group mb-3">
+            <div id="chatArea" class="col-6" style="height: 350px; overflow: auto"></div>
+            <div class="row">
+                <div class="col">
                     <textarea id="chatInput" class="form-control" style="resize: none"></textarea>
-                    <div class="input-group-append">
-                        <button type="button" id="button-send" class="btn btn-primary my-2">전송️</button>
-                    </div>
+                </div>
+                <div class="col" style="padding: 0px">
+                    <button type="button" id="button-send" class="btn btn-primary my-2">전송️</button>
                 </div>
             </div>
-            <div class="col-6"></div>
         </div>
     </body>
     
@@ -32,11 +37,10 @@
                 msg.focus();
             }
 
-            let roomName = [[${room.roomName}]];
             let roomId = [[${room.roomId}]];
             let username = [[${#authentication.principal.username}]];
 
-            console.log(roomName + ", " + roomId + ", " + username);
+            console.log(roomId + ", " + username);
 
             let sockJs = new SockJS("/ws/chat");
             let stomp = Stomp.over(sockJs);
