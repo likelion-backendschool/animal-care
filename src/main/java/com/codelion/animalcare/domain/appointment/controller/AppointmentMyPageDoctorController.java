@@ -29,7 +29,6 @@ import java.util.Optional;
 public class AppointmentMyPageDoctorController {
     private final AppointmentService appointmentService;
     private final DiagnosisService diagnosisService;
-    private final DoctorService doctorService;
 
     // TODO page 설정
     /**

@@ -92,8 +92,11 @@
 <!-- 화면 나누기 -->
 <a sec:authorize="hasRole('DOCTOR')">
 
-    <iframe src = "/usr/mypage/doctor/member-manage/appointments/all" width="49%" height = "600"> </iframe>
-    <iframe src = "/usr/mypage/doctor/diagnosis/info/new" width="50%" height = "600"> </iframe>
+<!--    예약내역 -->
+    <iframe src = "/usr/mypage/doctor/member-manage/appointments/all" width="100%" height = "600"> </iframe>
+
+<!--    진단서 작성 -> 지울예정 -->
+<!--    <iframe src = "/usr/mypage/doctor/diagnosis/info/new" width="50%" height = "600"> </iframe>-->
 
 </a>
 

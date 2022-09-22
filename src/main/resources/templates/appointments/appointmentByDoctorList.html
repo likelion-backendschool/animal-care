@@ -52,6 +52,11 @@
                     <td th:text="${ad.doctorName}"></td>
                     <td th:text="${ad.date}"></td>
                     <td th:text="${ad.status}"></td>
+
+<!--                    수정중-->
+                    <td>
+                        <a href="#" th:href="@{/usr/mypage/doctor/member-manage/appointments/all/{appointmentId} (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">진단서 작성</a>
+                    </td>
 <!--                    <td>-->
 <!--                        <a th:if="${ad.status.name() == 'READY'}"-->
 <!--                           href="#" th:href="@{/usr/mypage/member/appointment/info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">MODIFY</a>-->

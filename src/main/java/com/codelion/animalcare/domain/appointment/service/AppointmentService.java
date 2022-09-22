@@ -52,17 +52,17 @@ public class AppointmentService {
     }
 
 
-    public List<LoadMyPageDoctorAppointment.ResponseDto> findAppointmentByDoctorEmail(String email) {
-        Doctor doctor = doctorRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
-
-        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
-
-        List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
-                .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
-
-        return result;
-    }
+//    public List<LoadMyPageDoctorAppointment.ResponseDto> findAppointmentByDoctorEmail(String email) {
+//        Doctor doctor = doctorRepository.findByEmail(email)
+//                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
+//
+//        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
+//
+//        List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
+//                .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
+//
+//        return result;
+//    }
 
     public List<Appointment> findByMemberId(long id) {
         return appointmentRepository.findByMemberId(id);
@@ -184,6 +184,15 @@ public class AppointmentService {
         Optional<AppointmentDto> appointmentDto = appointmentOptional.map(o -> new AppointmentDto(o));
 
         return appointmentDto;
+    }
+
+    // TODO 수정할거임. 잠시 테스트하기 위함
+    public Appointment findAppointmentById(Long appointmentId) {
+//        Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
+//        Optional<AppointmentDto> appointmentDto = appointmentOptional.map(o -> new AppointmentDto(o));
+
+        Appointment appointment = appointmentRepository.findAppointmentById(appointmentId);
+        return appointment;
     }
 
     public List<Appointment> findAppointments(AppointmentSearch appointmentSearch) {

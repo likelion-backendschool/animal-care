@@ -1,20 +1,31 @@
 package com.codelion.animalcare.webrtc.controller;
 
 
+import com.codelion.animalcare.domain.animal.dto.AnimalDto;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
+import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
+import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
+import com.codelion.animalcare.domain.user.dto.MemberDto;
+import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,6 +35,7 @@ public class WebrtcDiagnosisController {
     private final DiagnosisService diagnosisService;
     private final AppointmentService appointmentService;
     private final MemberService memberService;
+    private final DoctorService doctorService;
 
     @GetMapping("/new")
     public String createDiagnosisForm(Model model) {
@@ -33,7 +45,7 @@ public class WebrtcDiagnosisController {
 
 
     @PostMapping("/new")
-    public String writeDiagnosis(@Valid FindOneDiagnosis writtenDiagnosisForm, BindingResult result) {
+    public String writeDiagnosis(@Valid FindOneDiagnosis writtenDiagnosisForm, BindingResult result, Principal principal) {
 
         if (result.hasErrors()) {
             return "diagnosis/diagnosisForm";
@@ -69,11 +81,48 @@ public class WebrtcDiagnosisController {
         newDiagnosisForm.setDoctorName(writtenDiagnosisForm.getDoctorName());
 
 
+
+//        String email = principal.getName();
+//        List<LoadMyPageDoctorAppointment.ResponseDto> appointments = appointmentService.findAllByDoctorEmail(email);
+//
+////        하나를 가져와야하는데
+////        model.addAttribute("appointments", appointments);
+////        return "myPage/doctor/member-manage";
+//        appointments.get(0).getId();
+////
+//        //appointmentId 추가하기
+//        newDiagnosisForm.setAppointment(appointments.get(0));
+
         diagnosisService.diagnosis(newDiagnosisForm);
 
-        return "redirect:/usr/mypage/doctor/member-manage/appointments";
+        return "redirect:/";
 
     }
+
+//    @GetMapping("/{appointmentId}")
+//    public String updateAppointmentForm(@PathVariable("appointmentId") Long appointmentId,
+//                                        Model model,
+//                                        Principal principal) {
+//
+//        Optional<AppointmentDto> appointmentDto = appointmentService.findById(appointmentId);
+//
+//        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
+//        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get());
+//
+//        List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
+//        List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
+//
+//        model.addAttribute("appointmentDto", appointmentDto.get());
+//        model.addAttribute("memberDto", memberDto.get());
+//        model.addAttribute("animalDtos", animalDtos);
+//        model.addAttribute("hospitalDtos", hospitalDtos);
+//        model.addAttribute("doctorDtos", doctorDtos);
+//
+//
+//        return "appointments/appointmentModifyForm";
+//    }
+
+
 
 
     // TODO 진단서, 예약서 매핑하기

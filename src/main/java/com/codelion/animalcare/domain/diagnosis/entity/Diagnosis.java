@@ -99,7 +99,7 @@ public class Diagnosis extends BaseEntity{
     @Column(nullable=false)
     private String doctorName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
@@ -130,6 +130,7 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setHospitalStreet(findOneDiagnosis.getHospitalStreet());
         diagnosis.setDoctorLicense(findOneDiagnosis.getDoctorLicense());
         diagnosis.setDoctorName(findOneDiagnosis.getDoctorName());
+        diagnosis.setAppointment(findOneDiagnosis.getAppointment());
 
         return diagnosis;
     }
