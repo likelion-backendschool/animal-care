@@ -52,8 +52,4 @@ public class Animal extends BaseEntity {
     @OneToMany(mappedBy = "animal")
     private List<Appointment> appointments = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "animal")
-    private List<Diagnosis> diagnoses = new ArrayList<>();
-
 }

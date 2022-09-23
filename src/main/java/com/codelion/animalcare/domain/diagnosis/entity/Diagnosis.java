@@ -115,42 +115,25 @@ public class Diagnosis extends BaseEntity{
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
+//    @ManyToOne(fetch = LAZY)
+//    @JoinColumn(name = "doctor_id"
+//    private Doctor doctor;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+//    @ManyToOne(fetch = LAZY)
+//    @JoinColumn(name = "hospital_id")
+//    private Hospital hospital;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "hospital_id")
-    private Hospital hospital;
 
     // == 연관관계 메서드 == //
-    public void addMember(Member member) {
-        this.member = member;
-        member.getDiagnoses().add(this);
-    }
-
-    public void addAnimal(Animal animal) {
-        this.animal = animal;
-        animal.getDiagnoses().add(this);
-    }
-
-    public void addDoctor(Doctor doctor) {
-        this.doctor = doctor;
-        doctor.getDiagnoses().add(this);
-    }
-
-    public void addHospital(Hospital hospital) {
-        this.hospital = hospital;
-        hospital.getDiagnoses().add(this);
-    }
+//    public void addDoctor(Doctor doctor) {
+//        this.doctor = doctor;
+//        doctor.getDiagnoses().add(this);
+//    }
+//
+//    public void addHospital(Hospital hospital) {
+//        this.hospital = hospital;
+//        hospital.getDiagnoses().add(this);
+//    }
 
     public void addAppointment(Appointment appointment) {
         this.appointment = appointment;
@@ -160,10 +143,8 @@ public class Diagnosis extends BaseEntity{
     public static Diagnosis createDiagnosis(Member member, Animal animal, Hospital hospital, Doctor doctor, Appointment appointment, FindOneDiagnosis writtenDiagnosisForm) {
 
         Diagnosis diagnosis = new Diagnosis();
-        diagnosis.addMember(member);
-        diagnosis.addAnimal(animal);
-        diagnosis.addHospital(hospital);
-        diagnosis.addDoctor(doctor);
+//        diagnosis.addHospital(hospital);
+//        diagnosis.addDoctor(doctor);
         diagnosis.addAppointment(appointment);
 
         diagnosis.setMemberName(member.getName());

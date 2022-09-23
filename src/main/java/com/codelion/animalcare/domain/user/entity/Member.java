@@ -28,10 +28,6 @@ public class Member extends UserInfo{
     @OneToMany(mappedBy = "member")
     private List<Animal> animals = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "member")
-    private List<Diagnosis> diagnoses = new ArrayList<>();
-
 
 //    @Builder(builderMethodName = "patientBuilder")
 //    public Patient(String email, String password, String auth, String animal) {
