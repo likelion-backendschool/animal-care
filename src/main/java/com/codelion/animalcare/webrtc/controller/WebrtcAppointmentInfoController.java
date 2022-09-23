@@ -66,18 +66,18 @@ public class WebrtcAppointmentInfoController {
 
         System.out.println("============ start createDiagnosisNewForm ===============");
 
-        LoadMyPageDoctorAppointment.ResponseDto appointment = appointmentService.findById(appointmentId);
+        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
 
 //        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
 
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("member", appointment.getMember());
-        model.addAttribute("animal", appointment.getAnimal());
-        model.addAttribute("hospital", appointment.getHospital());
-        model.addAttribute("doctor", appointment.getDoctor());
+        model.addAttribute("appointment", appointmentDto);
+        model.addAttribute("member", appointmentDto.getMember());
+        model.addAttribute("animal", appointmentDto.getAnimal());
+        model.addAttribute("hospital", appointmentDto.getHospital());
+        model.addAttribute("doctor", appointmentDto.getDoctor());
 //        model.addAttribute("diagnosis", diagnosis);
 
-        model.addAttribute("diagnosisForm", new FindOneDiagnosis());
+        model.addAttribute("oneDiagnosisForm", new FindOneDiagnosis());
 
         System.out.println("============ end createDiagnosisNewForm ===============");
 
@@ -87,10 +87,10 @@ public class WebrtcAppointmentInfoController {
     @PostMapping("/all/{appointmentId}")
     public String writeNewDiagnosis(@PathVariable("appointmentId") long appointmentId,
                                     @Valid FindOneDiagnosis writtenDiagnosisForm,
-                                    BindingResult result) {
+                                    BindingResult result
+                                  ) {
 
-        System.out.println("***************** 여기 작동 언제할거니 *****************");
-        System.out.println("============ start writeNewDiagnosis ===============");
+        System.out.println("***************** start writeNewDiagnosis *****************");
 
         if (result.hasErrors()) {
             return "diagnosis/diagnosisForm";
@@ -101,8 +101,7 @@ public class WebrtcAppointmentInfoController {
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
 
 
-        System.out.println("============ end writeNewDiagnosis ===============");
-
+        System.out.println("***************** end writeNewDiagnosis *****************");
 
         return "redirect:/usr/mypage/doctor/member-manage/appointments/all";
     }

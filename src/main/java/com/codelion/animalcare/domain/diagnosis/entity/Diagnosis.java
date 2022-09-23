@@ -145,7 +145,7 @@ public class Diagnosis extends BaseEntity{
     }
 
     public void addAppointment(Appointment appointment) {
-        this.hospital = hospital;
+        this.appointment = appointment;
     }
 
 
@@ -164,15 +164,28 @@ public class Diagnosis extends BaseEntity{
 //        appointment.setStatus(AppointmentStatus.READY);
 //        diagnosis.setDate(diagnosisDate);
 
-        diagnosis.setMemberName(writtenDiagnosisForm.getMemberName());
-        diagnosis.setAddressCity(writtenDiagnosisForm.getAddressCity());
-        diagnosis.setAddressStreet(writtenDiagnosisForm.getAddressStreet());
+//        diagnosis.setMemberName(writtenDiagnosisForm.getMemberName());
+        diagnosis.setMemberName(member.getName());
+
+//        diagnosis.setAddressCity(writtenDiagnosisForm.getAddressCity());
+        diagnosis.setAddressCity(member.getAddress().getCity());
+
+//        diagnosis.setAddressStreet(writtenDiagnosisForm.getAddressStreet());
+        diagnosis.setAddressCity(member.getAddress().getStreet());
+
 
         diagnosis.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
         diagnosis.setAnimalType(writtenDiagnosisForm.getAnimalType());
         diagnosis.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
-        diagnosis.setAnimalName(writtenDiagnosisForm.getAnimalName());
-        diagnosis.setAnimalGenderId(writtenDiagnosisForm.getAnimalGenderId());
+
+//        diagnosis.setAnimalName(writtenDiagnosisForm.getAnimalName());
+        diagnosis.setAnimalName(animal.getName());
+
+
+//        diagnosis.setAnimalGenderId(writtenDiagnosisForm.getAnimalGenderId());
+        diagnosis.setAnimalGenderId(animal.getGenderId());
+
+
         diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
         diagnosis.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
         diagnosis.setAnimalSpecial(writtenDiagnosisForm.getAnimalSpecial());
@@ -183,10 +196,17 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setOpinion(writtenDiagnosisForm.getOpinion());
         diagnosis.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
 
-        diagnosis.setHospitalName(writtenDiagnosisForm.getHospitalName());
-        diagnosis.setHospitalStreet(writtenDiagnosisForm.getHospitalStreet());
+//        diagnosis.setHospitalName(writtenDiagnosisForm.getHospitalName());
+        diagnosis.setHospitalName(hospital.getName());
+
+//        diagnosis.setHospitalStreet(writtenDiagnosisForm.getHospitalStreet());
+        diagnosis.setHospitalStreet(hospital.getAddress().getStreet());
+
+
         diagnosis.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
-        diagnosis.setDoctorName(writtenDiagnosisForm.getDoctorName());
+
+//        diagnosis.setDoctorName(writtenDiagnosisForm.getDoctorName());
+        diagnosis.setDoctorName(doctor.getName());
 
         return diagnosis;
     }

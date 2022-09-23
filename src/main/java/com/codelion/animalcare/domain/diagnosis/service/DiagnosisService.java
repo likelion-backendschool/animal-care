@@ -50,53 +50,15 @@ public class DiagnosisService {
         Hospital hospital = appointmentDto.getHospital();
         Doctor doctor = appointmentDto.getDoctor();
 
-        //수정하기
+        //수정 구현 예정
         Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentDto.getId());
         Appointment appointment = appointmentOptional.get();
 
         //진단서 생성
-        Diagnosis diagnosis = Diagnosis.createDiagnosis(member, animal, hospital, doctor, appointment,writtenDiagnosisForm);
+        Diagnosis diagnosis = Diagnosis.createDiagnosis(member, animal, hospital, doctor, appointment, writtenDiagnosisForm);
 
         diagnosisRepository.save(diagnosis);
-/*
-        FindOneDiagnosis newDiagnosisForm = new FindOneDiagnosis();
 
-        newDiagnosisForm.setMemberName(writtenDiagnosisForm.getMemberName());
-        newDiagnosisForm.setAddressCity(writtenDiagnosisForm.getAddressCity());
-        newDiagnosisForm.setAddressStreet(writtenDiagnosisForm.getAddressStreet());
-
-        newDiagnosisForm.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
-        newDiagnosisForm.setAnimalType(writtenDiagnosisForm.getAnimalType());
-        newDiagnosisForm.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
-        newDiagnosisForm.setAnimalName(writtenDiagnosisForm.getAnimalName());
-        newDiagnosisForm.setAnimalGenderId(writtenDiagnosisForm.getAnimalGenderId());
-        newDiagnosisForm.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
-        newDiagnosisForm.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
-        newDiagnosisForm.setAnimalSpecial(writtenDiagnosisForm.getAnimalSpecial());
-        newDiagnosisForm.setDiseaseName(writtenDiagnosisForm.getDiseaseName());
-
-//        newDiagnosisForm.setDiseaseDate(writtenDiagnosisForm.getDiseaseDate());
-//        newDiagnosisForm.setDiagnosisDate(writtenDiagnosisForm.getDiagnosisDate());
-//      날짜는 임시로 넣어둠
-        newDiagnosisForm.setDiseaseDate(LocalDateTime.now());
-        newDiagnosisForm.setDiagnosisDate(LocalDateTime.now());
-
-        newDiagnosisForm.setOpinion(writtenDiagnosisForm.getOpinion());
-        newDiagnosisForm.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
-
-        newDiagnosisForm.setHospitalName(writtenDiagnosisForm.getHospitalName());
-        newDiagnosisForm.setHospitalStreet(writtenDiagnosisForm.getHospitalStreet());
-        newDiagnosisForm.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
-        newDiagnosisForm.setDoctorName(writtenDiagnosisForm.getDoctorName());
-
-        Appointment appointment = appointmentService.findAppointmentById(appointmentId);
-        newDiagnosisForm.setAppointment(appointment);
-        diagnosisService.diagnosis(newDiagnosisForm);
-        */
-//        //진단서 생성
-//        Diagnosis diagnosis = Diagnosis.createDiagnosis(member, animal, hospital, doctor);
-//
-//        diagnosisRepository.save(diagnosis);
 
         return diagnosis.getId();
     }
