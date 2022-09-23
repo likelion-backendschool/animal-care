@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.animal.entity;
 
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
+import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -53,5 +54,9 @@ public class Animal extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "animal")
     private List<Appointment> appointments = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "animal")
+    private List<Diagnosis> diagnoses = new ArrayList<>();
 
 }

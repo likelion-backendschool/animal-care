@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.user.entity;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
+import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -27,7 +28,9 @@ public class Member extends UserInfo{
     @OneToMany(mappedBy = "member")
     private List<Animal> animals = new ArrayList<>();
 
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Diagnosis> diagnoses = new ArrayList<>();
 
 
 //    @Builder(builderMethodName = "patientBuilder")

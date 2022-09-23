@@ -3,6 +3,7 @@ package com.codelion.animalcare.domain.diagnosis.entity;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
@@ -106,38 +107,86 @@ public class Diagnosis extends BaseEntity{
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
-    public static Diagnosis createDiagnosis(FindOneDiagnosis findOneDiagnosis) {
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital;
+
+    // == 연관관계 메서드 == //
+    public void addMember(Member member) {
+        this.member = member;
+        member.getDiagnoses().add(this);
+    }
+
+    public void addAnimal(Animal animal) {
+        this.animal = animal;
+        animal.getDiagnoses().add(this);
+    }
+
+    public void addDoctor(Doctor doctor) {
+        this.doctor = doctor;
+        doctor.getDiagnoses().add(this);
+    }
+
+    public void addHospital(Hospital hospital) {
+        this.hospital = hospital;
+        hospital.getDiagnoses().add(this);
+    }
+
+    public void addAppointment(Appointment appointment) {
+        this.hospital = hospital;
+    }
+
+
+    public static Diagnosis createDiagnosis(Member member, Animal animal, Hospital hospital, Doctor doctor,
+            Appointment appointment, FindOneDiagnosis writtenDiagnosisForm
+//            , LocalDateTime diagnosisDate
+    ) {
 
         Diagnosis diagnosis = new Diagnosis();
+        diagnosis.addMember(member);
+        diagnosis.addAnimal(animal);
+        diagnosis.addHospital(hospital);
+        diagnosis.addDoctor(doctor);
+        diagnosis.addAppointment(appointment);
 
-        diagnosis.setMemberName(findOneDiagnosis.getMemberName());
-        diagnosis.setAddressCity(findOneDiagnosis.getAddressCity());
-        diagnosis.setAddressStreet(findOneDiagnosis.getAddressStreet());
+//        appointment.setStatus(AppointmentStatus.READY);
+//        diagnosis.setDate(diagnosisDate);
 
-        diagnosis.setBreedingPlace(findOneDiagnosis.getBreedingPlace());
-        diagnosis.setAnimalType(findOneDiagnosis.getAnimalType());
-        diagnosis.setAnimalBreed(findOneDiagnosis.getAnimalBreed());
-        diagnosis.setAnimalName(findOneDiagnosis.getAnimalName());
-        diagnosis.setAnimalGenderId(findOneDiagnosis.getAnimalGenderId());
-        diagnosis.setAnimalAge(findOneDiagnosis.getAnimalAge());
-        diagnosis.setAnimalCoatColor(findOneDiagnosis.getAnimalCoatColor());
-        diagnosis.setAnimalSpecial(findOneDiagnosis.getAnimalSpecial());
-        diagnosis.setDiseaseName(findOneDiagnosis.getDiseaseName());
+        diagnosis.setMemberName(writtenDiagnosisForm.getMemberName());
+        diagnosis.setAddressCity(writtenDiagnosisForm.getAddressCity());
+        diagnosis.setAddressStreet(writtenDiagnosisForm.getAddressStreet());
 
-        diagnosis.setDiseaseDate(findOneDiagnosis.getDiseaseDate());
-        diagnosis.setDiagnosisDate(findOneDiagnosis.getDiagnosisDate());
-        diagnosis.setOpinion(findOneDiagnosis.getOpinion());
-        diagnosis.setOtherMatter(findOneDiagnosis.getOtherMatter());
+        diagnosis.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
+        diagnosis.setAnimalType(writtenDiagnosisForm.getAnimalType());
+        diagnosis.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
+        diagnosis.setAnimalName(writtenDiagnosisForm.getAnimalName());
+        diagnosis.setAnimalGenderId(writtenDiagnosisForm.getAnimalGenderId());
+        diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
+        diagnosis.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
+        diagnosis.setAnimalSpecial(writtenDiagnosisForm.getAnimalSpecial());
+        diagnosis.setDiseaseName(writtenDiagnosisForm.getDiseaseName());
 
-        diagnosis.setHospitalName(findOneDiagnosis.getHospitalName());
-        diagnosis.setHospitalStreet(findOneDiagnosis.getHospitalStreet());
-        diagnosis.setDoctorLicense(findOneDiagnosis.getDoctorLicense());
-        diagnosis.setDoctorName(findOneDiagnosis.getDoctorName());
+        diagnosis.setDiseaseDate(writtenDiagnosisForm.getDiseaseDate());
+        diagnosis.setDiagnosisDate(writtenDiagnosisForm.getDiagnosisDate());
+        diagnosis.setOpinion(writtenDiagnosisForm.getOpinion());
+        diagnosis.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
 
-        System.out.println("findOneDiagnosis.getAppointment(): " + findOneDiagnosis.getAppointment());
-        System.out.println("findOneDiagnosis.getAppointment().getId(): " + findOneDiagnosis.getAppointment().getId());
-
-        diagnosis.setAppointment(findOneDiagnosis.getAppointment());
+        diagnosis.setHospitalName(writtenDiagnosisForm.getHospitalName());
+        diagnosis.setHospitalStreet(writtenDiagnosisForm.getHospitalStreet());
+        diagnosis.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
+        diagnosis.setDoctorName(writtenDiagnosisForm.getDoctorName());
 
         return diagnosis;
     }

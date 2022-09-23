@@ -16,13 +16,11 @@ import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -66,19 +64,22 @@ public class WebrtcAppointmentInfoController {
     @GetMapping("/all/{appointmentId}")
     public String createDiagnosisNewForm(@PathVariable("appointmentId") long appointmentId, Model model) {
 
-        LoadMyPageDoctorAppointment.ResponseDto appointment
-                = appointmentService.findById(appointmentId);
+        System.out.println("============ start createDiagnosisNewForm ===============");
 
-        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
+        LoadMyPageDoctorAppointment.ResponseDto appointment = appointmentService.findById(appointmentId);
+
+//        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
 
         model.addAttribute("appointment", appointment);
         model.addAttribute("member", appointment.getMember());
         model.addAttribute("animal", appointment.getAnimal());
         model.addAttribute("hospital", appointment.getHospital());
-        model.addAttribute("diagnosis", diagnosis);
         model.addAttribute("doctor", appointment.getDoctor());
+//        model.addAttribute("diagnosis", diagnosis);
 
         model.addAttribute("diagnosisForm", new FindOneDiagnosis());
+
+        System.out.println("============ end createDiagnosisNewForm ===============");
 
         return "diagnosis/diagnosisForm";
     }
@@ -86,52 +87,24 @@ public class WebrtcAppointmentInfoController {
     @PostMapping("/all/{appointmentId}")
     public String writeNewDiagnosis(@PathVariable("appointmentId") long appointmentId,
                                     @Valid FindOneDiagnosis writtenDiagnosisForm,
-                                    BindingResult result,
-                                    Principal principal) {
+                                    BindingResult result) {
+
+        System.out.println("***************** 여기 작동 언제할거니 *****************");
+        System.out.println("============ start writeNewDiagnosis ===============");
 
         if (result.hasErrors()) {
             return "diagnosis/diagnosisForm";
         }
 
-        FindOneDiagnosis newDiagnosisForm = new FindOneDiagnosis();
+        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
 
-        newDiagnosisForm.setMemberName(writtenDiagnosisForm.getMemberName());
-        newDiagnosisForm.setAddressCity(writtenDiagnosisForm.getAddressCity());
-        newDiagnosisForm.setAddressStreet(writtenDiagnosisForm.getAddressStreet());
-
-        newDiagnosisForm.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
-        newDiagnosisForm.setAnimalType(writtenDiagnosisForm.getAnimalType());
-        newDiagnosisForm.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
-        newDiagnosisForm.setAnimalName(writtenDiagnosisForm.getAnimalName());
-        newDiagnosisForm.setAnimalGenderId(writtenDiagnosisForm.getAnimalGenderId());
-        newDiagnosisForm.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
-        newDiagnosisForm.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
-        newDiagnosisForm.setAnimalSpecial(writtenDiagnosisForm.getAnimalSpecial());
-        newDiagnosisForm.setDiseaseName(writtenDiagnosisForm.getDiseaseName());
-
-//        newDiagnosisForm.setDiseaseDate(writtenDiagnosisForm.getDiseaseDate());
-//        newDiagnosisForm.setDiagnosisDate(writtenDiagnosisForm.getDiagnosisDate());
-//      날짜는 임시로 넣어둠
-        newDiagnosisForm.setDiseaseDate(LocalDateTime.now());
-        newDiagnosisForm.setDiagnosisDate(LocalDateTime.now());
-
-        newDiagnosisForm.setOpinion(writtenDiagnosisForm.getOpinion());
-        newDiagnosisForm.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
-
-        newDiagnosisForm.setHospitalName(writtenDiagnosisForm.getHospitalName());
-        newDiagnosisForm.setHospitalStreet(writtenDiagnosisForm.getHospitalStreet());
-        newDiagnosisForm.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
-        newDiagnosisForm.setDoctorName(writtenDiagnosisForm.getDoctorName());
+        diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
 
 
-        Appointment appointment = appointmentService.findAppointmentById(appointmentId);
+        System.out.println("============ end writeNewDiagnosis ===============");
 
-        newDiagnosisForm.setAppointment(appointment);
-
-        diagnosisService.diagnosis(newDiagnosisForm);
 
         return "redirect:/usr/mypage/doctor/member-manage/appointments/all";
-
     }
 
 
