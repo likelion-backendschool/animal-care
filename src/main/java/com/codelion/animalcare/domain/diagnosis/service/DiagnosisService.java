@@ -59,7 +59,6 @@ public class DiagnosisService {
 
         diagnosisRepository.save(diagnosis);
 
-
         return diagnosis.getId();
     }
 }

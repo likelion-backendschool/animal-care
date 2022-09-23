@@ -37,9 +37,7 @@ public class WebrtcAppointmentInfoController {
     private final AppointmentQueryService appointmentQueryService;
     private final AppointmentService appointmentService;
     private final DiagnosisService diagnosisService;
-    private final MemberService memberService;
-    private final AnimalService animalService;
-    private final HospitalService hospitalService;
+
 
     /**
      * 비대면 진료에서 예약명단 확인
@@ -64,50 +62,32 @@ public class WebrtcAppointmentInfoController {
     @GetMapping("/all/{appointmentId}")
     public String createDiagnosisNewForm(@PathVariable("appointmentId") long appointmentId, Model model) {
 
-        System.out.println("============ start createDiagnosisNewForm ===============");
-
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
 
-//        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
+        FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointmentDto.getId());
 
         model.addAttribute("appointment", appointmentDto);
         model.addAttribute("member", appointmentDto.getMember());
         model.addAttribute("animal", appointmentDto.getAnimal());
         model.addAttribute("hospital", appointmentDto.getHospital());
         model.addAttribute("doctor", appointmentDto.getDoctor());
-//        model.addAttribute("diagnosis", diagnosis);
+        model.addAttribute("diagnosis", diagnosis);
 
         model.addAttribute("oneDiagnosisForm", new FindOneDiagnosis());
 
-        System.out.println("============ end createDiagnosisNewForm ===============");
 
         return "diagnosis/diagnosisForm";
     }
 
     @PostMapping("/all/{appointmentId}")
     public String writeNewDiagnosis(@PathVariable("appointmentId") long appointmentId,
-                                    @Valid FindOneDiagnosis writtenDiagnosisForm,
-                                    BindingResult result
-                                  ) {
-
-        System.out.println("***************** start writeNewDiagnosis *****************");
-
-        if (result.hasErrors()) {
-            return "diagnosis/diagnosisForm";
-        }
+                                    @Valid FindOneDiagnosis writtenDiagnosisForm) {
 
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
-
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
-
-
-        System.out.println("***************** end writeNewDiagnosis *****************");
 
         return "redirect:/usr/mypage/doctor/member-manage/appointments/all";
     }
-
-
-
 
 
 

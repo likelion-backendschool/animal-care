@@ -37,15 +37,18 @@ public class Diagnosis extends BaseEntity{
     private String addressStreet;
 
     //사육 장소
-    @Column(nullable = false, length=70)
+    //    nullable = true로 잠시 수정
+    @Column(nullable = true, length=70)
     private String breedingPlace;
 
     // 동물의 표시
     // 종류
-    @Column(nullable = false, length=50)
+    //    nullable = true로 잠시 수정
+    @Column(nullable = true, length=50)
     private String animalType;
     // 품종
-    @Column(nullable = false, length=50)
+//    nullable = true로 잠시 수정
+    @Column(nullable = true, length=50)
     private String animalBreed;
     // 동물명
     @Column(nullable = false, length=50)
@@ -54,13 +57,16 @@ public class Diagnosis extends BaseEntity{
     @Column(nullable = false, length=50)
     private int animalGenderId;
     // 연령
-    @Column(nullable = false, length=50)
+    //    nullable = true로 잠시 수정
+    @Column(nullable = true, length=50)
     private int animalAge;
     // 모색
-    @Column(nullable = false, length=50)
+    //    nullable = true로 잠시 수정
+    @Column(nullable = true, length=50)
     private String animalCoatColor;
     // 특징
-    @Column(nullable = false, length=200)
+    //    nullable = true로 잠시 수정
+    @Column(nullable = true, length=200)
     private String animalSpecial;
 
     // 병명
@@ -75,11 +81,12 @@ public class Diagnosis extends BaseEntity{
 //    private Date diagnosisDate;
 
 //    임시로 바꿔봄 Date -> LocalDateTime
+//    잠시 nullable = true
     // 발병 연월일
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime diseaseDate;
     // 진단 연월일
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime diagnosisDate;
 
 
@@ -97,7 +104,8 @@ public class Diagnosis extends BaseEntity{
     @Column(nullable = false, length = 70)
     private String hospitalStreet;
     // 수의사 면허
-    @Column(nullable = false, length = 50)
+    //    nullable = true로 잠시 수정
+    @Column(nullable = true, length = 50)
     private String doctorLicense;
     // 수의사 이름
     @Column(nullable=false)
@@ -149,10 +157,7 @@ public class Diagnosis extends BaseEntity{
     }
 
 
-    public static Diagnosis createDiagnosis(Member member, Animal animal, Hospital hospital, Doctor doctor,
-            Appointment appointment, FindOneDiagnosis writtenDiagnosisForm
-//            , LocalDateTime diagnosisDate
-    ) {
+    public static Diagnosis createDiagnosis(Member member, Animal animal, Hospital hospital, Doctor doctor, Appointment appointment, FindOneDiagnosis writtenDiagnosisForm) {
 
         Diagnosis diagnosis = new Diagnosis();
         diagnosis.addMember(member);
@@ -161,30 +166,16 @@ public class Diagnosis extends BaseEntity{
         diagnosis.addDoctor(doctor);
         diagnosis.addAppointment(appointment);
 
-//        appointment.setStatus(AppointmentStatus.READY);
-//        diagnosis.setDate(diagnosisDate);
-
-//        diagnosis.setMemberName(writtenDiagnosisForm.getMemberName());
         diagnosis.setMemberName(member.getName());
-
-//        diagnosis.setAddressCity(writtenDiagnosisForm.getAddressCity());
         diagnosis.setAddressCity(member.getAddress().getCity());
-
-//        diagnosis.setAddressStreet(writtenDiagnosisForm.getAddressStreet());
-        diagnosis.setAddressCity(member.getAddress().getStreet());
-
+        diagnosis.setAddressStreet(member.getAddress().getStreet());
 
         diagnosis.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
         diagnosis.setAnimalType(writtenDiagnosisForm.getAnimalType());
         diagnosis.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
 
-//        diagnosis.setAnimalName(writtenDiagnosisForm.getAnimalName());
         diagnosis.setAnimalName(animal.getName());
-
-
-//        diagnosis.setAnimalGenderId(writtenDiagnosisForm.getAnimalGenderId());
         diagnosis.setAnimalGenderId(animal.getGenderId());
-
 
         diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
         diagnosis.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
@@ -196,16 +187,11 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setOpinion(writtenDiagnosisForm.getOpinion());
         diagnosis.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
 
-//        diagnosis.setHospitalName(writtenDiagnosisForm.getHospitalName());
         diagnosis.setHospitalName(hospital.getName());
-
-//        diagnosis.setHospitalStreet(writtenDiagnosisForm.getHospitalStreet());
         diagnosis.setHospitalStreet(hospital.getAddress().getStreet());
-
 
         diagnosis.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
 
-//        diagnosis.setDoctorName(writtenDiagnosisForm.getDoctorName());
         diagnosis.setDoctorName(doctor.getName());
 
         return diagnosis;
