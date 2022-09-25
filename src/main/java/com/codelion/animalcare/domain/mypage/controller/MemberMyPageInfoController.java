@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller("/usr/member/mypage")
-@RequestMapping
+@Controller
+@RequestMapping("/usr/member/mypage")
 @RequiredArgsConstructor
 public class MemberMyPageInfoController {
     private final MemberService memberService;
@@ -15,6 +15,6 @@ public class MemberMyPageInfoController {
     @GetMapping("")
     public String myPageHome() {
 
-        return "myPage";
+        return "myPage/member/myPageForm";
     }
 }
