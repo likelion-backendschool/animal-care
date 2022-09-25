@@ -1,7 +1,32 @@
-<html layout:decorate="~{global/layout}" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html layout:decorate="~{global/layout}" xmlns="http://www.w3.org/1999/html">
+
 <div layout:fragment="content" class="container my-5">
     <body>
-    test
+        <table class = "table" style="text-align: center">
+            <thead class = "table-dark" >
+            <tr>
+                <th class="col-md-1">번호</th>
+                <th class="col-md-1">이름</th>
+                <th class="col-md-2">생일</th>
+                <th class="col-md-2">등록번호</th>
+                <th class="col-md-1">성별</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="animal, loop : ${animals}" >
+                <td th:text="${loop.count}"></td>
+                <td>
+                    <a th:href="@{|/usr/animal/${animal.id}|}" th:text="${animal.name}"></a>
+                </td>
+                <td th:text="${#dates.format(animal.birthday, 'yyyy-MM-dd')}"></td>
+                <td th:text="${animal.registrationNum}"></td>
+                <td th:text="${animal.genderId == 0 ? '여' : '남'}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="col-6">
+            <a th:href="@{/usr/animal/add}" class="btn btn-primary">동물 등록하기</a>
+        </div>
     </body>
 </div>
 </html>
