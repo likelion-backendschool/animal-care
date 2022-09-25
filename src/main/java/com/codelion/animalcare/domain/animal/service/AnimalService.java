@@ -3,9 +3,11 @@ package com.codelion.animalcare.domain.animal.service;
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
+import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.UserService;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AnimalService {
     private final AnimalRepository animalRepository;
@@ -26,11 +27,18 @@ public class AnimalService {
      * 애완 동물 등록
      */
 
-
-    public void save(AnimalDto animalDto, Principal principal) {
+    public Long save(AnimalDto animalDto, Principal principal) {
         Member member = userService.getMember(principal.getName());
 
-        return animalRepository.save(animalDto.toEntity(member).getId());
+        return animalRepository.save(animalDto.toEntity(member)).getId();
+    }
+
+    public Long update(Long id, AnimalDto animalDto){
+        Animal animal = animalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
+        animal.update(animalDto);
+        System.out.println(animal.getName());
+        animalRepository.save(animal);
+        return id;
     }
 
     private void validateDuplicateAnimal(Animal animal) {
@@ -40,8 +48,13 @@ public class AnimalService {
         }
     }
 
-    public Optional<Animal> findById(Long id) {
-        return animalRepository.findById(id);
+    public AnimalDto findById(Long id) {
+        Optional<Animal> animal = animalRepository.findById(id);
+        if(animal.isEmpty()){
+            throw new IllegalArgumentException("animal is null");
+        }
+
+        return new AnimalDto(animal.get());
     }
 
     //memberEmail로 member가 갖고있는 동물 출력
@@ -56,14 +69,27 @@ public class AnimalService {
     }
 
 
-    public List<AnimalDto> findByMember(MemberDto memberDto) {
-        List<Animal> animals = animalRepository.findByMemberEmail(memberDto.getEmail());
+    public List<AnimalDto> findByMember(String email) {
+        List<Animal> animals = animalRepository.findByMemberEmail(email);
         List<AnimalDto> result = animals.stream()
                 .map(o -> new AnimalDto(o))
                 .collect(Collectors.toList());
-
         return result;
     }
+    public boolean questionAuthorized(Long id, Principal principal){
+        Animal animal = animalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("작성된 글이 없습니다."));
 
 
+        if(animal.getMember().getEmail().equals(principal.getName())) {
+            return false;
+        }
+
+        return true;
+
+    }
+    public void delete(Long id){
+        Animal animal = animalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("작성된 글이 없습니다."));
+
+        animalRepository.delete(animal);
+    }
 }
