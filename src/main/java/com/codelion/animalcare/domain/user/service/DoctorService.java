@@ -1,8 +1,8 @@
 package com.codelion.animalcare.domain.user.service;
 
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfo;
-import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfoPassword;
+import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfoPassword;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.user.dto.DoctorSignUpDto;

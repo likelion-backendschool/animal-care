@@ -1,8 +1,8 @@
-package com.codelion.animalcare.domain.doctormypage.controller;
+package com.codelion.animalcare.domain.mypage.controller;
 
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfo;
-import com.codelion.animalcare.domain.doctormypage.dto.UpdateDoctorMyPageInfoPassword;
+import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfoPassword;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.global.error.exception.DoctorModifyAfterPasswordNotSameException;
 import com.codelion.animalcare.global.error.exception.DoctorModifyBeforePasswordNotSameException;
