@@ -69,7 +69,9 @@
                                     <input class="form-control"
                                            type="time"
                                            th:field="*{monStart}"
-                                            required>
+                                           required
+                                           th:readonly="${requestDto.monStart == null}"
+                                        >
                                 </td>
                                 <td style="text-align: center">
                                     ~
@@ -77,11 +79,13 @@
                                 <td>
                                     <input class="form-control"
                                            type="time" th:field="*{monEnd}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.monEnd == null}"
+                                    >
                                 </td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('mon')" id="monDayOff">
+                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('mon')" id="monDayOff" th:checked="${requestDto.monEnd == null}">
                                         <label class="form-check-label" for="monDayOff">
                                             정기 휴무
                                         </label>
@@ -94,7 +98,9 @@
                                     <input class="form-control"
                                            type="time"
                                            th:field="*{tueStart}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.tueStart == null}"
+                                    >
                                 </td>
                                 <td style="text-align: center">
                                     ~
@@ -102,11 +108,13 @@
                                 <td>
                                     <input class="form-control"
                                            type="time" th:field="*{tueEnd}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.tueEnd == null}"
+                                    >
                                 </td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('tue')" id="tueDayOff">
+                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('tue')" id="tueDayOff" th:checked="${requestDto.tueEnd == null}">
                                         <label class="form-check-label" for="monDayOff">
                                             정기 휴무
                                         </label>
@@ -119,7 +127,9 @@
                                     <input class="form-control"
                                            type="time"
                                            th:field="*{wedStart}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.wedStart == null}"
+                                    >
                                 </td>
                                 <td style="text-align: center">
                                     ~
@@ -127,11 +137,13 @@
                                 <td>
                                     <input class="form-control"
                                            type="time" th:field="*{wedEnd}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.wedEnd == null}"
+                                    >
                                 </td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('wed')" id="wedDayOff">
+                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('wed')" id="wedDayOff" th:checked="${requestDto.wedEnd == null}">
                                         <label class="form-check-label" for="monDayOff">
                                             정기 휴무
                                         </label>
@@ -144,7 +156,9 @@
                                     <input class="form-control"
                                            type="time"
                                            th:field="*{thuStart}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.thuStart == null}"
+                                    >
                                 </td>
                                 <td style="text-align: center">
                                     ~
@@ -152,11 +166,13 @@
                                 <td>
                                     <input class="form-control"
                                            type="time" th:field="*{thuEnd}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.thuEnd == null}"
+                                    >
                                 </td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('thu')" id="thuDayOff">
+                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('thu')" id="thuDayOff" th:checked="${requestDto.thuEnd == null}">
                                         <label class="form-check-label" for="monDayOff">
                                             정기 휴무
                                         </label>
@@ -169,7 +185,9 @@
                                     <input class="form-control"
                                            type="time"
                                            th:field="*{friStart}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.friStart == null}"
+                                    >
                                 </td>
                                 <td style="text-align: center">
                                     ~
@@ -177,11 +195,13 @@
                                 <td>
                                     <input class="form-control"
                                            type="time" th:field="*{friEnd}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.friEnd == null}"
+                                    >
                                 </td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('fri')" id="friDayOff">
+                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('fri')" id="friDayOff" th:checked="${requestDto.friEnd == null}">
                                         <label class="form-check-label" for="monDayOff">
                                             정기 휴무
                                         </label>
@@ -194,7 +214,9 @@
                                     <input class="form-control"
                                            type="time"
                                            th:field="*{satStart}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.satStart == null}"
+                                    >
                                 </td>
                                 <td style="text-align: center">
                                     ~
@@ -202,11 +224,13 @@
                                 <td>
                                     <input class="form-control"
                                            type="time" th:field="*{satEnd}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.satEnd == null}"
+                                    >
                                 </td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('sat')" id="satDayOff">
+                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('sat')" id="satDayOff" th:checked="${requestDto.satEnd == null}">
                                         <label class="form-check-label" for="monDayOff">
                                             정기 휴무
                                         </label>
@@ -219,7 +243,9 @@
                                     <input class="form-control"
                                            type="time"
                                            th:field="*{sunStart}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.sunStart == null}"
+                                    >
                                 </td>
                                 <td style="text-align: center">
                                     ~
@@ -227,11 +253,13 @@
                                 <td>
                                     <input class="form-control"
                                            type="time" th:field="*{sunEnd}"
-                                           required>
+                                           required
+                                           th:readonly="${requestDto.sunEnd == null}"
+                                    >
                                 </td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('sun')" id="sunDayOff">
+                                        <input class="form-check-input" type="checkbox" onclick="dayOffChk('sun')" id="sunDayOff" th:checked="${requestDto.sunEnd == null}">
                                         <label class="form-check-label" for="monDayOff">
                                             정기 휴무
                                         </label>
@@ -323,73 +351,65 @@
                 switch (day){
                     case 'mon' :
                         if($('#monDayOff').is(':checked')){
-                            $('#monStart').val('').prop( "disabled", true );
-                            $('#monEnd').val('').prop( "disabled", true );
+                            $('#monStart').val('').prop( "readonly", true );
+                            $('#monEnd').val('').prop( "readonly", true );
                         } else{
-                            $('#monStart').prop( "disabled", false );
-                            $('#monEnd').prop( "disabled", false );
+                            $('#monStart').prop( "readonly", false );
+                            $('#monEnd').prop( "readonly", false );
                         }
                     break;
                     case 'tue' :
                         if($('#tueDayOff').is(':checked')){
-                            $('#tueStart').val('').prop( "disabled", true );
-                            $('#tueEnd').val('').prop( "disabled", true );
+                            $('#tueStart').val('').prop( "readonly", true );
+                            $('#tueEnd').val('').prop( "readonly", true );
                         } else{
-                            $('#tueStart').prop( "disabled", false );
-                            $('#tueEnd').prop( "disabled", false );
+                            $('#tueStart').prop( "readonly", false );
+                            $('#tueEnd').prop( "readonly", false );
                         }
                         break;
                     case 'wed' :
                         if($('#wedDayOff').is(':checked')){
-                            $('#wedStart').val('').prop( "disabled", true );
-                            $('#wedEnd').val('').prop( "disabled", true );
+                            $('#wedStart').val('').prop( "readonly", true );
+                            $('#wedEnd').val('').prop( "readonly", true );
                         } else{
-                            $('#wedStart').prop( "disabled", false );
-                            $('#wedEnd').prop( "disabled", false );
+                            $('#wedStart').prop( "readonly", false );
+                            $('#wedEnd').prop( "readonly", false );
                         }
                         break;
                     case 'thu' :
                         if($('#thuDayOff').is(':checked')){
-                            $('#thuStart').val('').prop( "disabled", true );
-                            $('#thuEnd').val('').prop( "disabled", true );
+                            $('#thuStart').val('').prop( "readonly", true );
+                            $('#thuEnd').val('').prop( "readonly", true );
                         } else{
-                            $('#thuStart').prop( "disabled", false );
-                            $('#thuEnd').prop( "disabled", false );
+                            $('#thuStart').prop( "readonly", false );
+                            $('#thuEnd').prop( "readonly", false );
                         }
                         break;
-                    case 'fri' :                    case 'sat' :
-                        if($('#satDayOff').is(':checked')){
-                            $('#satStart').val('').prop( "disabled", true );
-                            $('#satEnd').val('').prop( "disabled", true );
-                        } else{
-                            $('#satStart').prop( "disabled", false );
-                            $('#satEnd').prop( "disabled", false );
-                        }
-                        break;
+                    case 'fri' :
                         if($('#friDayOff').is(':checked')){
-                            $('#friStart').val('').prop( "disabled", true );
-                            $('#friEnd').val('').prop( "disabled", true );
+                            $('#friStart').val('').prop( "readonly", true );
+                            $('#friEnd').val('').prop( "readonly", true );
                         } else{
-                            $('#friStart').prop( "disabled", false );
-                            $('#friEnd').prop( "disabled", false );
+                            $('#friStart').prop( "readonly", false );
+                            $('#friEnd').prop( "readonly", false );
                         }
                         break;
                     case 'sat' :
                         if($('#satDayOff').is(':checked')){
-                            $('#satStart').val('').prop( "disabled", true );
-                            $('#satEnd').val('').prop( "disabled", true );
+                            $('#satStart').val('').prop( "readonly", true );
+                            $('#satEnd').val('').prop( "readonly", true );
                         } else{
-                            $('#satStart').prop( "disabled", false );
-                            $('#satEnd').prop( "disabled", false );
+                            $('#satStart').prop( "readonly", false );
+                            $('#satEnd').prop( "readonly", false );
                         }
                         break;
                     case 'sun' :
                         if($('#sunDayOff').is(':checked')){
-                            $('#sunStart').val('').prop( "disabled", true );
-                            $('#sunEnd').val('').prop( "disabled", true );
+                            $('#sunStart').val('').prop( "readonly", true );
+                            $('#sunEnd').val('').prop( "readonly", true );
                         } else{
-                            $('#sunStart').prop( "disabled", false );
-                            $('#sunEnd').prop( "disabled", false );
+                            $('#sunStart').prop( "readonly", false );
+                            $('#sunEnd').prop( "readonly", false );
                         }
                         break;
                 }
