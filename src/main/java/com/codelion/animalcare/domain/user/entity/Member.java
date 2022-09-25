@@ -27,7 +27,9 @@ public class Member extends UserInfo{
     @OneToMany(mappedBy = "member")
     private List<Animal> animals = new ArrayList<>();
 
-
+    public void updateLoginPwd(String newLoginPwd){
+        password = newLoginPwd;
+    }
 
 
 //    @Builder(builderMethodName = "patientBuilder")

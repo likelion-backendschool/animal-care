@@ -2,14 +2,14 @@ package com.codelion.animalcare.domain.user.service;
 
 import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfo;
-import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfoPassword;
+import com.codelion.animalcare.domain.mypage.dto.UpdateUserInfoPassword;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import com.codelion.animalcare.domain.user.dto.DoctorSignUpDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
-import com.codelion.animalcare.global.error.exception.DoctorModifyAfterPasswordNotSameException;
-import com.codelion.animalcare.global.error.exception.DoctorModifyBeforePasswordNotSameException;
+import com.codelion.animalcare.global.error.exception.UserModifyAfterPasswordNotSameException;
+import com.codelion.animalcare.global.error.exception.UserModifyBeforePasswordNotSameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -82,7 +82,7 @@ public class DoctorService {
 
     // TODO 비밀번호 암호화 적용.
     // 의사 비밀번호 변경
-    public void updatePassword(UpdateDoctorMyPageInfoPassword.RequestDto requestDto, String email) throws DoctorModifyBeforePasswordNotSameException {
+    public void updatePassword(UpdateUserInfoPassword.RequestDto requestDto, String email) throws UserModifyBeforePasswordNotSameException {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         // doctor check
@@ -90,11 +90,11 @@ public class DoctorService {
 
         // 비밀번호 확인
         if (!encoder.matches(requestDto.getBeforePassword(), doctor.getPassword())) {
-            throw new DoctorModifyBeforePasswordNotSameException("기존 비밀번호가 일치하지 않습니다.");
+            throw new UserModifyBeforePasswordNotSameException("기존 비밀번호가 일치하지 않습니다.");
         }
         // 비밀번호 체크
         if (!requestDto.getNewPassword().equals(requestDto.getNewPasswordConfirm())) {
-            throw new DoctorModifyAfterPasswordNotSameException("새 비밀번호가 서로 일치하지 않습니다.");
+            throw new UserModifyAfterPasswordNotSameException("새 비밀번호가 서로 일치하지 않습니다.");
         }
 
 

@@ -2,10 +2,10 @@ package com.codelion.animalcare.domain.mypage.controller;
 
 import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfo;
-import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfoPassword;
+import com.codelion.animalcare.domain.mypage.dto.UpdateUserInfoPassword;
 import com.codelion.animalcare.domain.user.service.DoctorService;
-import com.codelion.animalcare.global.error.exception.DoctorModifyAfterPasswordNotSameException;
-import com.codelion.animalcare.global.error.exception.DoctorModifyBeforePasswordNotSameException;
+import com.codelion.animalcare.global.error.exception.UserModifyAfterPasswordNotSameException;
+import com.codelion.animalcare.global.error.exception.UserModifyBeforePasswordNotSameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,7 +72,7 @@ public class DoctorMyPageInfoController {
 
     @GetMapping("/info/modify/password")
     public String loadDoctorMyPageInfoPassword(
-            UpdateDoctorMyPageInfoPassword.RequestDto requestDto
+            UpdateUserInfoPassword.RequestDto requestDto
     ){
         return "myPage/doctor/info-modify-password";
     }
@@ -82,7 +82,7 @@ public class DoctorMyPageInfoController {
     public String updateDoctorMyPageInfoPassword(
             Model model,
             Principal principal,
-            @Valid UpdateDoctorMyPageInfoPassword.RequestDto requestDto,
+            @Valid UpdateUserInfoPassword.RequestDto requestDto,
             BindingResult bindingResult
     ){
         if(bindingResult.hasErrors()){
@@ -94,12 +94,12 @@ public class DoctorMyPageInfoController {
         // TODO try-catch문 대체품 찾기
         try{
             doctorService.updatePassword(requestDto, email);
-        } catch (DoctorModifyBeforePasswordNotSameException e){
+        } catch (UserModifyBeforePasswordNotSameException e){
             bindingResult.reject("DoctorModifyBeforePasswordNotSame", e.getMessage());
             // TODO  addAttribute 없애도 될듯?
             model.addAttribute("passwordDto", requestDto);
             return "myPage/doctor/info-modify-password";
-        } catch (DoctorModifyAfterPasswordNotSameException e){
+        } catch (UserModifyAfterPasswordNotSameException e){
             bindingResult.reject("DoctorModifyAfterPasswordNotSame", e.getMessage());
             model.addAttribute("passwordDto", requestDto);
             return "myPage/doctor/info-modify-password";

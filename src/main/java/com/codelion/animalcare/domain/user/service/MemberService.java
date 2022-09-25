@@ -1,9 +1,12 @@
 package com.codelion.animalcare.domain.user.service;
 
+import com.codelion.animalcare.domain.mypage.dto.UpdateUserInfoPassword;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.dto.MemberSignUpDto;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.MemberRepository;
+import com.codelion.animalcare.global.error.exception.UserModifyAfterPasswordNotSameException;
+import com.codelion.animalcare.global.error.exception.UserModifyBeforePasswordNotSameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -65,5 +68,31 @@ public class MemberService {
         Member newMember = memberDto.toEntity(beforeMember);
         memberRepository.save(newMember);
     }
+    @Transactional
+    public void updatePassword(UpdateUserInfoPassword.RequestDto requestDto, String email) throws UserModifyBeforePasswordNotSameException {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+
+        Member member = findMemberByEmail(email);
+
+        // 비밀번호 확인
+        if (!encoder.matches(requestDto.getBeforePassword(), member.getPassword())) {
+            throw new UserModifyBeforePasswordNotSameException("기존 비밀번호가 일치하지 않습니다.");
+        }
+        // 비밀번호 체크
+        if (!requestDto.getNewPassword().equals(requestDto.getNewPasswordConfirm())) {
+            throw new UserModifyAfterPasswordNotSameException("새 비밀번호가 서로 일치하지 않습니다.");
+        }
+
+
+
+        member.updateLoginPwd(encoder.encode(requestDto.getNewPassword()));
+
+        memberRepository.save(member);
+    }
+
+    private Member findMemberByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Member email:" + email + " can't found."));
+    }
 }

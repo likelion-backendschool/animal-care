@@ -1,9 +1,10 @@
 package com.codelion.animalcare.domain.mypage.controller;
 
-import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.mypage.dto.UpdateDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.UpdateUserInfoPassword;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.MemberService;
+import com.codelion.animalcare.global.error.exception.UserModifyAfterPasswordNotSameException;
+import com.codelion.animalcare.global.error.exception.UserModifyBeforePasswordNotSameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,7 @@ public class MemberMyPageInfoController {
         return "myPage/member/info";
     }
     @GetMapping("/info/modify")
-    public String loadDoctorMyPageInfoModify(Model model, Principal principal
+    public String loadMemberMyPageInfoModify(Model model, Principal principal
     ){
         String email = principal.getName();
         MemberDto memberDto =  memberService.findByEmail(email).get();
@@ -45,7 +46,7 @@ public class MemberMyPageInfoController {
     }
 
     @PostMapping("/info/modify")
-    public String updateDoctorMyPageInfo(@Valid MemberDto memberDto, BindingResult bindingResult){
+    public String updateMemberMyPageInfo(@Valid MemberDto memberDto, BindingResult bindingResult){
         System.out.println("qweqweqwe");
         if(bindingResult.hasErrors()){
             return "myPage/doctor/info-modify";
@@ -53,6 +54,41 @@ public class MemberMyPageInfoController {
         System.out.println("---------------testetes");
         System.out.println(memberDto.getId());
         memberService.update(memberDto);
+
+        return "redirect:/usr/member/mypage/info";
+    }
+    @GetMapping("/info/modify/password")
+    public String loadMemberMyPageInfoPassword(
+            UpdateUserInfoPassword.RequestDto requestDto
+    ){
+        return "myPage/member/info-modify-password";
+    }
+    @PostMapping("/info/modify/password")
+    public String updateMemberMyPageInfoPassword(
+            Model model,
+            Principal principal,
+            @Valid UpdateUserInfoPassword.RequestDto requestDto,
+            BindingResult bindingResult
+    ){
+        if(bindingResult.hasErrors()){
+            return "myPage/member/info-modify-password";
+        }
+
+        String email = principal.getName();
+
+        // TODO try-catch문 대체품 찾기
+        try{
+            memberService.updatePassword(requestDto, email);
+        } catch (UserModifyBeforePasswordNotSameException e){
+            bindingResult.reject("MemberModifyBeforePasswordNotSame", e.getMessage());
+            // TODO  addAttribute 없애도 될듯?
+            model.addAttribute("passwordDto", requestDto);
+            return "myPage/member/info-modify-password";
+        } catch (UserModifyAfterPasswordNotSameException e){
+            bindingResult.reject("MemberModifyAfterPasswordNotSame", e.getMessage());
+            model.addAttribute("passwordDto", requestDto);
+            return "myPage/member/info-modify-password";
+        }
 
         return "redirect:/usr/member/mypage/info";
     }

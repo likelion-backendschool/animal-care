@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class UpdateDoctorMyPageInfoPassword {
+public class UpdateUserInfoPassword {
     @Getter
     @Setter
     @AllArgsConstructor
