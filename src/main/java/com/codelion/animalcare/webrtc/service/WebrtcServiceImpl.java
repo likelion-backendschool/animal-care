@@ -1,5 +1,6 @@
 package com.codelion.animalcare.webrtc.service;
 
+import com.codelion.animalcare.chat.service.ChatRoomService;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
@@ -28,6 +29,7 @@ public class WebrtcServiceImpl implements WebrtcService {
     private final Parser parser;
     private final MemberService memberService;
     private final DoctorService doctorService;
+    private final ChatRoomService chatRoomService;
 
 //    @Autowired
 //    public WebrtcServiceImpl(final RoomService roomService, final Parser parser) {
@@ -62,7 +64,10 @@ public class WebrtcServiceImpl implements WebrtcService {
             return new ModelAndView(REDIRECT);
         }
         Optional<Long> optionalId = parser.parseId(sid);
-        optionalId.ifPresent(id -> Optional.ofNullable(uuid).ifPresent(name -> roomService.addRoom(new Room(id))));
+        optionalId.ifPresent(id -> Optional.ofNullable(uuid).ifPresent(name -> {
+            roomService.addRoom(new Room(id));
+            chatRoomService.createRoom(sid);
+        }));
 
 
         return this.displayMainPage(optionalId.orElse(null), uuid, principal);
@@ -80,6 +85,7 @@ public class WebrtcServiceImpl implements WebrtcService {
                 // open the chat room
                 modelAndView = new ModelAndView("webrtc/chat_room", "id", sid);
                 modelAndView.addObject("uuid", uuid);
+                modelAndView.addObject("chatRoom", chatRoomService.findChatRoomById(sid));
             }
         }
 
