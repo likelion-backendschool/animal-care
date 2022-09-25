@@ -1,0 +1,46 @@
+<html layout:decorate="~{global/layout}" xmlns="http://www.w3.org/1999/html">
+
+<div layout:fragment="content" class="container my-5">
+  <body>
+  <nav>
+    <a th:href="@{/usr/animal/list}" class="btn">뒤로</a>
+  </nav>
+  <nav>
+    <a class="btn btn-primary"
+       th:href="@{|/usr/animal/modify/${animal.id}|}"
+       th:text="수정"></a>
+    <a class="btn btn-primary"
+       onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;"
+       th:href="@{|/usr/animal/delete/${animal.id}|}"
+       th:text="삭제"></a>
+  </nav>
+  <table class="table">
+    <tbody>
+      <th class="col-2">이름</th>
+      <td th:text="${animal.getName()}"></td>
+    </tr>
+    <tr>
+      <th>생년월일</th>
+      <td th:text="${animal.getBirthday()}"></td>
+    </tr>
+    <tr>
+      <th>등록번호</th>
+      <td th:text="${animal.getRegistrationNum()}"></td>
+    </tr>
+    <tr>
+      <th>성별</th>
+      <td th:text="${animal.getGenderId() == 0 ? '여' : '남'}"></td>
+    </tr>
+    <tr>
+      <th>가입 기간</th>
+      <td th:text="${#temporals.format(animal.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    <tr>
+      <th>수정 기간</th>
+      <td th:text="${#temporals.format(animal.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+  </table>
+  </body>
+</div>
+</html>
