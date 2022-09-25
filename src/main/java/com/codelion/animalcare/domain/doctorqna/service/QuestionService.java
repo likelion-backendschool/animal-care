@@ -4,6 +4,8 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestD
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.repository.QuestionLike;
+import com.codelion.animalcare.domain.doctorqna.repository.QuestionLikeRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.UserService;
@@ -25,8 +27,9 @@ import java.util.List;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-
     private final UserService userService;
+
+    private final QuestionLikeRepository questionLikeRepository;
 
     @Transactional
     public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
@@ -58,14 +61,27 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Question> findAll(int page) {
-
+    public Page<Question> findAll(int page, String type, String kw) {
         List<Sort.Order> sortsList = new ArrayList<>();
         sortsList.add(Sort.Order.desc("createdAt"));
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sortsList));
 
-        return questionRepository.findAll(pageable);
+        switch (type != null ? type : " ") {
+            case "title" -> {
+                return questionRepository.findByTitleContaining(kw, pageable);
+            }
+            case "content" -> {
+                return questionRepository.findByContentContaining(kw, pageable);
+            }
+            case "member" -> {
+                return questionRepository.findByMemberContaining(kw, pageable);
+            }
+            default -> {
+                return questionRepository.findAll(pageable);
+            }
+        }
+
     }
 
     @Transactional
@@ -87,8 +103,32 @@ public class QuestionService {
 
     }
 
+    public boolean findLike(Long id, Member member) {
+        return questionLikeRepository.existsByQuestion_IdAndMember_Id(id, member.getId());
+    }
+
+    @Transactional(readOnly = false)
+    public boolean saveLike(Long id, Member member){
+
+        if(!findLike(id, member)) {
+
+            Question question = questionRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+            QuestionLike questionLike = new QuestionLike(member, question);
+            questionLikeRepository.save(questionLike);
+            questionRepository.plusLike(id);
+
+            return true;
+        }
+
+        questionLikeRepository.deleteByQuestion_IdAndMember_Id(id, member.getId());
+        questionRepository.minusLike(id);
+
+        return false;
+    }
+
     //delete flag
 
 
 
 }
+

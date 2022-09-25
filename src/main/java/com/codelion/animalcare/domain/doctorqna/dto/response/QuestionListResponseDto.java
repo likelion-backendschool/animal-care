@@ -16,6 +16,7 @@ public class QuestionListResponseDto {
     private LocalDateTime createdAt;
     private int view;
 
+    private int likeCount;
     private Member member;
 
     /*TODO : private String member
@@ -26,6 +27,7 @@ public class QuestionListResponseDto {
         this.title = entity.getTitle();
         this.createdAt = entity.getCreatedAt();
         this.view = entity.getView();
+        this.likeCount = entity.getLikeCount();
         this.member = entity.getMember();
     }
 }
