@@ -32,8 +32,5 @@ public class AnimalDto {
             registrationNum = animal.getRegistrationNum();
             genderId = animal.getGenderId();
         }
-        public Animal toEntity(Member member){
-            return Animal.builder()
-                    .
-        }
+
 }
