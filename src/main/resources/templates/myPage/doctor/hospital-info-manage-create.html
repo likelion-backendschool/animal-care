@@ -18,13 +18,13 @@
                 <tr>
                     <th>이름</th>
                     <td>
-                        <input class="form-control" type="text" th:field="*{name}">
+                        <input class="form-control" type="text" th:field="*{name}" required>
                     </td>
                 </tr>
                 <tr>
                     <th>전화 번호</th>
                     <td>
-                        <input class="form-control" type="text" th:field="*{phoneNum}">
+                        <input class="form-control" type="text" th:field="*{phoneNum}" required>
                     </td>
                 </tr>
                 <tr>
@@ -33,7 +33,7 @@
                     </th>
                     <td class="row">
                         <div class="col-auto">
-                            <input class="form-control-plaintext" type="text" id="zipcode"  th:field="*{zipcode}" readonly>
+                            <input class="form-control-plaintext" type="text" id="zipcode" placeholder="우편 번호"  th:field="*{zipcode}" required>
                         </div>
                         <div class="col-auto">
                             <button type="button" class="btn btn-primary" onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
@@ -43,7 +43,7 @@
                 <tr>
                     <th>도로명 주소</th>
                     <td>
-                        <input  type="text" id="street" name="street" placeholder="도로명주소" class=" form-control-plaintext col-md-6 col-12" th:field="*{street}" readonly>
+                        <input  type="text" id="street" name="street" placeholder="도로명주소" class=" form-control-plaintext col-md-6 col-12" th:field="*{street}" readonly required>
                     </td>
                 </tr>
                 <tr>
