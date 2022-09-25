@@ -3,7 +3,9 @@ package com.codelion.animalcare.domain.user.dto;
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Embedded;
@@ -16,6 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberDto {
 
     private Long id;
@@ -62,7 +66,6 @@ public class MemberDto {
     }
 
     public Member toEntity(Member member) {
-
         return Member.builder()
                 .id(member.getId())
                 .email(email)

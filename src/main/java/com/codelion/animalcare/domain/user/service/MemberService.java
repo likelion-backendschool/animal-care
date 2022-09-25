@@ -59,6 +59,11 @@ public class MemberService {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("Member id:" + memberId + " can't found."));
     }
-
+    @Transactional
+    public void update(MemberDto memberDto){
+        Member beforeMember = findMemberById(memberDto.getId());
+        Member newMember = memberDto.toEntity(beforeMember);
+        memberRepository.save(newMember);
+    }
 
 }
