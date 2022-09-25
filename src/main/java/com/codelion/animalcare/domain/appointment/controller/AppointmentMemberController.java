@@ -61,7 +61,7 @@ public class AppointmentMemberController {
 
             LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = hospitalService.findById(appointmentFormDto.getHospitalId());
 
-            List<AnimalDto> animalDtoList = animalService.findByMember(memberDto);
+            List<AnimalDto> animalDtoList = animalService.findByMember(memberDto.getEmail());
 
             model.addAttribute("memberDto", memberDto);
             model.addAttribute("hospitalDto", hospitalDto);
