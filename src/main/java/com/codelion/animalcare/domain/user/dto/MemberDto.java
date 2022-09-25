@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,9 @@ public class MemberDto {
     private int genderId;
 
     private String auth;
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
     private List<AnimalDto> animals;
 
     public MemberDto(Member member) {
@@ -50,6 +54,8 @@ public class MemberDto {
         phoneNum = member.getPhoneNum();
         genderId = member.getGenderId();
         auth = member.getAuth();
+        createdAt = member.getCreatedAt();
+        updatedAt = member.getUpdatedAt();
         animals = member.getAnimals().stream()
                 .map(animals -> new AnimalDto(animals))
                 .collect(Collectors.toList());

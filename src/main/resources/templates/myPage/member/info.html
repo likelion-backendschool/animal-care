@@ -1,0 +1,56 @@
+<html layout:decorate="~{global/layout}">
+<div class="container my-5" layout:fragment="content">
+    <nav>
+        <a th:href="@{/usr/member/mypage}" class="btn">뒤로</a>
+    </nav>
+    <h2 class="p-4">
+        내 정보
+    </h2>
+    <nav>
+<!--        <a class="btn btn-primary"-->
+<!--           th:href="@{/usr/doctor/mypage/info/modify}"-->
+<!--           th:text="수정"></a>-->
+        수정
+    </nav>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>이메일</th>
+            <td th:text="${memberDto.getEmail()}"></td>
+        </tr>
+        <tr>
+            <th>비밀번호</th>
+            <td>
+<!--                <a class="btn btn-primary" th:href="@{/usr/doctor/mypage/info/modify/password}">비밀번호 수정-->
+<!--                </a>-->
+                비밀번호 수정
+            </td>
+        </tr>
+        <tr>
+            <th class="col-2">이름</th>
+            <td th:text="${memberDto.getName()}"></td>
+        </tr>
+        <tr>
+            <th>생년월일</th>
+            <td th:text="${memberDto.getBirthday()}"></td>
+        </tr>
+        <tr>
+            <th>핸드폰 번호</th>
+            <td th:text="${memberDto.getPhoneNum()}"></td>
+        </tr>
+        <tr>
+            <th>성별</th>
+            <td th:text="${memberDto.getGenderId() == 0 ? '여' : '남'}"></td>
+        </tr>
+        <tr>
+            <th>가입 기간</th>
+            <td th:text="${#temporals.format(memberDto.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        <tr>
+            <th>수정 기간</th>
+            <td th:text="${#temporals.format(memberDto.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>
