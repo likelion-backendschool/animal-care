@@ -12,10 +12,10 @@
         </nav>
     </div>
     <div class="row">
-        <div class="col-2">
+        <div class="col-md-2">
             <div id="hospital-list" class="list-group"></div>
         </div>
-        <div class="col-10">
+        <div class="col-md-10">
             <div id="map" style="width:100%; padding-bottom: 100%;"></div>
         </div>
     </div>
@@ -261,6 +261,7 @@
             }
         }
 
+
         // 의사 고르는 창(오른쪽에서 나옴)
         async function chooseDoctor(hospitalId,hospitalName){
             try {
@@ -275,24 +276,32 @@
                         <h5 class="card-title">${doctor.name}</h5>
                         <p class="card-text">전공 : ${doctor.major || ""}</p>
                         <p class="card-text">소개 : ${doctor.introduce || ""}</p>
-                        <a href="#" class="btn btn-primary disabled">오프라인 예약</a>
-                        <span class="dropdown">
-                          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="false" >
+                        <p>
+                            <a href="#" class="btn btn-primary disabled">오프라인 예약</a>
+                          <button class="btn btn-primary collapse-date" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-date-${doctor.id}" aria-expanded="false" aria-controls="collapseExample">
                             온라인 예약
                           </button>
-                          <form action="/usr/member/appointment/others" method="get" class="dropdown-menu p-4">
-                            <div class="mb-3">
-                              <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
-                              <input type="hidden" name="hospitalId" value="${hospitalId}">
-                              <input type="hidden" name="doctorId" value="${doctor.id}">
-                              <input type="datetime-local" class="form-control" id="appointmentDateTime" name="date" value="${new Date().toISOString().slice(0, 16)}">
-                            </div>
-                            <button type="submit" class="btn btn-primary">날짜 결정</button>
-                          </form>
-                        </span>
+                        </p>
+                        <div class="collapse" id="collapse-date-${doctor.id}">
+                            <form action="/usr/member/appointment/others" method="get" class="p-4">
+                                <div class="mb-3">
+                                  <input type="hidden" name="hospitalId" value="${hospitalId}">
+                                  <input type="hidden" name="doctorId" value="${doctor.id}">
+                                  <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
+                                  <input type="date" class="form-control appointment-date" id="appointment-date-${doctor.id}" name="date">
+                                </div>
+                                <div class="collapse" id="appointmentTime-${doctor.id}">
+                                    hi
+                                </div>
+
+
+<!--                            <button type="submit" class="btn btn-primary">날짜 결정</button>-->
+                            </form>
+                        </div>
                       </div>
                     </div>`)
-                    .reduce( (previousValue, currentValue) => previousValue + currentValue, "");
+                    .reduce((previousValue, currentValue) => previousValue + currentValue, "");
+
                 $('#offcanvasRight').empty()
                     .append(`
                     <div class="offcanvas-header">
@@ -303,10 +312,31 @@
                         ${cards}
                     </div>
                     `)
+
+                $('.appointment-date').on('input', async e => {
+                    const doctorId = e.target?.id?.split('-')[2];
+                    const date = e.target?.value;
+                    const appointmentTimes = await $.ajax({
+                        url: `/usr/appointment/times`,
+                        type: 'GET',
+                        data:{
+                            doctorId,
+                            date
+                        }
+                    });
+                    console.log(appointmentTimes)
+                    console.log($(`#appointmentTime-${doctorId}`))
+                    $(`#appointmentTime-${doctorId}`)
+                        .empty()
+                        .addClass("show")
+                        .append(`
+                            ${appointmentTimes}
+                        `)
+
+                })
             } catch (err) {
                 console.error(err)
             }
-
         }
 
         function updateMarker() {
@@ -338,7 +368,7 @@
 
                 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
                 const content =
-                    '<div class="card">' +
+                    '<div class="card" style="min-width: 300px">' +
                     '    <div class="info">' +
                     '        <div class="card-header">' +
                     hospital.name +
@@ -346,7 +376,7 @@
                     '        </div>' +
                     '        <div class="card-body">' +
                     '            <div class="desc">' +
-                    '                <p>' + address.street + address.detail + '</p>' +
+                    '                <p>' + address.street + ' ' + address.detail + '</p>' +
                     '            </div>' +
                     '            <div class="container">' +
                     '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
@@ -390,7 +420,7 @@
 
             // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
             const content =
-                '<div class="card">' +
+                '<div class="card" style="min-width: 300px">' +
                 '    <div class="info">' +
                 '        <div class="card-header">' +
                 hospital.name  +

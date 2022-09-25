@@ -19,7 +19,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -169,4 +172,19 @@ public class AppointmentService {
 
         return appointmentDto;
     }
+
+    /**
+     * 의사가 해당 날짜에 예약 되어있는 시간을 출력함.
+     * @param date
+     * @param doctorId
+     * @return
+     */
+    public List<LocalDateTime> findDateTimesByDateAndDoctor(LocalDate date, Long doctorId){
+        // UTC로 검색하기 위해 Java.sql.Date 대신 LocalDate 사용
+        LocalDateTime utcDateTimeFront = date.atStartOfDay();
+        LocalDateTime utcDateTimeEnd = date.atStartOfDay().plusDays(1);
+        System.out.println(utcDateTimeFront + " " + utcDateTimeEnd);
+        return appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctorId);
+    }
+
 }
