@@ -18,13 +18,17 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("usr/doctor/mypage/info")
+@RequestMapping("/usr/doctor/mypage")
 @RequiredArgsConstructor
 public class DoctorMyPageInfoController {
     private final DoctorService doctorService;
 
+    @GetMapping("")
+    public String loadDoctorMyPage(){
+        return "myPage/doctor/index";
+    }
     // 내 정보
-    @GetMapping()
+    @GetMapping("/info")
     public String loadDoctorMyPageInfo(
             Model model,
             Principal principal
@@ -38,7 +42,7 @@ public class DoctorMyPageInfoController {
     }
 
     // 내 정보 수정 페이지
-    @GetMapping("modify")
+    @GetMapping("/info/modify")
     public String loadDoctorMyPageInfoModify(
             Model model,
             Principal principal
@@ -52,7 +56,7 @@ public class DoctorMyPageInfoController {
     }
 
     // 내 정보 수정 요청(비밀번호 제외)
-    @PostMapping("modify")
+    @PostMapping("/info/modify")
     public String updateDoctorMyPageInfo(
             @Valid UpdateDoctorMyPageInfo.RequestDto requestDto,
             BindingResult bindingResult
@@ -66,7 +70,7 @@ public class DoctorMyPageInfoController {
         return "redirect:/usr/doctor/mypage/info";
     }
 
-    @GetMapping("modify/password")
+    @GetMapping("/info/modify/password")
     public String loadDoctorMyPageInfoPassword(
             UpdateDoctorMyPageInfoPassword.RequestDto requestDto
     ){
@@ -74,7 +78,7 @@ public class DoctorMyPageInfoController {
     }
 
     // 비밀번호 수정.
-    @PostMapping("modify/password")
+    @PostMapping("/info/modify/password")
     public String updateDoctorMyPageInfoPassword(
             Model model,
             Principal principal,
