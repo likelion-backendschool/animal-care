@@ -42,37 +42,37 @@
                         <tr>
                             <th>월요일</th>
                             <td th:if="${OpeningHours.getMonEnd()}" th:text="|${OpeningHours.monStart} ~ ${OpeningHours.monEnd}|"></td>
-                            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+                            <td th:unless="${OpeningHours.getMonEnd()}">정기 휴무</td>
                         </tr>
                         <tr>
                             <th>화요일</th>
                             <td th:if="${OpeningHours.getTueEnd()}" th:text="|${OpeningHours.getTueStart()} ~ ${OpeningHours.getTueEnd()}|"></td>
-                            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+                            <td th:unless="${OpeningHours.getTueEnd()}">정기 휴무</td>
                         </tr>
                         <tr>
                             <th>수요일</th>
                             <td th:if="${OpeningHours.getWedEnd()}" th:text="|${OpeningHours.getWedStart()} ~ ${OpeningHours.getWedEnd()}|"></td>
-                            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+                            <td th:unless="${OpeningHours.getWedEnd()}">정기 휴무</td>
                         </tr>
                         <tr>
                             <th>목요일</th>
                             <td th:if="${OpeningHours.getThuEnd()}" th:text="|${OpeningHours.getThuStart()} ~ ${OpeningHours.getThuEnd()}|"></td>
-                            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+                            <td th:unless="${OpeningHours.getThuEnd()}">정기 휴무</td>
                         </tr>
                         <tr>
                             <th>금요일</th>
                             <td th:if="${OpeningHours.getFriEnd()}" th:text="|${OpeningHours.getFriStart()} ~ ${OpeningHours.getFriEnd()}|"></td>
-                            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+                            <td th:unless="${OpeningHours.getFriEnd()}">정기 휴무</td>
                         </tr>
                         <tr>
                             <th>토요일</th>
                             <td th:if="${OpeningHours.getSatEnd()}" th:text="|${OpeningHours.getSatStart()} ~ ${OpeningHours.getSatEnd()}|"></td>
-                            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+                            <td th:unless="${OpeningHours.getSatEnd()}">정기 휴무</td>
                         </tr>
                         <tr>
                             <th>일요일</th>
                             <td th:if="${OpeningHours.getSunEnd()}" th:text="|${OpeningHours.getSunStart()} ~ ${OpeningHours.getSunEnd()}|"></td>
-                            <td th:unless="${OpeningHours.getMonEnd()}">휴무 요일</td>
+                            <td th:unless="${OpeningHours.getSunEnd()}">정기 휴무</td>
                         </tr>
                     </table>
                 </th>
