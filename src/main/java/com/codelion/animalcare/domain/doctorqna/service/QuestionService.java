@@ -8,6 +8,7 @@ import com.codelion.animalcare.domain.doctorqna.repository.QuestionLike;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionLikeRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -103,12 +104,12 @@ public class QuestionService {
 
     }
 
-    public boolean findLike(Long id, Member member) {
+    public boolean findLike(Long id, UserInfo member) {
         return questionLikeRepository.existsByQuestion_IdAndMember_Id(id, member.getId());
     }
 
     @Transactional(readOnly = false)
-    public boolean saveLike(Long id, Member member){
+    public boolean saveLike(Long id, UserInfo member){
 
         if(!findLike(id, member)) {
 

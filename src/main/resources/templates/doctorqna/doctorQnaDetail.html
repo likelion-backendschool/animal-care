@@ -12,7 +12,7 @@
                 <h2 th:text="|${question.title}|"></h2>
                 <div class = "d-flex justify-content-between">
                     <div class ="d-flex items-center fs-6">
-                        <div class = "text-dark text-bold" th:text="|${question.member.name}님&nbsp;&nbsp;|"></div>
+                        <div class = "text-dark text-bold" th:text="|${question.member?.name}님&nbsp;&nbsp;|"></div>
                         <div class = "text-muted" th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
                     </div>
                 </div>
