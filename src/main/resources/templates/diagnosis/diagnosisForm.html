@@ -32,14 +32,23 @@
                     </td>
                 <tr>
                     <th>사육 장소</th>
-                    <td colspan="4" th:text="${diagnosis?.breedingPlace}"></td>
+                    <td colspan="4">
+                        <input type="text" th:field="*{breedingPlace}" class="form-control" placeholder="사육 장소를 입력하세요. 예) 아파트, 마당"/>
+                    </td>
                 </tr>
                 <tr>
                     <th class="col-2" rowspan="4" >동물의 표시</th>
+
                     <th class="col-2">종류</th>
-                    <td class="col-3" th:text="${diagnosis?.animalType}"></td>
+                    <td>
+                        <input type="text" th:field="*{animalType}" class="form-control" placeholder="예) 개"/>
+                    </td>
+
                     <th class="col-2">품종</th>
-                    <td th:text="${diagnosis?.animalBreed}"></td>
+                    <td>
+                        <input type="text" th:field="*{animalBreed}" class="form-control" placeholder="예) 시츄"/>
+                    </td>
+
                 </tr>
                 <tr>
                     <th>동물명</th>
@@ -48,24 +57,29 @@
                     <td th:text="${animal?.genderId == 0 ? '암컷' : '수컷'}"></td>
                 </tr>
                 <tr>
-                    <th>연령</th>
-                    <td th:text="|${diagnosis?.animalAge}세|">X</td>
+<!--                    TODO 나이 계산해야함-->
+                    <th>연령(연도)</th>
+                    <td th:text="|${animal?.birthday}세|">X</td>
                     <th>모색</th>
-                    <td th:text="${diagnosis?.animalCoatColor}"></td>
+                    <td>
+                        <input type="text" th:field="*{animalCoatColor}" class="form-control" placeholder="예) 흰색"/>
+                    </td>
+
                 </tr>
                 <tr>
                     <th>특징</th>
-                    <td colspan="4" th:text="${diagnosis?.animalSpecial}">X</td>
+                    <td colspan="4">
+                        <input type="text" th:field="*{animalSpecial}" class="form-control" placeholder="특징을 입력하세요"/>
+                    </td>
                 </tr>
                 <tr>
                     <th>병명</th>
                     <td colspan="4">
                         <input type="text" th:field="*{diseaseName}" class="form-control" placeholder="병명을 입력하세요"/>
-                        </input>
                     </td>
                 </tr>
                 <tr>
-                    <th>발병 연월일<br />(임신 연월일)</th>
+                    <th>발병 연월일<br/>(임신 연월일)</th>
                     <td colspan="4">
                     <input type="date" th:name="diseaseDate" th:field="*{diseaseDate}"  class="form-control">
                     </td>
@@ -108,6 +122,7 @@
 
         </div>
 <!-- modal body end-->
+
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">작성완료</button>
 
@@ -127,12 +142,6 @@
 </div> <!-- /container -->
 
 </body>
-    <script>
-        function test_iframe(){
-            form.target="_top"
-            form.submit();
-        }
-    </script>
 
 </div>
 </html>
