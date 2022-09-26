@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/usr/mypage/member/delivery/info")
+@RequestMapping("/usr/member/mypage/delivery/info")
 public class DeliveryInfoController {
 
     @GetMapping()

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ItemOrderListController {
 
 
-    @GetMapping("/usr/mypage/member/itemOrder/list")
+    @GetMapping("/usr/member/mypage/itemOrder/list")
     public String createForm(Model model) {
         model.addAttribute("orderListForm", new ItemOrderListDto());
         return "itemOrder/list";

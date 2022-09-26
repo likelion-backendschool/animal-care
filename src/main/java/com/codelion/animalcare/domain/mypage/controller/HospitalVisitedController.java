@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/usr/mypage/member/hospitalVisited/info")
+@RequestMapping("/usr/member/mypage/hospitalVisited/info")
 public class HospitalVisitedController {
 
     private final MemberService memberService;

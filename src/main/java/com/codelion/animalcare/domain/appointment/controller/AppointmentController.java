@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/usr/mypage/member/appointment")
+@RequestMapping("/usr/member/mypage/appointment")
 public class AppointmentController {
 
     private final AppointmentQueryService appointmentQueryService;
@@ -68,7 +68,7 @@ public class AppointmentController {
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
         appointmentService.appointment(memberDto.get(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
-        return "redirect:/usr/mypage/member/appointment/info";
+        return "redirect:/usr/member/mypage/appointment/info";
     }
 
     /**
@@ -93,7 +93,7 @@ public class AppointmentController {
     @PostMapping("/info/{appointmentId}/cancel")
     public String cancelAppointment(@PathVariable("appointmentId") Long appointmentId) {
         appointmentService.cancelAppointment(appointmentId);
-        return "redirect:/usr/mypage/member/appointment/info";
+        return "redirect:/usr/member/mypage/appointment/info";
     }
 
     /**
@@ -138,7 +138,7 @@ public class AppointmentController {
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
         appointmentService.updateAppointment(appointmentId, memberDto.get(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
-            return "redirect:/usr/mypage/member/appointment/info";
+            return "redirect:/usr/member/mypage/appointment/info";
     }
 
 }

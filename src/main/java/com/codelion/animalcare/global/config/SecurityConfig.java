@@ -38,12 +38,8 @@ public class SecurityConfig {
 //                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
                 .and() // 문맥의 끝
-<<<<<<< HEAD
                 .csrf().ignoringAntMatchers("/**")
 
-=======
-                    .csrf().ignoringAntMatchers("/**")
->>>>>>> 281ed786f3ac45ca1db198f22d1214bb8378f07b
                 .and() // 문맥의 끝
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(
                         XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
@@ -66,7 +62,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
         // 403 에러로 인한 ignore 처리
-        http.csrf().ignoringAntMatchers("/usr/**");
+//        http.csrf().ignoringAntMatchers("/usr/**");
 
         return http.build();
     }

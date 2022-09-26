@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -22,18 +23,19 @@ import java.util.Optional;
  */
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/usr/member")
 public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/usr/mypage/member/new")
+    @GetMapping("/mypage/new")
     public String createForm(Model model) {
 
         model.addAttribute("memberForm", new MemberForm());
         return "myPage/member/memberForm";
     }
 
-    @PostMapping("/usr/mypage/member/new")
+    @PostMapping("/mypage/new")
     public String create(@Valid MemberForm form, BindingResult result, Principal principal) {
 
         if (result.hasErrors()) {
@@ -49,11 +51,11 @@ public class MemberController {
 
         memberService.join(memberDto.get());
 
-        return "redirect:/usr/mypage/member";
+        return "redirect:/usr/member/mypage";
     }
 
 
-    @GetMapping("/usr/mypage/member/info")
+    @GetMapping("/mypage/info")
     public String list(Model model, Principal principal) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
@@ -62,13 +64,13 @@ public class MemberController {
         return "myPage/member/memberInfo";
     }
 
-    @GetMapping("/usr/member/signup")
+    @GetMapping("/signup")
     public String signup(Model model){
         model.addAttribute("memberSignUpDto", new MemberSignUpDto());
         return "login/memberSignup";
     }
 
-    @PostMapping("/usr/member/signup")
+    @PostMapping("/signup")
     public String signup(@Valid MemberSignUpDto memberSignUpDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "login/memberSignup";

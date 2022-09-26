@@ -33,7 +33,7 @@
                         <td th:text="${ad.status}"></td>
                         <td>
                             <a th:if="${ad.status.name() == 'READY'}"
-                            href="#" th:href="@{/usr/mypage/member/appointment/info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">MODIFY</a>
+                            href="#" th:href="@{/usr/member/mypage/appointment/info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">MODIFY</a>
                         </td>
                         <td>
                             <a th:if="${ad.status.name() == 'READY'}" href="#" th:href="'javascript:cancel('+${ad.appointmentId}+')'"
@@ -54,7 +54,7 @@
             function cancel(id) {
                 var form = document.createElement("form");
                 form.setAttribute("method", "post");
-                form.setAttribute("action", "/usr/mypage/member/appointment/info/" + id + "/cancel");
+                form.setAttribute("action", "/usr/member/mypage/appointment/info/" + id + "/cancel");
                 document.body.appendChild(form);
                 form.submit();
             }
