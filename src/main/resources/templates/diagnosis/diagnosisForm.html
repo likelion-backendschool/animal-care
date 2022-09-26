@@ -115,8 +115,10 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">작성완료</button>
 
+<!--                TODO 여기서 수정이 필요한듯. class 안에서 redirect:/로 해결이 안되는 상황. 진단서 작성완료 시 예약내역으로 이동해야함-->
 <!--                <button type="submit" class="btn btn-primary"-->
 <!--                        onclick="location.href='/usr/mypage/doctor/member-manage/appointments/all'">작성완료</button>-->
+<!--                <button window.parent.location.href="/usr/mypage/doctor/member-manage/appointments/all" type="submit" class="btn btn-primary">작성완료</button>-->
 
                 <a href="#" th:href="@{/usr/mypage/doctor/member-manage/appointments/all}" class="btn btn-primary" role="button">예약내역으로 이동</a>
 
