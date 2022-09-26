@@ -21,28 +21,28 @@ public class WebrtcController {
     }
 
     @GetMapping({"/diagnosis", "/webrtc/webrtc_main"})
-    public ModelAndView displayMainPage(final Long id, final String uuid, Principal principal) {
-        return this.webrtcService.displayMainPage(id, uuid, principal);
+    public ModelAndView displayMainPage(final Long id, final String uuid) {
+        return this.webrtcService.displayMainPage(id, uuid);
     }
 
     @PostMapping(value = "/room", params = "action=create")
-    public ModelAndView processRoomSelection(@ModelAttribute("id") final String sid, @ModelAttribute("uuid") final String uuid, final BindingResult binding, Principal principal) {
-        return this.webrtcService.processRoomSelection(sid, uuid, binding, principal);
+    public ModelAndView processRoomSelection(@ModelAttribute("id") final String sid, @ModelAttribute("uuid") final String uuid, final BindingResult binding) {
+        return this.webrtcService.processRoomSelection(sid, uuid, binding);
     }
 
     @GetMapping("/room/{sid}/user/{uuid}")
-    public ModelAndView displaySelectedRoom(@PathVariable("sid") final String sid, @PathVariable("uuid") final String uuid, Principal principal) {
-        return this.webrtcService.displaySelectedRoom(sid, uuid, principal);
+    public ModelAndView displaySelectedRoom(@PathVariable("sid") final String sid, @PathVariable("uuid") final String uuid) {
+        return this.webrtcService.displaySelectedRoom(sid, uuid);
     }
 
     @GetMapping("/room/{sid}/user/{uuid}/exit")
-    public ModelAndView processRoomExit(@PathVariable("sid") final String sid, @PathVariable("uuid") final String uuid, Principal principal) {
-        return this.webrtcService.processRoomExit(sid, uuid, principal);
+    public ModelAndView processRoomExit(@PathVariable("sid") final String sid, @PathVariable("uuid") final String uuid) {
+        return this.webrtcService.processRoomExit(sid, uuid);
     }
 
     @GetMapping("/room/random")
-    public ModelAndView requestRandomRoomNumber(@ModelAttribute("uuid") final String uuid, Principal principal) {
-        return webrtcService.requestRandomRoomNumber(uuid, principal);
+    public ModelAndView requestRandomRoomNumber(@ModelAttribute("uuid") final String uuid) {
+        return webrtcService.requestRandomRoomNumber(uuid);
     }
 
     @GetMapping("/offer")

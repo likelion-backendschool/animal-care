@@ -52,6 +52,19 @@ public class AppointmentService {
         return result;
     }
 
+
+//    public List<LoadMyPageDoctorAppointment.ResponseDto> findAppointmentByDoctorEmail(String email) {
+//        Doctor doctor = doctorRepository.findByEmail(email)
+//                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
+//
+//        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
+//
+//        List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
+//                .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
+//
+//        return result;
+//    }
+
     public List<Appointment> findByMemberId(long id) {
         return appointmentRepository.findByMemberId(id);
     }
@@ -203,6 +216,7 @@ public class AppointmentService {
         return appointmentDto;
     }
 
+
     /**
      * 의사가 해당 날짜에 예약 되어있는 시간을 출력함.
      * @param date
@@ -218,3 +232,4 @@ public class AppointmentService {
     }
 
 }
+

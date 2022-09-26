@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Chat Room</title>
@@ -30,11 +31,12 @@
     </style>
     <link rel="stylesheet" type="text/css" href="/css/webrtc/webrtc_main.css"/>
 </head>
+
 <body class="text-center">
 
 <!-- Begin page content -->
 <main role="main" class="container-fluid">
-    <h1>Simple WebRTC Signalling Server</h1>
+    <h1>Online Medical Office</h1>
     <input type="hidden" id="id" name="id" th:value="${id}"/>
     <div class="col-lg-12 mb-3">
         <div class="mb-3" th:text="'User: ' + ${uuid} + ' @ Room #' + ${id}">
@@ -84,7 +86,26 @@
 </main>
 
 <script src="/js/webrtc/webrtc_client.js"></script>
+
 </body>
-<iframe th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" width="100%" height="550"></iframe>
+
+<!-- iframe 사용: 화면 나누기 -->
+
+<!--    권한: Doctor -->
+<a sec:authorize="hasRole('DOCTOR')">
+    <!--채팅 기능 -->
+    <iframe th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" width="49%" height="600"></iframe>
+
+<!--    예약내역 확인. 예약내역에서 진단서 작성-->
+    <iframe th:src = "@{|/usr/mypage/doctor/member-manage/appointments/all|}" width="50%" height = "600"> </iframe>
+</a>
+
+
+<!--    권한: MEMBER -->
+<a sec:authorize="hasRole('MEMBER')">
+    <!--채팅 기능 -->
+    <iframe th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" width="100%" height="600"></iframe>
+</a>
+
 
 </html>
