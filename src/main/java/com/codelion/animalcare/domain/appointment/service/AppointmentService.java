@@ -216,8 +216,7 @@ public class AppointmentService {
         return appointmentDto;
     }
 
-<<<<<<< HEAD
-=======
+
     /**
      * 의사가 해당 날짜에 예약 되어있는 시간을 출력함.
      * @param date
@@ -232,5 +231,4 @@ public class AppointmentService {
         return appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctorId);
     }
 
->>>>>>> c5845da2c01441085afbbf626b22132c21918417
 }
