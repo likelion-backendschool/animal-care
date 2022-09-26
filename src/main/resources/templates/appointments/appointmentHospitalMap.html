@@ -291,7 +291,7 @@
                                   <input type="hidden" name="hospitalId" value="${hospitalId}">
                                   <input type="hidden" name="doctorId" value="${doctor.id}">
                                   <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
-                                  <input type="date" class="form-control appointment-date" id="appointment-date-${doctor.id}" name="date">
+                                  <input type="date" class="form-control appointment-date" id="appointment-date-${doctor.id}">
                                 </div>
                                 <div class="collapse"  id="appointment-time-${doctor.id}">
 
@@ -379,7 +379,7 @@
         function submitOthers(time, doctorId){
             // 시간 추가.
             const beforeVal= $(`#appointment-date-${doctorId}`).attr('disabled', true).val();
-            const date = `${beforeVal}T${time}:00`
+            const date = `${beforeVal}T${time}:00`;
             $('#other-form')
                 .append(`<input type="hidden" value="${date}" name="date">`);
             $(`#other-form`).submit();
