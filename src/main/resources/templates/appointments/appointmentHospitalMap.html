@@ -263,12 +263,15 @@
 
 
         // 의사 고르는 창(오른쪽에서 나옴)
-        async function chooseDoctor(hospitalId,hospitalName){
+        async function chooseDoctor(hospitalId, hospitalName, openingHours){
+            const openingHourArr = openingHours.split('/', 7);
+            console.log('weekday: ', openingHourArr);
             try {
                 const doctors = await $.ajax({
                     url: `/usr/doctor/hospital/${hospitalId}`,
                     type: 'GET',
                 });
+                console.log(openingHours);
                 console.log(doctors);
                 const cards = doctors.map(doctor =>
                     `<div class="card">
@@ -283,15 +286,15 @@
                           </button>
                         </p>
                         <div class="collapse" id="collapse-date-${doctor.id}">
-                            <form action="/usr/member/appointment/others" method="get" class="p-4">
+                            <form id="other-form" action="/usr/member/appointment/others" method="get" class="p-4">
                                 <div class="mb-3">
                                   <input type="hidden" name="hospitalId" value="${hospitalId}">
                                   <input type="hidden" name="doctorId" value="${doctor.id}">
                                   <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
                                   <input type="date" class="form-control appointment-date" id="appointment-date-${doctor.id}" name="date">
                                 </div>
-                                <div class="collapse" id="appointmentTime-${doctor.id}">
-                                    hi
+                                <div class="collapse"  id="appointment-time-${doctor.id}">
+
                                 </div>
 
 
@@ -316,27 +319,70 @@
                 $('.appointment-date').on('input', async e => {
                     const doctorId = e.target?.id?.split('-')[2];
                     const date = e.target?.value;
-                    const appointmentTimes = await $.ajax({
+                    let appointmentTimes = await $.ajax({
                         url: `/usr/appointment/times`,
                         type: 'GET',
                         data:{
                             doctorId,
                             date
                         }
-                    });
+                    })
+                    // datetime에서 time만 추출.
+                    appointmentTimes = appointmentTimes.map(item => item.substring(11,16));
+                    const hospitalTime = openingHourArr[(new Date(date).getDay() + 7) % 7]
+                    console.log('hospitalTime:',hospitalTime)
+                    const [openTime, closeTime] = hospitalTime.split('~', 2);
+                    let content = '';
+
+                    // 10분 단위 버튼 제작.
+                    if(openTime && closeTime){
+                        let [openHour, openMinute] = openTime.split(':', 2).map(item => Number(item));
+                        openMinute = Math.ceil(openMinute / 10) * 10;
+                        const [closeHour, closeMinute] = closeTime.split(':', 2).map(item => Number(item));
+                        console.log(openHour, closeHour, openMinute, closeMinute);
+                        while(openHour < closeHour || openMinute < closeMinute){
+                            // 시간을 string으로
+                            const time = `${String(openHour).padStart(2, '0')}:${String(openMinute).padStart(2, '0')}`;
+                            console.log(time, appointmentTimes.includes(time), appointmentTimes);
+                            // 이미 예약된 곳은 버튼을 disabled 한다.
+                            if(appointmentTimes.includes(time)) content +=`
+                            <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn col-4 b-1" disabled>${time}</button>
+                            `
+                            else content +=`
+                            <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn btn-primary col-4 b-1">${time}</button>
+                            `
+
+                            // 시간 조정.
+                            if(openMinute === 50){
+                                openHour++; openMinute = 0;
+                            }
+                            else openMinute += 10;
+                        }
+                    }
+                    console.log(content)
                     console.log(appointmentTimes)
-                    console.log($(`#appointmentTime-${doctorId}`))
-                    $(`#appointmentTime-${doctorId}`)
+                    console.log(hospitalTime)
+                    $(`#appointment-time-${doctorId}`)
                         .empty()
                         .addClass("show")
                         .append(`
-                            ${appointmentTimes}
-                        `)
-
+                            <div class="row"  style="height: 250px; overflow-y: scroll;">
+                                ${content === '' ? "정기휴무 입니다." : content}
+                            </div>
+                        `);
                 })
             } catch (err) {
                 console.error(err)
             }
+        }
+
+        function submitOthers(time, doctorId){
+            // 시간 추가.
+            const beforeVal= $(`#appointment-date-${doctorId}`).attr('disabled', true).val();
+            const date = `${beforeVal}T${time}:00`
+            $('#other-form')
+                .append(`<input type="hidden" value="${date}" name="date">`);
+            $(`#other-form`).submit();
         }
 
         function updateMarker() {
@@ -365,7 +411,7 @@
 
                 // markers에 저장.
                 markers.push(marker);
-
+                console.log(hospital.openingHours);
                 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
                 const content =
                     '<div class="card" style="min-width: 300px">' +
@@ -380,7 +426,7 @@
                     '            </div>' +
                     '            <div class="container">' +
                     '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
-                    `               <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id}, '${hospital.name}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
+                    `               <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id}, '${hospital.name}', '${hospital.openingHours}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
                     '           </div>' +
                     '        </div>' +
                     '    </div>' +
@@ -407,7 +453,6 @@
         function setCenterByHospital(index) {
             const hospital = hospitals[index];
             const marker = markers[index];
-            console.log(hospital)
             const {latitude, longitude, street, detail} = hospital.address;
 
             // 이동할 위도 경도 위치를 생성합니다
@@ -433,7 +478,7 @@
                 '            </div>' +
                 '            <div class="container">' +
                 '                 <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
-                `                 <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id},'${hospital.name}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
+                `                 <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id},'${hospital.name}', '${hospital.openingHours}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
                 '           </div>' +
                 '        </div>' +
                 '    </div>' +
