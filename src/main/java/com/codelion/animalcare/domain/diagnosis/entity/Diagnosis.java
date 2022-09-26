@@ -74,25 +74,13 @@ public class Diagnosis extends BaseEntity{
     @Column(nullable = false, length=50)
     private String diseaseName;
 
-//    // 발병 연월일
-//    @Column(nullable = false)
-//    private Date diseaseDate;
-//    // 진단 연월일
-//    @Column(nullable = false)
-//    private Date diagnosisDate;
-
-//    임시로 바꿔봄 Date -> LocalDateTime
-//    잠시 nullable = true
     // 발병 연월일
-//    @Column(nullable = true)
-//    private LocalDateTime diseaseDate;
-
     @Column(nullable = true)
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date diseaseDate;
 
     // 진단 연월일
-    @Column(nullable = true)
+    @Column(nullable = false)
     private LocalDateTime diagnosisDate;
 
 
@@ -165,11 +153,11 @@ public class Diagnosis extends BaseEntity{
 
         diagnosis.setDoctorName(doctor.getName());
         appointment.setStatus(AppointmentStatus.COMPLETE);
+        diagnosis.setDiagnosisDate(appointment.getDate());
 
         diagnosis.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
         diagnosis.setAnimalType(writtenDiagnosisForm.getAnimalType());
         diagnosis.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
-
 
         diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
         diagnosis.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
@@ -177,7 +165,7 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setDiseaseName(writtenDiagnosisForm.getDiseaseName());
 
         diagnosis.setDiseaseDate(writtenDiagnosisForm.getDiseaseDate());
-        diagnosis.setDiagnosisDate(writtenDiagnosisForm.getDiagnosisDate());
+
         diagnosis.setOpinion(writtenDiagnosisForm.getOpinion());
         diagnosis.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
 

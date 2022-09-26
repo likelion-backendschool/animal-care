@@ -47,17 +47,13 @@ public class FindOneDiagnosis {
     // 병명
     private String diseaseName;
 
-
-//    // 발병 연월일
-//    private Date diseaseDate;
-//    // 진단 연월일
-//    private Date diagnosisDate;
-//    임시로 날짜 수정함
 //     발병 연월일
     @Temporal(TemporalType.DATE)
     private Date diseaseDate;
-    // 진단 연월일
+
+//    진단 연월일
     private LocalDateTime diagnosisDate;
+
 
     // 예후 소견
     private String opinion;

@@ -70,13 +70,10 @@
                     <input type="date" th:name="diseaseDate" th:field="*{diseaseDate}"  class="form-control">
                     </td>
                 </tr>
-
-<!--                아래에 있음 div class="text-center container"-->
-<!--                <tr>-->
-<!--                    <th>진단 연월일</th>-->
-<!--&lt;!&ndash;                    <td colspan="4"  th:text="${#dates.format(diagnosis?.diagnosisDate, 'yyyy년 MM월 dd일')}"></td>&ndash;&gt;-->
-<!--                    <td colspan="4" th:text="${#temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일')}"></td>-->
-<!--                </tr>-->
+                <tr>
+                    <th>진단 연월일</th>
+                    <td colspan="4" th:text="${appointment?.appointmentDate}"></td>
+                </tr>
 
                 <tr>
                     <th>예후 소견</th>
