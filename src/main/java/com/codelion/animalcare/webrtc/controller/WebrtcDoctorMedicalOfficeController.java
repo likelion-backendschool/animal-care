@@ -75,7 +75,6 @@ public class WebrtcDoctorMedicalOfficeController {
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
 
-
         return "redirect:/usr/mypage/doctor/member-manage/appointments/all";
     }
 

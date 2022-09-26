@@ -1,4 +1,4 @@
-<html layout:decorate="~{global/no-navbars-layout}">
+<html layout:decorate="~{global/no-navbars-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <div layout:fragment="content" class="container my-0">
 
     <body>
@@ -9,6 +9,7 @@
         </div>
 
         <div>
+
 <!--            수정 필요 -->
 <!--            <div>-->
 <!--                <form th:object="${appointmentSearch}" class="form-inline">-->
@@ -53,18 +54,11 @@
                     <td th:text="${ad.date}"></td>
                     <td th:text="${ad.status}"></td>
 
-<!--                    수정중-->
+
                     <td>
-                        <a href="#" th:href="@{/usr/mypage/doctor/member-manage/appointments/all/{appointmentId} (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">진단서 작성</a>
+                        <a href="#" th:if="${ad.status.name() == 'READY'}" th:href="@{/usr/mypage/doctor/member-manage/appointments/all/{appointmentId} (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">진단서 작성</a>
+                        <button th:if="${ad.status.name() == 'COMPLETE'}" disabled type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">진단서 작성 완료</button>
                     </td>
-<!--                    <td>-->
-<!--                        <a th:if="${ad.status.name() == 'READY'}"-->
-<!--                           href="#" th:href="@{/usr/mypage/member/appointment/info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">MODIFY</a>-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <a th:if="${ad.status.name() == 'READY'}" href="#" th:href="'javascript:cancel('+${ad.appointmentId}+')'"-->
-<!--                           class="btn btn-danger">CANCEL</a>-->
-<!--                    </td>-->
                 </tr>
 
                 </tbody>
@@ -75,15 +69,5 @@
 
     </body>
 
-
-<!--    <script>-->
-<!--        function cancel(id) {-->
-<!--            var form = document.createElement("form");-->
-<!--            form.setAttribute("method", "post");-->
-<!--            form.setAttribute("action", "/usr/mypage/member/appointment/info/" + id + "/cancel");-->
-<!--            document.body.appendChild(form);-->
-<!--            form.submit();-->
-<!--        }-->
-<!--    </script>-->
 </div>
 </html>

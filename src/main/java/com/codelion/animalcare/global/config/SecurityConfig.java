@@ -62,7 +62,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
         // 403 에러로 인한 ignore 처리
-//        http.csrf().ignoringAntMatchers("/usr/**");
+        http.csrf().ignoringAntMatchers("/usr/**");
 
         return http.build();
     }

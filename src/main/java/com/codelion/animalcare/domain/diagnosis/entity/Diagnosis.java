@@ -151,12 +151,19 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setAddressCity(member.getAddress().getCity());
         diagnosis.setAddressStreet(member.getAddress().getStreet());
 
+        diagnosis.setAnimalName(animal.getName());
+        diagnosis.setAnimalGenderId(animal.getGenderId());
+
+        diagnosis.setHospitalName(hospital.getName());
+        diagnosis.setHospitalStreet(hospital.getAddress().getStreet());
+
+        diagnosis.setDoctorName(doctor.getName());
+        appointment.setStatus(AppointmentStatus.COMPLETE);
+
         diagnosis.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
         diagnosis.setAnimalType(writtenDiagnosisForm.getAnimalType());
         diagnosis.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
 
-        diagnosis.setAnimalName(animal.getName());
-        diagnosis.setAnimalGenderId(animal.getGenderId());
 
         diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
         diagnosis.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
@@ -168,12 +175,7 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setOpinion(writtenDiagnosisForm.getOpinion());
         diagnosis.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
 
-        diagnosis.setHospitalName(hospital.getName());
-        diagnosis.setHospitalStreet(hospital.getAddress().getStreet());
-
         diagnosis.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
-
-        diagnosis.setDoctorName(doctor.getName());
 
         return diagnosis;
     }
