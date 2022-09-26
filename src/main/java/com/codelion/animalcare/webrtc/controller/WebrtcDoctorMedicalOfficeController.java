@@ -76,9 +76,9 @@ public class WebrtcDoctorMedicalOfficeController {
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
 
         // 왜 안먹힐까
+        // TODO redirect 가능하게 하기
         return "redirect:/usr/mypage/doctor/member-manage/appointments/all";
     }
-
 
 
     // TODO 예약내역을 날짜에 따라서 분류하기

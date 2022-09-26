@@ -114,6 +114,12 @@
 <!-- modal body end-->
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">작성완료</button>
+
+<!--                <button type="submit" class="btn btn-primary"-->
+<!--                        onclick="location.href='/usr/mypage/doctor/member-manage/appointments/all'">작성완료</button>-->
+
+                <a href="#" th:href="@{/usr/mypage/doctor/member-manage/appointments/all}" class="btn btn-primary" role="button">예약내역으로 이동</a>
+
             </div>
 
 
@@ -123,5 +129,12 @@
 </div> <!-- /container -->
 
 </body>
+    <script>
+        function test_iframe(){
+            form.target="_top"
+            form.submit();
+        }
+    </script>
+
 </div>
 </html>
