@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.animal.entity;
 
+import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.user.entity.Member;
@@ -52,4 +53,10 @@ public class Animal extends BaseEntity {
     @OneToMany(mappedBy = "animal")
     private List<Appointment> appointments = new ArrayList<>();
 
+    public void update(AnimalDto animalDto){
+        name = animalDto.getName();
+        registrationNum = animalDto.getRegistrationNum();
+        birthday = animalDto.getBirthday();
+        genderId = animalDto.getGenderId();
+    }
 }

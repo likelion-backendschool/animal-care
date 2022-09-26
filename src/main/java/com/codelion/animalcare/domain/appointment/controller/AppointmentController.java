@@ -42,7 +42,7 @@ public class AppointmentController {
     public String createAppointmentForm(Model model, Principal principal) {
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get());
+        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get().getEmail());
 
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
@@ -107,7 +107,7 @@ public class AppointmentController {
         Optional<AppointmentDto> appointmentDto = appointmentService.findById(appointmentId);
 
         Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get());
+        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get().getEmail());
 
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();

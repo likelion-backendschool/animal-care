@@ -22,6 +22,7 @@ public class QuestionResponseDto {
     /*TODO :  private Integer like */
     private Member member;
 
+    private int likeCount;
     public QuestionResponseDto(Question entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
@@ -30,5 +31,6 @@ public class QuestionResponseDto {
         this.createdAt = entity.getCreatedAt();
         this.answerList = entity.getAnswerList();
         this.member = entity.getMember();
+        this.likeCount = entity.getLikeCount();
     }
 }
