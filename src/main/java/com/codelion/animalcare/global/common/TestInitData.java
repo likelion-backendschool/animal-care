@@ -346,19 +346,19 @@ public class TestInitData {
 
 
             // 예약서
-            Appointment appointment1 = Appointment.builder()
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
-                    .content("강아지가 많이 기침합니다.")
-                    .date(LocalDateTime.of(2022,9,30, 14,30,00))
-                    .status(AppointmentStatus.READY)
-                    .member(member1)
-                    .animal(animal1)
-                    .doctor(doctor1)
-                    .hospital(hospital1)
-                    .build();
-
-            appointmentRepository.save(appointment1);
+//            Appointment appointment1 = Appointment.builder()
+//                    .createdAt(LocalDateTime.now())
+//                    .updatedAt(LocalDateTime.now())
+//                    .content("강아지가 많이 기침합니다.")
+//                    .date(LocalDateTime.of(2022,9,30, 14,30,00))
+//                    .status(AppointmentStatus.READY)
+//                    .member(member1)
+//                    .animal(animal1)
+//                    .doctor(doctor1)
+//                    .hospital(hospital1)
+//                    .build();
+//
+//            appointmentRepository.save(appointment1);
 
             // 진단서
 

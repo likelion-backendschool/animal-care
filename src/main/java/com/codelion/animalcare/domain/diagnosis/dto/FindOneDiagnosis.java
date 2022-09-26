@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
@@ -52,7 +54,8 @@ public class FindOneDiagnosis {
 //    private Date diagnosisDate;
 //    임시로 날짜 수정함
 //     발병 연월일
-    private LocalDateTime diseaseDate;
+    @Temporal(TemporalType.DATE)
+    private Date diseaseDate;
     // 진단 연월일
     private LocalDateTime diagnosisDate;
 

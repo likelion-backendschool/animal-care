@@ -24,5 +24,4 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query("select ma from Appointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h where d.id = :doctorId")
     List<Appointment> findByDoctorId(Long doctorId);
 
-    Appointment findAppointmentById(Long appointmentId);
 }

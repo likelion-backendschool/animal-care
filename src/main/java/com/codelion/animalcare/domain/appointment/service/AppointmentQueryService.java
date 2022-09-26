@@ -4,7 +4,6 @@ import com.codelion.animalcare.domain.appointment.AppointmentSearch;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
-import com.codelion.animalcare.domain.appointment.repository.AppointmentRepositoryImpl;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,6 @@ import java.util.stream.Collectors;
 public class AppointmentQueryService {
 
     private final AppointmentRepository appointmentRepository;
-    private final AppointmentRepositoryImpl appointmentRepositoryImpl;
-
 
     public List<AppointmentDto> findAppointmentByMemberDto(MemberDto memberDto) {
 
@@ -45,8 +42,4 @@ public class AppointmentQueryService {
         return appointmentDtos;
     }
 
-    public List<Appointment> findAppointments(AppointmentSearch appointmentSearch) {
-
-        return appointmentRepositoryImpl.findAllByString(appointmentSearch);
-    }
 }

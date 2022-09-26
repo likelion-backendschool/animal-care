@@ -12,6 +12,7 @@ import com.codelion.animalcare.domain.animal.entity.Animal;
 import groovy.lang.Lazy;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -83,8 +84,13 @@ public class Diagnosis extends BaseEntity{
 //    임시로 바꿔봄 Date -> LocalDateTime
 //    잠시 nullable = true
     // 발병 연월일
+//    @Column(nullable = true)
+//    private LocalDateTime diseaseDate;
+
     @Column(nullable = true)
-    private LocalDateTime diseaseDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date diseaseDate;
+
     // 진단 연월일
     @Column(nullable = true)
     private LocalDateTime diagnosisDate;
