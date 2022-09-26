@@ -271,7 +271,7 @@
                     url: `/usr/doctor/hospital/${hospitalId}`,
                     type: 'GET',
                 });
-                console.log(openingHours);
+                    console.log(openingHours);
                 console.log(doctors);
                 const cards = doctors.map(doctor =>
                     `<div class="card">
@@ -415,18 +415,25 @@
 
                 // markers에 저장.
                 markers.push(marker);
-                console.log(hospital.openingHours);
+                console.log(hospital.openingHours.split('/', 7));
+                // 병원 시간표
+                const openingHourHeaders = ['월', '화', '수', '목', '금', '토', '일']
+                const openingHoursContent = hospital.openingHours.split('/', 7)
+                    .map(
+                        (times, i) => `${openingHourHeaders[i]} :  ${times === '~' ? "정기 휴무" : times}<br />`)
+                    .reduce((previousValue, currentValue) => previousValue + currentValue, '');
                 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
                 const content =
                     '<div class="card" style="min-width: 300px">' +
                     '    <div class="info">' +
                     '        <div class="card-header">' +
-                    hospital.name +
+                    `<h4>${hospital.name}</h4>`  +
                     '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
                     '        </div>' +
                     '        <div class="card-body">' +
                     '            <div class="desc">' +
                     '                <p>' + address.street + ' ' + address.detail + '</p>' +
+                    `<p>${openingHoursContent}</p>` +
                     '            </div>' +
                     '            <div class="container">' +
                     '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
@@ -465,20 +472,25 @@
             // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
             map.setCenter(position);
 
-            // 마크 생성
+            // 병원 시간표
+            const openingHourHeaders = ['월', '화', '수', '목', '금', '토', '일']
+            const openingHoursContent = hospital.openingHours.split('/', 7)
+                .map(
+                    (times, i) => `${openingHourHeaders[i]} :  ${times === '~' ? "정기 휴무" : times}<br />`)
+                .reduce((previousValue, currentValue) => previousValue + currentValue, '');
 
             // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
             const content =
                 '<div class="card" style="min-width: 300px">' +
                 '    <div class="info">' +
                 '        <div class="card-header">' +
-                hospital.name  +
+                `<h4>${hospital.name}</h4>`  +
                 '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
                 '        </div>' +
                 '        <div class="card-body">' +
                 '            <div class="desc">' +
-                '                <div class="ellipsis"></div>' +
-                '                <div class="jibun ellipsis">' + street + ' '+ detail +'</div>' +
+                '                <p>' + street + ' '+ detail +'</p>' +
+                openingHoursContent +
                 '            </div>' +
                 '            <div class="container">' +
                 '                 <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
