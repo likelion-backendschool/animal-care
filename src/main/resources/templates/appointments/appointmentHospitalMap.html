@@ -329,7 +329,7 @@
                     })
                     // datetime에서 time만 추출.
                     appointmentTimes = appointmentTimes.map(item => item.substring(11,16));
-                    const hospitalTime = openingHourArr[(new Date(date).getDay() + 7) % 7]
+                    const hospitalTime = openingHourArr[(new Date(date).getDay() - 1 + 7) % 7]
                     console.log('hospitalTime:',hospitalTime)
                     const [openTime, closeTime] = hospitalTime.split('~', 2);
                     let content = '';
@@ -346,10 +346,14 @@
                             console.log(time, appointmentTimes.includes(time), appointmentTimes);
                             // 이미 예약된 곳은 버튼을 disabled 한다.
                             if(appointmentTimes.includes(time)) content +=`
-                            <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn col-4 b-1" disabled>${time}</button>
+                            <div class="col-4 p-1">
+                                <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn" disabled>${time}</button>
+                            </div>
                             `
                             else content +=`
-                            <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn btn-primary col-4 b-1">${time}</button>
+                            <div class="col-4 p-1">
+                            <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn btn-primary">${time}</button>
+                            </div>
                             `
 
                             // 시간 조정.

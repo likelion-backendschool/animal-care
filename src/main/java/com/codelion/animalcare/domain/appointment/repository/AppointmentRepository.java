@@ -27,4 +27,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             @Param("utcDateTimeFront")LocalDateTime utcDateTimeFront,
             @Param("utcDateTimeEnd")LocalDateTime utcDateTimeEnd,
             @Param("doctorId") long doctorId);
+
+    Optional<Appointment> findOneByDateAndDoctorId(LocalDateTime date, Long doctorId);
 }

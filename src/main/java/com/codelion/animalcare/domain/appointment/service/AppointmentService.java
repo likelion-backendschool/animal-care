@@ -15,14 +15,15 @@ import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.user.repository.MemberRepository;
+import com.codelion.animalcare.global.util.OpeningHour;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,12 +82,41 @@ public class AppointmentService {
      */
     @Transactional
     public Long appointment(MemberDto memberDto, AppointmentFormDto appointmentFormDto) {
-
         //엔티티 조회
         Member member = memberRepository.findById(memberDto.getId()).get();
         Animal animal = animalRepository.findById(appointmentFormDto.getAnimalId()).get();
         Hospital hospital = hospitalRepository.findById(appointmentFormDto.getHospitalId()).get();
         Doctor doctor = doctorRepository.findById(appointmentFormDto.getDoctorId()).get();
+
+        /* 올바른 date인지 확인.*/
+        LocalDateTime date = appointmentFormDto.getDateToLocalDateTime();
+        // 1. 10분 단위로 예약 가능.
+        if(date.getMinute() % 10 != 0) throw new RuntimeException("올바른 예약날짜 형식이 아닙니다.(10분 단위)");
+
+        // 2. 병원 시간 안에 있는지
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        // 예약 날자의 병원 운영시간
+        ////////////////////// 여기 체크
+        String timeOfHospital = hospital.getOpeningHours().split("/")[dayOfWeek.getValue() -1];
+        System.out.println(dayOfWeek.getValue() - 1);
+        System.out.println(timeOfHospital);
+        String[] times = timeOfHospital.split("~", 2);
+        if(times[1].trim().equals("")) throw new RuntimeException("병원의 정기 휴무일 입니다.");
+        System.out.println(times[1] + " " + times[1].trim().equals(""));
+
+        // 2-1 병원 시작 시간보다 빠를 때.
+        int[] openTime = Arrays.stream(times[0].split(":")).mapToInt(Integer::parseInt).toArray();
+        if(openTime[0] > date.getHour() || (openTime[0] == date.getHour() && openTime[1] > date.getMinute()))
+            throw new RuntimeException("병원 시작 시간보다 빠릅니다.");
+
+        // 2-2 병원 마감 시간보다 느릴 때
+        int[] closeTime = Arrays.stream(times[1].split(":")).mapToInt(Integer::parseInt).toArray();
+        if(closeTime[0] < date.getHour() || (closeTime[0] == date.getHour() && closeTime[1] < date.getMinute()))
+            throw new RuntimeException("병원 마감 시간보다 늦습니다.");
+
+        // 3 병원에 예약한 사람이 있을 때
+        Optional<Appointment> appointments =appointmentRepository.findOneByDateAndDoctorId(date, doctor.getId());
+        if(appointments.isPresent()) throw new RuntimeException("예약이 마감되었습니다.");
 
         //예약 생성
         // TODO builder 숨기기
@@ -96,7 +126,7 @@ public class AppointmentService {
                 .hospital(hospital)
                 .doctor(doctor)
                 .content(appointmentFormDto.getContent())
-                .date(appointmentFormDto.getDateToLocalDateTime())
+                .date(date)
                 .status(AppointmentStatus.READY)
                 .build();
 
