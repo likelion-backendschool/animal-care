@@ -18,9 +18,9 @@
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td>
                 <a th:href="@{|/usr/doctor-qna/${question.id}|}" th:text="${question.title}"></a>
-                <span class="text-danger small ms-2"
+                <span class="text-info small ms-2 text-bold"
                       th:if="${#lists.size(question.answerList) > 0}"
-                      th:text="${#lists.size(question.answerList)}">
+                      th:text="|(${#lists.size(question.answerList)})|">
                 </span>
             </td>
             <td><a th:text="${question.member?.name}"></a></td>
