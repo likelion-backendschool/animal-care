@@ -1,37 +1,26 @@
 package com.codelion.animalcare.webrtc.controller;
 
-import com.codelion.animalcare.domain.animal.dto.AnimalDto;
-import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
-import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
-import com.codelion.animalcare.domain.hospital.service.HospitalService;
-import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
-import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/usr/mypage/doctor/member-manage/appointments")
 @RequiredArgsConstructor
-public class WebrtcAppointmentInfoController {
+public class WebrtcDoctorMedicalOfficeController {
 
     private final DoctorService doctorService;
     private final AppointmentQueryService appointmentQueryService;
