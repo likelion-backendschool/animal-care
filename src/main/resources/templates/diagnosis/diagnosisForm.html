@@ -57,9 +57,10 @@
                     <td th:text="${animal?.genderId == 0 ? '암컷' : '수컷'}"></td>
                 </tr>
                 <tr>
-<!--                    TODO 나이 계산해야함-->
+<!--                    TODO 애완동물 나이 계산해야함-->
                     <th>연령(연도)</th>
-                    <td th:text="|${animal?.birthday}세|">X</td>
+<!--                    <td th:text="|${animal?.birthday}세|">X</td>-->
+                    <td th:text="|${diagnosis?.animalAge}세|">X</td>
                     <th>모색</th>
                     <td>
                         <input type="text" th:field="*{animalCoatColor}" class="form-control" placeholder="예) 흰색"/>
