@@ -1,14 +1,19 @@
 <html layout:decorate="~{global/no-navbars-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 
 <div layout:fragment="content" class="container my-5">
+    <nav>
+        <a href="/usr/mypage/doctor/member-manage/appointments/all" class="btn">뒤로</a>
+    </nav>
+
     <body>
 
 <div class="container">
-    <div class="page-header">
-        <h3>진단서 작성</h3>
-    </div>
 
         <form role="form" th:object="${oneDiagnosisForm}" method="post">
+
+            <div class="modal-header">
+                <h3 class="modal-title text-center" id="staticBackdropLabel">진단서 작성</h3>
+            </div>
 
         <div class="modal-body">
             <table class="table caption-top table-bordered">
@@ -104,15 +109,15 @@
                 <p th:text="|수의사 : ${doctor?.name} (인)|"> </p>
                 <h2 th:text="${hospital?.name}"></h2>
             </div>
+
         </div>
 <!-- modal body end-->
-
-            <td>
+            <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">작성완료</button>
-<!--                <a href="#" th:href="@{/usr/mypage/doctor/member-manage/appointments/all}" class="btn btn-primary" role="button">작성 완료</a>-->
-<!--                <button type="submit" href="#" th:href="@{/usr/mypage/doctor/member-manage/appointments/all}" class="btn btn-primary" role="button">작성 완료</button>-->
-            </td>
-    </form>
+            </div>
+
+
+        </form>
     <br/>
 
 </div> <!-- /container -->
