@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 public class Question extends BaseEntity {
 
-    @Column(length = 40, nullable = false)
+    @Column(length = 200, nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)

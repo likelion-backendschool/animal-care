@@ -5,15 +5,21 @@
 </head>
 <div layout:fragment="content" class="container my-5">
 
-    <h2 class="border-bottom py-2" th:text="${question.title}"></h2>
+
     <div class="card my-3">
         <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;" th:text="${question.content}"></div>
-            <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2 text-start">
-                    <div th:text="|질문 등록일 ${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
+            <div class="border-bottom py-2">
+                <h2 th:text="|${question.title}|"></h2>
+                <div class = "d-flex justify-content-between">
+                    <div class ="d-flex items-center fs-6">
+                        <div class = "text-dark text-bold" th:text="|${question.member?.name}님&nbsp;&nbsp;|"></div>
+                        <div class = "text-muted" th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
+                    </div>
                 </div>
             </div>
+            <br>
+            <div class="card-text" style="white-space: pre-line;" th:text="${question.content}"></div>
+            <br>
             <!-- test-->
             <div sec:authorize="isAuthenticated()">
                 <!-- 좋아요 -->
@@ -29,40 +35,41 @@
                 <span th:text="${question.likeCount}"></span>
             </div>
             <!-- testEnd-->
-            <div class="my-3">
-                <a th:href="@{|/usr/doctor-qna/${question.id}/modify|}" class="btn btn-sm btn-outline-secondary"
-                   sec:authorize="isAuthenticated()"
-                   th:if="${question.member != null and #authentication.getPrincipal().getEmail() == question.member.email}"
-                   th:text="수정"></a>
-                <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/delete|}"
-                   class="delete btn btn-sm btn-outline-secondary"
-                   sec:authorize="isAuthenticated()"
-                   th:if="${question.member != null and #authentication.getPrincipal().getEmail() == question.member.email}"
-                   th:text="삭제"></a>
-            </div>
         </div>
         <input type="hidden" id="questionId" th:value="${question.id}">
+    </div>
+
+    <div class="my-3">
+        <a th:href="@{|/usr/doctor-qna/${question.id}/modify|}" class="btn btn-sm btn btn-primary"
+           sec:authorize="isAuthenticated()"
+           th:if="${question.member != null and #authentication.getPrincipal().getEmail() == question.member.email}"
+           th:text="수정"></a>
+        <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/delete|}"
+           class="delete btn btn-sm btn btn-primary"
+           sec:authorize="isAuthenticated()"
+           th:if="${question.member != null and #authentication.getPrincipal().getEmail() == question.member.email}"
+           th:text="삭제"></a>
     </div>
 
     <h5 class="border-bottom my-3 py-2" th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
 
     <div class="card my-3" th:each="answer : ${question.answerList}">
         <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
-            <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2 text-start">
-                    <div th:text="|답변 작성일 ${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
-                </div>
-            </div>
-            <div class="my-3">
-                <a th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/modify|}" class="btn btn-sm btn-outline-secondary"
+            <div class = "fs-6 text-dark text-bold" th:text="|${answer.doctor.name} 수의사|"></div>
+            <div class = "text-xs text-muted" th:text="${answer.doctor.major}"></div>
+            <div class="border-bottom py-2"></div> <br>
+            <div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div> <br>
+            <div class = "text-xs" th:text="|${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
+
+            <div class="my-3 align-content-end">
+                <a th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/modify|}" class="btn btn-sm btn btn-primary"
                    sec:authorize="isAuthenticated()"
                    th:if="${answer.doctor != null and #authentication.getPrincipal().getEmail() == answer.doctor.email}"
                    th:text="수정"></a>
                 <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/doctor-qna/${question.id}/answers/${answer.id}/delete|}"
                    sec:authorize="isAuthenticated()"
                    th:if="${answer.doctor != null and #authentication.getPrincipal().getEmail() == answer.doctor.email}"
-                   class="delete btn btn-sm btn-outline-secondary"
+                   class="delete btn btn-sm btn btn-primary"
                    th:text="삭제"></a>
             </div>
         </div>

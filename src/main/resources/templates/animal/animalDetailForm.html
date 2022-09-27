@@ -24,8 +24,32 @@
       <td th:text="${animal.getBirthday()}"></td>
     </tr>
     <tr>
+      <th>나이</th>
+      <td th:text="${animal.getAge()} + '세'"></td>
+    </tr>
+    <tr>
       <th>등록번호</th>
       <td th:text="${animal.getRegistrationNum()}"></td>
+    </tr>
+    <tr>
+      <th>사육장소</th>
+      <td th:text="${animal.getBreedingPlace()}"></td>
+    </tr>
+    <tr>
+      <th>종류</th>
+      <td th:text="${animal.getAnimalType()}"></td>
+    </tr>
+    <tr>
+      <th>품종</th>
+      <td th:text="${animal.getAnimalBreed()}"></td>
+    </tr>
+    <tr>
+      <th>색상</th>
+      <td th:text="${animal.getAnimalCoatColor()}"></td>
+    </tr>
+    <tr>
+      <th>특징</th>
+      <td th:text="${animal.getAnimalSpecial()}"></td>
     </tr>
     <tr>
       <th>성별</th>

@@ -8,8 +8,8 @@ import com.codelion.animalcare.domain.doctorqna.repository.QuestionLike;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionLikeRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.MemberService;
-import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -104,24 +104,24 @@ public class QuestionService {
 
     }
 
-    public boolean findLike(Long id, Member member) {
-        return questionLikeRepository.existsByQuestion_IdAndMember_Id(id, member.getId());
+    public boolean findLike(Long id, UserInfo user) {
+        return questionLikeRepository.existsByQuestion_IdAndMember_Id(id, user.getId());
     }
 
     @Transactional(readOnly = false)
-    public boolean saveLike(Long id, Member member){
+    public boolean saveLike(Long id, UserInfo user){
 
-        if(!findLike(id, member)) {
+        if(!findLike(id, user)) {
 
             Question question = questionRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-            QuestionLike questionLike = new QuestionLike(member, question);
+            QuestionLike questionLike = new QuestionLike(user, question);
             questionLikeRepository.save(questionLike);
             questionRepository.plusLike(id);
 
             return true;
         }
 
-        questionLikeRepository.deleteByQuestion_IdAndMember_Id(id, member.getId());
+        questionLikeRepository.deleteByQuestion_IdAndMember_Id(id, user.getId());
         questionRepository.minusLike(id);
 
         return false;

@@ -43,8 +43,6 @@ public class AnimalController {
 
     @PostMapping("/add")
     public String save(@Valid AnimalDto animalDto, BindingResult bindingResult, Principal principal){
-        System.out.println(animalDto.getName());
-        System.out.println(animalDto.getRegistrationNum());
         if(bindingResult.hasErrors()){
             return "animal/animalForm";
         }
