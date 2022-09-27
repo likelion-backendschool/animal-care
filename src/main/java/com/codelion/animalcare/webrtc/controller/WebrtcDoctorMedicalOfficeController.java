@@ -40,7 +40,7 @@ public class WebrtcDoctorMedicalOfficeController {
 
         model.addAttribute("appointmentDto", appointmentDto);
 
-        return "appointments/appointmentByDoctorList";
+        return "webrtc/diagnosis/appointment-info-in-medicaloffice";
     }
 
 
@@ -65,7 +65,7 @@ public class WebrtcDoctorMedicalOfficeController {
         model.addAttribute("oneDiagnosisForm", new FindOneDiagnosis());
 
 
-        return "diagnosis/diagnosisForm";
+        return "webrtc/diagnosis/diagnosisForm";
     }
 
     @PostMapping("/{appointmentId}")
@@ -75,7 +75,7 @@ public class WebrtcDoctorMedicalOfficeController {
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
 
-        // 왜 안먹힐까
+
         // TODO redirect 가능하게 하기. 진단서 작성 완료시 예약내역으로 이동해야함
         return "redirect:/usr/doctor/medicalOffice";
     }
