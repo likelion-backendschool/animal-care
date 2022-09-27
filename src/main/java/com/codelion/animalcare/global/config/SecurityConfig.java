@@ -28,13 +28,14 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**");
+        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/favicon.ico", "/resources/**", "/error");
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/user/login", "/signup", "/user", "/test", "/", "/usr/doctor/signup", "/usr/member/signup").permitAll() // 누구나 접근 허용
-                .antMatchers("/usr/member/appointment/**").hasRole("MEMBER")
+                .antMatchers("/usr/member/**").hasRole("MEMBER")
+                .antMatchers("/usr/doctor/**").hasRole("DOCTOR")
 //                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
                 .and() // 문맥의 끝

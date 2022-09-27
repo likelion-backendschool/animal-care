@@ -2,8 +2,7 @@ package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
-import com.codelion.animalcare.domain.appointment.entity.Appointment;
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 

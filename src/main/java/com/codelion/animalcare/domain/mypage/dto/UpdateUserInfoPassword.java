@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctormypage.dto;
+package com.codelion.animalcare.domain.mypage.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class UpdateDoctorMyPageInfoPassword {
+public class UpdateUserInfoPassword {
     @Getter
     @Setter
     @AllArgsConstructor

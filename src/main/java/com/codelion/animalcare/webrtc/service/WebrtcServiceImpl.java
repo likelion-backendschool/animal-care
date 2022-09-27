@@ -10,7 +10,7 @@ import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 
 import com.codelion.animalcare.chat.service.ChatRoomService;
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
