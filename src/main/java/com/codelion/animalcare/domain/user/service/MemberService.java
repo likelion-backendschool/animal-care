@@ -91,7 +91,7 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    private Member findMemberByEmail(String email) {
+    public Member findMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Member email:" + email + " can't found."));
     }

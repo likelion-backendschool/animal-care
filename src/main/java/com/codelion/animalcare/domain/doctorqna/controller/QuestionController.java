@@ -6,6 +6,7 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateReques
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
 import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.service.MemberService;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    private final UserService userService;
+    private final MemberService memberService;
     //게시글 등록 화면
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/write")
@@ -96,7 +97,7 @@ public class QuestionController {
 
         //글 추천
         boolean like = false; // 비로그인 유저라면 false
-        Member member = userService.getMember(principal.getName());
+        Member member = memberService.findMemberByEmail(principal.getName());
         if(member != null) { // 로그인 한 사용자라면
             model.addAttribute("login_id", member.getId());
             like = questionService.findLike(id, member); // 로그인 유저의 추천 여부 확인

@@ -28,7 +28,6 @@ import java.util.Optional;
 @RequestMapping("/usr/member/animal")
 public class AnimalController {
     private final AnimalService animalService;
-    private final MemberService memberService;
 
     @GetMapping("/list")
     public String list(Model model, Principal principal){

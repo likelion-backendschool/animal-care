@@ -6,6 +6,7 @@ import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.service.MemberService;
 import com.codelion.animalcare.domain.user.service.UserService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,13 @@ import java.util.stream.Collectors;
 public class AnimalService {
     private final AnimalRepository animalRepository;
 
-    private final UserService userService;
+    private final MemberService memberService;
     /**
      * 애완 동물 등록
      */
 
     public Long save(AnimalDto animalDto, Principal principal) {
-        Member member = userService.getMember(principal.getName());
+        Member member = memberService.findMemberByEmail(principal.getName());
 
         return animalRepository.save(animalDto.toEntity(member)).getId();
     }
