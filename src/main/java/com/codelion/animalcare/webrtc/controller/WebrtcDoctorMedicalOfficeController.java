@@ -62,10 +62,10 @@ public class WebrtcDoctorMedicalOfficeController {
         model.addAttribute("doctor", appointmentDto.getDoctor());
         model.addAttribute("diagnosis", diagnosis);
 
-        model.addAttribute("oneDiagnosisForm", new FindOneDiagnosis());
+        model.addAttribute("diagnosisForm", new FindOneDiagnosis());
 
 
-        return "webrtc/diagnosis/diagnosisForm";
+        return "webrtc/diagnosis/create-diagnosis";
     }
 
     @PostMapping("/{appointmentId}")

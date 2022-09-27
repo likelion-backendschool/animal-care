@@ -9,7 +9,7 @@
 
 <div class="container">
 
-        <form role="form" th:object="${oneDiagnosisForm}" method="post">
+        <form role="form" th:object="${diagnosisForm}" method="post">
 
             <div class="modal-header">
                 <h3 class="modal-title text-center" id="staticBackdropLabel">진단서 작성</h3>
@@ -125,9 +125,9 @@
 <!-- modal body end-->
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" onclick="moveToAppointmentList()" >작성완료</button>
-
                 <a href="#" th:href="@{/usr/doctor/medicalOffice}" class="btn btn-primary" role="button">예약내역으로 이동</a>
+
+                <button type="submit" class="btn btn-primary" onclick="moveToAppointmentList()">작성완료</button>
             </div>
 
 
@@ -140,10 +140,12 @@
 
     <script type="text/javascript">
 
-<!--        TODO 진단서 iframe 한부분만 예약내역으로 이동하게하기. 현재는 한페이지 전체가 진료실로 이동됨-->
+        // TODO 진단서 iframe만 이동되게 하기. 현재는 페이지 전체가 이동이 됨.
         function moveToAppointmentList() {
-            if (top.location != self.location) {
-                top.location = self.top.location.href;
+            if (window.top.location != self.location) {
+                window.top.location = self.top.location.href;
+                // window.top.location = "/usr/doctor/medicalOffice";
+                // window.top.location.href = "/usr/doctor/medicalOffice";
             }
         }
 
