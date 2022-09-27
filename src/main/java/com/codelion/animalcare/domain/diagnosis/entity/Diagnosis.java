@@ -147,6 +147,14 @@ public class Diagnosis extends BaseEntity{
 
         diagnosis.setAnimalName(animal.getName());
         diagnosis.setAnimalGenderId(animal.getGenderId());
+        diagnosis.setBreedingPlace(animal.getBreedingPlace());
+        diagnosis.setAnimalType(animal.getAnimalType());
+        diagnosis.setAnimalBreed(animal.getAnimalBreed());
+
+
+        diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
+//        diagnosis.setAnimalAge(animal.getAnimalAge());
+
 
         diagnosis.setHospitalName(hospital.getName());
         diagnosis.setHospitalStreet(hospital.getAddress().getStreet());
@@ -155,15 +163,11 @@ public class Diagnosis extends BaseEntity{
         appointment.setStatus(AppointmentStatus.COMPLETE);
         diagnosis.setDiagnosisDate(appointment.getDate());
 
-        diagnosis.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
-        diagnosis.setAnimalType(writtenDiagnosisForm.getAnimalType());
-        diagnosis.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
 
-        diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
-        diagnosis.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
-        diagnosis.setAnimalSpecial(writtenDiagnosisForm.getAnimalSpecial());
+        diagnosis.setAnimalCoatColor(animal.getAnimalCoatColor());
+        diagnosis.setAnimalSpecial(animal.getAnimalSpecial());
+
         diagnosis.setDiseaseName(writtenDiagnosisForm.getDiseaseName());
-
         diagnosis.setDiseaseDate(writtenDiagnosisForm.getDiseaseDate());
 
         diagnosis.setOpinion(writtenDiagnosisForm.getOpinion());

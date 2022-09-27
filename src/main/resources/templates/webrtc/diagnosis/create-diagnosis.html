@@ -32,22 +32,16 @@
                     </td>
                 <tr>
                     <th>사육 장소</th>
-                    <td colspan="4">
-                        <input type="text" th:field="*{breedingPlace}" class="form-control" placeholder="사육 장소를 입력하세요. 예) 아파트, 마당"/>
-                    </td>
+                    <td colspan="4" th:text="${animal?.breedingPlace}"></td>
                 </tr>
                 <tr>
                     <th class="col-2" rowspan="4" >동물의 표시</th>
 
                     <th class="col-2">종류</th>
-                    <td>
-                        <input type="text" th:field="*{animalType}" class="form-control" placeholder="예) 개"/>
-                    </td>
+                    <td th:text="${animal?.animalType}" class="form-control"/></td>
 
                     <th class="col-2">품종</th>
-                    <td>
-                        <input type="text" th:field="*{animalBreed}" class="form-control" placeholder="예) 시츄"/>
-                    </td>
+                    <td th:text="${animal?.animalBreed}" class="form-control"></td>
 
                 </tr>
                 <tr>
@@ -62,16 +56,12 @@
 <!--                    <td th:text="|${animal?.birthday}세|">X</td>-->
                     <td th:text="|${diagnosis?.animalAge}세|">X</td>
                     <th>모색</th>
-                    <td>
-                        <input type="text" th:field="*{animalCoatColor}" class="form-control" placeholder="예) 흰색"/>
-                    </td>
+                    <td th:text="${animal?.animalCoatColor}">
 
                 </tr>
                 <tr>
                     <th>특징</th>
-                    <td colspan="4">
-                        <input type="text" th:field="*{animalSpecial}" class="form-control" placeholder="특징을 입력하세요"/>
-                    </td>
+                    <td colspan="4" th:text="${animal?.animalSpecial}"></td>
                 </tr>
                 <tr>
                     <th>병명</th>
