@@ -99,7 +99,7 @@ public class Diagnosis extends BaseEntity{
     private String hospitalStreet;
     // 수의사 면허
     //    nullable = true로 잠시 수정
-    @Column(nullable = true, length = 50)
+    @Column(nullable = false, length = 50)
     private String doctorLicense;
     // 수의사 이름
     @Column(nullable=false)
@@ -160,6 +160,8 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setHospitalStreet(hospital.getAddress().getStreet());
 
         diagnosis.setDoctorName(doctor.getName());
+        diagnosis.setDoctorLicense(doctor.getDoctorLicense());
+
         appointment.setStatus(AppointmentStatus.COMPLETE);
         diagnosis.setDiagnosisDate(appointment.getDate());
 
@@ -173,7 +175,6 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setOpinion(writtenDiagnosisForm.getOpinion());
         diagnosis.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
 
-        diagnosis.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
 
         return diagnosis;
     }
