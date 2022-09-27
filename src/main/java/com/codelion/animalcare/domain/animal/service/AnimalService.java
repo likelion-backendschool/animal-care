@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,7 +31,6 @@ public class AnimalService {
 
     public Long save(AnimalDto animalDto, Principal principal) {
         Member member = memberService.findMemberByEmail(principal.getName());
-
         return animalRepository.save(animalDto.toEntity(member)).getId();
     }
 
@@ -93,4 +93,6 @@ public class AnimalService {
 
         animalRepository.delete(animal);
     }
+
+
 }

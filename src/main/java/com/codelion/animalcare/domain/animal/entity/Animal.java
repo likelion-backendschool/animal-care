@@ -37,9 +37,28 @@ public class Animal extends BaseEntity {
     @Column()
     private int genderId;
 
+    // 추가한 컬럼
+
+    @Column(nullable = true, length=70)
+    private String breedingPlace;
+
+    @Column()
+    private String animalType;
+
+    @Column()
+    private String animalBreed;
+
+    @Column()
+    private String animalCoatColor;
+
+    @Column(nullable = true, length=200)
+    private String animalSpecial;
+
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
 
     // == 연관관계 메서드 == //
     public void addMember(Member member) {

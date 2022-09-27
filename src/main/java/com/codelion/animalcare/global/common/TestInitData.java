@@ -43,7 +43,7 @@ public class TestInitData {
                     .email("member1@test.com")
                     .password(encoder.encode("member1"))
                     .name("김멤버")
-                    .birthday(new Date(1995, 2, 24))
+                    .birthday(new Date(95, 2, 24))
                     .address(new Address("서울 강남구 도곡동 953-11", "서울 강남구 강남대로 238", "06267", "멤버1상세주소",
                             37.4849665053325, 127.034757121285))
                     .phoneNum("01011110000")
@@ -57,11 +57,16 @@ public class TestInitData {
             Animal animal1 = Animal.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .birthday(new Date(2022, 8, 10))
+                    .birthday(new Date(122, 8, 10))
                     .genderId(1)
                     .name("멍멍이")
                     .registrationNum("410000000000001")
                     .member(member1)
+                    .breedingPlace("집")
+                    .animalType("고양이")
+                    .animalBreed("먼치킨")
+                    .animalCoatColor("검은색")
+                    .animalSpecial("꼬리가 짧음")
                     .build();
 
             animalRepository.save(animal1);
@@ -69,11 +74,16 @@ public class TestInitData {
             Animal animal2 = Animal.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .birthday(new Date(2021, 1, 1))
+                    .birthday(new Date(121, 1, 1))
                     .genderId(1)
                     .name("땅콩")
                     .registrationNum("410000000000002")
                     .member(member1)
+                    .breedingPlace("야외")
+                    .animalType("강아지")
+                    .animalBreed("잡종")
+                    .animalCoatColor("흰색")
+                    .animalSpecial("꼬리가 검은색")
                     .build();
 
             animalRepository.save(animal2);
@@ -84,7 +94,7 @@ public class TestInitData {
                     .email("member2@test.com")
                     .password(encoder.encode("member2"))
                     .name("이멤버")
-                    .birthday(new Date(1999, 5, 21))
+                    .birthday(new Date(99, 5, 21))
                     .address(new Address("서울 강남구 도곡동 953-3", "서울 강남구 강남대로 242", "06267", "멤버2상세주소",
                             37.4853735070328, 127.034082861809))
                     .phoneNum("01022220000")
@@ -97,11 +107,16 @@ public class TestInitData {
             Animal animal3 = Animal.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .birthday(new Date(2020, 4, 12))
+                    .birthday(new Date(120, 4, 12))
                     .genderId(1)
                     .name("냥냥이")
                     .registrationNum("410000000000003")
                     .member(member2)
+                    .breedingPlace("집3")
+                    .animalType("고양이3")
+                    .animalBreed("먼치킨3")
+                    .animalCoatColor("검은색3")
+                    .animalSpecial("꼬리가 짧음3")
                     .build();
 
             animalRepository.save(animal3);
@@ -109,11 +124,16 @@ public class TestInitData {
             Animal animal4 = Animal.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .birthday(new Date(2010, 9, 9))
+                    .birthday(new Date(110, 9, 9))
                     .genderId(1)
                     .name("슈퍼도그")
                     .registrationNum("410000000000004")
                     .member(member2)
+                    .breedingPlace("집4")
+                    .animalType("고양이4")
+                    .animalBreed("먼치킨4")
+                    .animalCoatColor("검은색4")
+                    .animalSpecial("꼬리가 짧음4")
                     .build();
 
             animalRepository.save(animal4);
@@ -121,11 +141,16 @@ public class TestInitData {
             Animal animal5 = Animal.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .birthday(new Date(2014, 10, 3))
+                    .birthday(new Date(114, 10, 3))
                     .genderId(1)
                     .name("슈카")
                     .registrationNum("410000000000005")
                     .member(member2)
+                    .breedingPlace("집5")
+                    .animalType("고양이5")
+                    .animalBreed("먼치킨5")
+                    .animalCoatColor("검은색5")
+                    .animalSpecial("꼬리가 짧음5")
                     .build();
 
             animalRepository.save(animal5);
@@ -136,7 +161,7 @@ public class TestInitData {
                     .email("member3@test.com")
                     .password(encoder.encode("member3"))
                     .name("최멤버")
-                    .birthday(new Date(1950, 12, 1))
+                    .birthday(new Date(50, 12, 1))
                     .address(new Address("서울 동작구 상도동 321-4", "서울 동작구 국사봉길 21", "07042", "멤버3상세주소",
                             37.4983449739223, 126.929376868639))
                     .phoneNum("01033330000")
@@ -149,11 +174,16 @@ public class TestInitData {
             Animal animal6 = Animal.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .birthday(new Date(2021, 5, 5))
+                    .birthday(new Date(121, 5, 5))
                     .genderId(1)
                     .name("복덩이")
                     .registrationNum("410000000000006")
                     .member(member3)
+                    .breedingPlace("집6")
+                    .animalType("고양이6")
+                    .animalBreed("먼치킨6")
+                    .animalCoatColor("검은색6")
+                    .animalSpecial("꼬리가 짧음6")
                     .build();
 
             animalRepository.save(animal6);
@@ -161,11 +191,16 @@ public class TestInitData {
             Animal animal7 = Animal.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .birthday(new Date(2021, 8, 20))
+                    .birthday(new Date(121, 8, 20))
                     .genderId(1)
                     .name("별이")
                     .registrationNum("410000000000007")
                     .member(member3)
+                    .breedingPlace("집7")
+                    .animalType("고양이7")
+                    .animalBreed("먼치킨7")
+                    .animalCoatColor("검은색7")
+                    .animalSpecial("꼬리가 짧음7")
                     .build();
 
             animalRepository.save(animal7);
@@ -176,7 +211,7 @@ public class TestInitData {
                     .email("member4@test.com")
                     .password(encoder.encode("member4"))
                     .name("강멤버")
-                    .birthday(new Date(1984, 7, 2))
+                    .birthday(new Date(84, 7, 2))
                     .address(new Address("서울 동작구 상도동 321-30", "서울 동작구 국사봉길 41", "07042", "멤버4상세주소",
                             37.4978834274108, 126.930048131868))
                     .phoneNum("01044440000")
@@ -189,11 +224,16 @@ public class TestInitData {
             Animal animal8 = Animal.builder()
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .birthday(new Date(2021, 7, 10))
+                    .birthday(new Date(121, 7, 10))
                     .genderId(1)
                     .name("호이")
                     .registrationNum("410000000000008")
                     .member(member4)
+                    .breedingPlace("집8")
+                    .animalType("고양이8")
+                    .animalBreed("먼치킨8")
+                    .animalCoatColor("검은색8")
+                    .animalSpecial("꼬리가 짧음8")
                     .build();
 
             animalRepository.save(animal8);
@@ -204,7 +244,7 @@ public class TestInitData {
                     .email("doctor1@test.com")
                     .password(encoder.encode("doctor1"))
                     .name("김닥터")
-                    .birthday(new Date(1994, 9, 5))
+                    .birthday(new Date(94, 9, 5))
                     .address(new Address("서울 강남구 도곡동 946-1", "서울 강남구 강남대로 284", "06258", "닥터1상세주소",
                             37.4887802184047, 127.032484091622))
                     .phoneNum("01011111111")
@@ -221,7 +261,7 @@ public class TestInitData {
                     .email("doctor2@test.com")
                     .password(encoder.encode("doctor2"))
                     .name("이닥터")
-                    .birthday(new Date(1990, 10, 11))
+                    .birthday(new Date(90, 10, 11))
                     .address(new Address("서울 강남구 도곡동 946-14", "서울 강남구 강남대로 282", "06258", "닥터2상세주소",
                             37.4885664092435, 127.03248411211))
                     .phoneNum("01022221111")
