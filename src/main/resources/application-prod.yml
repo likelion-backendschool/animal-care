@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://{우리 서버 ip}:3306/animal_care?serverTimezone=UTC
+    username: animalcare
+    password: animalcare123
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
+    properties:
+      hibernate:
+        format_sql: true # 실행되는 query를 보여줌
