@@ -4,7 +4,7 @@ import com.codelion.animalcare.domain.appointment.AppointmentSearch;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
