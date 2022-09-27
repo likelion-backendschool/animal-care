@@ -1,15 +1,15 @@
 <html layout:decorate="~{global/layout}">
 <div class="container my-5" layout:fragment="content">
     <nav>
-        <a href="/usr/mypage/doctor" class="btn">뒤로</a>
+        <a th:href="@{/usr/doctor/mypage}" class="btn">뒤로</a>
     </nav>
     <h2 class="p-4">
         아직 근무하는 병원이 등록되지 않았습니다.
     </h2>
     <nav>
-        <a class="btn btn-primary" href="/usr/mypage/doctor/hospital-info-manage/create"
+        <a class="btn btn-primary" th:href="@{/usr/doctor/mypage/hospital/create}"
            >병원 생성</a>
-        <a class="btn btn-primary" href="/usr/mypage/doctor/hospital-info-manage/select"
+        <a class="btn btn-primary" th:href="@{/usr/doctor/mypage/hospital/select}"
            >병원 선택</a>
     </nav>
 </div>

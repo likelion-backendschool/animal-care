@@ -1,14 +1,12 @@
 package com.codelion.animalcare.domain.hospital.controller;
 
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.dto.UpdateDoctorMyPageHospitalInfoManage;
-import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +16,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/usr/mypage/doctor/hospital-info-manage")
+@RequestMapping("usr/doctor/mypage/hospital")
 @RequiredArgsConstructor
 public class HospitalMyPageDoctorController {
     private final HospitalService hospitalService;
@@ -78,7 +76,7 @@ public class HospitalMyPageDoctorController {
         hospitalService.create(requestDto, doctorEmail);
 
         // TODO modify를 form으로 이름을 바꾼다.
-        return "redirect:/usr/mypage/doctor/hospital-info-manage";
+        return "redirect:/usr/doctor/mypage/hospital";
     }
 
     /**
@@ -97,6 +95,7 @@ public class HospitalMyPageDoctorController {
         // TODO modify를 form으로 이름을 바꾼다.
         return "myPage/doctor/hospital-info-manage-select";
     }
+
     @PostMapping("select")
     public String loadDoctorMyPageHospitalList(
             Principal principal,
@@ -107,7 +106,7 @@ public class HospitalMyPageDoctorController {
         LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(doctorEmail);
 
         doctorService.addHospital(doctorDto.getId(), hospitalId);
-        return "redirect:/usr/mypage/doctor/hospital-info-manage";
+        return "redirect:/usr/doctor/mypage/hospital";
     }
 
     // 병원 소개 수정 페이지
@@ -137,6 +136,6 @@ public class HospitalMyPageDoctorController {
 
             hospitalService.update(requestDto);
 
-        return "redirect:/usr/mypage/doctor/hospital-info-manage";
+        return "redirect:/usr/doctor/mypage/hospital";
     }
 }

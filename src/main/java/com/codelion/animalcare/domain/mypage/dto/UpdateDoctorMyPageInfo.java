@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctormypage.dto;
+package com.codelion.animalcare.domain.mypage.dto;
 
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import lombok.AllArgsConstructor;

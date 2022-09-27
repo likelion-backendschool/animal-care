@@ -77,11 +77,7 @@ public class UserService implements UserDetailsService {
 //        return userRepository.findByDtype(tmp);
 //    }
 
-        public Member getMember(String email){
-            Member member = memberRepository.findByEmail(email);
 
-            return member;
-        }
 
 
 
