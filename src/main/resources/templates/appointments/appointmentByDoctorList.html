@@ -56,7 +56,7 @@
 
 
                     <td>
-                        <a href="#" th:if="${ad.status.name() == 'READY'}" th:href="@{/usr/mypage/doctor/member-manage/appointments/all/{appointmentId} (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">진단서 작성</a>
+                        <a href="#" th:if="${ad.status.name() == 'READY'}" th:href="@{/usr/doctor/medicalOffice/{appointmentId} (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">진단서 작성</a>
                         <button th:if="${ad.status.name() == 'COMPLETE'}" disabled type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">진단서 작성 완료</button>
                     </td>
                 </tr>
