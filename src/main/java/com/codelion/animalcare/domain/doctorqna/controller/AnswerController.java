@@ -27,7 +27,7 @@ public class AnswerController {
     private final QuestionService questionService;
 
     //답변 작성
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{questionId}/answers/write")
     public String save(Model model, @PathVariable Long questionId, @Valid AnswerSaveRequestDto answerSaveRequestDto, BindingResult bindingResult, Principal principal){
 
@@ -44,7 +44,7 @@ public class AnswerController {
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto, Principal principal){
 
@@ -56,7 +56,7 @@ public class AnswerController {
 
         return "/doctorqna/doctorQnaAnswerModifyForm";
     }
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public String modify(@PathVariable Long questionId, @PathVariable Long answerId, @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult, Principal principal){
 
@@ -73,7 +73,7 @@ public class AnswerController {
     }
 
     //답변 삭제
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/delete")
     public String delete(@PathVariable Long questionId, @PathVariable Long answerId, Principal principal) {
 
