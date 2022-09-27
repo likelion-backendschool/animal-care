@@ -1,57 +1,148 @@
-<!--<!DOCTYPE HTML>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head th:replace="fragments/header :: header" />-->
-<!--<body>-->
+<html layout:decorate="~{global/no-navbars-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 
-<!--<div class="container">-->
-<!--    <div th:replace="fragments/bodyHeader :: bodyHeader"/>-->
+<div layout:fragment="content" class="container my-5">
+    <nav>
+        <a href="/usr/mypage/doctor/member-manage/appointments/all" class="btn">뒤로</a>
+    </nav>
 
-<!--    <form role="form" action="/diagnosis" method="post">-->
+    <body>
 
-<!--        <div class="form-group">-->
-<!--            <label>진료날짜</label>-->
-<!--            &lt;!&ndash;            <input type="number" name="count" class="form-control" id="count" placeholder="예약날짜를 입력하세요">&ndash;&gt;-->
-<!--        </div>-->
+<div class="container">
+
+        <form role="form" th:object="${oneDiagnosisForm}" method="post">
+
+            <div class="modal-header">
+                <h3 class="modal-title text-center" id="staticBackdropLabel">진단서 작성</h3>
+            </div>
+
+        <div class="modal-body">
+            <table class="table caption-top table-bordered">
+
+                <tr>
+                    <th rowspan="2" class="col-2">동물보호자</th>
+                    <th class="col-2" >성명</th>
+                    <td colspan="3" th:text="${member?.name}"></td>
+                </tr>
+
+                <tr>
+                    <th>주소</th>
+                    <td colspan="3">
+                        <p th:text="|(도로명)${member?.address?.street}|"></p>
+                        <p th:text="|(지번)${member?.address?.city}|"></p>
+                    </td>
+                <tr>
+                    <th>사육 장소</th>
+                    <td colspan="4">
+                        <input type="text" th:field="*{breedingPlace}" class="form-control" placeholder="사육 장소를 입력하세요. 예) 아파트, 마당"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2" rowspan="4" >동물의 표시</th>
+
+                    <th class="col-2">종류</th>
+                    <td>
+                        <input type="text" th:field="*{animalType}" class="form-control" placeholder="예) 개"/>
+                    </td>
+
+                    <th class="col-2">품종</th>
+                    <td>
+                        <input type="text" th:field="*{animalBreed}" class="form-control" placeholder="예) 시츄"/>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>동물명</th>
+                    <td th:text="${animal?.name}"></td>
+                    <th>성별</th>
+                    <td th:text="${animal?.genderId == 0 ? '암컷' : '수컷'}"></td>
+                </tr>
+                <tr>
+<!--                    TODO 애완동물 나이 계산해야함-->
+                    <th>연령(연도)</th>
+<!--                    <td th:text="|${animal?.birthday}세|">X</td>-->
+                    <td th:text="|${diagnosis?.animalAge}세|">X</td>
+                    <th>모색</th>
+                    <td>
+                        <input type="text" th:field="*{animalCoatColor}" class="form-control" placeholder="예) 흰색"/>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>특징</th>
+                    <td colspan="4">
+                        <input type="text" th:field="*{animalSpecial}" class="form-control" placeholder="특징을 입력하세요"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>병명</th>
+                    <td colspan="4">
+                        <input type="text" th:field="*{diseaseName}" class="form-control" placeholder="병명을 입력하세요"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>발병 연월일<br/>(임신 연월일)</th>
+                    <td colspan="4">
+                    <input type="date" th:name="diseaseDate" th:field="*{diseaseDate}"  class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <th>진단 연월일</th>
+                    <td colspan="4" th:text="${appointment?.appointmentDate}"></td>
+                </tr>
+
+                <tr>
+                    <th>예후 소견</th>
+                    <td colspan="4">
+                        <input type="text" th:field="*{opinion}" class="form-control" placeholder="예후소견을 입력하세요"/>
+                        </input>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>그 밖의 사항</th>
+                    <td colspan="4">
+                        <input type="text" th:field="*{otherMatter}" class="form-control" placeholder="그 밖의 사항을 입력하세요"/>
+                        </input>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center container">
+                <p>수의사법 제12조 및  도법 시행규칙 제9조에 따라 위와 같이 증명합니다.</p>
+                <p th:text="${#temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일')}"></p>
+            </div>
+
+            <div class="container">
+                <p th:text="|동물병원 명칭 : ${hospital?.name}|"></p>
+                <p th:text="|동물병원 주소 : ${hospital?.address?.street}|"></p>
+                <p th:text="|동물병원 수의사 면허 : ${diagnosis?.doctorLicense}|"></p>
+            </div>
+            <div class="text-center container">
+                <p th:text="|수의사 : ${doctor?.name} (인)|"> </p>
+                <h2 th:text="${hospital?.name}"></h2>
+            </div>
+
+        </div>
+<!-- modal body end-->
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">작성완료</button>
+
+<!--                TODO 여기서 수정이 필요한듯. class 안에서 redirect:/로 해결이 안되는 상황. 진단서 작성완료 시 예약내역으로 이동해야함-->
+<!--                <button type="submit" class="btn btn-primary"-->
+<!--                        onclick="location.href='/usr/mypage/doctor/member-manage/appointments/all'">작성완료</button>-->
+<!--                <button window.parent.location.href="/usr/mypage/doctor/member-manage/appointments/all" type="submit" class="btn btn-primary">작성완료</button>-->
+
+                <a href="#" th:href="@{/usr/mypage/doctor/member-manage/appointments/all}" class="btn btn-primary" role="button">예약내역으로 이동</a>
+
+            </div>
 
 
-<!--        <div class="form-group">-->
-<!--            <label for="member">예약회원</label>-->
-<!--            <select name="memberId" id="member" class="form-control">-->
-<!--                <option value="">회원선택</option>-->
-<!--                <option th:each="member : ${members}"-->
-<!--                        th:value="${member.id}"-->
-<!--                        th:text="${member.name}" />-->
-<!--            </select>-->
-<!--        </div>-->
+        </form>
+    <br/>
 
-<!--        <div class="form-group">-->
-<!--            <label for="animal">애완동물이름</label>-->
-<!--            <select name="animalId" id="animal" class="form-control">-->
-<!--                <option value="">애완동물선택</option>-->
-<!--                <option th:each="animal : ${animals}"-->
-<!--                        th:value="${animal.id}"-->
-<!--                        th:text="${animal.name}" />-->
-<!--            </select>-->
-<!--        </div>-->
+</div> <!-- /container -->
 
-<!--        <div class="form-group">-->
-<!--            <label for="doctor">의사이름</label>-->
-<!--            <select name="doctorId" id="doctor" class="form-control">-->
-<!--                <option value="">의사</option>-->
-<!--                <option th:each="doctor : ${doctors}"-->
-<!--                        th:value="${doctor.id}"-->
-<!--                        th:text="${doctor.name}" />-->
-<!--            </select>-->
-<!--        </div>-->
+</body>
 
-
-
-<!--        <button type="submit" class="btn btn-primary">Submit</button>-->
-<!--    </form>-->
-<!--    <br/>-->
-<!--    <div th:replace="fragments/footer :: footer" />-->
-
-<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
-
-<!--</body>-->
-<!--</html>-->
+</div>
+</html>

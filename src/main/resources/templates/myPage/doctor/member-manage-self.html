@@ -23,7 +23,7 @@
                     <td th:text="${appointment.content}"></td>
                 </tr>
                 <tr>
-                    <th>예약 상태</th>
+                    <th>진료 상태</th>
                     <td>
                         [[${appointment.appointmentStatus}]]
                         <form th:action="|/usr/doctor/mypage/appointments/${appointment?.id}/refuse|" method="post">
@@ -106,7 +106,9 @@
                                                 </tr>
                                                 <tr>
                                                     <th>진단 연월일</th>
-                                                    <td colspan="4"  th:text="${#dates.format(diagnosis?.diagnosisDate, 'yyyy년 MM월 dd일')}"></td>
+<!--                                                    TODO 잠시 LocalDateTime 적용. Date로 할지 LocalDateTime로 할지 정해야함-->
+<!--                                                    <td colspan="4"  th:text="${#dates.format(diagnosis?.diagnosisDate, 'yyyy년 MM월 dd일')}"></td>-->
+                                                    <td colspan="4"  th:text="${diagnosis?.diagnosisDate}"></td>
                                                 </tr>
                                                 <tr>
                                                     <th>예후 소견</th>
@@ -124,7 +126,7 @@
                                             <div class="container">
                                                 <p th:text="|동물병원 명칭 : ${diagnosis?.hospitalName}|"></p>
                                                 <p th:text="|동물병원 주소 : ${diagnosis?.hospitalStreet}|"></p>
-                                                <p th:text="|동물병원 면허 : ${diagnosis?.doctorLicense}|"></p>
+                                                <p th:text="|동물병원 수의사 면허 : ${diagnosis?.doctorLicense}|"></p>
                                             </div>
                                             <div class="text-center container">
                                                 <p th:text="|수의사 : ${diagnosis?.doctorName} (인)|"> </p>

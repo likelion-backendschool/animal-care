@@ -22,19 +22,22 @@ import java.util.Optional;
  */
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/usr/member")
 public class MemberController {
 
     private final MemberService memberService;
 
 
 
-    @GetMapping("/usr/member/signup")
+
+
+    @GetMapping("/signup")
     public String signup(Model model){
         model.addAttribute("memberSignUpDto", new MemberSignUpDto());
         return "login/memberSignup";
     }
 
-    @PostMapping("/usr/member/signup")
+    @PostMapping("/signup")
     public String signup(@Valid MemberSignUpDto memberSignUpDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "login/memberSignup";

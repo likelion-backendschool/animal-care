@@ -39,7 +39,8 @@ public class SecurityConfig {
 //                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
                 .and() // 문맥의 끝
-                    .csrf().ignoringAntMatchers("/**")
+                .csrf().ignoringAntMatchers("/**")
+
                 .and() // 문맥의 끝
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(
                         XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))

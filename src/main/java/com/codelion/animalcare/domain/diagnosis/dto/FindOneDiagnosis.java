@@ -2,16 +2,22 @@ package com.codelion.animalcare.domain.diagnosis.dto;
 
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
+import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class FindOneDiagnosis {
+
+    private Long id;
     // 동물 보호자
     // 성명
     private String memberName;
@@ -30,9 +36,9 @@ public class FindOneDiagnosis {
     // 동물명
     private String animalName;
     // 성별
-    private short animalGenderId;
+    private int animalGenderId;
     // 연령
-    private short animalAge;
+    private int animalAge;
     // 모색
     private String animalCoatColor;
     // 특징
@@ -40,10 +46,15 @@ public class FindOneDiagnosis {
 
     // 병명
     private String diseaseName;
-    // 발병 연월일
+
+//     발병 연월일
+    @Temporal(TemporalType.DATE)
     private Date diseaseDate;
-    // 진단 연월일
-    private Date diagnosisDate;
+
+//    진단 연월일
+    private LocalDateTime diagnosisDate;
+
+
     // 예후 소견
     private String opinion;
     // 그 밖의 사항
@@ -61,6 +72,7 @@ public class FindOneDiagnosis {
     private Appointment appointment;
 
     public FindOneDiagnosis(Diagnosis diagnosis) {
+        this.id = diagnosis.getId();
         this.memberName = diagnosis.getMemberName();
         this.addressCity = diagnosis.getAddressCity();
         this.addressStreet = diagnosis.getAddressStreet();
@@ -82,5 +94,32 @@ public class FindOneDiagnosis {
         this.doctorLicense = diagnosis.getDoctorLicense();
         this.doctorName = diagnosis.getDoctorName();
         this.appointment = diagnosis.getAppointment();
+    }
+
+    public Diagnosis toEntity(Diagnosis diagnosis) {
+        return Diagnosis.builder()
+                .id(diagnosis.getId())
+                .memberName(diagnosis.getMemberName())
+                .addressCity(diagnosis.getAddressCity())
+                .addressStreet(diagnosis.getAddressStreet())
+                .breedingPlace(diagnosis.getBreedingPlace())
+                .animalType(diagnosis.getAnimalType())
+                .animalBreed(diagnosis.getAnimalBreed())
+                .animalName(diagnosis.getAnimalName())
+                .animalGenderId(diagnosis.getAnimalGenderId())
+                .animalAge(diagnosis.getAnimalAge())
+                .animalCoatColor(diagnosis.getAnimalCoatColor())
+                .animalSpecial(diagnosis.getAnimalSpecial())
+                .diseaseName(diagnosis.getDiseaseName())
+                .diseaseDate(diagnosis.getDiseaseDate())
+                .diagnosisDate(diagnosis.getDiagnosisDate())
+                .opinion(diagnosis.getOpinion())
+                .otherMatter(diagnosis.getOtherMatter())
+                .hospitalName(diagnosis.getHospitalName())
+                .hospitalStreet(diagnosis.getHospitalStreet())
+                .doctorLicense(diagnosis.getDoctorLicense())
+                .doctorName(diagnosis.getDoctorName())
+                .appointment(diagnosis.getAppointment())
+                .build();
     }
 }

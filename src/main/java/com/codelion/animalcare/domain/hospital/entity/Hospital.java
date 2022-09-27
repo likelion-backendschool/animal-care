@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.hospital.entity;
 
 
 
+import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
@@ -52,4 +53,8 @@ public class Hospital extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "hospital")
     private List<Appointment> appointments = new ArrayList<>();
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "hospital")
+//    private List<Diagnosis> diagnoses = new ArrayList<>();
 }

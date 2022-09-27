@@ -21,7 +21,7 @@ public class AnimalServiceTest {
     @Autowired
     private AnimalService animalService;
 
-// Test Init Data 필요 //
+
 //    @Test
 //    public void 고객이_갖고있는_동물들_구하기(){
 //        Long memberId1 = 3L;

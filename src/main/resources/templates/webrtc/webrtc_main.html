@@ -37,8 +37,9 @@
                         </h4>
                     </div>
 
-<!--                    dto.auth가 의사이면 온라인 진료실 생성 가능 -->
-                    <div th:if="${dto.auth == 'ROLE_DOCTOR'}">
+<!--                    의사이면 온라인 진료실 생성 가능 -->
+                    <div>
+                        <a class="nav-link active" sec:authorize="hasRole('DOCTOR')">
 
                         <div class="mb-3">
                             <label for="id">To create a new room enter your room number,
@@ -53,7 +54,7 @@
                             <button name="action" value="create" type="submit" class="btn btn-outline-primary">
                                 Create Selected Room</button>
                         </div>
-
+                        </a>
                     </div>
                 </div>
             </div>

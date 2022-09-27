@@ -81,11 +81,17 @@ public class AppointmentMemberController {
                 return "redirect:"+ referer;
             }
 
+
             String email = principal.getName();
             MemberDto memberDto = memberService.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
 
-            appointmentService.appointment(memberDto, appointmentFormDto);
+            try{
+                appointmentService.appointment(memberDto, appointmentFormDto);
+            } catch(RuntimeException e) {
+                model.addAttribute("message", e.getMessage());
+                return "error/error-with-message";
+            }
 
             return "redirect:/";
     }

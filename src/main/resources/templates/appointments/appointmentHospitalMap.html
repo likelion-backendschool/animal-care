@@ -12,10 +12,10 @@
         </nav>
     </div>
     <div class="row">
-        <div class="col-2">
+        <div class="col-md-2">
             <div id="hospital-list" class="list-group"></div>
         </div>
-        <div class="col-10">
+        <div class="col-md-10">
             <div id="map" style="width:100%; padding-bottom: 100%;"></div>
         </div>
     </div>
@@ -261,13 +261,17 @@
             }
         }
 
+
         // 의사 고르는 창(오른쪽에서 나옴)
-        async function chooseDoctor(hospitalId,hospitalName){
+        async function chooseDoctor(hospitalId, hospitalName, openingHours){
+            const openingHourArr = openingHours.split('/', 7);
+            console.log('weekday: ', openingHourArr);
             try {
                 const doctors = await $.ajax({
                     url: `/usr/doctor/hospital/${hospitalId}`,
                     type: 'GET',
                 });
+                    console.log(openingHours);
                 console.log(doctors);
                 const cards = doctors.map(doctor =>
                     `<div class="card">
@@ -275,24 +279,32 @@
                         <h5 class="card-title">${doctor.name}</h5>
                         <p class="card-text">전공 : ${doctor.major || ""}</p>
                         <p class="card-text">소개 : ${doctor.introduce || ""}</p>
-                        <a href="#" class="btn btn-primary disabled">오프라인 예약</a>
-                        <span class="dropdown">
-                          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="false" >
+                        <p>
+                            <a href="#" class="btn btn-primary disabled">오프라인 예약</a>
+                          <button class="btn btn-primary collapse-date" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-date-${doctor.id}" aria-expanded="false" aria-controls="collapseExample">
                             온라인 예약
                           </button>
-                          <form action="/usr/member/appointment/others" method="get" class="dropdown-menu p-4">
-                            <div class="mb-3">
-                              <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
-                              <input type="hidden" name="hospitalId" value="${hospitalId}">
-                              <input type="hidden" name="doctorId" value="${doctor.id}">
-                              <input type="datetime-local" class="form-control" id="appointmentDateTime" name="date" value="${new Date().toISOString().slice(0, 16)}">
-                            </div>
-                            <button type="submit" class="btn btn-primary">날짜 결정</button>
-                          </form>
-                        </span>
+                        </p>
+                        <div class="collapse" id="collapse-date-${doctor.id}">
+                            <form id="other-form" action="/usr/member/appointment/others" method="get" class="p-4">
+                                <div class="mb-3">
+                                  <input type="hidden" name="hospitalId" value="${hospitalId}">
+                                  <input type="hidden" name="doctorId" value="${doctor.id}">
+                                  <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
+                                  <input type="date" class="form-control appointment-date" id="appointment-date-${doctor.id}">
+                                </div>
+                                <div class="collapse"  id="appointment-time-${doctor.id}">
+
+                                </div>
+
+
+<!--                            <button type="submit" class="btn btn-primary">날짜 결정</button>-->
+                            </form>
+                        </div>
                       </div>
                     </div>`)
-                    .reduce( (previousValue, currentValue) => previousValue + currentValue, "");
+                    .reduce((previousValue, currentValue) => previousValue + currentValue, "");
+
                 $('#offcanvasRight').empty()
                     .append(`
                     <div class="offcanvas-header">
@@ -303,10 +315,78 @@
                         ${cards}
                     </div>
                     `)
+
+                $('.appointment-date').on('input', async e => {
+                    const doctorId = e.target?.id?.split('-')[2];
+                    const date = e.target?.value;
+                    let appointmentTimes = await $.ajax({
+                        url: `/usr/appointment/times`,
+                        type: 'GET',
+                        data:{
+                            doctorId,
+                            date
+                        }
+                    })
+                    // datetime에서 time만 추출.
+                    appointmentTimes = appointmentTimes.map(item => item.substring(11,16));
+                    const hospitalTime = openingHourArr[(new Date(date).getDay() - 1 + 7) % 7]
+                    console.log('hospitalTime:',hospitalTime)
+                    const [openTime, closeTime] = hospitalTime.split('~', 2);
+                    let content = '';
+
+                    // 10분 단위 버튼 제작.
+                    if(openTime && closeTime){
+                        let [openHour, openMinute] = openTime.split(':', 2).map(item => Number(item));
+                        openMinute = Math.ceil(openMinute / 10) * 10;
+                        const [closeHour, closeMinute] = closeTime.split(':', 2).map(item => Number(item));
+                        console.log(openHour, closeHour, openMinute, closeMinute);
+                        while(openHour < closeHour || openMinute < closeMinute){
+                            // 시간을 string으로
+                            const time = `${String(openHour).padStart(2, '0')}:${String(openMinute).padStart(2, '0')}`;
+                            console.log(time, appointmentTimes.includes(time), appointmentTimes);
+                            // 이미 예약된 곳은 버튼을 disabled 한다.
+                            if(appointmentTimes.includes(time)) content +=`
+                            <div class="col-4 p-1">
+                                <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn" disabled>${time}</button>
+                            </div>
+                            `
+                            else content +=`
+                            <div class="col-4 p-1">
+                            <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn btn-primary">${time}</button>
+                            </div>
+                            `
+
+                            // 시간 조정.
+                            if(openMinute === 50){
+                                openHour++; openMinute = 0;
+                            }
+                            else openMinute += 10;
+                        }
+                    }
+                    console.log(content)
+                    console.log(appointmentTimes)
+                    console.log(hospitalTime)
+                    $(`#appointment-time-${doctorId}`)
+                        .empty()
+                        .addClass("show")
+                        .append(`
+                            <div class="row"  style="height: 250px; overflow-y: scroll;">
+                                ${content === '' ? "정기휴무 입니다." : content}
+                            </div>
+                        `);
+                })
             } catch (err) {
                 console.error(err)
             }
+        }
 
+        function submitOthers(time, doctorId){
+            // 시간 추가.
+            const beforeVal= $(`#appointment-date-${doctorId}`).attr('disabled', true).val();
+            const date = `${beforeVal}T${time}:00`;
+            $('#other-form')
+                .append(`<input type="hidden" value="${date}" name="date">`);
+            $(`#other-form`).submit();
         }
 
         function updateMarker() {
@@ -335,22 +415,29 @@
 
                 // markers에 저장.
                 markers.push(marker);
-
+                console.log(hospital.openingHours.split('/', 7));
+                // 병원 시간표
+                const openingHourHeaders = ['월', '화', '수', '목', '금', '토', '일']
+                const openingHoursContent = hospital.openingHours.split('/', 7)
+                    .map(
+                        (times, i) => `${openingHourHeaders[i]} :  ${times === '~' ? "정기 휴무" : times}<br />`)
+                    .reduce((previousValue, currentValue) => previousValue + currentValue, '');
                 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
                 const content =
-                    '<div class="card">' +
+                    '<div class="card" style="min-width: 300px">' +
                     '    <div class="info">' +
                     '        <div class="card-header">' +
-                    hospital.name +
+                    `<h4>${hospital.name}</h4>`  +
                     '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
                     '        </div>' +
                     '        <div class="card-body">' +
                     '            <div class="desc">' +
-                    '                <p>' + address.street + address.detail + '</p>' +
+                    '                <p>' + address.street + ' ' + address.detail + '</p>' +
+                    `<p>${openingHoursContent}</p>` +
                     '            </div>' +
                     '            <div class="container">' +
                     '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
-                    `               <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id}, '${hospital.name}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
+                    `               <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id}, '${hospital.name}', '${hospital.openingHours}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
                     '           </div>' +
                     '        </div>' +
                     '    </div>' +
@@ -377,7 +464,6 @@
         function setCenterByHospital(index) {
             const hospital = hospitals[index];
             const marker = markers[index];
-            console.log(hospital)
             const {latitude, longitude, street, detail} = hospital.address;
 
             // 이동할 위도 경도 위치를 생성합니다
@@ -386,24 +472,29 @@
             // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
             map.setCenter(position);
 
-            // 마크 생성
+            // 병원 시간표
+            const openingHourHeaders = ['월', '화', '수', '목', '금', '토', '일']
+            const openingHoursContent = hospital.openingHours.split('/', 7)
+                .map(
+                    (times, i) => `${openingHourHeaders[i]} :  ${times === '~' ? "정기 휴무" : times}<br />`)
+                .reduce((previousValue, currentValue) => previousValue + currentValue, '');
 
             // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
             const content =
-                '<div class="card">' +
+                '<div class="card" style="min-width: 300px">' +
                 '    <div class="info">' +
                 '        <div class="card-header">' +
-                hospital.name  +
+                `<h4>${hospital.name}</h4>`  +
                 '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
                 '        </div>' +
                 '        <div class="card-body">' +
                 '            <div class="desc">' +
-                '                <div class="ellipsis"></div>' +
-                '                <div class="jibun ellipsis">' + street + ' '+ detail +'</div>' +
+                '                <p>' + street + ' '+ detail +'</p>' +
+                openingHoursContent +
                 '            </div>' +
                 '            <div class="container">' +
                 '                 <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
-                `                 <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id},'${hospital.name}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
+                `                 <button class="btn btn-primary" type="button" onclick="chooseDoctor(${hospital.id},'${hospital.name}', '${hospital.openingHours}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">의사 선택</button>`+
                 '           </div>' +
                 '        </div>' +
                 '    </div>' +
