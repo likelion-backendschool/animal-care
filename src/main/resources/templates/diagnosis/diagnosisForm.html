@@ -2,7 +2,7 @@
 
 <div layout:fragment="content" class="container my-5">
     <nav>
-        <a href="/usr/mypage/doctor/member-manage/appointments/all" class="btn">뒤로</a>
+        <a th:href="@{/usr/doctor/medicalOffice}" class="btn">뒤로</a>
     </nav>
 
     <body>
@@ -143,6 +143,13 @@
 </div> <!-- /container -->
 
 </body>
+
+<!--    Pop out of an iframe part:-->
+<!--    <script type="text/javascript">-->
+<!--        if (top.location!= self.location) {-->
+<!--            top.location = self.location.href;-->
+<!--        }-->
+<!--    </script>-->
 
 </div>
 </html>
