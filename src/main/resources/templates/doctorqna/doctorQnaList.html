@@ -18,9 +18,9 @@
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td>
                 <a th:href="@{|/usr/doctor-qna/${question.id}|}" th:text="${question.title}"></a>
-                <span class="text-danger small ms-2"
+                <span class="text-info small ms-2 text-bold"
                       th:if="${#lists.size(question.answerList) > 0}"
-                      th:text="${#lists.size(question.answerList)}">
+                      th:text="|(${#lists.size(question.answerList)})|">
                 </span>
             </td>
             <td><a th:text="${question.member?.name}"></a></td>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-6">
             <form class="input-group input-group-sm mb-3">
-                <select onchange="$(this).closest('form').submit();" class="form-select m-0" name="type" th:value="${param.kr}">
+                <select class="form-select m-0" name="type" th:value="${param.kr}">
                     <option value="title">제목</option>
                     <option value="content">내용</option>
                     <option value="member">작성자</option>
@@ -71,10 +71,8 @@
                 <input class="form-control m-0" type="text" name="kw" style="width: auto; text-align: center" placeholder="검색어를 입력해주세요.">
                 <button type="submit" class="btn btn-primary btn-sm m-0">검색</button>
             </form>
-
         </div>
     </div>
-
 
     </body>
 </div>

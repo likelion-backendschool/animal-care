@@ -1,8 +1,7 @@
 package com.codelion.animalcare.domain.doctorqna.controller;
 
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
-import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.service.MemberService;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,14 +17,14 @@ import java.security.Principal;
 public class QuestionRestController {
 
     private final QuestionService questionService;
-    private final MemberService memberService;
+    private final UserService userService;
 
     @PostMapping("/usr/doctor-qna/like/{id}")
     public boolean like(@PathVariable Long id, Principal principal) {
 
-        Member member = memberService.findMemberByEmail(principal.getName());
+        UserInfo user = userService.getUserInfo(principal.getName()).orElse(null);
 
-        boolean result = questionService.saveLike(id, member);
+        boolean result = questionService.saveLike(id, user);
 
         return result;
     }

@@ -1,14 +1,14 @@
 package com.codelion.animalcare.domain.user.service;
 
 
+import com.codelion.animalcare.domain.user.dto.UserInfoDto;
 import com.codelion.animalcare.domain.user.entity.Admin;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.dto.UserInfoDto;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.repository.AdminRepository;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.user.repository.MemberRepository;
-
 import com.codelion.animalcare.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -78,6 +80,12 @@ public class UserService implements UserDetailsService {
 //    }
 
 
+
+        public Optional<UserInfo> getUserInfo(String email) {
+            Optional<UserInfo> user = userRepository.findByEmail(email);
+
+            return user;
+        }
 
 
 

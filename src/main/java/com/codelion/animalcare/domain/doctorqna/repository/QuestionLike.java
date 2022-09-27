@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.doctorqna.repository;
 
-import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,12 +25,12 @@ public class QuestionLike {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private UserInfo member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
 
-    public QuestionLike(Member member, Question question) {
+    public QuestionLike(UserInfo member, Question question) {
         this.member = member;
         this.question = question;
     }
