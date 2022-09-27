@@ -268,7 +268,7 @@
             console.log('weekday: ', openingHourArr);
             try {
                 const doctors = await $.ajax({
-                    url: `/usr/doctor/hospital/${hospitalId}`,
+                    url: `/usr/domain/doctor/hospital/${hospitalId}`,
                     type: 'GET',
                 });
                     console.log(openingHours);
