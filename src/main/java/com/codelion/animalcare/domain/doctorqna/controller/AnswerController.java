@@ -54,14 +54,14 @@ public class AnswerController {
 
         model.addAttribute("answer", answerService.findById(answerId));
 
-        return "/doctorqna/doctorQnaAnswerModifyForm";
+        return "doctorqna/doctorQnaAnswerModifyForm";
     }
 //    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public String modify(@PathVariable Long questionId, @PathVariable Long answerId, @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult, Principal principal){
 
         if(bindingResult.hasErrors()) {
-            return "/doctorqna/doctorQnaAnswerModifyForm";
+            return "doctorqna/doctorQnaAnswerModifyForm";
         }
 
         if(answerService.answerAuthorized(answerId, principal)){

@@ -109,7 +109,7 @@ public class QuestionController {
 
         model.addAttribute("like", like);
 
-        return "/doctorqna/doctorQnaDetail";
+        return "doctorqna/doctorQnaDetail";
     }
     //전체 조회
     @GetMapping("/usr/doctor-qna")
@@ -121,7 +121,7 @@ public class QuestionController {
         model.addAttribute("kw", kw);
 
 
-        return "/doctorqna/doctorQnaList";
+        return "doctorqna/doctorQnaList";
     }
 
 //    @PreAuthorize("isAuthenticated()")
@@ -133,14 +133,14 @@ public class QuestionController {
         }
 
         model.addAttribute("question", questionService.findById(id));
-        return "/doctorqna/doctorQnaQuestionModifyForm";
+        return "doctorqna/doctorQnaQuestionModifyForm";
     }
 //    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{id}/modify")
     public String update(@PathVariable Long id, @Valid QuestionUpdateRequestDto questionUpdateRequestDto, BindingResult bindingResult, Principal principal){
 
         if(bindingResult.hasErrors()) {
-            return "/doctorqna/doctorQnaQuestionModifyForm";
+            return "doctorqna/doctorQnaQuestionModifyForm";
         }
 
         if(questionService.questionAuthorized(id, principal)){
