@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.diagnosis.entity;
 
+import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
@@ -18,6 +19,8 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import static javax.persistence.FetchType.*;
 
@@ -151,10 +154,8 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setAnimalType(animal.getAnimalType());
         diagnosis.setAnimalBreed(animal.getAnimalBreed());
 
-
-        diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
-//        diagnosis.setAnimalAge(animal.getAnimalAge());
-
+        int animalAge = getAgeFromBirthday(animal.getBirthday());
+        diagnosis.setAnimalAge(animalAge);
 
         diagnosis.setHospitalName(hospital.getName());
         diagnosis.setHospitalStreet(hospital.getAddress().getStreet());
@@ -177,5 +178,20 @@ public class Diagnosis extends BaseEntity{
 
 
         return diagnosis;
+    }
+
+    public static int getAgeFromBirthday(Date birthday) {
+          Calendar birth = new GregorianCalendar();
+          Calendar today = new GregorianCalendar();
+
+          birth.setTime(birthday);
+          today.setTime(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+
+        int factor = 0;
+        if (today.get(Calendar.DAY_OF_YEAR) < birth.get(Calendar.DAY_OF_YEAR)) {
+            factor = -1;
+        }
+
+        return today.get(Calendar.YEAR) - birth.get(Calendar.YEAR) + factor;
     }
 }
