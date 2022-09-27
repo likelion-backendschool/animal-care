@@ -28,41 +28,9 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/mypage/new")
-    public String createForm(Model model) {
-
-        model.addAttribute("memberForm", new MemberForm());
-        return "myPage/member/memberForm";
-    }
-
-    @PostMapping("/mypage/new")
-    public String create(@Valid MemberForm form, BindingResult result, Principal principal) {
-
-        if (result.hasErrors()) {
-            return "myPage/member/memberForm";
-        }
-
-        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode(), form.getDetail());
-
-        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-
-        memberDto.get().setName(form.getName());
-        memberDto.get().setAddress(address);
-
-        memberService.join(memberDto.get());
-
-        return "redirect:/usr/member/mypage";
-    }
 
 
-    @GetMapping("/mypage/info")
-    public String list(Model model, Principal principal) {
 
-        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-
-        model.addAttribute("memberDto", memberDto.get());
-        return "myPage/member/memberInfo";
-    }
 
     @GetMapping("/signup")
     public String signup(Model model){

@@ -25,10 +25,9 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/usr/animal")
+@RequestMapping("/usr/member/animal")
 public class AnimalController {
     private final AnimalService animalService;
-    private final MemberService memberService;
 
     @GetMapping("/list")
     public String list(Model model, Principal principal){
@@ -50,7 +49,7 @@ public class AnimalController {
             return "animal/animalForm";
         }
         animalService.save(animalDto, principal);
-        return "redirect:/usr/animal/list";
+        return "redirect:/usr/member/animal/list";
     }
 
     @GetMapping("/{id}")
@@ -86,7 +85,7 @@ public class AnimalController {
         }
         animalService.update(id, animalDto);
 
-        return "redirect:/usr/animal/%d".formatted(id);
+        return "redirect:/usr/member/animal/%d".formatted(id);
     }
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Principal principal){
@@ -94,6 +93,6 @@ public class AnimalController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "권한이 없습니다.");
         }
         animalService.delete(id);
-        return "redirect:/usr/animal/list";
+        return "redirect:/usr/member/animal/list";
     }
 }

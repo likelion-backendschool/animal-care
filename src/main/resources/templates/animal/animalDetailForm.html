@@ -3,15 +3,15 @@
 <div layout:fragment="content" class="container my-5">
   <body>
   <nav>
-    <a th:href="@{/usr/animal/list}" class="btn">뒤로</a>
+    <a th:href="@{/usr/member/animal/list}" class="btn">뒤로</a>
   </nav>
   <nav>
     <a class="btn btn-primary"
-       th:href="@{|/usr/animal/modify/${animal.id}|}"
+       th:href="@{|/usr/member/animal/modify/${animal.id}|}"
        th:text="수정"></a>
     <a class="btn btn-primary"
        onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;"
-       th:href="@{|/usr/animal/delete/${animal.id}|}"
+       th:href="@{|/usr/member/animal/delete/${animal.id}|}"
        th:text="삭제"></a>
   </nav>
   <table class="table">

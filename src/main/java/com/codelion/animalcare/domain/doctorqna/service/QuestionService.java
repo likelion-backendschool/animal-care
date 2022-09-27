@@ -9,7 +9,7 @@ import com.codelion.animalcare.domain.doctorqna.repository.QuestionLikeRepositor
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
-import com.codelion.animalcare.domain.user.service.UserService;
+import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,14 +28,14 @@ import java.util.List;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final UserService userService;
+    private final MemberService memberService;
 
     private final QuestionLikeRepository questionLikeRepository;
 
     @Transactional
     public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
 
-        Member member = userService.getMember(principal.getName());
+        Member member = memberService.findMemberByEmail(principal.getName());
 
         return questionRepository.save(questionSaveRequestDto.toEntity(member)).getId();
     }

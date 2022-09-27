@@ -3,7 +3,7 @@
 <div layout:fragment="content" class="container my-5">
     <body>
     <h5 class="my-3 border-bottom pb-2">동물 수정</h5>
-    <form th:action="@{|/usr/animal/modify/${id}|}" th:object="${animalDto}" method="post">
+    <form th:action="@{|/usr/member/animal/modify/${id}|}" th:object="${animalDto}" method="post">
         <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
             <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
         </div>

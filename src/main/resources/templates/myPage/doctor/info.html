@@ -1,14 +1,14 @@
 <html layout:decorate="~{global/layout}">
 <div class="container my-5" layout:fragment="content">
     <nav>
-        <a href="/usr/mypage/doctor" class="btn">뒤로</a>
+        <a th:href="@{/usr/doctor/mypage}" class="btn">뒤로</a>
     </nav>
     <h2 class="p-4">
         내 정보
     </h2>
     <nav>
         <a class="btn btn-primary"
-           href="/usr/mypage/doctor/info/modify"
+           th:href="@{/usr/doctor/mypage/info/modify}"
            th:text="수정"></a>
     </nav>
     <table class="table">
@@ -20,7 +20,7 @@
         <tr>
             <th>비밀번호</th>
             <td>
-                <a class="btn btn-primary" href="/usr/mypage/doctor/info/modify/password">비밀번호 수정
+                <a class="btn btn-primary" th:href="@{/usr/doctor/mypage/info/modify/password}">비밀번호 수정
                 </a>
             </td>
         </tr>

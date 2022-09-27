@@ -1,7 +1,7 @@
 <html layout:decorate="~{global/layout}">
 <div class="container my-5" layout:fragment="content">
     <nav>
-        <a th:href="@{/usr/doctor/mypage/info}"
+        <a th:href="@{/usr/member/mypage/info}"
            th:text="돌아가기"
            class="btn"
         ></a>
@@ -10,8 +10,8 @@
         내 정보 수정
     </h2>
     <div>
-        <form th:action="@{/usr/doctor/mypage/info/modify}"
-              th:object="${requestDto}" method="post">
+        <form th:action="@{/usr/member/mypage/info/modify}"
+              th:object="${memberDto}" method="post">
             <div th:replace="myPage/doctor/sample-form-errors :: formErrorsFragment"></div>
             <table class="table">
                 <tbody>
@@ -21,7 +21,7 @@
                     <th>이메일</th>
                     <td>
                         <input class="form-control" type="text" th:name="loginEmail"
-                               th:field="*{loginEmail}" />
+                               th:field="*{email}" />
                     </td>
                 </tr>
                 <tr>
@@ -45,25 +45,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>전공</th>
-                    <td>
-                        <input class="form-control" type="text" th:name="major"
-                               th:field="*{major}" />
-                    </td>
-                </tr>
-                <tr>
                     <th>핸드폰 번호</th>
                     <td>
                         <input class="form-control" type="text" th:name="phoneNum"
                                th:field="*{phoneNum}" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>자기 소개</th>
-                    <td>
-                <textarea class="form-control" th:name="introduce" id="" cols="30" rows="10"
-                          th:field="*{introduce}">
-                </textarea>
                     </td>
                 </tr>
                 <tr>

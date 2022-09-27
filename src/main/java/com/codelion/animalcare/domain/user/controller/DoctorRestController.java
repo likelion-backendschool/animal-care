@@ -1,7 +1,6 @@
 package com.codelion.animalcare.domain.user.controller;
 
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
+import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

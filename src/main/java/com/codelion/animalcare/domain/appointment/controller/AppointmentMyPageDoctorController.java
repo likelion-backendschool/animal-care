@@ -9,7 +9,6 @@ import com.codelion.animalcare.domain.appointment.service.AppointmentQueryServic
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/usr/mypage/doctor/member-manage/appointments")
+@RequestMapping("usr/doctor/mypage/appointments")
 @RequiredArgsConstructor
 public class AppointmentMyPageDoctorController {
     private final AppointmentService appointmentService;
@@ -56,10 +55,8 @@ public class AppointmentMyPageDoctorController {
     ){
         appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.REFUSE);
 
-        return "redirect:/usr/mypage/doctor/member-manage/appointments";
+        return String.format("redirect:/usr/doctor/mypage/appointments/%d",appointmentId);
     }
-
-    // TODO 환자정보 확인
 
     /**
      * 환자 정보 확인
@@ -83,7 +80,4 @@ public class AppointmentMyPageDoctorController {
         model.addAttribute("doctor", appointment.getDoctor());
         return "myPage/doctor/member-manage-self";
     }
-
-    // TODO 진단서 확인
-
 }

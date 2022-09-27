@@ -2,10 +2,9 @@ package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
-import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentFormDto;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
-import com.codelion.animalcare.domain.doctormypage.dto.LoadDoctorMyPageInfo;
+import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
@@ -18,12 +17,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
