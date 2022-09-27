@@ -22,14 +22,14 @@ public class AnimalServiceTest {
     private AnimalService animalService;
 
 
-//    @Test
-//    public void 고객이_갖고있는_동물들_구하기(){
+    @Test
+    public void 고객이_갖고있는_동물들_구하기(){
 //        Long memberId1 = 3L;
 //        List<Animal> animalList = animalService.findByMemberId(memberId1); // 2마리 있다 가정.
 //
 //        System.out.println(animalList.size());
 //        assertThat(animalList.size(), greaterThan(0));
-//
-//    }
+
+    }
 
 }
