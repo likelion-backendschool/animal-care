@@ -75,8 +75,6 @@ public class WebrtcDoctorMedicalOfficeController {
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
 
-
-        // TODO redirect 가능하게 하기. 진단서 작성 완료시 예약내역으로 이동해야함
         return "redirect:/usr/doctor/medicalOffice";
     }
 
