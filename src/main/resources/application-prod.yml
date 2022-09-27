@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://{우리 서버 ip}:3306/animal_care?serverTimezone=UTC
+    url: jdbc:mariadb://101.101.209.50:3306/animal_care?serverTimezone=UTC
     username: animalcare
     password: animalcare123
     driver-class-name: org.mariadb.jdbc.Driver
