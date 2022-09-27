@@ -22,9 +22,9 @@ public class QuestionRestController {
     @PostMapping("/usr/doctor-qna/like/{id}")
     public boolean like(@PathVariable Long id, Principal principal) {
 
-        UserInfo member = userService.getUserInfo(principal.getName()).orElse(null);
+        UserInfo user = userService.getUserInfo(principal.getName()).orElse(null);
 
-        boolean result = questionService.saveLike(id, member);
+        boolean result = questionService.saveLike(id, user);
 
         return result;
     }
