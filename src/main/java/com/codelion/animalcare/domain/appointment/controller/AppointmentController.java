@@ -84,12 +84,13 @@ public class AppointmentController {
     /**
      * 회원마이페이지 예약내역 취소 CANCEL
      */
-    // 마이페이지 회원 예약정보 취소
     @PostMapping("/info/{appointmentId}/cancel")
     public String cancelAppointment(@PathVariable("appointmentId") Long appointmentId) {
         appointmentService.cancelAppointment(appointmentId);
         return "redirect:/usr/member/mypage/appointment/info";
     }
+
+
 
 
     /**
