@@ -208,14 +208,5 @@ public class AppointmentService {
         return appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctorId);
     }
 
-    private Doctor findDoctor(String email) {
-        return doctorRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
-    }
-
-    private Member findMember(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Member " + email + "is not found."));
-    }
 }
 

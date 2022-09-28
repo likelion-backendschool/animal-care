@@ -1,12 +1,9 @@
 package com.codelion.animalcare.domain.appointment.service;
 
-import com.codelion.animalcare.domain.appointment.AppointmentSearch;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
-import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
@@ -36,7 +33,7 @@ public class AppointmentQueryService {
 
         Doctor doctor = findDoctor(email);
 
-        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctor.getId());
+        List<Appointment> appointments = appointmentRepository.findAppointmentsByDoctorId(doctor.getId());
 
         List<AppointmentDto> appointmentDtos = appointments.stream()
                 .map(o -> new AppointmentDto(o))
@@ -54,7 +51,7 @@ public class AppointmentQueryService {
 
         Doctor doctor = findDoctor(email);
 
-        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
+        List<Appointment> appointmentList = appointmentRepository.findAppointmentsByDoctorId(doctor.getId());
 
         List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
                 .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
