@@ -25,18 +25,6 @@ public class AppointmentQueryService {
     private final AppointmentRepository appointmentRepository;
     private final MemberRepository memberRepository;
 
-    public List<AppointmentDto> findAppointmentByMemberDto(MemberDto memberDto) {
-
-        List<Appointment> appointments = appointmentRepository.findByMemberId(memberDto.getId());
-
-        List<AppointmentDto> appointmentDtos = appointments.stream()
-                .map(o -> new AppointmentDto(o))
-                .collect(Collectors.toList());
-
-        return appointmentDtos;
-    }
-
-    //위코드 수정
     public List<AppointmentDto> findAppointmentByEmail(String email) {
 
         Member member = memberRepository.findByEmail(email)
