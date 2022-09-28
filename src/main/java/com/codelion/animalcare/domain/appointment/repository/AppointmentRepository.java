@@ -24,7 +24,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
      * Member가 MemberMyPage에서 예약내역 조회
      */
     @Query("select ma from Appointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h where m.id = :memberId")
-    List<Appointment> findByMemberId(long memberId);
+    List<Appointment> findAppointmentsByMemberId(@Param("memberId") long memberId);
 
 
     @Query("select ma from Appointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h where ma.id = :appointmentId")

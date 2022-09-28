@@ -40,13 +40,15 @@ public class AppointmentController {
     @GetMapping()
     public String createAppointmentForm(Model model, Principal principal) {
 
-        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get().getEmail());
+        String email = principal.getName();
+        MemberDto memberDto = findMemberDto(email);
+
+        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.getEmail());
 
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
 
-        model.addAttribute("memberDto", memberDto.get());
+        model.addAttribute("memberDto", memberDto);
         model.addAttribute("animalDtos", animalDtos);
         model.addAttribute("hospitalDtos", hospitalDtos);
         model.addAttribute("doctorDtos", doctorDtos);
@@ -64,8 +66,10 @@ public class AppointmentController {
             @RequestParam("doctorDtosId") Long doctorDtosId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
-        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        appointmentService.appointment(memberDto.get(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
+        String email = principal.getName();
+        MemberDto memberDto = findMemberDto(email);
+
+        appointmentService.appointment(memberDto, animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
         return "redirect:/usr/member/mypage/appointment/info";
     }
@@ -106,18 +110,19 @@ public class AppointmentController {
 
         Optional<AppointmentDto> appointmentDto = appointmentService.findById(appointmentId);
 
-        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.get().getEmail());
+        String email = principal.getName();
+        MemberDto memberDto = findMemberDto(email);
+
+        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.getEmail());
 
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
 
         model.addAttribute("appointmentDto", appointmentDto.get());
-        model.addAttribute("memberDto", memberDto.get());
+        model.addAttribute("memberDto", memberDto);
         model.addAttribute("animalDtos", animalDtos);
         model.addAttribute("hospitalDtos", hospitalDtos);
         model.addAttribute("doctorDtos", doctorDtos);
-
 
         return "appointments/appointmentModifyForm";
     }
@@ -135,10 +140,16 @@ public class AppointmentController {
             @RequestParam("doctorDtosId") Long doctorDtosId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
-        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        appointmentService.updateAppointment(appointmentId, memberDto.get(), animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
+        String email = principal.getName();
+        MemberDto memberDto = findMemberDto(email);
 
-            return "redirect:/usr/member/mypage/appointment/info";
+        appointmentService.updateAppointment(appointmentId, memberDto, animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
+
+        return "redirect:/usr/member/mypage/appointment/info";
     }
 
+    private MemberDto findMemberDto(String email) {
+        return memberService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
+    }
 }

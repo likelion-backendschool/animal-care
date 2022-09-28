@@ -66,7 +66,7 @@ public class AppointmentQueryService {
 
         Member member = findMember(email);
 
-        List<Appointment> appointments = appointmentRepository.findByMemberId(member.getId());
+        List<Appointment> appointments = appointmentRepository.findAppointmentsByMemberId(member.getId());
 
         List<AppointmentDto> appointmentDtos = appointments.stream()
                 .map(o -> new AppointmentDto(o))
