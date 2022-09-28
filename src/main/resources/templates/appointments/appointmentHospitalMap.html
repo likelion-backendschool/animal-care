@@ -338,8 +338,10 @@
                     if(openTime && closeTime){
                         let [openHour, openMinute] = openTime.split(':', 2).map(item => Number(item));
                         openMinute = Math.ceil(openMinute / 10) * 10;
-                        const [closeHour, closeMinute] = closeTime.split(':', 2).map(item => Number(item));
-                        console.log(openHour, closeHour, openMinute, closeMinute);
+                        if(openMinute >= 60){
+                            openHour++; openMinute = 0;
+                        }
+                        let [closeHour, closeMinute] = closeTime.split(':', 2).map(item => Number(item));
                         while(openHour < closeHour || openMinute < closeMinute){
                             // 시간을 string으로
                             const time = `${String(openHour).padStart(2, '0')}:${String(openMinute).padStart(2, '0')}`;
@@ -355,9 +357,8 @@
                             <button type="button" onclick="submitOthers('${time}', ${doctorId})" class="btn btn-primary">${time}</button>
                             </div>
                             `
-
                             // 시간 조정.
-                            if(openMinute === 50){
+                            if(openMinute >= 50){
                                 openHour++; openMinute = 0;
                             }
                             else openMinute += 10;
