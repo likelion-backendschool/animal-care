@@ -35,10 +35,7 @@ public class AppointmentMemberController {
 
     @GetMapping()
     public String appointment(Model model, Principal principal){
-        String email = principal.getName();
-        MemberDto memberDto = memberService.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
-
+        MemberDto memberDto = findMemberDto(principal);
         model.addAttribute("memberAddress", memberDto.getAddress());
 
         return "appointments/appointmentHospitalMap";
@@ -50,9 +47,8 @@ public class AppointmentMemberController {
             Principal principal,
             AppointmentFormDto appointmentFormDto
     ){
-            String email = principal.getName();
-            MemberDto memberDto = memberService.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
+
+            MemberDto memberDto = findMemberDto(principal);
 
             LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findById(appointmentFormDto.getDoctorId());
 
@@ -81,12 +77,9 @@ public class AppointmentMemberController {
                 return "redirect:"+ referer;
             }
 
+            MemberDto memberDto = findMemberDto(principal);
 
-            String email = principal.getName();
-            MemberDto memberDto = memberService.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
-
-            try{
+        try{
                 appointmentService.appointment(memberDto, appointmentFormDto);
             } catch(RuntimeException e) {
                 model.addAttribute("message", e.getMessage());
@@ -96,4 +89,9 @@ public class AppointmentMemberController {
             return "redirect:/";
     }
 
+    private MemberDto findMemberDto(Principal principal) {
+        String email = principal.getName();
+        return memberService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
+    }
 }

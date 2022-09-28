@@ -10,6 +10,7 @@ import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
+import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +41,7 @@ public class AppointmentController {
     @GetMapping()
     public String createAppointmentForm(Model model, Principal principal) {
 
-        String email = principal.getName();
-        MemberDto memberDto = findMemberDto(email);
-
+        MemberDto memberDto = findMemberDto(principal);
         List<AnimalDto> animalDtos = animalService.findByMember(memberDto.getEmail());
 
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
@@ -66,9 +65,7 @@ public class AppointmentController {
             @RequestParam("doctorDtosId") Long doctorDtosId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
-        String email = principal.getName();
-        MemberDto memberDto = findMemberDto(email);
-
+        MemberDto memberDto = findMemberDto(principal);
         appointmentService.appointment(memberDto, animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
         return "redirect:/usr/member/mypage/appointment/info";
@@ -110,9 +107,7 @@ public class AppointmentController {
 
         Optional<AppointmentDto> appointmentDto = appointmentService.findById(appointmentId);
 
-        String email = principal.getName();
-        MemberDto memberDto = findMemberDto(email);
-
+        MemberDto memberDto = findMemberDto(principal);
         List<AnimalDto> animalDtos = animalService.findByMember(memberDto.getEmail());
 
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
@@ -140,16 +135,17 @@ public class AppointmentController {
             @RequestParam("doctorDtosId") Long doctorDtosId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
-        String email = principal.getName();
-        MemberDto memberDto = findMemberDto(email);
-
+        MemberDto memberDto = findMemberDto(principal);
         appointmentService.updateAppointment(appointmentId, memberDto, animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
 
         return "redirect:/usr/member/mypage/appointment/info";
     }
 
-    private MemberDto findMemberDto(String email) {
+
+    private MemberDto findMemberDto(Principal principal) {
+        String email = principal.getName();
         return memberService.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
     }
+
 }
