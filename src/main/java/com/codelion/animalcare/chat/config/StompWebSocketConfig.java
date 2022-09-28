@@ -12,7 +12,7 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat")
-                .setAllowedOrigins("https://5d4a-182-212-58-21.jp.ngrok.io") //ngrok 주소
+                .setAllowedOrigins("https://cd85-182-212-58-21.jp.ngrok.io") //ngrok 주소
 //                .setAllowedOrigins("/**") // localhost 사용하기 위함
                 .withSockJS();
     }

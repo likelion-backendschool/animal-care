@@ -29,6 +29,9 @@ public class DoctorSignUpDto {
     @NotEmpty(message = "이름은 필수항목입니다.")
     private String name;
 
+    @NotEmpty(message = "수의사 면허는 필수항목입니다.")
+    private String doctorLicense;
+
 //    @NotEmpty(message = "생일은 필수항목입니다.")
     private Date birthDay;
 
@@ -66,6 +69,7 @@ public class DoctorSignUpDto {
                 .email(doctorDto.getEmail())
                 .password(doctorDto.getPassword())
                 .name(doctorDto.getName())
+                .doctorLicense(doctorDto.getDoctorLicense())
                 .birthday((java.sql.Date) doctorDto.getBirthDay())
                 .address(address)
                 .phoneNum(doctorDto.getPhoneNum())
