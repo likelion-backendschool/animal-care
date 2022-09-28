@@ -76,13 +76,14 @@ public class AppointmentController {
     @GetMapping("/info")
     public String appointmentList(Model model, Principal principal) {
 
-        Optional<MemberDto> memberDto = memberService.findByEmail(principal.getName());
-        List<AppointmentDto> appointmentDto = appointmentQueryService.findAppointmentByMemberDto(memberDto.get());
+        String email = principal.getName();
+        List<AppointmentDto> appointmentDto = appointmentQueryService.findAppointmentByEmail(email);
 
         model.addAttribute("appointmentDto", appointmentDto);
 
         return "appointments/appointmentList";
     }
+
 
 
     /**

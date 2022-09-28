@@ -53,23 +53,6 @@ public class AppointmentService {
     }
 
 
-//    public List<LoadMyPageDoctorAppointment.ResponseDto> findAppointmentByDoctorEmail(String email) {
-//        Doctor doctor = doctorRepository.findByEmail(email)
-//                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
-//
-//        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
-//
-//        List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
-//                .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
-//
-//        return result;
-//    }
-
-    public List<Appointment> findByMemberId(long id) {
-        return appointmentRepository.findByMemberId(id);
-    }
-
-
     /**
      * 예약
      */
