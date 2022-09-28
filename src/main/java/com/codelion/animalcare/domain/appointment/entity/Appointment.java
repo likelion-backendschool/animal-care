@@ -1,15 +1,24 @@
 package com.codelion.animalcare.domain.appointment.entity;
 
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
-import com.codelion.animalcare.domain.animal.entity.Animal;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;

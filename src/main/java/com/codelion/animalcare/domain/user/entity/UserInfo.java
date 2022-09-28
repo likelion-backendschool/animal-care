@@ -47,17 +47,7 @@ public class UserInfo extends BaseEntity implements UserDetails {
     @Column()
     private int genderId;
 
-    // TODO : Adress, deleteAt 들어가야함
-
-
-//    @Builder
-//    public UserInfo(String email, String password, String auth) {
-//        this.email = email;
-//        this.password = password;
-//        this.auth = auth;
-//    }
-
-
+    // TODO : deleteAt 들어가야함
 
     // 사용자의 권한을 콜렉션 형태로 반환
     // 단, 클래스 자료형은 GrantedAuthority를 구현해야함

@@ -2,7 +2,6 @@ package com.codelion.animalcare.domain.diagnosis.dto;
 
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
-import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -5,6 +5,8 @@ import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,12 +1,7 @@
 package com.codelion.animalcare.domain.animal.controller;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
-import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.service.AnimalService;
-import com.codelion.animalcare.domain.user.dto.MemberDto;
-import com.codelion.animalcare.domain.user.entity.Member;
-import com.codelion.animalcare.domain.user.service.MemberService;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
