@@ -1,11 +1,9 @@
 package com.codelion.animalcare.global.util;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 

@@ -74,13 +74,6 @@ public class UserService implements UserDetailsService {
                 .build()).getId();
     }
 
-//    public UserInfo findPatientAndDoctor(){
-//        String tmp = "Patient";
-//        return userRepository.findByDtype(tmp);
-//    }
-
-
-
         public Optional<UserInfo> getUserInfo(String email) {
             Optional<UserInfo> user = userRepository.findByEmail(email);
 

@@ -18,7 +18,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/usr/mypage/doctor/member-manage/appointments")
+@RequestMapping("/usr/doctor/medicalOffice")
 @RequiredArgsConstructor
 public class WebrtcDoctorMedicalOfficeController {
 
@@ -31,7 +31,7 @@ public class WebrtcDoctorMedicalOfficeController {
     /**
      * 비대면 진료에서 예약명단 확인
      */
-    @GetMapping("/all")
+    @GetMapping()
     public String loadByDoctorAppointments(Model model, Principal principal) {
 
         LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
@@ -40,7 +40,7 @@ public class WebrtcDoctorMedicalOfficeController {
 
         model.addAttribute("appointmentDto", appointmentDto);
 
-        return "appointments/appointmentByDoctorList";
+        return "webrtc/diagnosis/appointment-info-in-medicaloffice";
     }
 
 
@@ -48,7 +48,7 @@ public class WebrtcDoctorMedicalOfficeController {
      *
      * 예약명단에서 바로 진단서 작성
      */
-    @GetMapping("/all/{appointmentId}")
+    @GetMapping("/{appointmentId}")
     public String createDiagnosisNewForm(@PathVariable("appointmentId") long appointmentId, Model model) {
 
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
@@ -62,22 +62,20 @@ public class WebrtcDoctorMedicalOfficeController {
         model.addAttribute("doctor", appointmentDto.getDoctor());
         model.addAttribute("diagnosis", diagnosis);
 
-        model.addAttribute("oneDiagnosisForm", new FindOneDiagnosis());
+        model.addAttribute("diagnosisForm", new FindOneDiagnosis());
 
 
-        return "diagnosis/diagnosisForm";
+        return "webrtc/diagnosis/create-diagnosis";
     }
 
-    @PostMapping("/all/{appointmentId}")
+    @PostMapping("/{appointmentId}")
     public String writeNewDiagnosis(@PathVariable("appointmentId") long appointmentId,
                                     @Valid FindOneDiagnosis writtenDiagnosisForm) {
 
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
 
-        // 왜 안먹힐까
-        // TODO redirect 가능하게 하기. 진단서 작성 완료시 예약내역으로 이동해야함
-        return "redirect:/usr/mypage/doctor/member-manage/appointments/all";
+        return "redirect:/usr/doctor/medicalOffice";
     }
 
 
