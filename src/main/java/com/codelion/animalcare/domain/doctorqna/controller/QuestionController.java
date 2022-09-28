@@ -11,7 +11,6 @@ import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,14 +43,12 @@ public class QuestionController {
 
     private final UserService userService;
     //게시글 등록 화면
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/write")
     public String saveForm(QuestionSaveRequestDto questionSaveRequestDto){
         return "doctorqna/doctorQnaQuestionForm";
     }
 
     //게시글 등록
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/write")
     public String save(@Valid QuestionSaveRequestDto questionSaveRequestDto, BindingResult bindingResult, Principal principal) {
 
@@ -124,7 +121,6 @@ public class QuestionController {
         return "doctorqna/doctorQnaList";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{id}/modify")
     public String update(Model model, @PathVariable Long id, QuestionUpdateRequestDto questionUpdateRequestDto, Principal principal){
 
@@ -135,7 +131,6 @@ public class QuestionController {
         model.addAttribute("question", questionService.findById(id));
         return "doctorqna/doctorQnaQuestionModifyForm";
     }
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{id}/modify")
     public String update(@PathVariable Long id, @Valid QuestionUpdateRequestDto questionUpdateRequestDto, BindingResult bindingResult, Principal principal){
 
@@ -152,7 +147,6 @@ public class QuestionController {
         return "redirect:/usr/doctor-qna/%d".formatted(id);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{id}/delete")
     public String delete(@PathVariable Long id, Principal principal){
 
