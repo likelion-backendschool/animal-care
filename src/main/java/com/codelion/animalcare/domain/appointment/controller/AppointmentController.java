@@ -32,7 +32,6 @@ public class AppointmentController {
     private final AppointmentQueryService appointmentQueryService;
     private final AppointmentService appointmentService;
     private final MemberService memberService;
-    private final AnimalService animalService;
     private final DoctorService doctorService;
     private final HospitalService hospitalService;
 
@@ -42,7 +41,7 @@ public class AppointmentController {
     public String createAppointmentForm(Model model, Principal principal) {
 
         MemberDto memberDto = findMemberDto(principal);
-        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.getEmail());
+        List<AnimalDto> animalDtos = memberDto.getAnimals();
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
 
@@ -105,7 +104,7 @@ public class AppointmentController {
                                         Principal principal) {
 
         MemberDto memberDto = findMemberDto(principal);
-        List<AnimalDto> animalDtos = animalService.findByMember(memberDto.getEmail());
+        List<AnimalDto> animalDtos = memberDto.getAnimals();
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
 
@@ -148,6 +147,6 @@ public class AppointmentController {
 
     private AppointmentDto findAppointmentDto(Long appointmentId) {
         return appointmentService.findById(appointmentId)
-                .orElseThrow(() -> new RuntimeException("appointment " + appointmentId + " was not found."));
+                .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " was not found."));
     }
 }
