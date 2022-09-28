@@ -26,9 +26,9 @@ public class WebrtcDoctorMedicalOfficeController {
     private final AppointmentService appointmentService;
     private final DiagnosisService diagnosisService;
 
-
     /**
-     * 비대면 진료에서 예약내역 확인
+     * 비대면 진료
+     * Doctor가 예약내역 확인
      */
     @GetMapping()
     public String loadByDoctorAppointments(Model model, Principal principal) {

@@ -27,10 +27,47 @@ public class AppointmentQueryService {
     private final MemberRepository memberRepository;
     private final DoctorRepository doctorRepository;
 
+
+    /**
+     * 비대면 진료
+     * Doctor가 예약내역 확인
+     */
+    public List<AppointmentDto> findAllAppointment(String email) {
+
+        Doctor doctor = findDoctor(email);
+
+        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctor.getId());
+
+        List<AppointmentDto> appointmentDtos = appointments.stream()
+                .map(o -> new AppointmentDto(o))
+                .collect(Collectors.toList());
+
+        return appointmentDtos;
+    }
+
+
+    /**
+     * DoctorMyPage
+     * 환자 예약  관리
+     */
+    public List<LoadMyPageDoctorAppointment.ResponseDto> findAllByDoctorEmail(String email) {
+
+        Doctor doctor = findDoctor(email);
+
+        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
+
+        List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
+                .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
+
+        return result;
+    }
+
+
+
+
     public List<AppointmentDto> findAppointmentByEmail(String email) {
 
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Member " + email + "is not found."));
+        Member member = findMember(email);
 
         List<Appointment> appointments = appointmentRepository.findByMemberId(member.getId());
 
@@ -41,17 +78,14 @@ public class AppointmentQueryService {
         return appointmentDtos;
     }
 
-    public List<AppointmentDto> findAllAppointment(String email) {
 
-        Doctor doctor = doctorRepository.findByEmail(email)
+    private Doctor findDoctor(String email) {
+        return doctorRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
+    }
 
-        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctor.getId());
-
-        List<AppointmentDto> appointmentDtos = appointments.stream()
-                .map(o -> new AppointmentDto(o))
-                .collect(Collectors.toList());
-
-        return appointmentDtos;
+    private Member findMember(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Member " + email + "is not found."));
     }
 }

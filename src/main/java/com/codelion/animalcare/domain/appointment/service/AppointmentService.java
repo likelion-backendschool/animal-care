@@ -40,19 +40,6 @@ public class AppointmentService {
     private final HospitalRepository hospitalRepository;
 
 
-    public List<LoadMyPageDoctorAppointment.ResponseDto> findAllByDoctorEmail(String email) {
-        Doctor doctor = doctorRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
-
-        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
-
-        List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
-                .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
-
-        return result;
-    }
-
-
     /**
      * 예약
      */
@@ -221,5 +208,14 @@ public class AppointmentService {
         return appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctorId);
     }
 
+    private Doctor findDoctor(String email) {
+        return doctorRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
+    }
+
+    private Member findMember(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Member " + email + "is not found."));
+    }
 }
 

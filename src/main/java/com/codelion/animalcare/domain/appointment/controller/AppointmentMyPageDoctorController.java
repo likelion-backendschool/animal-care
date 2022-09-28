@@ -27,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AppointmentMyPageDoctorController {
     private final AppointmentService appointmentService;
+    private final AppointmentQueryService appointmentQueryService;
     private final DiagnosisService diagnosisService;
 
     // TODO page 설정
@@ -41,7 +42,7 @@ public class AppointmentMyPageDoctorController {
     ){
         String email = principal.getName();
         List<LoadMyPageDoctorAppointment.ResponseDto> appointments
-                = appointmentService.findAllByDoctorEmail(email);
+                = appointmentQueryService.findAllByDoctorEmail(email);
         model.addAttribute("appointments", appointments);
         return "myPage/doctor/member-manage";
     }
