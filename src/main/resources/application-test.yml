@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://${MYSQL_HOST:localhost}:3306/animal_care_test?serverTimezone=UTC
+    url: jdbc:mariadb://${testDbIp:127.0.0.1}:3306/animal_care_test?serverTimezone=UTC
     username: ${testDbId:root}
     password: ${testDbPw:}
     driver-class-name: org.mariadb.jdbc.Driver
