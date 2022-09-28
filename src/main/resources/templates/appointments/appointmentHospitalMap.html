@@ -319,6 +319,8 @@
 
                 $('.appointment-date').on('input', async e => {
                     const doctorId = e.target?.id?.split('-')[2];
+                    console.log(doctorId);
+                    $('#doctor-id').val(doctorId);
                     const date = e.target?.value;
                     let appointmentTimes = await $.ajax({
                         url: `/usr/appointment/times`,
