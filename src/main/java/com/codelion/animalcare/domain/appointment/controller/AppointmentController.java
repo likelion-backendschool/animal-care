@@ -1,7 +1,6 @@
 package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
-import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
@@ -10,7 +9,6 @@ import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
-import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.DoctorService;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor

@@ -15,7 +15,6 @@ import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.user.repository.MemberRepository;
-import com.codelion.animalcare.global.util.OpeningHour;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

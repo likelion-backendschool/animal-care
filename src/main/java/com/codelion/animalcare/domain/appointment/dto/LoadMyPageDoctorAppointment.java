@@ -1,7 +1,6 @@
 package com.codelion.animalcare.domain.appointment.dto;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
-import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
