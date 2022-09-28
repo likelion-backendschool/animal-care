@@ -9,6 +9,7 @@ import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.user.dto.MemberDto;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import com.codelion.animalcare.domain.user.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class AppointmentQueryService {
 
     private final AppointmentRepository appointmentRepository;
     private final MemberRepository memberRepository;
+    private final DoctorRepository doctorRepository;
 
     public List<AppointmentDto> findAppointmentByEmail(String email) {
 
@@ -39,9 +41,12 @@ public class AppointmentQueryService {
         return appointmentDtos;
     }
 
-    public List<AppointmentDto> findAllAppointment(LoadDoctorMyPageInfo.ResponseDto doctorDto) {
+    public List<AppointmentDto> findAllAppointment(String email) {
 
-        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorDto.getId());
+        Doctor doctor = doctorRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
+
+        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctor.getId());
 
         List<AppointmentDto> appointmentDtos = appointments.stream()
                 .map(o -> new AppointmentDto(o))
@@ -49,5 +54,4 @@ public class AppointmentQueryService {
 
         return appointmentDtos;
     }
-
 }

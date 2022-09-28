@@ -22,21 +22,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebrtcDoctorMedicalOfficeController {
 
-    private final DoctorService doctorService;
     private final AppointmentQueryService appointmentQueryService;
     private final AppointmentService appointmentService;
     private final DiagnosisService diagnosisService;
 
 
     /**
-     * 비대면 진료에서 예약명단 확인
+     * 비대면 진료에서 예약내역 확인
      */
     @GetMapping()
     public String loadByDoctorAppointments(Model model, Principal principal) {
 
-        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
-
-        List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(doctorDto);
+        String email = principal.getName();
+        List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(email);
 
         model.addAttribute("appointmentDto", appointmentDto);
 

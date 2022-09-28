@@ -34,7 +34,7 @@ public class MemberService {
 
     public Optional<MemberDto> findByEmail(String email){
 
-        Optional<Member> optionalMember = memberRepository.findOptionalByEmail(email);
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
         Optional<MemberDto> memberDto = optionalMember.map(o -> new MemberDto(o));
 
         return memberDto;
