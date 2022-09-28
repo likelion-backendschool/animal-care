@@ -3,7 +3,6 @@ package com.codelion.animalcare.domain.hospital.dto;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.global.util.OpeningHour;
-//import com.codelion.animalcare.domain.member.Address;
 import lombok.Getter;
 import lombok.Setter;
 

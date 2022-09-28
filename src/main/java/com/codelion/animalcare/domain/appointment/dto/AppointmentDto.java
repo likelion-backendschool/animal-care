@@ -3,7 +3,6 @@ package com.codelion.animalcare.domain.appointment.dto;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 

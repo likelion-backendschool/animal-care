@@ -1,14 +1,12 @@
 package com.codelion.animalcare.domain.hospital.service;
 
-import com.codelion.animalcare.domain.hospital.dto.LatitudeLongitudeDto;
-import com.codelion.animalcare.domain.mypage.dto.HospitalVisitedDto;
 import com.codelion.animalcare.domain.hospital.dto.CreateHospital;
-import com.codelion.animalcare.domain.user.entity.Doctor;
-import com.codelion.animalcare.domain.user.repository.DoctorRepository;
+import com.codelion.animalcare.domain.hospital.dto.LatitudeLongitudeDto;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.dto.UpdateDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
+import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

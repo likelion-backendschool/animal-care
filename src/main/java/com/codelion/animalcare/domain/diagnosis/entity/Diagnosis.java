@@ -1,25 +1,28 @@
 package com.codelion.animalcare.domain.diagnosis.entity;
 
+import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
-import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
-import com.codelion.animalcare.domain.animal.entity.Animal;
-import groovy.lang.Lazy;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter

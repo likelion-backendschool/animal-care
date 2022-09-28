@@ -1,6 +1,5 @@
 package com.codelion.animalcare.domain.appointment.service;
 
-import com.codelion.animalcare.domain.appointment.AppointmentSearch;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
