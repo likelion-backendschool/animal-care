@@ -38,7 +38,6 @@ public class AppointmentMemberController {
     public String appointment(Model model, Principal principal){
         MemberDto memberDto = findMemberDto(principal);
         model.addAttribute("memberAddress", memberDto.getAddress());
-
         return "appointments/appointmentHospitalMap";
     }
 
@@ -63,6 +62,7 @@ public class AppointmentMemberController {
             model.addAttribute("doctorDto", doctorDto);
             model.addAttribute("animalDtoList", animalDtoList);
             model.addAttribute("appointmentFormDto", appointmentFormDto);
+
             return "appointments/appointmentOthers";
     }
 
@@ -74,6 +74,7 @@ public class AppointmentMemberController {
             @Valid AppointmentFormDto appointmentFormDto,
             BindingResult bindingResult
     ){
+
             if(bindingResult.hasErrors()){
                 String referer = request.getHeader("Referer");
                 return "redirect:"+ referer;

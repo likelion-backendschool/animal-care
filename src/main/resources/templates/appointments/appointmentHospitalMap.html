@@ -290,7 +290,7 @@
                             <form id="other-form" action="/usr/member/appointment/others" method="get" class="p-4">
                                 <div class="mb-3">
                                   <input type="hidden" name="hospitalId" value="${hospitalId}">
-                                  <input type="hidden" name="doctorId" value="${doctor.id}">
+                                  <input type="hidden" id="doctor-id" name="doctorId" value="${doctor.id}">
                                   <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
                                   <input type="date" class="form-control appointment-date" id="appointment-date-${doctor.id}">
                                 </div>

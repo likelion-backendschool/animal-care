@@ -69,7 +69,6 @@ public class AppointmentService {
         Animal animal = animalRepository.findById(appointmentFormDto.getAnimalId()).get();
         Hospital hospital = hospitalRepository.findById(appointmentFormDto.getHospitalId()).get();
         Doctor doctor = doctorRepository.findById(appointmentFormDto.getDoctorId()).get();
-
         /* 올바른 date인지 확인.*/
         LocalDateTime date = appointmentFormDto.getDateToLocalDateTime();
         // 1. 10분 단위로 예약 가능.
