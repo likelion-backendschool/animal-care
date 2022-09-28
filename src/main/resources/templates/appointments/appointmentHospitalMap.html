@@ -345,7 +345,19 @@
                             openHour++; openMinute = 0;
                         }
                         let [closeHour, closeMinute] = closeTime.split(':', 2).map(item => Number(item));
-                        while(openHour < closeHour || openMinute < closeMinute){
+                        closeMinute = Math.ceil(closeMinute / 10) * 10;
+                        if(closeMinute >= 60){
+                            closeHour++; closeMinute = 0;
+                        }
+                        let maxCnt = 24 * 6;
+
+                        while((openHour < closeHour || openMinute < closeMinute)){
+                            // 무한루프 차단.
+                            if(maxCnt-- <= 0) {
+                                content = '에러 발생.';
+                                break;
+                            }
+
                             // 시간을 string으로
                             const time = `${String(openHour).padStart(2, '0')}:${String(openMinute).padStart(2, '0')}`;
                             console.log(time, appointmentTimes.includes(time), appointmentTimes);
