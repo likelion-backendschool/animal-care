@@ -31,12 +31,4 @@ public class Member extends UserInfo{
     public void updateLoginPwd(String newLoginPwd){
         password = newLoginPwd;
     }
-
-
-
-//    @Builder(builderMethodName = "patientBuilder")
-//    public Patient(String email, String password, String auth, String animal) {
-////        super(email, password, auth);
-//        this.animal = animal;
-//    }
 }

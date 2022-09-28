@@ -98,10 +98,4 @@ public class HospitalService {
 
         hospitalRepository.save(afterHospital);
     }
-    //병원에 따른 닥터 조회
-//    public List<Doctor> findDoctors(long hospitalId) {
-//
-//        return doctorRepository.findAllById(hospitalId);
-//    }
-
 }

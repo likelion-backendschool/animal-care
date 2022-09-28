@@ -1,8 +1,7 @@
 package com.codelion.animalcare.domain.user.entity;
 
-import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
-import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,10 +47,6 @@ public class Doctor extends UserInfo{
     @JsonIgnore
     @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments = new ArrayList<>();
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "doctor")
-//    private List<Diagnosis> diagnoses = new ArrayList<>();
 
     public void addHospital(Hospital hospital){
         this.hospital = hospital;
