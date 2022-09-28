@@ -1,24 +1,19 @@
 package com.codelion.animalcare.domain.hospital.entity;
 
-
-
-import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
+import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.user.entity.Address;
 import com.codelion.animalcare.domain.user.entity.Doctor;
-import com.codelion.animalcare.domain.appointment.entity.Appointment;
-
-
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
-
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +48,4 @@ public class Hospital extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "hospital")
     private List<Appointment> appointments = new ArrayList<>();
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "hospital")
-//    private List<Diagnosis> diagnoses = new ArrayList<>();
 }
