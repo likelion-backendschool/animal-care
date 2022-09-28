@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.diagnosis.entity;
 
+import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
@@ -18,6 +19,8 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import static javax.persistence.FetchType.*;
 
@@ -99,7 +102,7 @@ public class Diagnosis extends BaseEntity{
     private String hospitalStreet;
     // 수의사 면허
     //    nullable = true로 잠시 수정
-    @Column(nullable = true, length = 50)
+    @Column(nullable = false, length = 50)
     private String doctorLicense;
     // 수의사 이름
     @Column(nullable=false)
@@ -147,30 +150,48 @@ public class Diagnosis extends BaseEntity{
 
         diagnosis.setAnimalName(animal.getName());
         diagnosis.setAnimalGenderId(animal.getGenderId());
+        diagnosis.setBreedingPlace(animal.getBreedingPlace());
+        diagnosis.setAnimalType(animal.getAnimalType());
+        diagnosis.setAnimalBreed(animal.getAnimalBreed());
+
+        int animalAge = getAgeFromBirthday(animal.getBirthday());
+        diagnosis.setAnimalAge(animalAge);
 
         diagnosis.setHospitalName(hospital.getName());
         diagnosis.setHospitalStreet(hospital.getAddress().getStreet());
 
         diagnosis.setDoctorName(doctor.getName());
+        diagnosis.setDoctorLicense(doctor.getDoctorLicense());
+
         appointment.setStatus(AppointmentStatus.COMPLETE);
         diagnosis.setDiagnosisDate(appointment.getDate());
 
-        diagnosis.setBreedingPlace(writtenDiagnosisForm.getBreedingPlace());
-        diagnosis.setAnimalType(writtenDiagnosisForm.getAnimalType());
-        diagnosis.setAnimalBreed(writtenDiagnosisForm.getAnimalBreed());
 
-        diagnosis.setAnimalAge(writtenDiagnosisForm.getAnimalAge());
-        diagnosis.setAnimalCoatColor(writtenDiagnosisForm.getAnimalCoatColor());
-        diagnosis.setAnimalSpecial(writtenDiagnosisForm.getAnimalSpecial());
+        diagnosis.setAnimalCoatColor(animal.getAnimalCoatColor());
+        diagnosis.setAnimalSpecial(animal.getAnimalSpecial());
+
         diagnosis.setDiseaseName(writtenDiagnosisForm.getDiseaseName());
-
         diagnosis.setDiseaseDate(writtenDiagnosisForm.getDiseaseDate());
 
         diagnosis.setOpinion(writtenDiagnosisForm.getOpinion());
         diagnosis.setOtherMatter(writtenDiagnosisForm.getOtherMatter());
 
-        diagnosis.setDoctorLicense(writtenDiagnosisForm.getDoctorLicense());
 
         return diagnosis;
+    }
+
+    public static int getAgeFromBirthday(Date birthday) {
+          Calendar birth = new GregorianCalendar();
+          Calendar today = new GregorianCalendar();
+
+          birth.setTime(birthday);
+          today.setTime(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+
+        int factor = 0;
+        if (today.get(Calendar.DAY_OF_YEAR) < birth.get(Calendar.DAY_OF_YEAR)) {
+            factor = -1;
+        }
+
+        return today.get(Calendar.YEAR) - birth.get(Calendar.YEAR) + factor;
     }
 }

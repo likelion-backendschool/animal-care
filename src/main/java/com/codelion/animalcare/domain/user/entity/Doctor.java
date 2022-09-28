@@ -36,6 +36,9 @@ public class Doctor extends UserInfo{
 //    @Column()
 //    private LocalDateTime deletedAt;
 
+    @Column()
+    private String doctorLicense;
+
     public void updateLoginPwd(String newLoginPwd){
         password = newLoginPwd;
     }

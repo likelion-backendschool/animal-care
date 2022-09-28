@@ -2,14 +2,14 @@
 
 <div layout:fragment="content" class="container my-5">
     <nav>
-        <a href="/usr/mypage/doctor/member-manage/appointments/all" class="btn">뒤로</a>
+        <a th:href="@{/usr/doctor/medicalOffice}" class="btn">뒤로</a>
     </nav>
 
     <body>
 
 <div class="container">
 
-        <form role="form" th:object="${oneDiagnosisForm}" method="post">
+        <form role="form" th:object="${diagnosisForm}" method="post">
 
             <div class="modal-header">
                 <h3 class="modal-title text-center" id="staticBackdropLabel">진단서 작성</h3>
@@ -32,22 +32,16 @@
                     </td>
                 <tr>
                     <th>사육 장소</th>
-                    <td colspan="4">
-                        <input type="text" th:field="*{breedingPlace}" class="form-control" placeholder="사육 장소를 입력하세요. 예) 아파트, 마당"/>
-                    </td>
+                    <td colspan="4" th:text="${animal?.breedingPlace}"></td>
                 </tr>
                 <tr>
                     <th class="col-2" rowspan="4" >동물의 표시</th>
 
                     <th class="col-2">종류</th>
-                    <td>
-                        <input type="text" th:field="*{animalType}" class="form-control" placeholder="예) 개"/>
-                    </td>
+                    <td th:text="${animal?.animalType}" class="form-control"/></td>
 
                     <th class="col-2">품종</th>
-                    <td>
-                        <input type="text" th:field="*{animalBreed}" class="form-control" placeholder="예) 시츄"/>
-                    </td>
+                    <td th:text="${animal?.animalBreed}" class="form-control"></td>
 
                 </tr>
                 <tr>
@@ -58,20 +52,16 @@
                 </tr>
                 <tr>
 <!--                    TODO 애완동물 나이 계산해야함-->
-                    <th>연령(연도)</th>
-<!--                    <td th:text="|${animal?.birthday}세|">X</td>-->
-                    <td th:text="|${diagnosis?.animalAge}세|">X</td>
+                    <th>생일</th>
+                    <td th:text="|${animal?.birthday}|">X</td>
+<!--                    <td th:text="|${diagnosis?.animalAge}세|">X</td>-->
                     <th>모색</th>
-                    <td>
-                        <input type="text" th:field="*{animalCoatColor}" class="form-control" placeholder="예) 흰색"/>
-                    </td>
+                    <td th:text="${animal?.animalCoatColor}">
 
                 </tr>
                 <tr>
                     <th>특징</th>
-                    <td colspan="4">
-                        <input type="text" th:field="*{animalSpecial}" class="form-control" placeholder="특징을 입력하세요"/>
-                    </td>
+                    <td colspan="4" th:text="${animal?.animalSpecial}"></td>
                 </tr>
                 <tr>
                     <th>병명</th>
@@ -114,7 +104,7 @@
             <div class="container">
                 <p th:text="|동물병원 명칭 : ${hospital?.name}|"></p>
                 <p th:text="|동물병원 주소 : ${hospital?.address?.street}|"></p>
-                <p th:text="|동물병원 수의사 면허 : ${diagnosis?.doctorLicense}|"></p>
+                <p th:text="|동물병원 수의사 면허 : ${doctor?.doctorLicense}|"></p>
             </div>
             <div class="text-center container">
                 <p th:text="|수의사 : ${doctor?.name} (인)|"> </p>
@@ -126,14 +116,6 @@
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">작성완료</button>
-
-<!--                TODO 여기서 수정이 필요한듯. class 안에서 redirect:/로 해결이 안되는 상황. 진단서 작성완료 시 예약내역으로 이동해야함-->
-<!--                <button type="submit" class="btn btn-primary"-->
-<!--                        onclick="location.href='/usr/mypage/doctor/member-manage/appointments/all'">작성완료</button>-->
-<!--                <button window.parent.location.href="/usr/mypage/doctor/member-manage/appointments/all" type="submit" class="btn btn-primary">작성완료</button>-->
-
-                <a href="#" th:href="@{/usr/mypage/doctor/member-manage/appointments/all}" class="btn btn-primary" role="button">예약내역으로 이동</a>
-
             </div>
 
 

@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="UTF-8">
     <title>Chat Room</title>
     <!-- Latest minified Bootstrap & JQuery-->
@@ -97,7 +98,7 @@
     <iframe th:src="@{|/usr/chat/room/${chatRoom.roomId}|}" width="49%" height="600"></iframe>
 
 <!--    예약내역 확인. 예약내역에서 진단서 작성-->
-    <iframe th:src = "@{|/usr/mypage/doctor/member-manage/appointments/all|}" width="50%" height = "600"> </iframe>
+    <iframe th:src = "@{|/usr/doctor/medicalOffice|}" width="50%" height = "600"> </iframe>
 </a>
 
 
