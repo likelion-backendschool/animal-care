@@ -289,7 +289,7 @@
                             <form id="other-form" action="/usr/member/appointment/others" method="get" class="p-4">
                                 <div class="mb-3">
                                   <input type="hidden" name="hospitalId" value="${hospitalId}">
-                                  <input type="hidden" name="doctorId" value="${doctor.id}">
+                                  <input type="hidden" id="doctor-id" name="doctorId" value="${doctor.id}">
                                   <label for="exampleDropdownFormEmail2" class="form-label">예약 날짜</label>
                                   <input type="date" class="form-control appointment-date" id="appointment-date-${doctor.id}">
                                 </div>
@@ -318,6 +318,8 @@
 
                 $('.appointment-date').on('input', async e => {
                     const doctorId = e.target?.id?.split('-')[2];
+                    console.log(doctorId);
+                    $('#doctor-id').val(doctorId);
                     const date = e.target?.value;
                     let appointmentTimes = await $.ajax({
                         url: `/usr/appointment/times`,
@@ -342,7 +344,19 @@
                             openHour++; openMinute = 0;
                         }
                         let [closeHour, closeMinute] = closeTime.split(':', 2).map(item => Number(item));
-                        while(openHour < closeHour || openMinute < closeMinute){
+                        closeMinute = Math.ceil(closeMinute / 10) * 10;
+                        if(closeMinute >= 60){
+                            closeHour++; closeMinute = 0;
+                        }
+                        let maxCnt = 24 * 6;
+
+                        while((openHour < closeHour || openMinute < closeMinute)){
+                            // 무한루프 차단.
+                            if(maxCnt-- <= 0) {
+                                content = '에러 발생.';
+                                break;
+                            }
+
                             // 시간을 string으로
                             const time = `${String(openHour).padStart(2, '0')}:${String(openMinute).padStart(2, '0')}`;
                             console.log(time, appointmentTimes.includes(time), appointmentTimes);
