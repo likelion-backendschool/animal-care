@@ -43,7 +43,6 @@ public class AppointmentController {
 
         MemberDto memberDto = findMemberDto(principal);
         List<AnimalDto> animalDtos = animalService.findByMember(memberDto.getEmail());
-
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
 
@@ -86,7 +85,6 @@ public class AppointmentController {
     }
 
 
-
     /**
      * 회원마이페이지 예약내역 취소 CANCEL
      */
@@ -97,6 +95,7 @@ public class AppointmentController {
         return "redirect:/usr/member/mypage/appointment/info";
     }
 
+
     /**
      * 회원마이페이지 예약내역 수정 MODIFY
      */
@@ -105,19 +104,18 @@ public class AppointmentController {
                                         Model model,
                                         Principal principal) {
 
-        Optional<AppointmentDto> appointmentDto = appointmentService.findById(appointmentId);
-
         MemberDto memberDto = findMemberDto(principal);
         List<AnimalDto> animalDtos = animalService.findByMember(memberDto.getEmail());
-
         List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
         List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
 
-        model.addAttribute("appointmentDto", appointmentDto.get());
+        AppointmentDto appointmentDto = findAppointmentDto(appointmentId);
+
         model.addAttribute("memberDto", memberDto);
         model.addAttribute("animalDtos", animalDtos);
         model.addAttribute("hospitalDtos", hospitalDtos);
         model.addAttribute("doctorDtos", doctorDtos);
+        model.addAttribute("appointmentDto", appointmentDto);
 
         return "appointments/appointmentModifyForm";
     }
@@ -128,8 +126,8 @@ public class AppointmentController {
      */
     @PostMapping("/info/{appointmentId}/modify")
     public String updateAppointment(
-            @PathVariable("appointmentId") Long appointmentId,
             Principal principal,
+            @PathVariable("appointmentId") Long appointmentId,
             @RequestParam("animalDtosId") Long animalDtosId,
             @RequestParam("hospitalDtosId") Long hospitalDtosId,
             @RequestParam("doctorDtosId") Long doctorDtosId,
@@ -148,4 +146,8 @@ public class AppointmentController {
                 .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
     }
 
+    private AppointmentDto findAppointmentDto(Long appointmentId) {
+        return appointmentService.findById(appointmentId)
+                .orElseThrow(() -> new RuntimeException("appointment " + appointmentId + " was not found."));
+    }
 }
