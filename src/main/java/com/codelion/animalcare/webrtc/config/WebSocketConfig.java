@@ -14,8 +14,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(signalHandler(), "/signal")
-                .setAllowedOrigins("https://public.animal-care.site/");
-//                .setAllowedOrigins("*"); // allow all origins
+//                .setAllowedOrigins("https://public.animal-care.site/");
+                .setAllowedOrigins("*"); // allow all origins
     }
 
     @Bean
