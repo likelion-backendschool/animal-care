@@ -244,6 +244,7 @@ public class TestInitData {
                     .email("doctor1@test.com")
                     .password(encoder.encode("doctor1"))
                     .name("김닥터")
+                    .doctorLicense("3532")
                     .birthday(new Date(94, 9, 5))
                     .address(new Address("서울 강남구 도곡동 946-1", "서울 강남구 강남대로 284", "06258", "닥터1상세주소",
                             37.4887802184047, 127.032484091622))
@@ -261,6 +262,7 @@ public class TestInitData {
                     .email("doctor2@test.com")
                     .password(encoder.encode("doctor2"))
                     .name("이닥터")
+                    .doctorLicense("3533")
                     .birthday(new Date(90, 10, 11))
                     .address(new Address("서울 강남구 도곡동 946-14", "서울 강남구 강남대로 282", "06258", "닥터2상세주소",
                             37.4885664092435, 127.03248411211))

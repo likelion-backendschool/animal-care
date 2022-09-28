@@ -34,7 +34,7 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>#</th>
+<!--                    <th>#</th>-->
                     <th>회원</th>
                     <th>애완동물</th>
                     <th>병원</th>
@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="ad : ${appointmentDto}">
-                    <td th:text="${ad.appointmentId}"></td>
+<!--                    <td th:text="${ad.appointmentId}"></td>-->
                     <td th:text="${ad.memberName}"></td>
                     <td th:text="${ad.animalName}"></td>
                     <td th:text="${ad.hospitalName}"></td>
@@ -56,7 +56,7 @@
 
 
                     <td>
-                        <a href="#" th:if="${ad.status.name() == 'READY'}" th:href="@{/usr/mypage/doctor/member-manage/appointments/all/{appointmentId} (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">진단서 작성</a>
+                        <a href="#" th:if="${ad.status.name() == 'READY'}" th:href="@{/usr/doctor/medicalOffice/{appointmentId} (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">진단서 작성</a>
                         <button th:if="${ad.status.name() == 'COMPLETE'}" disabled type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">진단서 작성 완료</button>
                     </td>
                 </tr>
