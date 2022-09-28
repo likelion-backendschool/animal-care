@@ -58,11 +58,4 @@ public class Question extends BaseEntity {
     }
 
 
-    /*
-    추후에 like entity 따로 만들어서 구성
-    @Column
-    private Integer like;
-
-    Forienkey(animal_breed_id), (member_id) 추후에 구성
-    */
 }

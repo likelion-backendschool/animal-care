@@ -9,16 +9,12 @@ import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
-import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 
-/*
-TODO : MEMBER REPO에서 DOCTOR을 못가져오는데, USER REPO 이용 ??
-* */
 @RequiredArgsConstructor
 @Service
 public class AnswerService {
@@ -28,8 +24,6 @@ public class AnswerService {
 
     private final DoctorRepository doctorRepository;
 
-    private final UserService userService;
-// TODO : 권한 설정을 추가해야함
     @Transactional
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
         Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
@@ -72,15 +66,6 @@ public class AnswerService {
         return new AnswerResponseDto(entity);
     }
 
-//    public boolean isDoctor(Principal principal) {
-//        Member member = userService.getMember(principal.getName());
-//        System.out.println("!!!!!!!!!!!!!!!!");
-//        System.out.println(member.getAuth());
-//        if(member.getAuth().contains("ROLE_DOCTOR")){
-//            return true;
-//        }
-//        return false;
-//    }
 
     public boolean answerAuthorized(Long answerId, Principal principal) {
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("작성된 글이 없습니다."));

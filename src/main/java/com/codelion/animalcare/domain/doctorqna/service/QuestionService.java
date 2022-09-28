@@ -127,7 +127,6 @@ public class QuestionService {
         return false;
     }
 
-    //delete flag
 
 
 

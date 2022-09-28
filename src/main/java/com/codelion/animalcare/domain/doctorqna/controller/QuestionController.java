@@ -6,7 +6,6 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateReques
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
-import com.codelion.animalcare.domain.user.service.MemberService;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,9 +37,6 @@ import java.security.Principal;
 public class QuestionController {
 
     private final QuestionService questionService;
-
-    private final MemberService memberService;
-
     private final UserService userService;
     //게시글 등록 화면
     @GetMapping("/usr/doctor-qna/write")
