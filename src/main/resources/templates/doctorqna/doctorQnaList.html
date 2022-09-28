@@ -58,7 +58,7 @@
 
 
     <div class="row">
-        <div class="col-6">
+        <div class="col-6" sec:authorize="hasRole('ROLE_MEMBER')">
             <a th:href="@{/usr/doctor-qna/write}" class="btn btn-primary">질문 등록하기</a>
         </div>
         <div class="col-6">
