@@ -42,7 +42,7 @@
 
             console.log(roomId + ", " + username);
 
-            let sockJs = new SockJS("/ws/chat");
+            let sockJs = new SockJS("/wss/chat");
             let stomp = Stomp.over(sockJs);
 
             // connection이 맺어지면 실행

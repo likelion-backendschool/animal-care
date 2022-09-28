@@ -11,7 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws/chat")
+        registry.addEndpoint("/wss/chat")
                 .setAllowedOrigins("https://public.animal-care.site/") //ngrok 주소
 //                .setAllowedOrigins("/**") // localhost 사용하기 위함
                 .withSockJS();
