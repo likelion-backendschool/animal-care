@@ -43,12 +43,5 @@ public class Answer extends BaseEntity {
         this.content = content;
     }
 
-    /*
-    추후에 like entity 따로 만들어서 구성
-    @Column
-    private int like;
-
-    Forienkey(doctor_id) 추후에 구성
-    */
 
 }
