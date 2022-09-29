@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 /*
     ToDo
     1. 댓글 작성, 수정, 삭제 사용자 인증(로그인 연동)
@@ -23,8 +25,8 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("/comments/write")
-    public String write(@PathVariable Long postId, CommentRequestDto commentRequestDto) {
-        commentService.saveComment(postId, commentRequestDto);
+    public String write(@PathVariable Long postId, CommentRequestDto commentRequestDto, Principal principal) {
+        commentService.saveComment(postId, commentRequestDto, principal);
 
         return "redirect:/usr/posts/%d".formatted(postId);
     }

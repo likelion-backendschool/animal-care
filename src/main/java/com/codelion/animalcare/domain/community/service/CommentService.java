@@ -6,22 +6,29 @@ import com.codelion.animalcare.domain.community.exception.CommentNotFoundExcepti
 import com.codelion.animalcare.domain.community.exception.PostNotFoundException;
 import com.codelion.animalcare.domain.community.repository.CommentRepository;
 import com.codelion.animalcare.domain.community.repository.PostRepository;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
+import com.codelion.animalcare.domain.user.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
+import java.security.Principal;
 import java.util.Optional;
 
-import static com.codelion.animalcare.domain.community.dto.CommentDto.*;
+import static com.codelion.animalcare.domain.community.dto.CommentDto.CommentRequestDto;
+import static com.codelion.animalcare.domain.community.dto.CommentDto.CommentResponseDto;
+import static com.codelion.animalcare.domain.community.dto.CommentDto.ModifyCommentRequestDto;
 
 @Service
 public class CommentService {
     private CommentRepository commentRepository;
     private PostRepository postRepository;
+    private UserService userService;
 
-    public CommentService(CommentRepository commentRepository, PostRepository postRepository) {
+    public CommentService(CommentRepository commentRepository, PostRepository postRepository, UserService userService) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
+        this.userService = userService;
+
     }
 
     @Transactional
@@ -36,17 +43,17 @@ public class CommentService {
     }
 
     @Transactional
-    public Long saveComment(Long id, CommentRequestDto commentRequestDto) {
+    public Long saveComment(Long id, CommentRequestDto commentRequestDto, Principal principal) {
         Optional<Post> post = postRepository.findById(id);
-
+        UserInfo user = userService.getUserInfo(principal.getName()).orElse(null);
         if(!post.isPresent()) {
             throw new PostNotFoundException(String.format("Post ID:%s is not found", id));
         }
         commentRequestDto.setPost(post.get());
-        Comment comment = commentRequestDto.toEntity();
+        Comment comment = commentRequestDto.toEntity(user);
         commentRepository.save(comment);
 
-        return commentRequestDto.toEntity().getId();
+        return commentRequestDto.toEntity(user).getId();
     }
 
     @Transactional

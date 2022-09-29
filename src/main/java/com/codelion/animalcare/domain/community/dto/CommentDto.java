@@ -33,7 +33,6 @@ public class CommentDto {
         private String content;
         private int likes;
         private Long postId;
-
         private UserInfo member;
 
         public CommentResponseDto(Comment comment) {
