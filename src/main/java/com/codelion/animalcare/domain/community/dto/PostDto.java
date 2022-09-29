@@ -2,6 +2,7 @@ package com.codelion.animalcare.domain.community.dto;
 
 import com.codelion.animalcare.domain.community.dto.CommentDto.CommentResponseDto;
 import com.codelion.animalcare.domain.community.entity.Post;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,12 +17,13 @@ public class PostDto {
         private String title;
         private String content;
 
-        public Post toEntity() {
+        public Post toEntity(UserInfo member) {
             return Post.builder()
                     .title(title)
                     .content(content)
                     .likes(0)
                     .views(0)
+                    .member(member)
                     .build();
         }
     }
@@ -35,6 +37,8 @@ public class PostDto {
         private String content;
         private int likes;
         private int views;
+
+        private UserInfo member;
         private List<CommentResponseDto> comments;
 
         public PostResponseDto(Post post){
@@ -45,6 +49,7 @@ public class PostDto {
             this.views = post.getViews();
             this.createdAt = post.getCreatedAt();
             this.updatedAt = post.getUpdatedAt();
+            this.member = post.getMember();
             this.comments = post.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
         }
     }
@@ -57,12 +62,8 @@ public class PostDto {
 
         public Post toEntity(Post oldPost) {
             return Post.builder()
-                    .id(oldPost.getId())
-                    .createdAt(oldPost.getCreatedAt())
                     .title(title)
                     .content(content)
-                    .likes(oldPost.getLikes())
-                    .views(oldPost.getViews())
                     .build();
         }
     }

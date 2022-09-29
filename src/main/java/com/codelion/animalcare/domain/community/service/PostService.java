@@ -86,7 +86,7 @@ public class PostService {
     public Long savePost(PostRequestDto postRequestDto, Principal principal) {
         UserInfo user = userService.getUserInfo(principal.getName()).orElse(null);
 
-        return postRepository.save(postRequestDto.toEntity()).getId();
+        return postRepository.save(postRequestDto.toEntity(user)).getId();
     }
 
     @Transactional

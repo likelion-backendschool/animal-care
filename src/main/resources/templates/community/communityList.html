@@ -6,7 +6,7 @@
                 <a th:href="@{/usr/posts}"><h3>Community</h3></a>
             </div>
 
-            <table class="table table-hover">
+            <table class="table table-hover" style="text-align: center">
                 <thead class="table-dark">
                 <tr>
                     <th class="col-md-1">번호</th>
@@ -22,9 +22,9 @@
                     <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
                     <td>
                         <a th:href="@{|/usr/posts/${post.id}|}" th:text="${post.title}"></a>
-                        <span class="text-info small ms-2 text-bold"
+                        <span class="text-danger small ms-2 text-bold"
                               th:if="${#lists.size(post.comments) > 0}"
-                              th:text="|(${#lists.size(post.comments)})|">
+                              th:text="|${#lists.size(post.comments)}|">
                 </span>
                     </td>
                     <td><a th:text="${post.member?.name}"></a></td>
