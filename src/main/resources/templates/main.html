@@ -2,8 +2,30 @@
 
 <div layout:fragment="content" class="container my-5">
     <body>
-    <h6 class="font-weight-bolder mb-0">이 페이지 구성을 어떻게 해야 할지 생각 해야 합니다</h6>
-
+        <div class="card">
+            <div class="row">
+                <div class="col-8">
+                    <div class="card-body">
+                        <h3 class="card-title">반려동물 케어는 Animal-Care!!</h3>
+                        <br />
+                        <p>이제 병원에 가지 않아도 진찰 받을 수 있습니다.</p>
+                        <p>영상과 채팅, 약 배송, 반려 용품 구매까지 해결해 드립니다.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <img class="img-fluid rounded-end" th:src="@{img/main-page/dog.jpg}"></br>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h4>애완동물이 어떤 증상을 보이나요?</h4>
+        <form class="input-group mb-3" th:action="@{/usr/doctor-qna}">
+            <input type="hidden" name="type" value="titleAndContent">
+            <div class="input-group-prepend">
+                <input class="form-control m-0" type="text" name="kw" style="width: auto; text-align: center" placeholder="검색어를 입력해주세요." aria-describedby="inputGroup-sizing-default">
+            </div>
+            <button type="submit" class="btn btn-primary m-0">검색</button>
+        </form>
     </body>
 </div>
 </html>

@@ -17,6 +17,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @Query("select q from Question q where q.member.name like concat('%',UPPER(:kw),'%')")
     Page<Question> findByMemberContaining(@Param("kw")String kw, Pageable pageable);
+
+    @Query("select q from Question q where q.title like concat('%', UPPER(:kw), '%') or q.content like concat('%', UPPER(:kw), '%')")
+    Page<Question> findByTitleOrContent(@Param("kw")String kw, Pageable pageable);
     @Modifying
     @Query("update Question q set q.view = q.view + 1 where q.id = :id")
     int updateView(@Param("id") Long id);
