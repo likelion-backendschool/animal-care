@@ -5,7 +5,7 @@
 
     <div class="container">
         <div class="page-header">
-            <h3>예약날짜(시간)수정하기</h3>
+            <h3>예약날짜 수정</h3>
         </div>
 
         <form role="form" th:object="${appointmentModifyDto}" th:method="post" >
@@ -37,10 +37,10 @@
             </div>
 
             <div class="form-group">
-                <label>예약날짜</label>
+                <label>예약된 날짜</label>
 
                 <input name="inputDateId" id="input_date" type="datetime-local" th:value="${appointmentModifyDto.date}" class="form-control form-control-sm" readonly/>
-                <label>날짜선택</label>
+                <label>예약날짜 수정</label>
                 <div class="row">
                     <div class="col-6">
                         <input type="date" class="form-control" id="appointment_date">
