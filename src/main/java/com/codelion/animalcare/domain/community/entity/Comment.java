@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.post.entity;
+package com.codelion.animalcare.domain.community.entity;
 
 
 import com.codelion.animalcare.domain.user.entity.Member;
@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter

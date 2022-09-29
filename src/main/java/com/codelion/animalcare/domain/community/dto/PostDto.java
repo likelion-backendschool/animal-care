@@ -1,7 +1,7 @@
-package com.codelion.animalcare.domain.post.dto;
+package com.codelion.animalcare.domain.community.dto;
 
-import com.codelion.animalcare.domain.post.dto.CommentDto.CommentResponseDto;
-import com.codelion.animalcare.domain.post.entity.Post;
+import com.codelion.animalcare.domain.community.dto.CommentDto.CommentResponseDto;
+import com.codelion.animalcare.domain.community.entity.Post;
 import lombok.Getter;
 import lombok.Setter;
 

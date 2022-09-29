@@ -1,11 +1,11 @@
-package com.codelion.animalcare.domain.post.service;
+package com.codelion.animalcare.domain.community.service;
 
-import com.codelion.animalcare.domain.post.dto.PostDto.ModifyPostRequestDto;
-import com.codelion.animalcare.domain.post.dto.PostDto.PostRequestDto;
-import com.codelion.animalcare.domain.post.dto.PostDto.PostResponseDto;
-import com.codelion.animalcare.domain.post.entity.Post;
-import com.codelion.animalcare.domain.post.exception.PostNotFoundException;
-import com.codelion.animalcare.domain.post.repository.PostRepository;
+import com.codelion.animalcare.domain.community.dto.PostDto.ModifyPostRequestDto;
+import com.codelion.animalcare.domain.community.dto.PostDto.PostRequestDto;
+import com.codelion.animalcare.domain.community.dto.PostDto.PostResponseDto;
+import com.codelion.animalcare.domain.community.entity.Post;
+import com.codelion.animalcare.domain.community.exception.PostNotFoundException;
+import com.codelion.animalcare.domain.community.repository.PostRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

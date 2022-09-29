@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.post.entity;
+package com.codelion.animalcare.domain.community.entity;
 
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;

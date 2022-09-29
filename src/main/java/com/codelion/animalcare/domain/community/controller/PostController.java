@@ -1,10 +1,10 @@
-package com.codelion.animalcare.domain.post.controller;
+package com.codelion.animalcare.domain.community.controller;
 
-import com.codelion.animalcare.domain.post.dto.CommentDto.CommentRequestDto;
-import com.codelion.animalcare.domain.post.dto.PostDto.ModifyPostRequestDto;
-import com.codelion.animalcare.domain.post.dto.PostDto.PostRequestDto;
-import com.codelion.animalcare.domain.post.entity.Post;
-import com.codelion.animalcare.domain.post.service.PostService;
+import com.codelion.animalcare.domain.community.dto.CommentDto.CommentRequestDto;
+import com.codelion.animalcare.domain.community.dto.PostDto.ModifyPostRequestDto;
+import com.codelion.animalcare.domain.community.dto.PostDto.PostRequestDto;
+import com.codelion.animalcare.domain.community.entity.Post;
+import com.codelion.animalcare.domain.community.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

@@ -1,18 +1,18 @@
-package com.codelion.animalcare.domain.post.service;
+package com.codelion.animalcare.domain.community.service;
 
-import com.codelion.animalcare.domain.post.entity.Comment;
-import com.codelion.animalcare.domain.post.entity.Post;
-import com.codelion.animalcare.domain.post.exception.CommentNotFoundException;
-import com.codelion.animalcare.domain.post.exception.PostNotFoundException;
-import com.codelion.animalcare.domain.post.repository.CommentRepository;
-import com.codelion.animalcare.domain.post.repository.PostRepository;
+import com.codelion.animalcare.domain.community.entity.Comment;
+import com.codelion.animalcare.domain.community.entity.Post;
+import com.codelion.animalcare.domain.community.exception.CommentNotFoundException;
+import com.codelion.animalcare.domain.community.exception.PostNotFoundException;
+import com.codelion.animalcare.domain.community.repository.CommentRepository;
+import com.codelion.animalcare.domain.community.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 import java.util.Optional;
 
-import static com.codelion.animalcare.domain.post.dto.CommentDto.*;
+import static com.codelion.animalcare.domain.community.dto.CommentDto.*;
 
 @Service
 public class CommentService {

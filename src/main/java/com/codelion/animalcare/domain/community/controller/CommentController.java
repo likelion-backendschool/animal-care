@@ -1,8 +1,8 @@
-package com.codelion.animalcare.domain.post.controller;
+package com.codelion.animalcare.domain.community.controller;
 
-import com.codelion.animalcare.domain.post.dto.CommentDto.CommentRequestDto;
-import com.codelion.animalcare.domain.post.dto.CommentDto.ModifyCommentRequestDto;
-import com.codelion.animalcare.domain.post.service.CommentService;
+import com.codelion.animalcare.domain.community.dto.CommentDto.CommentRequestDto;
+import com.codelion.animalcare.domain.community.dto.CommentDto.ModifyCommentRequestDto;
+import com.codelion.animalcare.domain.community.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
