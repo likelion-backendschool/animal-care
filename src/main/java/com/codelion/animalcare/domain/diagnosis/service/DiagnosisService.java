@@ -49,9 +49,7 @@ public class DiagnosisService {
         Hospital hospital = appointmentDto.getHospital();
         Doctor doctor = appointmentDto.getDoctor();
 
-        //수정 구현 예정
-        Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentDto.getId());
-        Appointment appointment = appointmentOptional.get();
+        Appointment appointment = findAppointment(appointmentDto.getId());
 
         // ready인 상태에서만 의사가 진단서 작성을 할 수 있다.
         if (status == AppointmentStatus.COMPLETE) {
@@ -69,5 +67,10 @@ public class DiagnosisService {
         diagnosisRepository.save(diagnosis);
 
         return diagnosis.getId();
+    }
+
+    private Appointment findAppointment(Long appointmentId) {
+        return appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new RuntimeException("Appointment Id " + appointmentId + " was not found."));
     }
 }
