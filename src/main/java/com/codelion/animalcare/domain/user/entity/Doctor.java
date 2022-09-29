@@ -31,7 +31,7 @@ public class Doctor extends UserInfo{
     @Column()
     private String major;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
