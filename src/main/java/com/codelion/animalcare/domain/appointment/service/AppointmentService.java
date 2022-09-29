@@ -169,7 +169,7 @@ public class AppointmentService {
 
     public LoadMyPageDoctorAppointment.ResponseDto findById(long appointmentId) {
         Appointment appointment = appointmentRepository
-                .findByIdWithMemberAndAnimalAndHospitalAndDoctor(appointmentId)
+                .findByAppointmentId(appointmentId)
                         .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " is not found."));
 
         return new LoadMyPageDoctorAppointment.ResponseDto(appointment);
@@ -177,7 +177,7 @@ public class AppointmentService {
 
     public Optional<AppointmentModifyDto> findAppointmentModifyDtoById(Long appointmentId) {
 
-        Optional<Appointment> appointmentOptional = appointmentRepository.findByIdWithMemberAndAnimalAndHospitalAndDoctor(appointmentId);
+        Optional<Appointment> appointmentOptional = appointmentRepository.findByAppointmentId(appointmentId);
         Optional<AppointmentModifyDto> appointmentModifyDto = appointmentOptional.map(o -> new AppointmentModifyDto(o));
 
         return appointmentModifyDto;

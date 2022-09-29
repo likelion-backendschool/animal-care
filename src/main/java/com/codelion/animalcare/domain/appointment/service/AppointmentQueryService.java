@@ -33,7 +33,7 @@ public class AppointmentQueryService {
 
         Doctor doctor = findDoctor(email);
 
-        List<Appointment> appointments = appointmentRepository.findAppointmentsByDoctorId(doctor.getId());
+        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctor.getId());
 
         List<AppointmentDto> appointmentDtos = appointments.stream()
                 .map(o -> new AppointmentDto(o))
@@ -51,7 +51,7 @@ public class AppointmentQueryService {
 
         Doctor doctor = findDoctor(email);
 
-        List<Appointment> appointmentList = appointmentRepository.findAppointmentsByDoctorId(doctor.getId());
+        List<Appointment> appointmentList = appointmentRepository.findByDoctorId(doctor.getId());
 
         List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
                 .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
@@ -66,7 +66,7 @@ public class AppointmentQueryService {
 
         Member member = findMember(email);
 
-        List<Appointment> appointments = appointmentRepository.findAppointmentsByMemberId(member.getId());
+        List<Appointment> appointments = appointmentRepository.findByMemberId(member.getId());
 
         List<AppointmentDto> appointmentDtos = appointments.stream()
                 .map(o -> new AppointmentDto(o))

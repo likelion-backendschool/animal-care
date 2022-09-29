@@ -18,17 +18,17 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
      * 2. DoctorMyPage 환자 예약  관리
      */
     @Query("select ma from Appointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h where d.id = :doctorId ")
-    List<Appointment> findAppointmentsByDoctorId(@Param("doctorId") long doctorId);
+    List<Appointment> findByDoctorId(@Param("doctorId") long doctorId);
 
     /**
      * Member가 MemberMyPage에서 예약내역 조회
      */
     @Query("select ma from Appointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h where m.id = :memberId")
-    List<Appointment> findAppointmentsByMemberId(@Param("memberId") long memberId);
+    List<Appointment> findByMemberId(@Param("memberId") long memberId);
 
 
     @Query("select ma from Appointment ma join fetch  ma.member m join fetch  ma.animal a join fetch ma.doctor d join fetch ma.hospital h where ma.id = :appointmentId")
-    Optional<Appointment> findByIdWithMemberAndAnimalAndHospitalAndDoctor(@Param("appointmentId") long appointmentId);
+    Optional<Appointment> findByAppointmentId(@Param("appointmentId") long appointmentId);
 
 
     @Query("select ma.date from Appointment ma where ma.doctor.id = :doctorId and :utcDateTimeFront <= ma.date and ma.date < :utcDateTimeEnd")
