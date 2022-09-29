@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.mypage.controller;
 
+import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentModifyDto;
 
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
@@ -45,9 +46,10 @@ public class MemberMyPageAppointmentController {
     @PostMapping("/info/{appointmentId}/cancel")
     public String cancelAppointment(@PathVariable("appointmentId") Long appointmentId) {
 
-        appointmentService.cancelAppointment(appointmentId);
+        appointmentService.cancelAppointment(appointmentId, AppointmentStatus.CANCEL);
         return "redirect:/usr/member/mypage/appointment/info";
     }
+
 
 
     /**
