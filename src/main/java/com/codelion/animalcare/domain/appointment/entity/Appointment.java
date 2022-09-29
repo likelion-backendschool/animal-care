@@ -1,15 +1,14 @@
 package com.codelion.animalcare.domain.appointment.entity;
 
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
-import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -24,7 +23,7 @@ import static javax.persistence.FetchType.LAZY;
 
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 public class Appointment extends BaseEntity {
@@ -59,69 +58,36 @@ public class Appointment extends BaseEntity {
     private Hospital hospital;
 
 
-    // == 연관관계 메서드 == //
-    public void addMember(Member member) {
-        this.member = member;
-        member.getAppointments().add(this);
-    }
-
-    public void addAnimal(Animal animal) {
-        this.animal = animal;
-        animal.getAppointments().add(this);
-    }
-
-    public void addDoctor(Doctor doctor) {
-        this.doctor = doctor;
-        doctor.getAppointments().add(this);
-    }
-
-    public void addHospital(Hospital hospital) {
-        this.hospital = hospital;
-        hospital.getAppointments().add(this);
-    }
-
-
-    //== 생성 메서드 ==//
-    public static Appointment createAppointment(Member member, Animal animal, Hospital hospital, Doctor doctor, LocalDateTime appointmentDate) {
-        Appointment appointment = new Appointment();
-        appointment.addMember(member);
-
-        appointment.addAnimal(animal);
-        appointment.addHospital(hospital);
-        appointment.addDoctor(doctor);
-
-        appointment.setStatus(AppointmentStatus.READY);
-        appointment.setDate(appointmentDate);
-        return appointment;
-    }
-
-    //== 수정 메서드 ==//
-    public static Appointment updateAppointment(Appointment appointment, Member member, Animal animal, Hospital hospital, Doctor doctor, LocalDateTime appointmentDate) {
-
-        appointment.addMember(member);
-
-        appointment.addAnimal(animal);
-        appointment.addHospital(hospital);
-        appointment.addDoctor(doctor);
-
-        appointment.setStatus(AppointmentStatus.READY);
-        appointment.setDate(appointmentDate);
-        return appointment;
-    }
-
-    //==비즈니스 로직==//
     /**
-     * 예약 취소
+     * 예약날짜(시간) 변경
      */
-    public void cancel() {
-        this.setStatus(AppointmentStatus.CANCEL);
+    public void updateAppointmentDate(LocalDateTime date) {
+        this.date = date;
     }
+
 
     /**
-     * 예약 상태 변경
+     * 진료 상태 변경: 수의사가 취소
      */
-    public void updateStatus(AppointmentStatus refuse) {
+    public void updateStatusToRefuse(AppointmentStatus refuse) {
         this.status = refuse;
     }
+
+
+    /**
+     * 진료 상태 변경: 멤버가 취소
+     */
+    public void updateStatusToCancel(AppointmentStatus cancel) {
+        this.status = cancel;
+    }
+
+
+    /**
+     * 진료 상태 변경: 수의사가 진단서 작성시 진료상태 완료
+     */
+    public void updateStatusToComplete(AppointmentStatus complete) {
+        this.status = complete;
+    }
+
 
 }

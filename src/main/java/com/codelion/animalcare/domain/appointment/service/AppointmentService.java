@@ -3,7 +3,7 @@ package com.codelion.animalcare.domain.appointment.service;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
-import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentModifyDto;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentFormDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
@@ -39,56 +39,6 @@ public class AppointmentService {
     private final HospitalRepository hospitalRepository;
 
 
-    public List<LoadMyPageDoctorAppointment.ResponseDto> findAllByDoctorEmail(String email) {
-        Doctor doctor = doctorRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
-
-        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
-
-        List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
-                .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
-
-        return result;
-    }
-
-
-//    public List<LoadMyPageDoctorAppointment.ResponseDto> findAppointmentByDoctorEmail(String email) {
-//        Doctor doctor = doctorRepository.findByEmail(email)
-//                .orElseThrow(() -> new RuntimeException("Doctor " + email + "is not found."));
-//
-//        List<Appointment> appointmentList = appointmentRepository.findAllByDoctorId(doctor.getId());
-//
-//        List< LoadMyPageDoctorAppointment.ResponseDto> result = appointmentList.stream()
-//                .map(LoadMyPageDoctorAppointment.ResponseDto::new).toList();
-//
-//        return result;
-//    }
-
-    public List<Appointment> findByMemberId(long id) {
-        return appointmentRepository.findByMemberId(id);
-    }
-
-
-    /**
-     * 예약
-     */
-    @Transactional
-    public Long appointment(MemberDto memberDto, Long animalDtoId, Long hospitalDtosId, Long doctorDtosId, LocalDateTime appointmentDate) {
-
-        //엔티티 조회
-        Member member = memberRepository.findById(memberDto.getId()).get();
-        Animal animal = animalRepository.findById(animalDtoId).get();
-        Hospital hospital = hospitalRepository.findById(hospitalDtosId).get();
-        Doctor doctor = doctorRepository.findById(doctorDtosId).get();
-
-        //예약 생성
-        Appointment appointment = Appointment.createAppointment(member, animal, hospital, doctor, appointmentDate);
-
-        appointmentRepository.save(appointment);
-
-        return appointment.getId();
-    }
-
     /**
      * 예약(메세지 추가)
      */
@@ -99,7 +49,6 @@ public class AppointmentService {
         Animal animal = animalRepository.findById(appointmentFormDto.getAnimalId()).get();
         Hospital hospital = hospitalRepository.findById(appointmentFormDto.getHospitalId()).get();
         Doctor doctor = doctorRepository.findById(appointmentFormDto.getDoctorId()).get();
-
         /* 올바른 date인지 확인.*/
         LocalDateTime date = appointmentFormDto.getDateToLocalDateTime();
         // 1. 10분 단위로 예약 가능.
@@ -152,12 +101,18 @@ public class AppointmentService {
      * 예약내역에서 예약취소
      */
     @Transactional
-    public void cancelAppointment(Long appointmentId) {
+    public void cancelAppointment(Long appointmentId, AppointmentStatus status) {
         //예약 엔티티 조회
         Appointment appointment = appointmentRepository.findById(appointmentId).get();
 
+        // ready인 상태에서만 멤버가 거절을 할 수 있다.
+        if (status == AppointmentStatus.CANCEL) {
+            if (appointment.getStatus() != AppointmentStatus.READY)
+                throw new RuntimeException("멤버가 거절할 수 없습니다.");
+        }
+
         //에약 취소
-        appointment.cancel();
+        appointment.updateStatusToCancel(status);
     }
 
     /**
@@ -177,49 +132,39 @@ public class AppointmentService {
         }
 
         // 예약 변경.
-        appointment.updateStatus(status);
+        appointment.updateStatusToRefuse(status);
     }
 
 
 
     /**
-     * 예약내역에서 예약수정
+     * 예약내역에서 예약시간수정
      */
     @Transactional
-    public Long updateAppointment(Long appointmentId, MemberDto memberDto, Long animalDtoId, Long hospitalDtosId, Long doctorDtosId, LocalDateTime appointmentDate) {
+    public void updateAppointment(Long appointmentId, LocalDateTime appointmentDate) {
 
         //예약 엔티티 조회
         Appointment appointment = appointmentRepository.findById(appointmentId).get();
 
-        //엔티티 조회
-        Member member = memberRepository.findById(memberDto.getId()).get();
-        Animal animal = animalRepository.findById(animalDtoId).get();
-        Hospital hospital = hospitalRepository.findById(hospitalDtosId).get();
-        Doctor doctor = doctorRepository.findById(doctorDtosId).get();
-
         //예약 수정
-        appointment = appointment.updateAppointment(appointment, member, animal, hospital, doctor, appointmentDate);
-
-        appointmentRepository.save(appointment);
-
-        return appointment.getId();
+        appointment.updateAppointmentDate(appointmentDate);
     }
 
 
     public LoadMyPageDoctorAppointment.ResponseDto findById(long appointmentId) {
         Appointment appointment = appointmentRepository
-                .findByIdWithMemberAndAnimalAndHospitalAndDoctor(appointmentId)
+                .findByAppointmentId(appointmentId)
                         .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " is not found."));
 
         return new LoadMyPageDoctorAppointment.ResponseDto(appointment);
     }
 
+    public Optional<AppointmentModifyDto> findAppointmentModifyDtoById(Long appointmentId) {
 
-    public Optional<AppointmentDto> findById(Long appointmentId) {
-        Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
-        Optional<AppointmentDto> appointmentDto = appointmentOptional.map(o -> new AppointmentDto(o));
+        Optional<Appointment> appointmentOptional = appointmentRepository.findByAppointmentId(appointmentId);
+        Optional<AppointmentModifyDto> appointmentModifyDto = appointmentOptional.map(o -> new AppointmentModifyDto(o));
 
-        return appointmentDto;
+        return appointmentModifyDto;
     }
 
 
@@ -236,6 +181,7 @@ public class AppointmentService {
         System.out.println(utcDateTimeFront + " " + utcDateTimeEnd);
         return appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctorId);
     }
+
 
 }
 

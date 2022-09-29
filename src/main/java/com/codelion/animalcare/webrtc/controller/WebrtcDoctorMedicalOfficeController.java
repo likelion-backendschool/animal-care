@@ -1,5 +1,6 @@
 package com.codelion.animalcare.webrtc.controller;
 
+import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
@@ -22,21 +23,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebrtcDoctorMedicalOfficeController {
 
-    private final DoctorService doctorService;
     private final AppointmentQueryService appointmentQueryService;
     private final AppointmentService appointmentService;
     private final DiagnosisService diagnosisService;
 
-
     /**
-     * 비대면 진료에서 예약명단 확인
+     * 비대면 진료
+     * Doctor가 예약내역 확인
      */
     @GetMapping()
     public String loadByDoctorAppointments(Model model, Principal principal) {
 
-        LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findByEmail(principal.getName());
-
-        List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(doctorDto);
+        String email = principal.getName();
+        List<AppointmentDto> appointmentDto = appointmentQueryService.findAllAppointment(email);
 
         model.addAttribute("appointmentDto", appointmentDto);
 
@@ -73,7 +72,7 @@ public class WebrtcDoctorMedicalOfficeController {
                                     @Valid FindOneDiagnosis writtenDiagnosisForm) {
 
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
-        diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
+        diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm, AppointmentStatus.COMPLETE);
 
         return "redirect:/usr/doctor/medicalOffice";
     }

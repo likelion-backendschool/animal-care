@@ -1,13 +1,19 @@
-package com.codelion.animalcare.domain.post.entity;
+package com.codelion.animalcare.domain.community.entity;
 
 import com.codelion.animalcare.domain.user.entity.Doctor;
-import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.util.List;
 
 @Entity
@@ -29,7 +35,7 @@ public class Post extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private UserInfo member;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")

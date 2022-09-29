@@ -2,12 +2,20 @@ package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
+
+import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
+
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +30,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AppointmentMyPageDoctorController {
     private final AppointmentService appointmentService;
+    private final AppointmentQueryService appointmentQueryService;
     private final DiagnosisService diagnosisService;
 
     // TODO page 설정
@@ -36,7 +45,7 @@ public class AppointmentMyPageDoctorController {
     ){
         String email = principal.getName();
         List<LoadMyPageDoctorAppointment.ResponseDto> appointments
-                = appointmentService.findAllByDoctorEmail(email);
+                = appointmentQueryService.findAllByDoctorEmail(email);
         model.addAttribute("appointments", appointments);
         return "myPage/doctor/member-manage";
     }
