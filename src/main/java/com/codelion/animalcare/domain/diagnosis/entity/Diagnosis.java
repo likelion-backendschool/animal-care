@@ -33,13 +33,16 @@ import static javax.persistence.FetchType.LAZY;
 @SuperBuilder
 @Setter
 public class Diagnosis extends BaseEntity{
+
     // 동물 보호자
     // 성명
     @Column(nullable = false, length = 30)
     private String memberName;
+
     // 주소
     @Column(nullable = false, length=70)
     private String addressCity;
+
     @Column(nullable = false, length=70)
     private String addressStreet;
 
@@ -53,24 +56,30 @@ public class Diagnosis extends BaseEntity{
     //    nullable = true로 잠시 수정
     @Column(nullable = true, length=50)
     private String animalType;
+
     // 품종
 //    nullable = true로 잠시 수정
     @Column(nullable = true, length=50)
     private String animalBreed;
+
     // 동물명
     @Column(nullable = false, length=50)
     private String animalName;
+
     // 성별
     @Column(nullable = false, length=50)
     private int animalGenderId;
+
     // 연령
     //    nullable = true로 잠시 수정
     @Column(nullable = true, length=50)
     private int animalAge;
+
     // 모색
     //    nullable = true로 잠시 수정
     @Column(nullable = true, length=50)
     private String animalCoatColor;
+
     // 특징
     //    nullable = true로 잠시 수정
     @Column(nullable = true, length=200)
