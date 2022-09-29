@@ -9,7 +9,6 @@ import com.codelion.animalcare.global.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -25,7 +24,6 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 public class Appointment extends BaseEntity {
@@ -59,29 +57,28 @@ public class Appointment extends BaseEntity {
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
-    public static Appointment updateAppointmentDate(Appointment appointment, LocalDateTime appointmentDate) {
-        appointment.setDate(appointmentDate);
-        return appointment;
-    }
-
-//    public void Appointment updateAppointmentDate(LocalDateTime date) {
-//        this.date = date;
-//    }
-
 
     /**
-     * 예약 취소
+     * 예약날짜(시간) 변경
      */
-    public void cancelStatus(AppointmentStatus cancel) {
-        this.status = cancel;
+    public void updateAppointmentDate(LocalDateTime date) {
+        this.date = date;
     }
 
 
     /**
-     * 예약 상태 변경
+     * 예약 상태 변경: 수의사가 취소
      */
     public void updateStatus(AppointmentStatus refuse) {
         this.status = refuse;
+    }
+
+
+    /**
+     * 예약 상태 변경: 멤버가 취소
+     */
+    public void cancelStatus(AppointmentStatus cancel) {
+        this.status = cancel;
     }
 
 

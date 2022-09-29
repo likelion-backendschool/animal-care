@@ -147,7 +147,7 @@ public class AppointmentService {
         Appointment appointment = appointmentRepository.findById(appointmentId).get();
 
         //예약 수정
-        appointment.updateAppointmentDate(appointment, appointmentDate);
+        appointment.updateAppointmentDate(appointmentDate);
     }
 
 
