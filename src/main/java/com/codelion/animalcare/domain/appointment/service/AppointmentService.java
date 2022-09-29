@@ -112,7 +112,7 @@ public class AppointmentService {
         }
 
         //에약 취소
-        appointment.cancelStatus(status);
+        appointment.updateStatusToCancel(status);
     }
 
     /**
@@ -132,7 +132,7 @@ public class AppointmentService {
         }
 
         // 예약 변경.
-        appointment.updateStatus(status);
+        appointment.updateStatusToRefuse(status);
     }
 
 

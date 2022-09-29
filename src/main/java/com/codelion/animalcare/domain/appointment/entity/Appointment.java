@@ -67,18 +67,26 @@ public class Appointment extends BaseEntity {
 
 
     /**
-     * 예약 상태 변경: 수의사가 취소
+     * 진료 상태 변경: 수의사가 취소
      */
-    public void updateStatus(AppointmentStatus refuse) {
+    public void updateStatusToRefuse(AppointmentStatus refuse) {
         this.status = refuse;
     }
 
 
     /**
-     * 예약 상태 변경: 멤버가 취소
+     * 진료 상태 변경: 멤버가 취소
      */
-    public void cancelStatus(AppointmentStatus cancel) {
+    public void updateStatusToCancel(AppointmentStatus cancel) {
         this.status = cancel;
+    }
+
+
+    /**
+     * 진료 상태 변경: 수의사가 진단서 작성시 진료상태 완료
+     */
+    public void updateStatusToComplete(AppointmentStatus complete) {
+        this.status = complete;
     }
 
 
