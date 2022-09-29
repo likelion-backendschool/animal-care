@@ -61,6 +61,9 @@
         <div class="col-6" sec:authorize="hasRole('ROLE_MEMBER')">
             <a th:href="@{/usr/doctor-qna/write}" class="btn btn-primary">질문 등록하기</a>
         </div>
+        <div class="col-6" sec:authorize="hasRole('ROLE_DOCTOR')">
+            <span></span>
+        </div>
         <div class="col-6">
             <form class="input-group input-group-sm mb-3">
                 <select class="form-select m-0" name="type" th:value="${param.kr}">
