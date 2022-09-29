@@ -1,17 +1,10 @@
-package com.codelion.animalcare.domain.appointment.controller;
+package com.codelion.animalcare.domain.mypage.controller;
 
-import com.codelion.animalcare.domain.animal.dto.AnimalDto;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentModifyDto;
-import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
-import com.codelion.animalcare.domain.hospital.service.HospitalService;
 
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentService;
-import com.codelion.animalcare.domain.user.dto.MemberDto;
-import com.codelion.animalcare.domain.user.service.DoctorService;
-import com.codelion.animalcare.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -25,14 +18,14 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/usr/member/mypage/appointment")
-public class AppointmentController {
+public class MemberMyPageAppointmentController {
 
     private final AppointmentQueryService appointmentQueryService;
     private final AppointmentService appointmentService;
 
 
     /**
-     * 회원마이페이지 예약내역
+     * 멤버마이페이지 예약내역
      */
     @GetMapping("/info")
     public String appointmentList(Model model, Principal principal) {
@@ -47,7 +40,7 @@ public class AppointmentController {
 
 
     /**
-     * 회원마이페이지 예약내역 취소 CANCEL
+     * 멤버마이페이지 예약내역 취소 CANCEL
      */
     @PostMapping("/info/{appointmentId}/cancel")
     public String cancelAppointment(@PathVariable("appointmentId") Long appointmentId) {
@@ -57,7 +50,7 @@ public class AppointmentController {
 
 
     /**
-     * 회원마이페이지 예약내역 시간수정 MODIFY
+     * 멤버마이페이지 예약내역 시간수정 MODIFY
      */
     @GetMapping("/info/{appointmentId}/modify")
     public String updateAppointmentForm(@PathVariable("appointmentId") Long appointmentId, Model model) {
@@ -70,7 +63,7 @@ public class AppointmentController {
 
 
     /**
-     * 회원마이페이지 예약내역 시간수정 MODIFY
+     * 멤버마이페이지 예약내역 시간수정 MODIFY
      */
     @PostMapping("/info/{appointmentId}/modify")
     public String updateAppointment(
