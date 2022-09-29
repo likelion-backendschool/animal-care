@@ -29,43 +29,7 @@ public class AppointmentController {
 
     private final AppointmentQueryService appointmentQueryService;
     private final AppointmentService appointmentService;
-    private final MemberService memberService;
-    private final DoctorService doctorService;
-    private final HospitalService hospitalService;
 
-
-    // 임시 예약하기
-    @GetMapping()
-    public String createAppointmentForm(Model model, Principal principal) {
-
-        MemberDto memberDto = findMemberDto(principal);
-        List<AnimalDto> animalDtos = memberDto.getAnimals();
-        List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
-        List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
-
-        model.addAttribute("memberDto", memberDto);
-        model.addAttribute("animalDtos", animalDtos);
-        model.addAttribute("hospitalDtos", hospitalDtos);
-        model.addAttribute("doctorDtos", doctorDtos);
-
-        return "appointments/appointmentForm";
-    }
-
-
-    // 임시 예약하기
-    @PostMapping()
-    public String appointment(
-            Principal principal,
-            @RequestParam("animalDtosId") Long animalDtosId,
-            @RequestParam("hospitalDtosId") Long hospitalDtosId,
-            @RequestParam("doctorDtosId") Long doctorDtosId,
-            @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
-
-        MemberDto memberDto = findMemberDto(principal);
-        appointmentService.appointment(memberDto, animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
-
-        return "redirect:/usr/member/mypage/appointment/info";
-    }
 
     /**
      * 회원마이페이지 예약내역
@@ -90,7 +54,6 @@ public class AppointmentController {
         appointmentService.cancelAppointment(appointmentId);
         return "redirect:/usr/member/mypage/appointment/info";
     }
-
 
 
     /**
@@ -119,16 +82,9 @@ public class AppointmentController {
         return "redirect:/usr/member/mypage/appointment/info";
     }
 
-
-    private MemberDto findMemberDto(Principal principal) {
-        String email = principal.getName();
-        return memberService.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
-    }
-
-
     private AppointmentModifyDto findAppointmentModifyDto(Long appointmentId) {
         return appointmentService.findAppointmentModifyDtoById(appointmentId)
                 .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " was not found."));
     }
+
 }
