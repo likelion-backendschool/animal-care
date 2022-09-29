@@ -7,7 +7,6 @@ import com.codelion.animalcare.domain.doctorqna.service.AnswerService;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +26,6 @@ public class AnswerController {
     private final QuestionService questionService;
 
     //답변 작성
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{questionId}/answers/write")
     public String save(Model model, @PathVariable Long questionId, @Valid AnswerSaveRequestDto answerSaveRequestDto, BindingResult bindingResult, Principal principal){
 
@@ -44,7 +42,6 @@ public class AnswerController {
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto, Principal principal){
 
@@ -54,14 +51,13 @@ public class AnswerController {
 
         model.addAttribute("answer", answerService.findById(answerId));
 
-        return "/doctorqna/doctorQnaAnswerModifyForm";
+        return "doctorqna/doctorQnaAnswerModifyForm";
     }
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public String modify(@PathVariable Long questionId, @PathVariable Long answerId, @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult, Principal principal){
 
         if(bindingResult.hasErrors()) {
-            return "/doctorqna/doctorQnaAnswerModifyForm";
+            return "doctorqna/doctorQnaAnswerModifyForm";
         }
 
         if(answerService.answerAuthorized(answerId, principal)){
@@ -73,7 +69,6 @@ public class AnswerController {
     }
 
     //답변 삭제
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/delete")
     public String delete(@PathVariable Long questionId, @PathVariable Long answerId, Principal principal) {
 
