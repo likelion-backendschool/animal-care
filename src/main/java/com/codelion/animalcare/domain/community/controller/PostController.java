@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
   /*
         ToDo
@@ -33,14 +34,11 @@ public class PostController {
 
     // 게시글 목록 페이징
     @GetMapping("")
-    public String list(Model model, @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Post> postList = postService.listPost(pageable);
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, String type, String kw) {
+        Page<Post> paging = postService.findAll(page, type, kw);
 
-        model.addAttribute("postList", postList);
-        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
-        model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("hasNext", postList.hasNext());
-        model.addAttribute("hasPrev", postList.hasPrevious());
+        model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
 
         return "community/communityList";
     }
@@ -111,8 +109,8 @@ public class PostController {
 
     // 게시글 작성
     @PostMapping("/write")
-    public String write(PostRequestDto postRequestDto) {
-        postService.savePost(postRequestDto);
+    public String write(PostRequestDto postRequestDto, Principal principal) {
+        postService.savePost(postRequestDto, principal);
 
         return "redirect:/usr/posts";
     }

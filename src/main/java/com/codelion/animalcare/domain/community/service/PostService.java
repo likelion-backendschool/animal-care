@@ -6,24 +6,54 @@ import com.codelion.animalcare.domain.community.dto.PostDto.PostResponseDto;
 import com.codelion.animalcare.domain.community.entity.Post;
 import com.codelion.animalcare.domain.community.exception.PostNotFoundException;
 import com.codelion.animalcare.domain.community.repository.PostRepository;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
+import com.codelion.animalcare.domain.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
-    private PostRepository postRepository;
-
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+    private final PostRepository postRepository;
+    private final UserService userService;
 
     @Transactional
     public Page<Post> listPost(Pageable pageable) {
         return postRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public Page<Post> findAll(int page, String type, String kw) {
+        List<Sort.Order> sortsList = new ArrayList<>();
+        sortsList.add(Sort.Order.desc("createdAt"));
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sortsList));
+
+        switch (type != null ? type : " ") {
+            case "title" -> {
+                return postRepository.findByTitleContaining(kw, pageable);
+            }
+            case "content" -> {
+                return postRepository.findByContentContaining(kw, pageable);
+            }
+            case "member" -> {
+                return postRepository.findByMemberContaining(kw, pageable);
+            }
+            default -> {
+                return postRepository.findAll(pageable);
+            }
+        }
+
     }
 
     @Transactional
@@ -53,7 +83,9 @@ public class PostService {
     }
 
     @Transactional
-    public Long savePost(PostRequestDto postRequestDto) {
+    public Long savePost(PostRequestDto postRequestDto, Principal principal) {
+        UserInfo user = userService.getUserInfo(principal.getName()).orElse(null);
+
         return postRepository.save(postRequestDto.toEntity()).getId();
     }
 
