@@ -53,5 +53,6 @@ public class Doctor extends UserInfo{
 
     public void addHospital(Hospital hospital){
         this.hospital = hospital;
+        hospital.getDoctors().add(this);
     }
 }

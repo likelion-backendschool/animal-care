@@ -176,7 +176,8 @@ public class AppointmentService {
     }
 
     public Optional<AppointmentModifyDto> findAppointmentModifyDtoById(Long appointmentId) {
-        Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
+
+        Optional<Appointment> appointmentOptional = appointmentRepository.findByIdWithMemberAndAnimalAndHospitalAndDoctor(appointmentId);
         Optional<AppointmentModifyDto> appointmentModifyDto = appointmentOptional.map(o -> new AppointmentModifyDto(o));
 
         return appointmentModifyDto;

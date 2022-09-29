@@ -44,6 +44,7 @@ public class MemberMyPageAppointmentController {
      */
     @PostMapping("/info/{appointmentId}/cancel")
     public String cancelAppointment(@PathVariable("appointmentId") Long appointmentId) {
+
         appointmentService.cancelAppointment(appointmentId);
         return "redirect:/usr/member/mypage/appointment/info";
     }
@@ -71,7 +72,6 @@ public class MemberMyPageAppointmentController {
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
         appointmentService.updateAppointment(appointmentId, appointmentDate);
-
         return "redirect:/usr/member/mypage/appointment/info";
     }
 
