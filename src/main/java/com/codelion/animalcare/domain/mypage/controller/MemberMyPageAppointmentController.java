@@ -40,6 +40,7 @@ public class MemberMyPageAppointmentController {
     }
 
 
+
     /**
      * 멤버마이페이지 예약내역 취소 CANCEL
      */
@@ -49,6 +50,7 @@ public class MemberMyPageAppointmentController {
         appointmentService.cancelAppointment(appointmentId, AppointmentStatus.CANCEL);
         return "redirect:/usr/member/mypage/appointment/info";
     }
+
 
 
 
