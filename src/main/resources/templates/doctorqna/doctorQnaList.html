@@ -37,7 +37,7 @@
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{|?page=${paging.number-1}&kw=${kw}|}">
+                   th:href="@{|?page=${paging.number-1}&?type=${type}&kw=${kw}|}">
                     <span>이전</span>
                 </a>
             </li>
@@ -45,10 +45,10 @@
                 th:if="${page >= paging.number-2 and page <= paging.number+2}"
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
-                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}&kw=${kw}|}"></a>
+                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}&type=${type}&kw=${kw}|}"></a>
             </li>
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${paging.number+1}&kw=${kw}|}">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}&type=${type}&kw=${kw}|}">
                     <span>다음</span>
                 </a>
             </li>
@@ -69,6 +69,7 @@
                 <select class="form-select m-0" name="type" th:value="${param.kr}">
                     <option value="title">제목</option>
                     <option value="content">내용</option>
+                    <option value="titleAndContent">제목+내용</option>
                     <option value="member">작성자</option>
                 </select>
                 <input class="form-control m-0" type="text" name="kw" style="width: auto; text-align: center" placeholder="검색어를 입력해주세요.">

@@ -78,6 +78,9 @@ public class QuestionService {
             case "member" -> {
                 return questionRepository.findByMemberContaining(kw, pageable);
             }
+            case "titleAndContent" -> {
+                return questionRepository.findByTitleOrContent(kw, pageable);
+            }
             default -> {
                 return questionRepository.findAll(pageable);
             }
