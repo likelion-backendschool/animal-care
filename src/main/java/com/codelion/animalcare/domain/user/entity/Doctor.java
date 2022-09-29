@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 // TODO : 기존 코드에 영향을 안 줄려고 DoctorLogin로 선언함 추후 수정 해야함, SigleTable 전략을 씀
 @Entity
 @AllArgsConstructor
@@ -53,5 +55,6 @@ public class Doctor extends UserInfo{
 
     public void addHospital(Hospital hospital){
         this.hospital = hospital;
+        hospital.getDoctors().add(this);
     }
 }

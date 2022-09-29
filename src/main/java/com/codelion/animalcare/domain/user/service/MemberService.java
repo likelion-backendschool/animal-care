@@ -20,9 +20,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
-    public List<Member> findMembers() {
-        return memberRepository.findAll();
-    }
 
     public Optional<Member> findById(Long id) {
         return memberRepository.findById(id);
@@ -31,24 +28,13 @@ public class MemberService {
 
     public Optional<MemberDto> findByEmail(String email){
 
-        Optional<Member> optionalMember = memberRepository.findOptionalByEmail(email);
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
         Optional<MemberDto> memberDto = optionalMember.map(o -> new MemberDto(o));
 
         return memberDto;
     }
 
-    @Transactional
-    public void join(MemberDto memberDto) {
 
-        // member check
-        Member beforeMember = findMemberById(memberDto.getId());
-
-        // dto => entity
-        Member newMember = memberDto.toEntity(beforeMember);
-
-        // TODO save가 아닌 update 형식으로 구현해야함
-        memberRepository.save(newMember);
-    }
     @Transactional
     public Member save(MemberSignUpDto memberSignUpDto) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

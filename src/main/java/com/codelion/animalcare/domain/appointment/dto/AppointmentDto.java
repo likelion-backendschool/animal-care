@@ -29,11 +29,4 @@ public class AppointmentDto {
             status = appointment.getStatus();
         }
 
-//    public void update(String memberName, String animalName, String hospitalName, String doctorName, LocalDateTime date) {
-//        this.memberName = memberName;
-//        this.animalName = animalName;
-//        this.hospitalName = hospitalName;
-//        this.doctorName = doctorName;
-//        this.date = date;
-//    }
 }

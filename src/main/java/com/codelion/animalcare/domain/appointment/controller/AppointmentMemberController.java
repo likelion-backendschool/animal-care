@@ -28,19 +28,16 @@ import java.util.List;
 @RequestMapping("/usr/member/appointment")
 public class AppointmentMemberController {
     private final MemberService memberService;
-    private final AnimalService animalService;
+
+//    private final AnimalService animalService;
     private final DoctorService doctorService;
     private final HospitalService hospitalService;
     private final AppointmentService appointmentService;
 
     @GetMapping()
     public String appointment(Model model, Principal principal){
-        String email = principal.getName();
-        MemberDto memberDto = memberService.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
-
+        MemberDto memberDto = findMemberDto(principal);
         model.addAttribute("memberAddress", memberDto.getAddress());
-
         return "appointments/appointmentHospitalMap";
     }
 
@@ -50,21 +47,22 @@ public class AppointmentMemberController {
             Principal principal,
             AppointmentFormDto appointmentFormDto
     ){
-            String email = principal.getName();
-            MemberDto memberDto = memberService.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
+
+            MemberDto memberDto = findMemberDto(principal);
 
             LoadDoctorMyPageInfo.ResponseDto doctorDto = doctorService.findById(appointmentFormDto.getDoctorId());
 
             LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = hospitalService.findById(appointmentFormDto.getHospitalId());
 
-            List<AnimalDto> animalDtoList = animalService.findByMember(memberDto.getEmail());
+//        List<AnimalDto> animalDtoList = animalService.findByMember(memberDto.getEmail());
+            List<AnimalDto> animalDtoList = memberDto.getAnimals();
 
             model.addAttribute("memberDto", memberDto);
             model.addAttribute("hospitalDto", hospitalDto);
             model.addAttribute("doctorDto", doctorDto);
             model.addAttribute("animalDtoList", animalDtoList);
             model.addAttribute("appointmentFormDto", appointmentFormDto);
+
             return "appointments/appointmentOthers";
     }
 
@@ -76,17 +74,15 @@ public class AppointmentMemberController {
             @Valid AppointmentFormDto appointmentFormDto,
             BindingResult bindingResult
     ){
+
             if(bindingResult.hasErrors()){
                 String referer = request.getHeader("Referer");
                 return "redirect:"+ referer;
             }
 
+            MemberDto memberDto = findMemberDto(principal);
 
-            String email = principal.getName();
-            MemberDto memberDto = memberService.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
-
-            try{
+        try{
                 appointmentService.appointment(memberDto, appointmentFormDto);
             } catch(RuntimeException e) {
                 model.addAttribute("message", e.getMessage());
@@ -96,4 +92,10 @@ public class AppointmentMemberController {
             return "redirect:/";
     }
 
+
+    private MemberDto findMemberDto(Principal principal) {
+        String email = principal.getName();
+        return memberService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
+    }
 }

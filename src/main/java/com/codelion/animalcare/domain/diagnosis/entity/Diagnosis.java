@@ -33,46 +33,49 @@ import static javax.persistence.FetchType.LAZY;
 @SuperBuilder
 @Setter
 public class Diagnosis extends BaseEntity{
+
     // 동물 보호자
     // 성명
     @Column(nullable = false, length = 30)
     private String memberName;
+
     // 주소
     @Column(nullable = false, length=70)
     private String addressCity;
+
     @Column(nullable = false, length=70)
     private String addressStreet;
 
     //사육 장소
-    //    nullable = true로 잠시 수정
     @Column(nullable = true, length=70)
     private String breedingPlace;
 
     // 동물의 표시
     // 종류
-    //    nullable = true로 잠시 수정
     @Column(nullable = true, length=50)
     private String animalType;
+
     // 품종
-//    nullable = true로 잠시 수정
     @Column(nullable = true, length=50)
     private String animalBreed;
+
     // 동물명
     @Column(nullable = false, length=50)
     private String animalName;
+
     // 성별
     @Column(nullable = false, length=50)
     private int animalGenderId;
+
     // 연령
-    //    nullable = true로 잠시 수정
     @Column(nullable = true, length=50)
     private int animalAge;
+
     // 모색
-    //    nullable = true로 잠시 수정
     @Column(nullable = true, length=50)
     private String animalCoatColor;
+
     // 특징
-    //    nullable = true로 잠시 수정
     @Column(nullable = true, length=200)
     private String animalSpecial;
 
@@ -93,6 +96,7 @@ public class Diagnosis extends BaseEntity{
     // 예후 소견
     @Column(columnDefinition = "TEXT",nullable = false)
     private String opinion;
+
     // 그 밖의 사항
     @Column(columnDefinition = "TEXT",nullable = false)
     private String otherMatter;
@@ -100,13 +104,15 @@ public class Diagnosis extends BaseEntity{
     // 동물병언 명칭
     @Column(nullable = false, length = 20)
     private String hospitalName;
+
     // 동물병원 주소
     @Column(nullable = false, length = 70)
     private String hospitalStreet;
+
     // 수의사 면허
-    //    nullable = true로 잠시 수정
     @Column(nullable = false, length = 50)
     private String doctorLicense;
+
     // 수의사 이름
     @Column(nullable=false)
     private String doctorName;
@@ -115,25 +121,6 @@ public class Diagnosis extends BaseEntity{
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
-//    @ManyToOne(fetch = LAZY)
-//    @JoinColumn(name = "doctor_id"
-//    private Doctor doctor;
-
-//    @ManyToOne(fetch = LAZY)
-//    @JoinColumn(name = "hospital_id")
-//    private Hospital hospital;
-
-
-    // == 연관관계 메서드 == //
-//    public void addDoctor(Doctor doctor) {
-//        this.doctor = doctor;
-//        doctor.getDiagnoses().add(this);
-//    }
-//
-//    public void addHospital(Hospital hospital) {
-//        this.hospital = hospital;
-//        hospital.getDiagnoses().add(this);
-//    }
 
     public void addAppointment(Appointment appointment) {
         this.appointment = appointment;
@@ -143,8 +130,6 @@ public class Diagnosis extends BaseEntity{
     public static Diagnosis createDiagnosis(Member member, Animal animal, Hospital hospital, Doctor doctor, Appointment appointment, FindOneDiagnosis writtenDiagnosisForm) {
 
         Diagnosis diagnosis = new Diagnosis();
-//        diagnosis.addHospital(hospital);
-//        diagnosis.addDoctor(doctor);
         diagnosis.addAppointment(appointment);
 
         diagnosis.setMemberName(member.getName());
@@ -166,7 +151,6 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setDoctorName(doctor.getName());
         diagnosis.setDoctorLicense(doctor.getDoctorLicense());
 
-        appointment.setStatus(AppointmentStatus.COMPLETE);
         diagnosis.setDiagnosisDate(appointment.getDate());
 
 
