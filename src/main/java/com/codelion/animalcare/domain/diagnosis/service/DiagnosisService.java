@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.diagnosis.service;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
+import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
@@ -40,7 +41,7 @@ public class DiagnosisService {
     }
 
     @Transactional
-    public Long diagnosis(LoadMyPageDoctorAppointment.ResponseDto appointmentDto, FindOneDiagnosis writtenDiagnosisForm) {
+    public Long diagnosis(LoadMyPageDoctorAppointment.ResponseDto appointmentDto, FindOneDiagnosis writtenDiagnosisForm, AppointmentStatus status) {
 
         //엔티티 조회
         Member member = appointmentDto.getMember();
@@ -52,8 +53,18 @@ public class DiagnosisService {
         Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentDto.getId());
         Appointment appointment = appointmentOptional.get();
 
+        // ready인 상태에서만 의사가 진단서 작성을 할 수 있다.
+        if (status == AppointmentStatus.COMPLETE) {
+            if (appointment.getStatus() != AppointmentStatus.READY)
+                throw new RuntimeException("의사가 진단서 작성할 수 없습니다.");
+        }
+
+        appointment.updateStatusToComplete(status);
+
         //진단서 생성
         Diagnosis diagnosis = Diagnosis.createDiagnosis(member, animal, hospital, doctor, appointment, writtenDiagnosisForm);
+        // TODO builder로 바꾸기
+
 
         diagnosisRepository.save(diagnosis);
 

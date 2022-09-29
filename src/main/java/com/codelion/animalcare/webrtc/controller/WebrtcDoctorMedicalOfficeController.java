@@ -1,5 +1,6 @@
 package com.codelion.animalcare.webrtc.controller;
 
+import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
@@ -71,7 +72,7 @@ public class WebrtcDoctorMedicalOfficeController {
                                     @Valid FindOneDiagnosis writtenDiagnosisForm) {
 
         LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
-        diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm);
+        diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm, AppointmentStatus.COMPLETE);
 
         return "redirect:/usr/doctor/medicalOffice";
     }

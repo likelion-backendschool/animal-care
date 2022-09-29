@@ -166,7 +166,6 @@ public class Diagnosis extends BaseEntity{
         diagnosis.setDoctorName(doctor.getName());
         diagnosis.setDoctorLicense(doctor.getDoctorLicense());
 
-        appointment.updateStatusToComplete(AppointmentStatus.COMPLETE);
         diagnosis.setDiagnosisDate(appointment.getDate());
 
 
