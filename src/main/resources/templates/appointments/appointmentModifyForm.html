@@ -38,9 +38,15 @@
 
             <div class="form-group">
                 <label>예약날짜</label>
-                <input name="inputDateId" id="input_date" type="datetime-local" th:value="${appointmentModifyDto.date}" class="form-control form-control-sm"/>
 
-<!--                TODO 여러개 버튼으로 예약시간 볼 수 있게하기-->
+                <input name="inputDateId" id="input_date" type="datetime-local" th:value="${appointmentModifyDto.date}" class="form-control form-control-sm" readonly/>
+                <label>날짜선택</label>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="date" class="form-control" id="appointment_date">
+                    </div>
+                    <div class="col-6" id="appointment_time"></div>
+                </div>
 
 
             </div>
@@ -52,5 +58,91 @@
     </div> <!-- /container -->
 
     </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script th:inline="javascript">
+        $('#appointment_date').on('input', async e => {
+            const openingHours = [[${appointmentModifyDto.hospitalOpeningHours}]]
+            const openingHourArr = openingHours.split('/', 7);
+            const doctorId = [[${appointmentModifyDto.doctorId}]]
+            const date = e.target?.value;
+            console.log(doctorId);
+            let appointmentTimes = await $.ajax({
+                url: `/usr/appointment/times`,
+                type: 'GET',
+                data: {
+                    doctorId,
+                    date
+                }
+            })
+            // datetime에서 time만 추출.
+            appointmentTimes = appointmentTimes.map(item => item.substring(11, 16));
+            const hospitalTime = openingHourArr[(new Date(date).getDay() - 1 + 7) % 7]
+            console.log('hospitalTime:', hospitalTime)
+            const [openTime, closeTime] = hospitalTime.split('~', 2);
+            let content = '';
+
+            // 10분 단위 버튼 제작.
+            if (openTime && closeTime) {
+                let [openHour, openMinute] = openTime.split(':', 2).map(item => Number(item));
+                openMinute = Math.ceil(openMinute / 10) * 10;
+                if (openMinute >= 60) {
+                    openHour++;
+                    openMinute = 0;
+                }
+                let [closeHour, closeMinute] = closeTime.split(':', 2).map(item => Number(item));
+                closeMinute = Math.ceil(closeMinute / 10) * 10;
+                if (closeMinute >= 60) {
+                    closeHour++;
+                    closeMinute = 0;
+                }
+                let maxCnt = 24 * 6;
+
+                while ((openHour < closeHour || openMinute < closeMinute)) {
+                    // 무한루프 차단.
+                    if (maxCnt-- <= 0) {
+                        content = '에러 발생.';
+                        break;
+                    }
+
+                    // 시간을 string으로
+                    const time = `${String(openHour).padStart(2, '0')}:${String(openMinute).padStart(2, '0')}`;
+                    console.log(time, appointmentTimes.includes(time), appointmentTimes);
+                    // 이미 예약된 곳은 버튼을 disabled 한다.
+                    if (appointmentTimes.includes(time)) content += `
+                               <div class="col-4 p-1">
+                                   <button type="button"class="btn" disabled>${time}</button>
+                               </div>
+                               `
+                    else content += `
+                               <div class="col-4 p-1">
+                               <button type="button" onclick="updateInputDate('${time}')" class="btn btn-primary">${time}</button>
+                               </div>
+                               `
+                    // 시간 조정.
+                    if (openMinute >= 50) {
+                        openHour++;
+                        openMinute = 0;
+                    } else openMinute += 10;
+                }
+            }
+            console.log(content)
+            console.log(appointmentTimes)
+            console.log(hospitalTime)
+            $(`#appointment_time`)
+                .empty()
+                .addClass("show")
+                .append(`
+                               <div class="row"  style="height: 250px; overflow-y: scroll;">
+                                   ${content === '' ? "정기휴무 입니다." : content}
+                               </div>
+                           `);
+        })
+
+        function updateInputDate(time){
+            const appointmentDate = $('#appointment_date').val();
+            const date = `${appointmentDate}T${time}:00`;
+            $('#input_date').val(date);
+        }
+    </script>
 </div>
 </html>

@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppointmentModifyDto {
-
     private Long appointmentId;
     private String memberName;
     private String animalName;
@@ -21,6 +20,10 @@ public class AppointmentModifyDto {
 
     private LocalDateTime date;
     private AppointmentStatus status;
+
+    // just request
+    private String hospitalOpeningHours;
+    private Long doctorId;
 
 
     public AppointmentModifyDto(Appointment appointment) {
@@ -32,5 +35,8 @@ public class AppointmentModifyDto {
         doctorName = appointment.getDoctor().getName();
         date = appointment.getDate();
         status = appointment.getStatus();
+
+        hospitalOpeningHours = appointment.getHospital().getOpeningHours();
+        doctorId = appointment.getDoctor().getId();
     }
 }
