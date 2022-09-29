@@ -33,7 +33,7 @@
                         <td th:text="${ad.status}"></td>
                         <td>
                             <a th:if="${ad.status.name() == 'READY'}"
-                            href="#" th:href="@{/usr/member/mypage/appointment/info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">MODIFY</a>
+                            href="#" th:href="@{/usr/member/mypage/appointment/info/{appointmentId}/modify (appointmentId=${ad.appointmentId})}" class="btn btn-primary" role="button">TIME MODIFY</a>
                         </td>
                         <td>
                             <a th:if="${ad.status.name() == 'READY'}" href="#" th:href="'javascript:cancel('+${ad.appointmentId}+')'"

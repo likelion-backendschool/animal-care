@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentModifyDto;
 import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
@@ -92,46 +93,28 @@ public class AppointmentController {
 
 
 
-
     /**
-     * 회원마이페이지 예약내역 수정 MODIFY
+     * 회원마이페이지 예약내역 시간수정 MODIFY
      */
     @GetMapping("/info/{appointmentId}/modify")
-    public String updateAppointmentForm(@PathVariable("appointmentId") Long appointmentId,
-                                        Model model,
-                                        Principal principal) {
+    public String updateAppointmentForm(@PathVariable("appointmentId") Long appointmentId, Model model) {
 
-        MemberDto memberDto = findMemberDto(principal);
-        List<AnimalDto> animalDtos = memberDto.getAnimals();
-        List<LoadDoctorMyPageHospitalInfoManage.ResponseDto> hospitalDtos = hospitalService.findHospitals();
-        List<LoadDoctorMyPageInfo.ResponseDto> doctorDtos = doctorService.findDoctors();
-
-        AppointmentDto appointmentDto = findAppointmentDto(appointmentId);
-
-        model.addAttribute("memberDto", memberDto);
-        model.addAttribute("animalDtos", animalDtos);
-        model.addAttribute("hospitalDtos", hospitalDtos);
-        model.addAttribute("doctorDtos", doctorDtos);
-        model.addAttribute("appointmentDto", appointmentDto);
+        AppointmentModifyDto appointmentModifyDto = findAppointmentModifyDto(appointmentId);
+        model.addAttribute("appointmentModifyDto", appointmentModifyDto);
 
         return "appointments/appointmentModifyForm";
     }
 
 
     /**
-     * 회원마이페이지 수정 MODIFY
+     * 회원마이페이지 예약내역 시간수정 MODIFY
      */
     @PostMapping("/info/{appointmentId}/modify")
     public String updateAppointment(
-            Principal principal,
             @PathVariable("appointmentId") Long appointmentId,
-            @RequestParam("animalDtosId") Long animalDtosId,
-            @RequestParam("hospitalDtosId") Long hospitalDtosId,
-            @RequestParam("doctorDtosId") Long doctorDtosId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
-        MemberDto memberDto = findMemberDto(principal);
-        appointmentService.updateAppointment(appointmentId, memberDto, animalDtosId, hospitalDtosId, doctorDtosId, appointmentDate);
+        appointmentService.updateAppointment(appointmentId, appointmentDate);
 
         return "redirect:/usr/member/mypage/appointment/info";
     }
@@ -143,8 +126,9 @@ public class AppointmentController {
                 .orElseThrow(() -> new RuntimeException("member email " + email + " was not found."));
     }
 
-    private AppointmentDto findAppointmentDto(Long appointmentId) {
-        return appointmentService.findById(appointmentId)
+
+    private AppointmentModifyDto findAppointmentModifyDto(Long appointmentId) {
+        return appointmentService.findAppointmentModifyDtoById(appointmentId)
                 .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " was not found."));
     }
 }

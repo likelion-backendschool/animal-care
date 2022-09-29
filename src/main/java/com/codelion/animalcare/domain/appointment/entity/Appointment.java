@@ -97,18 +97,11 @@ public class Appointment extends BaseEntity {
     }
 
     //== 수정 메서드 ==//
-    public static Appointment updateAppointment(Appointment appointment, Member member, Animal animal, Hospital hospital, Doctor doctor, LocalDateTime appointmentDate) {
-
-        appointment.addMember(member);
-
-        appointment.addAnimal(animal);
-        appointment.addHospital(hospital);
-        appointment.addDoctor(doctor);
-
-        appointment.setStatus(AppointmentStatus.READY);
+    public static Appointment updateAppointmentDate(Appointment appointment, LocalDateTime appointmentDate) {
         appointment.setDate(appointmentDate);
         return appointment;
     }
+
 
     //==비즈니스 로직==//
     /**
@@ -118,11 +111,13 @@ public class Appointment extends BaseEntity {
         this.setStatus(AppointmentStatus.CANCEL);
     }
 
+
     /**
      * 예약 상태 변경
      */
     public void updateStatus(AppointmentStatus refuse) {
         this.status = refuse;
     }
+
 
 }

@@ -3,7 +3,7 @@ package com.codelion.animalcare.domain.appointment.service;
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
 import com.codelion.animalcare.domain.appointment.AppointmentStatus;
-import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentModifyDto;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentFormDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
@@ -152,24 +152,16 @@ public class AppointmentService {
 
 
     /**
-     * 예약내역에서 예약수정
+     * 예약내역에서 예약시간수정
      */
     @Transactional
-    public Long updateAppointment(Long appointmentId, MemberDto memberDto, Long animalDtoId, Long hospitalDtosId, Long doctorDtosId, LocalDateTime appointmentDate) {
+    public Long updateAppointment(Long appointmentId, LocalDateTime appointmentDate) {
 
         //예약 엔티티 조회
         Appointment appointment = appointmentRepository.findById(appointmentId).get();
 
-        //엔티티 조회
-        Member member = memberRepository.findById(memberDto.getId()).get();
-        Animal animal = animalRepository.findById(animalDtoId).get();
-        Hospital hospital = hospitalRepository.findById(hospitalDtosId).get();
-        Doctor doctor = doctorRepository.findById(doctorDtosId).get();
-
         //예약 수정
-        appointment = appointment.updateAppointment(appointment, member, animal, hospital, doctor, appointmentDate);
-
-        appointmentRepository.save(appointment);
+        appointment = appointment.updateAppointmentDate(appointment, appointmentDate);
 
         return appointment.getId();
     }
@@ -183,12 +175,11 @@ public class AppointmentService {
         return new LoadMyPageDoctorAppointment.ResponseDto(appointment);
     }
 
-
-    public Optional<AppointmentDto> findById(Long appointmentId) {
+    public Optional<AppointmentModifyDto> findAppointmentModifyDtoById(Long appointmentId) {
         Optional<Appointment> appointmentOptional = appointmentRepository.findById(appointmentId);
-        Optional<AppointmentDto> appointmentDto = appointmentOptional.map(o -> new AppointmentDto(o));
+        Optional<AppointmentModifyDto> appointmentModifyDto = appointmentOptional.map(o -> new AppointmentModifyDto(o));
 
-        return appointmentDto;
+        return appointmentModifyDto;
     }
 
 
@@ -205,6 +196,7 @@ public class AppointmentService {
         System.out.println(utcDateTimeFront + " " + utcDateTimeEnd);
         return appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctorId);
     }
+
 
 }
 
