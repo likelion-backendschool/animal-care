@@ -26,9 +26,6 @@ public class DiagnosisService {
     private final DiagnosisRepository diagnosisRepository;
     private final AppointmentRepository appointmentRepository;
 
-    public List<Diagnosis> findDiagnoses(DiagnosisSearch diagnosisSearch) {
-        return diagnosisRepository.findAll();
-    }
 
     /**
      * 예약서로 진단서 찾기
@@ -56,8 +53,8 @@ public class DiagnosisService {
             if (appointment.getStatus() != AppointmentStatus.READY)
                 throw new RuntimeException("의사가 진단서 작성할 수 없습니다.");
         }
-
         appointment.updateStatusToComplete(status);
+
 
         //진단서 생성
         Diagnosis diagnosis = Diagnosis.createDiagnosis(member, animal, hospital, doctor, appointment, writtenDiagnosisForm);

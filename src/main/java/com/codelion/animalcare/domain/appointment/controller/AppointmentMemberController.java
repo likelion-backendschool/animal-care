@@ -92,6 +92,7 @@ public class AppointmentMemberController {
             return "redirect:/";
     }
 
+
     private MemberDto findMemberDto(Principal principal) {
         String email = principal.getName();
         return memberService.findByEmail(email)

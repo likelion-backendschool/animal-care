@@ -32,9 +32,7 @@ public class AppointmentQueryService {
     public List<AppointmentDto> findAllAppointment(String email) {
 
         Doctor doctor = findDoctor(email);
-
         List<Appointment> appointments = appointmentRepository.findByDoctorId(doctor.getId());
-
         List<AppointmentDto> appointmentDtos = appointments.stream()
                 .map(o -> new AppointmentDto(o))
                 .collect(Collectors.toList());
