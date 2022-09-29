@@ -37,7 +37,7 @@
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{|?page=${paging.number-1}&kw=${kw}|}">
+                   th:href="@{|?page=${paging.number-1}&?type=${type}&kw=${kw}|}">
                     <span>이전</span>
                 </a>
             </li>
@@ -45,10 +45,10 @@
                 th:if="${page >= paging.number-2 and page <= paging.number+2}"
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
-                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}&kw=${kw}|}"></a>
+                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}&type=${type}&kw=${kw}|}"></a>
             </li>
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${paging.number+1}&kw=${kw}|}">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}&type=${type}&kw=${kw}|}">
                     <span>다음</span>
                 </a>
             </li>

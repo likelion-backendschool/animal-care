@@ -106,6 +106,7 @@ public class QuestionController {
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
+        model.addAttribute("type", type);
 
 
         return "doctorqna/doctorQnaList";
