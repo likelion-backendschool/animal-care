@@ -1,11 +1,13 @@
-package com.codelion.animalcare.domain.post.controller;
+package com.codelion.animalcare.domain.community.controller;
 
-import com.codelion.animalcare.domain.post.dto.CommentDto.CommentRequestDto;
-import com.codelion.animalcare.domain.post.dto.CommentDto.ModifyCommentRequestDto;
-import com.codelion.animalcare.domain.post.service.CommentService;
+import com.codelion.animalcare.domain.community.dto.CommentDto.CommentRequestDto;
+import com.codelion.animalcare.domain.community.dto.CommentDto.ModifyCommentRequestDto;
+import com.codelion.animalcare.domain.community.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 /*
     ToDo
@@ -23,8 +25,8 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("/comments/write")
-    public String write(@PathVariable Long postId, CommentRequestDto commentRequestDto) {
-        commentService.saveComment(postId, commentRequestDto);
+    public String write(@PathVariable Long postId, CommentRequestDto commentRequestDto, Principal principal) {
+        commentService.saveComment(postId, commentRequestDto, principal);
 
         return "redirect:/usr/posts/%d".formatted(postId);
     }

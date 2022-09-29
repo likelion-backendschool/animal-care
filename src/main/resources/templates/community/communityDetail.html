@@ -75,17 +75,28 @@
             </div>
 
             <a th:href="@{|/usr/posts/${post.id}/like|}" class="btn btn-primary my-2" th:text="|추천|"></a>
-            <a th:href="@{|/usr/posts/${post.id}/modify|}" class="btn btn-primary my-2" th:text="|게시글 수정|"></a>
+            <a th:href="@{|/usr/posts/${post.id}/modify|}" class="btn btn-primary my-2"
+               sec:authorize="isAuthenticated()"
+               th:if="${post.member != null and #authentication.getPrincipal().getEmail() == post.member.email}"
+               th:text="|게시글 수정|"></a>
             <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/posts/${post.id}/delete|}"
+               sec:authorize="isAuthenticated()"
+               th:if="${post.member != null and #authentication.getPrincipal().getEmail() == post.member.email}"
                class="btn btn-primary my-2" th:text="|게시글 삭제|"></a>
 
             <div class="card" th:each="comment : ${post.comments}">
                 <div class="card-body">
                     <pre class="card-text" th:text="${comment.content}"></pre>
                     <div class="card-text" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
-                    <a th:href="@{|/usr/posts/${post.id}/comments/${comment.id}/modify|}" class="btn btn-sm my-2">수정</a>
+                    <a th:href="@{|/usr/posts/${post.id}/comments/${comment.id}/modify|}" class="btn btn-sm my-2"
+                       sec:authorize="isAuthenticated()"
+                       th:if="${comment.member != null and #authentication.getPrincipal().getEmail() == comment.member.email}"
+                       th:text="|수정|"></a>
                     <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;"
-                    th:href="@{|/usr/posts/${post.id}/comments/${comment.id}/delete|}" class="btn btn-sm my-2">삭제</a>
+                       th:href="@{|/usr/posts/${post.id}/comments/${comment.id}/delete|}" class="btn btn-sm my-2"
+                       sec:authorize="isAuthenticated()"
+                       th:if="${comment.member != null and #authentication.getPrincipal().getEmail() == comment.member.email}"
+                       th:text="|수정|"></a>  
                 </div>
             </div>
 

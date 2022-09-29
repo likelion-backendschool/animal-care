@@ -1,16 +1,16 @@
-package com.codelion.animalcare.domain.post.entity;
+package com.codelion.animalcare.domain.community.entity;
 
 
-import com.codelion.animalcare.domain.user.entity.Member;
+import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -29,7 +29,7 @@ public class Comment extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private UserInfo member;
 
 //    @Builder
 //    private Comment(Long id, LocalDateTime createdDate, String content, int likes, Post post) {
