@@ -271,12 +271,12 @@
             }
             try {
                 const res = await $.ajax({
-                    url: "/usr/mypage/doctor/hospital-info-manage/select",
+                    url: "/usr/doctor/mypage/hospital/select",
                     type: 'POST',
                     data,
                 });
                 console.log(res);
-                window.location.replace('/usr/mypage/doctor/hospital-info-manage')
+                window.location.replace('/usr/doctor/mypage/hospital')
             } catch (err) {
                 console.error(err)
             }
