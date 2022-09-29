@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class Question extends BaseEntity {
 
     @Column(columnDefinition = "Integer default 0", nullable = false)
     private int likeCount;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -58,11 +59,4 @@ public class Question extends BaseEntity {
     }
 
 
-    /*
-    추후에 like entity 따로 만들어서 구성
-    @Column
-    private Integer like;
-
-    Forienkey(animal_breed_id), (member_id) 추후에 구성
-    */
 }
