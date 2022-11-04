@@ -16,6 +16,7 @@ spring:
     properties:
       hibernate:
         format_sql: true # 실행되는 query를 보여줌
+        default_batch_fetch_size: 100 # 컬렉션 조회를 위함
   thymeleaf:
     prefix: classpath:templates/
     suffix: .html
