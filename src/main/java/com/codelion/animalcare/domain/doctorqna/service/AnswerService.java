@@ -15,18 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AnswerService {
 
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
     private final DoctorRepository doctorRepository;
     private final QuestionService questionService;
+    private final AnswerQueryService answerQueryService;
 
     @Transactional
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
-        Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
+        Question question = questionService.findQuestionByQuestionId(questionId);
         answerSaveRequestDto.setQuestion(question);
 
         Doctor doctor = doctorRepository.findByEmail(principal.getName()).orElseThrow(() -> new IllegalArgumentException("의사가 존재하지 않습니다."));
@@ -43,7 +45,7 @@ public class AnswerService {
     public Long update(Long questionId, Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto) {
 
         Question question = questionService.findQuestionByQuestionId(questionId);
-        Answer answer = findAnswerByAnswerId(answerId);
+        Answer answer = answerQueryService.findAnswerByAnswerId(answerId);
 
         answer.update(answerUpdateRequestDto.getContent());
 
@@ -54,30 +56,18 @@ public class AnswerService {
     @Transactional
     public void delete(Long questionId, Long answerId) {
         Question question = questionService.findQuestionByQuestionId(questionId);
-        Answer answer = findAnswerByAnswerId(answerId);
+        Answer answer = answerQueryService.findAnswerByAnswerId(answerId);
 
         answerRepository.delete(answer);
     }
 
     @Transactional(readOnly = true)
     public AnswerResponseDto findById(Long answerId){
-        Answer entity = findAnswerByAnswerId(answerId);
+        Answer entity = answerQueryService.findAnswerByAnswerId(answerId);
 
         return new AnswerResponseDto(entity);
     }
 
 
-    public boolean answerAuthorized(Long answerId, Principal principal) {
-        Answer answer = findAnswerByAnswerId(answerId);
 
-        if(answer.getDoctor().getEmail().equals(principal.getName())) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public Answer findAnswerByAnswerId(Long answerId) {
-        return answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
-    }
 }
