@@ -23,6 +23,7 @@ public class AnswerService {
     private final QuestionRepository questionRepository;
 
     private final DoctorRepository doctorRepository;
+    private final QuestionService questionService;
 
     @Transactional
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
@@ -41,8 +42,8 @@ public class AnswerService {
 
     @Transactional
     public Long update(Long questionId, Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto) {
-        Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
 
+        Question question = questionService.findQuestionByQuestionId(questionId);
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
 
         answer.update(answerUpdateRequestDto.getContent());
@@ -52,8 +53,7 @@ public class AnswerService {
 
     @Transactional
     public void delete(Long questionId, Long answerId) {
-        Question question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
-
+        Question question = questionService.findQuestionByQuestionId(questionId);
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
 
         answerRepository.delete(answer);
