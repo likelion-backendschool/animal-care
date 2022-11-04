@@ -56,6 +56,7 @@ public class AnswerController {
 
         return "doctorqna/doctorQnaAnswerModifyForm";
     }
+
     @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
     public String modify(@PathVariable Long questionId, @PathVariable Long answerId, @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult, Principal principal){
 
@@ -67,7 +68,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
-        answerCommandService.update(questionId, answerId, answerUpdateRequestDto);
+        answerCommandService.update(answerId, answerUpdateRequestDto);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
@@ -79,7 +80,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
-        answerCommandService.delete(questionId, answerId);
+        answerCommandService.delete(answerId);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 }

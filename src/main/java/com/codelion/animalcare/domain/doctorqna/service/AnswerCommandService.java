@@ -39,24 +39,17 @@ public class AnswerCommandService {
     }
 
 
-    public Long update(Long questionId, Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto) {
-
-        Question question = questionQueryService.findQuestionByQuestionId(questionId);
+    public Long update(Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto) {
         Answer answer = answerQueryService.findAnswerByAnswerId(answerId);
-
         answer.update(answerUpdateRequestDto.getContent());
 
         return answerId;
     }
 
 
-    public void delete(Long questionId, Long answerId) {
-        Question question = questionQueryService.findQuestionByQuestionId(questionId);
+    public void delete(Long answerId) {
         Answer answer = answerQueryService.findAnswerByAnswerId(answerId);
-
         answerRepository.delete(answer);
     }
-
-
 
 }
