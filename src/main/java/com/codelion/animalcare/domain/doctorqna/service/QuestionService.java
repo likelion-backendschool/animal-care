@@ -29,31 +29,27 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
-
     private final QuestionLikeRepository questionLikeRepository;
 
     @Transactional
     public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
-
         Member member = memberService.findMemberByEmail(principal.getName());
-
         return questionRepository.save(questionSaveRequestDto.toEntity(member)).getId();
     }
 
     @Transactional
     public Long update(Long id, QuestionUpdateRequestDto questionUpdateRequestDto){
-        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
-
+        Question question = findQuestionByQuestionId(id);
         question.update(questionUpdateRequestDto.getTitle(), questionUpdateRequestDto.getContent());
 
         return id;
     }
+
+
     @Transactional(readOnly = true)
     public QuestionResponseDto findById(Long id){
-        Question entity = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
-
+        Question entity = findQuestionByQuestionId(id);
         return new QuestionResponseDto(entity);
-
     }
 
     @Transactional
@@ -90,21 +86,18 @@ public class QuestionService {
 
     @Transactional
     public void delete(Long id) {
-        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
-
+        Question question = findQuestionByQuestionId(id);
         questionRepository.delete(question);
     }
 
     public boolean questionAuthorized(Long id, Principal principal){
-        Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("작성된 글이 없습니다."));
-
+        Question question = findQuestionByQuestionId(id);
 
         if(question.getMember().getEmail().equals(principal.getName())) {
             return false;
         }
 
         return true;
-
     }
 
     public boolean findLike(Long id, UserInfo user) {
@@ -130,8 +123,9 @@ public class QuestionService {
         return false;
     }
 
-
-
+    public Question findQuestionByQuestionId(Long id) {
+        return questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
+    }
 
 }
 

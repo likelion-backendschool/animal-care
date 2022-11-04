@@ -15,6 +15,8 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import static javax.persistence.FetchType.*;
+
 @Getter
 @NoArgsConstructor
 @Entity
@@ -25,11 +27,11 @@ public class Answer extends BaseEntity {
     private String content;
 
     @Setter
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Question question;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private Doctor doctor;
 
     @Builder

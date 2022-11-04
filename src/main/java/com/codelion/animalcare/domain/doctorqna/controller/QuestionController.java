@@ -81,9 +81,7 @@ public class QuestionController {
             response.addCookie(newCookie);
         }
 
-
         model.addAttribute("question", questionService.findById(id));
-
         //글 추천
         boolean like = false; // 비로그인 유저라면 false
 
@@ -91,7 +89,9 @@ public class QuestionController {
 
         if(user != null) { // 로그인 한 사용자라면
             model.addAttribute("login_id", user.getId());
+
             like = questionService.findLike(id, user); // 로그인 유저의 추천 여부 확인
+
         }
 
         model.addAttribute("like", like);
