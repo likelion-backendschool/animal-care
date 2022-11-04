@@ -4,7 +4,8 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,10 @@ import java.security.Principal;
 @Controller
 public class QuestionController {
 
-    private final QuestionService questionService;
+    private final QuestionCommandService questionCommandService;
+    private final QuestionQueryService questionQueryService;
     private final UserService userService;
+
     //게시글 등록 화면
     @GetMapping("/usr/doctor-qna/write")
     public String saveForm(QuestionSaveRequestDto questionSaveRequestDto){
@@ -46,7 +49,7 @@ public class QuestionController {
             return "doctorqna/doctorQnaQuestionForm";
         }
 
-        questionService.save(questionSaveRequestDto, principal);
+        questionCommandService.save(questionSaveRequestDto, principal);
 
         return "redirect:/usr/doctor-qna";
     }
@@ -67,21 +70,21 @@ public class QuestionController {
 
         if(oldCookie != null) {
             if(!oldCookie.getValue().contains("[" + id.toString() + "]")) {
-                questionService.updateView(id);
+                questionCommandService.updateView(id);
                 oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
                 oldCookie.setPath("/");
                 oldCookie.setMaxAge(60 * 60 * 24);
                 response.addCookie(oldCookie);
             }
         } else {
-            questionService.updateView(id);
+            questionCommandService.updateView(id);
             Cookie newCookie = new Cookie("DoctorQnaView", "[" + id + "]");
             newCookie.setPath("/");
             newCookie.setMaxAge(60 * 60 * 24);
             response.addCookie(newCookie);
         }
 
-        model.addAttribute("question", questionService.findById(id));
+        model.addAttribute("question", questionQueryService.findById(id));
         //글 추천
         boolean like = false; // 비로그인 유저라면 false
 
@@ -90,7 +93,7 @@ public class QuestionController {
         if(user != null) { // 로그인 한 사용자라면
             model.addAttribute("login_id", user.getId());
 
-            like = questionService.findLike(id, user); // 로그인 유저의 추천 여부 확인
+            like = questionQueryService.findLike(id, user); // 로그인 유저의 추천 여부 확인
 
         }
 
@@ -102,7 +105,7 @@ public class QuestionController {
     @GetMapping("/usr/doctor-qna")
     public String findAll(Model model, @RequestParam(value="page", defaultValue="0") int page, String type, String kw) {
 
-        Page<Question> paging = questionService.findAll(page, type, kw);
+        Page<Question> paging = questionQueryService.findAll(page, type, kw);
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
@@ -115,11 +118,11 @@ public class QuestionController {
     @GetMapping("/usr/doctor-qna/{id}/modify")
     public String update(Model model, @PathVariable Long id, QuestionUpdateRequestDto questionUpdateRequestDto, Principal principal){
 
-        if(questionService.questionAuthorized(id, principal)){
+        if(questionQueryService.questionAuthorized(id, principal)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
-        model.addAttribute("question", questionService.findById(id));
+        model.addAttribute("question", questionQueryService.findById(id));
         return "doctorqna/doctorQnaQuestionModifyForm";
     }
     @PostMapping("/usr/doctor-qna/{id}/modify")
@@ -129,11 +132,11 @@ public class QuestionController {
             return "doctorqna/doctorQnaQuestionModifyForm";
         }
 
-        if(questionService.questionAuthorized(id, principal)){
+        if(questionQueryService.questionAuthorized(id, principal)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
-        questionService.update(id, questionUpdateRequestDto);
+        questionCommandService.update(id, questionUpdateRequestDto);
 
         return "redirect:/usr/doctor-qna/%d".formatted(id);
     }
@@ -141,11 +144,11 @@ public class QuestionController {
     @GetMapping("/usr/doctor-qna/{id}/delete")
     public String delete(@PathVariable Long id, Principal principal){
 
-        if(questionService.questionAuthorized(id, principal)){
+        if(questionQueryService.questionAuthorized(id, principal)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
 
-        questionService.delete(id);
+        questionCommandService.delete(id);
         return "redirect:/usr/doctor-qna";
     }
 

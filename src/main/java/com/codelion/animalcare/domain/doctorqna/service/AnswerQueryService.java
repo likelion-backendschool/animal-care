@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class AnswerQueryService {
 
     private final AnswerRepository answerRepository;

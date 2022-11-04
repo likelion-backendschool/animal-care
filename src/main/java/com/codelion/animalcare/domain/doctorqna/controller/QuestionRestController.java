@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.doctorqna.controller;
 
-import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.security.Principal;
 @RestController
 public class QuestionRestController {
 
-    private final QuestionService questionService;
+    private final QuestionCommandService questionCommandService;
     private final UserService userService;
 
     @PostMapping("/usr/doctor-qna/like/{id}")
@@ -24,7 +24,7 @@ public class QuestionRestController {
 
         UserInfo user = userService.getUserInfo(principal.getName()).orElse(null);
 
-        boolean result = questionService.saveLike(id, user);
+        boolean result = questionCommandService.saveLike(id, user);
 
         return result;
     }

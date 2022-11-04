@@ -2,7 +2,6 @@ package com.codelion.animalcare.domain.doctorqna.service;
 
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.dto.response.AnswerResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Answer;
 import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.Question;
@@ -16,18 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class AnswerCommandService {
 
     private final AnswerRepository answerRepository;
-    private final QuestionRepository questionRepository;
     private final DoctorRepository doctorRepository;
-    private final QuestionService questionService;
+    private final QuestionQueryService questionQueryService;
     private final AnswerQueryService answerQueryService;
 
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
-        Question question = questionService.findQuestionByQuestionId(questionId);
+        Question question = questionQueryService.findQuestionByQuestionId(questionId);
         answerSaveRequestDto.setQuestion(question);
 
         Doctor doctor = doctorRepository.findByEmail(principal.getName()).orElseThrow(() -> new IllegalArgumentException("의사가 존재하지 않습니다."));
@@ -43,7 +41,7 @@ public class AnswerCommandService {
 
     public Long update(Long questionId, Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto) {
 
-        Question question = questionService.findQuestionByQuestionId(questionId);
+        Question question = questionQueryService.findQuestionByQuestionId(questionId);
         Answer answer = answerQueryService.findAnswerByAnswerId(answerId);
 
         answer.update(answerUpdateRequestDto.getContent());
@@ -53,7 +51,7 @@ public class AnswerCommandService {
 
 
     public void delete(Long questionId, Long answerId) {
-        Question question = questionService.findQuestionByQuestionId(questionId);
+        Question question = questionQueryService.findQuestionByQuestionId(questionId);
         Answer answer = answerQueryService.findAnswerByAnswerId(answerId);
 
         answerRepository.delete(answer);

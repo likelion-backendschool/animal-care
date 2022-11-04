@@ -5,7 +5,8 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.service.AnswerQueryService;
 import com.codelion.animalcare.domain.doctorqna.service.AnswerCommandService;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -25,14 +26,14 @@ public class AnswerController {
 
     private final AnswerCommandService answerCommandService;
     private final AnswerQueryService answerQueryService;
-    private final QuestionService questionService;
+    private final QuestionQueryService questionQueryService;
 
     //답변 작성
     @PostMapping("/usr/doctor-qna/{questionId}/answers/write")
     public String save(Model model, @PathVariable Long questionId, @Valid AnswerSaveRequestDto answerSaveRequestDto, BindingResult bindingResult, Principal principal){
 
         if(bindingResult.hasErrors()) {
-            model.addAttribute("question", questionService.findById(questionId));
+            model.addAttribute("question", questionQueryService.findById(questionId));
             return "doctorqna/doctorQnaDetail";
         }
 
