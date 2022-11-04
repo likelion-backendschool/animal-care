@@ -17,8 +17,8 @@ import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
-public class AnswerService {
+@Transactional
+public class AnswerCommandService {
 
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
@@ -26,7 +26,6 @@ public class AnswerService {
     private final QuestionService questionService;
     private final AnswerQueryService answerQueryService;
 
-    @Transactional
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
         Question question = questionService.findQuestionByQuestionId(questionId);
         answerSaveRequestDto.setQuestion(question);
@@ -41,7 +40,7 @@ public class AnswerService {
         return answerRepository.save(answerSaveRequestDto.toEntity(doctor)).getId();
     }
 
-    @Transactional
+
     public Long update(Long questionId, Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto) {
 
         Question question = questionService.findQuestionByQuestionId(questionId);
@@ -53,19 +52,11 @@ public class AnswerService {
     }
 
 
-    @Transactional
     public void delete(Long questionId, Long answerId) {
         Question question = questionService.findQuestionByQuestionId(questionId);
         Answer answer = answerQueryService.findAnswerByAnswerId(answerId);
 
         answerRepository.delete(answer);
-    }
-
-    @Transactional(readOnly = true)
-    public AnswerResponseDto findById(Long answerId){
-        Answer entity = answerQueryService.findAnswerByAnswerId(answerId);
-
-        return new AnswerResponseDto(entity);
     }
 
 

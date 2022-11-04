@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.doctorqna.service;
 
+import com.codelion.animalcare.domain.doctorqna.dto.response.AnswerResponseDto;
 import com.codelion.animalcare.domain.doctorqna.repository.Answer;
 import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,11 @@ public class AnswerQueryService {
 
     public Answer findAnswerByAnswerId(Long answerId) {
         return answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
+    }
+
+    public AnswerResponseDto findById(Long answerId){
+        Answer entity = findAnswerByAnswerId(answerId);
+
+        return new AnswerResponseDto(entity);
     }
 }

@@ -4,7 +4,7 @@ package com.codelion.animalcare.domain.doctorqna.controller;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.service.AnswerQueryService;
-import com.codelion.animalcare.domain.doctorqna.service.AnswerService;
+import com.codelion.animalcare.domain.doctorqna.service.AnswerCommandService;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ import java.security.Principal;
 @Controller
 public class AnswerController {
 
-    private final AnswerService answerService;
+    private final AnswerCommandService answerCommandService;
     private final AnswerQueryService answerQueryService;
     private final QuestionService questionService;
 
@@ -40,7 +40,7 @@ public class AnswerController {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
 //        }
 
-        answerService.save(questionId, answerSaveRequestDto, principal);
+        answerCommandService.save(questionId, answerSaveRequestDto, principal);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
@@ -51,7 +51,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
-        model.addAttribute("answer", answerService.findById(answerId));
+        model.addAttribute("answer", answerQueryService.findById(answerId));
 
         return "doctorqna/doctorQnaAnswerModifyForm";
     }
@@ -66,7 +66,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
-        answerService.update(questionId, answerId, answerUpdateRequestDto);
+        answerCommandService.update(questionId, answerId, answerUpdateRequestDto);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
@@ -78,7 +78,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
-        answerService.delete(questionId, answerId);
+        answerCommandService.delete(questionId, answerId);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 }
