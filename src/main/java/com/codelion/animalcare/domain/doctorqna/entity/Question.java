@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctorqna.repository;
+package com.codelion.animalcare.domain.doctorqna.entity;
 
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
@@ -38,7 +38,7 @@ public class Question extends BaseEntity {
     private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<QuestionLike> QuestionLike;
+    private List<com.codelion.animalcare.domain.doctorqna.entity.QuestionLike> QuestionLike;
     @Builder
     public Question(String title, String content, int view, int likeCount, Member member) {
         this.title = title;

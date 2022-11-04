@@ -1,4 +1,4 @@
-package com.codelion.animalcare.domain.doctorqna.repository;
+package com.codelion.animalcare.domain.doctorqna.entity;
 
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.global.common.entity.BaseEntity;
@@ -10,7 +10,6 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

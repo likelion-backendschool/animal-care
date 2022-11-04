@@ -2,10 +2,9 @@ package com.codelion.animalcare.domain.doctorqna.service;
 
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.repository.Answer;
+import com.codelion.animalcare.domain.doctorqna.entity.Answer;
 import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
-import com.codelion.animalcare.domain.doctorqna.repository.Question;
-import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
+import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +18,11 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class AnswerCommandService {
 
+    private final AnswerQueryService answerQueryService;
     private final AnswerRepository answerRepository;
     private final DoctorRepository doctorRepository;
     private final QuestionQueryService questionQueryService;
-    private final AnswerQueryService answerQueryService;
+
 
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
         Question question = questionQueryService.findQuestionByQuestionId(questionId);

@@ -3,7 +3,7 @@ package com.codelion.animalcare.domain.doctorqna.controller;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
 import com.codelion.animalcare.domain.user.entity.UserInfo;

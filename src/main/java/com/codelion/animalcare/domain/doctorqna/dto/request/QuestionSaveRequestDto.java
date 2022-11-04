@@ -1,6 +1,6 @@
 package com.codelion.animalcare.domain.doctorqna.dto.request;
 
-import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.user.entity.Member;
 import lombok.Builder;
 import lombok.Getter;

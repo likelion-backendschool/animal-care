@@ -1,7 +1,7 @@
 package com.codelion.animalcare.domain.doctorqna.service;
 
 import com.codelion.animalcare.domain.doctorqna.dto.response.AnswerResponseDto;
-import com.codelion.animalcare.domain.doctorqna.repository.Answer;
+import com.codelion.animalcare.domain.doctorqna.entity.Answer;
 import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

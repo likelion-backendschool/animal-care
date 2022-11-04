@@ -1,5 +1,6 @@
-package com.codelion.animalcare.domain.doctorqna.repository;
+package com.codelion.animalcare.domain.doctorqna.entity;
 
+import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

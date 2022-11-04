@@ -2,7 +2,7 @@ package com.codelion.animalcare.domain.doctorqna.service;
 
 
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
-import com.codelion.animalcare.domain.doctorqna.repository.Question;
+import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionLikeRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
