@@ -1,7 +1,7 @@
 package com.codelion.animalcare.doctorqna.controller;
 
 import com.codelion.animalcare.domain.doctorqna.controller.QuestionController;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class QuestionControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private QuestionService questionService;
+    private QuestionCommandService questionCommandService;
 
 
     @Test
