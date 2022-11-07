@@ -1,0 +1,85 @@
+<html layout:decorate="~{global/layout}">
+
+<div layout:fragment="content" class="container my-5">
+    <body>
+    <h5 class="my-3 border-bottom pb-2">동물 수정</h5>
+    <form th:action="@{|/usr/member/animal/modify/${id}|}" th:object="${animalDto}" method="post">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>이름</th>
+                <td>
+                    <input class="form-control" type="text" th:name="name"
+                           th:field="*{name}" />
+                </td>
+            </tr>
+            <tr>
+                <th>생년월일</th>
+                <td>
+                    <input class="form-control" type="date" th:name="birthday"
+                           th:field="*{birthday}" />
+                </td>
+            </tr>
+            <tr>
+                <th>등록번호</th>
+                <td>
+                    <input class="form-control" type="text" th:name="registrationNum"
+                           th:field="*{registrationNum}" />
+                </td>
+            </tr>
+            <tr>
+                <th>사육장소</th>
+                <td>
+                    <input class="form-control" type="text" th:name="breedingPlace"
+                           th:field="*{breedingPlace}" />
+                </td>
+            </tr>
+            <tr>
+                <th>종류</th>
+                <td>
+                    <input class="form-control" type="text" th:name="animalType"
+                           th:field="*{animalType}" />
+                </td>
+            </tr>
+            <tr>
+                <th>품종</th>
+                <td>
+                    <input class="form-control" type="text" th:name="animalBreed"
+                           th:field="*{animalBreed}" />
+                </td>
+            </tr>
+            <tr>
+                <th>색상</th>
+                <td>
+                    <input class="form-control" type="text" th:name="animalCoatColor"
+                           th:field="*{animalCoatColor}" />
+                </td>
+            </tr>
+            <tr>
+                <th>특징</th>
+                <td>
+                    <input class="form-control" type="text" th:name="animalSpecial"
+                           th:field="*{animalSpecial}" />
+                </td>
+            </tr>
+            <tr>
+                <th>성별</th>
+                <td>
+                    <label>
+                        여: <input  type="radio" th:field="*{genderId}" th:value="0">
+                    </label>
+                    <label>
+                        남: <input type="radio" th:field="*{genderId}" th:value="1">
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="submit" value="수정하기" class="btn btn-primary my-2">
+    </form>
+    </body>
+</div>
+</html>

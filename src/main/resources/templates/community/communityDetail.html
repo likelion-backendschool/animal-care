@@ -1,0 +1,112 @@
+<html layout:decorate="~{global/layout}" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<div layout:fragment="content" class="container my-5">
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <a th:href="@{/usr/posts}"><h3>Community</h3></a>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="control-label">제목</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <p class="form-control" id="title" th:text="${post.title}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="control-label">작성일</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <p class="form-control" id="createdAt" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <th:block th:if="${post.createdAt} != ${post.updatedAt}">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="control-label">수정일</label>
+                        </div>
+                        <div class="col-sm-10">
+                            <p class="form-control" id="updatedAt" th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm')}"></p>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="control-label">조회수</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <p class="form-control" id="view" th:text="${post.views}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="control-label">추천수</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <p class="form-control" id="likes" th:text="${post.likes}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="control-label">내용</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <pre class="form-control" id="content" th:text="${post.content}" style="height: 250px"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <a th:href="@{|/usr/posts/${post.id}/like|}" class="btn btn-primary my-2" th:text="|추천|"></a>
+            <a th:href="@{|/usr/posts/${post.id}/modify|}" class="btn btn-primary my-2"
+               sec:authorize="isAuthenticated()"
+               th:if="${post.member != null and #authentication.getPrincipal().getEmail() == post.member.email}"
+               th:text="|게시글 수정|"></a>
+            <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" th:href="@{|/usr/posts/${post.id}/delete|}"
+               sec:authorize="isAuthenticated()"
+               th:if="${post.member != null and #authentication.getPrincipal().getEmail() == post.member.email}"
+               class="btn btn-primary my-2" th:text="|게시글 삭제|"></a>
+
+            <div class="card" th:each="comment : ${post.comments}">
+                <div class="card-body">
+                    <pre class="card-text" th:text="${comment.content}"></pre>
+                    <div class="card-text" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
+                    <a th:href="@{|/usr/posts/${post.id}/comments/${comment.id}/modify|}" class="btn btn-sm my-2"
+                       sec:authorize="isAuthenticated()"
+                       th:if="${comment.member != null and #authentication.getPrincipal().getEmail() == comment.member.email}"
+                       th:text="|수정|"></a>
+                    <a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;"
+                       th:href="@{|/usr/posts/${post.id}/comments/${comment.id}/delete|}" class="btn btn-sm my-2"
+                       sec:authorize="isAuthenticated()"
+                       th:if="${comment.member != null and #authentication.getPrincipal().getEmail() == comment.member.email}"
+                       th:text="|수정|"></a>  
+                </div>
+            </div>
+
+            <form th:action="@{|/usr/posts/${post.id}/comments/write|}" th:object="${commentRequestDto}" method="post">
+                <div class="form-group">
+                    <textarea th:field="*{content}" class="form-control" rows="3" placeholder="댓글" required="required"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary my-2">댓글 쓰기</button>
+            </form>
+        </div>
+    </body>
+</div>
+</html>

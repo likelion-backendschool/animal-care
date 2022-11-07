@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+</head>
+<body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    function confirmAction (){
+        location = "/usr/member/animal/list"
+    }
+    function cancelAction (){
+        location = "/"
+    }
+
+    $.confirm({
+        title: '안내',
+        content: '등록된 동물이 없습니다. 등록하시겠습니까?',
+        buttons: {
+            confirm: {
+                text: '등록하기',
+                class: 'btn-primary',
+                action: confirmAction
+            },
+            cancel: {
+                text: '홈으로',
+                action: cancelAction
+            }
+        },
+        useBootstrap: false // Key line
+    })
+
+</script>
+</body>
+</html>

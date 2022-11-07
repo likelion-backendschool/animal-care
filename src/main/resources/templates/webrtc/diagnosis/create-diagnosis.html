@@ -1,0 +1,130 @@
+<html layout:decorate="~{global/no-navbars-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+
+<div layout:fragment="content" class="container my-5">
+    <nav>
+        <a th:href="@{/usr/doctor/medicalOffice}" class="btn">뒤로</a>
+    </nav>
+
+    <body>
+
+<div class="container">
+
+        <form role="form" th:object="${diagnosisForm}" method="post">
+
+            <div class="modal-header">
+                <h3 class="modal-title text-center" id="staticBackdropLabel">진단서 작성</h3>
+            </div>
+
+        <div class="modal-body">
+            <table class="table caption-top table-bordered">
+
+                <tr>
+                    <th rowspan="2" class="col-2">동물보호자</th>
+                    <th class="col-2" >성명</th>
+                    <td colspan="3" th:text="${member?.name}"></td>
+                </tr>
+
+                <tr>
+                    <th>주소</th>
+                    <td colspan="3">
+                        <p th:text="|(도로명)${member?.address?.street}|"></p>
+                        <p th:text="|(지번)${member?.address?.city}|"></p>
+                    </td>
+                <tr>
+                    <th>사육 장소</th>
+                    <td colspan="4" th:text="${animal?.breedingPlace}"></td>
+                </tr>
+                <tr>
+                    <th class="col-2" rowspan="4" >동물의 표시</th>
+
+                    <th class="col-2">종류</th>
+                    <td th:text="${animal?.animalType}" class="form-control"/></td>
+
+                    <th class="col-2">품종</th>
+                    <td th:text="${animal?.animalBreed}" class="form-control"></td>
+
+                </tr>
+                <tr>
+                    <th>동물명</th>
+                    <td th:text="${animal?.name}"></td>
+                    <th>성별</th>
+                    <td th:text="${animal?.genderId == 0 ? '암컷' : '수컷'}"></td>
+                </tr>
+                <tr>
+<!--                    TODO 애완동물 나이 계산해야함-->
+                    <th>생일</th>
+                    <td th:text="|${animal?.birthday}|">X</td>
+<!--                    <td th:text="|${diagnosis?.animalAge}세|">X</td>-->
+                    <th>모색</th>
+                    <td th:text="${animal?.animalCoatColor}">
+
+                </tr>
+                <tr>
+                    <th>특징</th>
+                    <td colspan="4" th:text="${animal?.animalSpecial}"></td>
+                </tr>
+                <tr>
+                    <th>병명</th>
+                    <td colspan="4">
+                        <input type="text" th:field="*{diseaseName}" class="form-control" placeholder="병명을 입력하세요"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>발병 연월일<br/>(임신 연월일)</th>
+                    <td colspan="4">
+                    <input type="date" th:name="diseaseDate" th:field="*{diseaseDate}"  class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <th>진단 연월일</th>
+                    <td colspan="4" th:text="${appointment?.appointmentDate}"></td>
+                </tr>
+
+                <tr>
+                    <th>예후 소견</th>
+                    <td colspan="4">
+                        <input type="text" th:field="*{opinion}" class="form-control" placeholder="예후소견을 입력하세요"/>
+                        </input>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>그 밖의 사항</th>
+                    <td colspan="4">
+                        <input type="text" th:field="*{otherMatter}" class="form-control" placeholder="그 밖의 사항을 입력하세요"/>
+                        </input>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center container">
+                <p>수의사법 제12조 및  도법 시행규칙 제9조에 따라 위와 같이 증명합니다.</p>
+                <p th:text="${#temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일')}"></p>
+            </div>
+
+            <div class="container">
+                <p th:text="|동물병원 명칭 : ${hospital?.name}|"></p>
+                <p th:text="|동물병원 주소 : ${hospital?.address?.street}|"></p>
+                <p th:text="|동물병원 수의사 면허 : ${doctor?.doctorLicense}|"></p>
+            </div>
+            <div class="text-center container">
+                <p th:text="|수의사 : ${doctor?.name} (인)|"> </p>
+                <h2 th:text="${hospital?.name}"></h2>
+            </div>
+
+        </div>
+<!-- modal body end-->
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">작성완료</button>
+            </div>
+
+
+        </form>
+    <br/>
+
+</div> <!-- /container -->
+
+</body>
+
+</div>
+</html>

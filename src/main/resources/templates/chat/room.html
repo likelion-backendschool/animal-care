@@ -1,0 +1,119 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<div class="container my-5">
+    <body>
+        <div class="container">
+            <div id="chatArea" class="col-6" style="height: 350px; overflow: auto"></div>
+            <div class="row">
+                <div class="col">
+                    <textarea id="chatInput" class="form-control" style="resize: none"></textarea>
+                </div>
+                <div class="col" style="padding: 0px">
+                    <button type="button" id="button-send" class="btn btn-primary my-2">전송️</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            // 채팅 입력 내용 전송
+            function send() {
+                let msg = document.getElementById("chatInput");
+                msg.value = msg.value.replaceAll(/\n/g, "<br>");
+
+                console.log(username + ":" + msg.value);
+                stomp.send("/pub/chat/message", {}, JSON.stringify({roomId: roomId, message: msg.value, sender: username}));
+                msg.value = null;
+                msg.focus();
+            }
+
+            let roomId = [[${room.roomId}]];
+            let username = [[${user.name}]];
+
+            console.log(roomId + ", " + username);
+
+            let sockJs = new SockJS("/ws/chat");
+            let stomp = Stomp.over(sockJs);
+
+            // connection이 맺어지면 실행
+            stomp.connect({}, function () {
+                console.log("STOMP Connection")
+
+                // subscribe(path, callback)
+                stomp.subscribe("/sub/chat/room/" + roomId, function (chat) {
+                    let content = JSON.parse(chat.body);
+                    let sender = content.sender;
+                    let message = content.message;
+                    let str = "";
+
+                    if(sender === username) {
+                        str = "<div class='col'>";
+                        str += "<div class='alert alert-light'>";
+                        str += "<b>"  + message + "</b>";
+                        str += "</div></div>";
+                        $("#chatArea").append(str);
+                    }
+                    else {
+                        str = "<div class='col'>";
+                        str += "<div class='alert alert-white'>";
+                        str += "<b>" + sender + " : " + message + "</b>";
+                        str += "</div></div>";
+                        $("#chatArea").append(str);
+                    }
+
+                    $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+                });
+
+                stomp.subscribe("/sub/chat/room/enter/" + roomId, function (chat) {
+                    let content = JSON.parse(chat.body);
+                    let sender = content.sender;
+                    let message = content.message;
+                    let str = "";
+
+                    if(sender === username) {
+                        str = "<div class='col'>";
+                        str += "<div class='alert alert-light'>";
+                        str += "<b>" + message + "</b>";
+                        str += "</div></div>";
+                        $("#chatArea").append(str);
+                    }
+                    else {
+                        str = "<div class='col'>";
+                        str += "<div class='alert alert-white'>";
+                        str += "<b>" + message + "</b>";
+                        str += "</div></div>";
+                        $("#chatArea").append(str);
+                    }
+
+                    $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+                });
+
+                stomp.send("/pub/chat/enter", {}, JSON.stringify({roomId: roomId, sender: username}))
+            });
+
+            $("#chatInput").keypress(function (e) {
+                if (e.keyCode == 13) {
+                    if (!e.shiftKey) {
+                        e.preventDefault();
+                        $("#button-send").click();
+                    }
+                }
+            });
+
+            $("#button-send").on("click", function(e){
+                send();
+            });
+        });
+    </script>
+</div>
+</html>

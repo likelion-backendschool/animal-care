@@ -1,0 +1,398 @@
+<html layout:decorate="~{global/layout}">
+<div class="container my-5" layout:fragment="content">
+    <nav>
+        <a th:href="@{/usr/doctor/mypage/hospital}" class="btn">뒤로</a>
+    </nav>
+    <h2 class="p-4">
+        병원 선택
+    </h2>
+    <div class="row my-3">
+        <div class="col-auto mb-3">
+            <input id="keyword" type="text" class="form-control" placeholder="검색">
+        </div>
+        <nav id="search-button-nav" class="col-auto mb-3">
+            <button class="btn" type="button" id="search-button" onclick="searchButton()">검색</button>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <div id="hospital-list" class="list-group"></div>
+        </div>
+        <div class="col-10">
+            <div id="map" style="width:100%; padding-bottom: 100%;"></div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!--TODO appkey 비밀키 사용  -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aab449394222985513f4f3c83a3da8f4&libraries=services"></script>
+    <script th:inline="javascript">
+        let hasHome = true;
+        const latitude = [[${doctorAddress}]]?.latitude;
+        const longitude = [[${doctorAddress}]]?.longitude;
+        const street = [[${doctorAddress}]]?.street;
+        let myHomePosition = null;
+        // 위도, 경도가 없다면
+        if(!latitude || !longitude){
+            // street는 있다면
+            if(street){
+                const geocoder = new kakao.maps.services.Geocoder();
+                geocoder.addressSearch(street, (result, status) =>{
+                    if(status === kakao.maps.services.Status.OK){
+                        myHomePosition = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    }
+                });
+            } else{
+                hasHome = false;
+            }
+        } // 위도 경도 있다면
+        else{
+            // 의사의 경도 위도 카카오 객체로 인스턴스화
+            myHomePosition = new kakao.maps.LatLng(latitude, longitude);
+        }
+        // 지도 초기 설정
+        const mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: hasHome ? myHomePosition : new kakao.maps.LatLng(37, 127), // 지도의 중심좌표
+                level: hasHome ? 3 : 10 // 지도의 확대 레벨
+            };
+
+        const map = new kakao.maps.Map(mapContainer, mapOption); // 지도
+
+        let keyword = ""
+
+        if(hasHome){
+            const myHomeMarker = new kakao.maps.Marker({
+                map,
+                title: "우리 집",
+                position: myHomePosition ,
+            });
+
+            // TODO 우리 집 색상 바꾸기
+            // 고객집 글자 마커위에 표시
+            myHomeInfowindow = new kakao.maps.InfoWindow({
+                content: "<div style='text-align: center'>우리 집</div>",
+            });
+            myHomeInfowindow.open(map, myHomeMarker);
+        }
+
+        let infowindow; // 현재 표시되는 지역 정보 창
+        let hospitals = []; // 현재 병원들
+        let markers = []; // 현재 표시되는 마커
+        let bounds = map.getBounds(); // 남서 동북 저장.
+        let beforeBounds = map.getBounds(); // 지도 이동 이전 남서 동북 저장
+
+        // 초기 병원 설정
+        updateHospitalsUseAjax();
+
+        //Event
+        // 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
+        kakao.maps.event.addListener(map, 'dragend', dragendCB);
+
+        kakao.maps.event.addListener(map, 'zoom_changed', zoomChangedCB);
+
+        // 검색창
+        async function searchButton(page){
+            keyword = $('#keyword').val()
+            if(keyword.length === 0) {
+                window.alert("문자열을 입력해주세요.");
+                return;
+            }
+            // bounds를 우리나라 전체 위도 경도로 초기화
+            const sw = new kakao.maps.LatLng(33, 124),
+                ne = new kakao.maps.LatLng(43, 132);
+            bounds = new kakao.maps.LatLngBounds(sw, ne);
+
+            try{
+                await updateHospitalsUseAjax(page);
+            } catch (err){
+                console.error(err)
+            }
+
+            // 마크가 표시된 만큼 지도 최적화
+            bounds = new kakao.maps.LatLngBounds()
+            console.log('지도 최적화')
+            if(markers.length === 0) {
+                alert("해당 검색어의 결과는 존재하지 않습니다.")
+                return;
+            }
+            for(const marker of markers){
+                bounds.extend(marker.getPosition())
+                console.log(marker.getPosition())
+            }
+            map.setBounds(bounds)
+            $('#search-button-nav')
+                .empty()
+                .append(`
+                <button class="btn" type="button" id="search-button" onclick="searchButton()">검색</button>
+                <button class="btn" type="button" id="reset-button" onclick="resetButton()">지도로 탐색</button>
+            `);
+        }
+
+        function resetButton(){
+            $('#keyword').val("")
+            keyword = ""
+            $('#search-button-nav')
+                .empty()
+                .append(`
+                <button class="btn" type="button" id="search-button" onclick="searchButton()">검색</button>
+                <button class="btn" type="button" id="reset-button" onclick="resetButton()">지도로 탐색</button>
+            `);
+            updateHospitalsUseAjax();
+        }
+
+        // paging된 값이 controller로 부터 넘어와야 한다.
+        function dragendCB(){
+            console.log('displayMarker');
+
+            // 남서, 동북 정보 저장
+            bounds =  map.getBounds();
+
+            // 현재 정보
+            // 영역정보의 남서쪽,  정보를 얻어옵니다
+            const swLatlng = bounds.getSouthWest();
+            // 영역정보의 북동쪽 정보를 얻어옵니다
+            const neLatlng = bounds.getNorthEast();
+            // 현재 맵의 중앙
+            const centerLatlng= map.getCenter();
+
+            // ajax 전 지도의 남서쪽 정보를 얻어옵니다
+            const swLatlngBefore = beforeBounds.getSouthWest();
+            // ajax 전 지도의 영역정보의 북동쪽 정보를 얻어옵니다
+            const neLatlngBefore = beforeBounds.getNorthEast();
+
+            // 현재 지도의 중앙이 변경 전 지도 안에 있다면 (지도를 조금만 움직였다면)
+            // ajax 실행 X
+            // 일단 보류
+            // if(
+            //     swLatlngBefore.La < centerLatlng.La && centerLatlng.La < neLatlngBefore.La &&
+            //     swLatlngBefore.Ma < centerLatlng.Ma && centerLatlng.Ma < neLatlngBefore.Ma
+            // ) return;
+
+            console.log(swLatlng, neLatlng);
+            console.log(centerLatlng);
+
+            beforeBounds = map.getBounds();
+            // 검색어가 있을 때는 업데이트 하지 않는다.
+            if (keyword.length > 0) return;
+            updateHospitalsUseAjax();
+        }
+
+        function zoomChangedCB(){
+            console.log('map Level : ', map.getLevel());
+            bounds =  map.getBounds();
+            // 검색어가 있을 때는 업데이트 하지 않는다.
+            if (keyword.length > 0) return;
+            updateHospitalsUseAjax();
+        }
+
+        function changeHospitalPage(page) {
+            // 안내 창 삭제
+            if (infowindow)
+                infowindow.close();
+            if(keyword.length === 0)
+                updateHospitalsUseAjax(page);
+            else
+                searchButton(page);
+
+        }
+
+        async function updateHospitalsUseAjax(page = 0){
+            try {
+                // 영역정보의 남서쪽,  정보를 얻어옵니다
+                const swLatlng = bounds.getSouthWest();
+                // 영역정보의 북동쪽 정보를 얻어옵니다
+                const neLatlng = bounds.getNorthEast();
+
+                // url 파라미터
+                const data = {
+                    minLatitude: swLatlng.Ma,
+                    maxLatitude: neLatlng.Ma,
+                    minLongitude: swLatlng.La,
+                    maxLongitude: neLatlng.La,
+                    page,
+                    keyword
+                };
+                console.log(data);
+
+                /**
+                 * hospitals 불러오기
+                 */
+                const res = await $.ajax({
+                    url: "/usr/hospital",
+                    type: 'GET',
+                    data
+                });
+                console.log(res);
+                // Pageable라는 가정으로 content 사용
+                hospitals = res.content;
+                $("#hospital-list")
+                    .empty()
+                    .append(
+                        hospitals.map((hospital, index) =>
+                            `<button type="button" onclick=setCenterByHospital(${index}) class="list-group-item list-group-item-action">
+                                    ${hospital.name}
+                                </button>`
+                        )
+                    )
+                    .append(
+                        res.empty ? '' :
+                            ` <div>
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item">
+                                        <button class="page-link ${res.first ? 'disabled' : 'btn'}"
+                                           th:href="@{|?page=${res.number- 1}|}"
+                                           onclick=changeHospitalPage(${res.number - 1})>
+                                            <span><</span>
+                                        </button>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <button class="page-link">${res.number + 1} / ${res.totalPages}</button>
+                                    </li>
+                                    <li class="page-item">
+                                        <button class="page-link ${res.last ? 'disabled' : 'btn'}"
+                                        onclick=changeHospitalPage(${res.number + 1})>
+                                            <span>></span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>`
+                    );
+                updateMarker();
+            } catch (err){
+                console.error(err);
+            }
+        }
+
+        async function joinHospital(hospitalId){
+            if(!confirm("정말 가입하시겠습니까?")) return;
+
+            const data = {
+                hospitalId
+            }
+            try {
+                const res = await $.ajax({
+                    url: "/usr/doctor/mypage/hospital/select",
+                    type: 'POST',
+                    data,
+                });
+                console.log(res);
+                window.location.replace('/usr/doctor/mypage/hospital')
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
+        function updateMarker() {
+
+            // 배열에 추가된 마커들을 삭제한다.
+            for (const marker of markers) {
+                marker.setMap(null);
+            }
+            markers = [];
+
+
+
+            // hospitals에 있는 장소들을 추가한다.
+            hospitals.forEach((hospital) => {
+                const {address} = hospital;
+                // 위도, 경도 표시
+                // 없다면 주소로 위도 경도 제작.
+                const position = new kakao.maps.LatLng(address.latitude, address.longitude);
+                console.log(position);
+                // 마커를 생성합니다
+                const marker = new kakao.maps.Marker({
+                    map,
+                    title: hospital.name,
+                    position,
+                });
+
+                // markers에 저장.
+                markers.push(marker);
+
+                // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+                const content =
+                    '<div class="card">' +
+                    '    <div class="info">' +
+                    '        <div class="card-header">' +
+                    hospital.name +
+                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                    '        </div>' +
+                    '        <div class="card-body">' +
+                    '            <div class="desc">' +
+                    '                <p>' + address.street + address.detail + '</p>' +
+                    '            </div>' +
+                    '            <div class="container">' +
+                    '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
+                    `              <a class="btn btn-primary" onclick="joinHospital(${hospital.id})">가입하기</a>` +
+                    '           </div>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
+
+                // 마커에 클릭이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    if(infowindow)
+                        infowindow.close();
+                    // 인포윈도우를 생성합니다
+                    console.log('click');
+                    infowindow = new kakao.maps.InfoWindow({
+                        content,
+                        removable: true // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+                    });
+                    // 마커 위에 인포윈도우를 표시합니다
+                    infowindow.open(map, marker);
+                });
+            })
+            console.log('updateMarker markers : ',markers)
+        }
+
+        // 지도 이동
+        function setCenterByHospital(index) {
+            const hospital = hospitals[index];
+            const marker = markers[index];
+            console.log(hospital)
+            const {latitude, longitude, street, detail} = hospital.address;
+
+            // 이동할 위도 경도 위치를 생성합니다
+            const position = new kakao.maps.LatLng(latitude,longitude);
+            // 지도 중심을 부드럽게 이동시킵니다
+            // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+            map.panTo(position);
+
+            // 마크 생성
+
+            // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+            const content =
+                '<div class="card">' +
+                '    <div class="info">' +
+                '        <div class="card-header">' +
+                hospital.name  +
+                '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                '        </div>' +
+                '        <div class="card-body">' +
+                '            <div class="desc">' +
+                '                <div class="ellipsis"></div>' +
+                '                <div class="jibun ellipsis">' + street + ' '+ detail +'</div>' +
+                '            </div>' +
+                '            <div class="container">' +
+                '               <a class="btn btn-primary" href="https://www.kakaocorp.com/main"  target="_blank" class="link">홈페이지</a>' +
+                `              <a class="btn btn-primary" onclick="joinHospital(${hospital.id})">가입하기</a>` +
+                '           </div>' +
+                '        </div>' +
+                '    </div>' +
+                '</div>';
+
+            if(infowindow)
+                infowindow.close();
+
+            infowindow = new kakao.maps.InfoWindow({
+                content : content,
+                removable : true // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+            });
+            // 마커 위에 인포윈도우를 표시합니다
+            infowindow.open(map, marker);
+        }
+    </script>
+</div>
+</html>

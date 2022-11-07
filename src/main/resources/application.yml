@@ -1,9 +1,49 @@
+server:
+  port: 80
 spring:
+  main.allow-bean-definition-overriding: true
   datasource:
-#    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/community?serverTimezone=UTC
-#    username: root
-#    password: rlaclgns5628
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/animal_care?serverTimezone=UTC
+    username: animalcare
+    password: animalcare123
     driver: com.mysql.cj.jdbc.Driver
   sql:
     init:
       encoding: UTF-8
+  jpa:
+    hibernate:
+      ddl-auto: update # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
+    properties:
+      hibernate:
+        format_sql: true # 실행되는 query를 보여줌
+        default_batch_fetch_size: 100 # 컬렉션 조회를 위함
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
+        registration:
+          kakao:
+            client-id: a064e9d95779f6f8e062d16d93ca641e
+            client-secret: XUQ6x4oTbUzFxbL4mmSym8kI0Rvb6s8M
+            client-authentication-method: POST
+            authorizationGrantType: authorization_code
+            redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            scope: profile_nickname, profile_image, account_email
+            client-name: Kakao
+logging.level:
+  org.hibernate.SQL: debug
+  
+

@@ -1,0 +1,175 @@
+<html layout:decorate="~{global/layout}">
+<div class="container my-5" layout:fragment="content">
+    <nav>
+        <a th:href="@{/usr/doctor/mypage}" class="btn">뒤로</a>
+    </nav>
+    <h2 class="p-4">
+        병원 관리
+    </h2>
+    <nav>
+        <a class="btn btn-primary" th:href="@{/usr/doctor/mypage/hospital/modify}"
+           th:text="수정"></a>
+    </nav>
+    <h4>병원 정보</h4>
+    <nav>
+
+    </nav>
+    <div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th class="col-4">이름</th>
+                <td th:text="${hospital.name}"></td>
+            </tr>
+            <tr>
+                <th>전화 번호</th>
+                <td th:text="${hospital.phoneNum}"></td>
+            </tr>
+            <tr>
+                <th>주소</th>
+                <td>
+                    <p th:text="${'(우편번호) ' + hospital.zipcode}"></p>
+                    <p th:text="${'(도로명 주소) ' +hospital.street + ' ' + hospital.detail}"></p>
+                    <input type="hidden" name="street" id="street" th:value="${hospital.street}">
+                    <p th:if="${!hospital.city.isBlank()}" th:text="${'(지번 주소) ' +hospital.city + ' ' + hospital.detail}"></p>
+                    <div class="mb-3" id="map" style="width:100%;height:350px;"></div>
+                </td>
+            </tr>
+            <tr>
+                <th>영업 시간</th>
+                <th>
+                    <table class="table">
+                        <tr>
+                            <th>월요일</th>
+                            <td th:if="${OpeningHours.getMonEnd()}" th:text="|${OpeningHours.monStart} ~ ${OpeningHours.monEnd}|"></td>
+                            <td th:unless="${OpeningHours.getMonEnd()}">정기 휴무</td>
+                        </tr>
+                        <tr>
+                            <th>화요일</th>
+                            <td th:if="${OpeningHours.getTueEnd()}" th:text="|${OpeningHours.getTueStart()} ~ ${OpeningHours.getTueEnd()}|"></td>
+                            <td th:unless="${OpeningHours.getTueEnd()}">정기 휴무</td>
+                        </tr>
+                        <tr>
+                            <th>수요일</th>
+                            <td th:if="${OpeningHours.getWedEnd()}" th:text="|${OpeningHours.getWedStart()} ~ ${OpeningHours.getWedEnd()}|"></td>
+                            <td th:unless="${OpeningHours.getWedEnd()}">정기 휴무</td>
+                        </tr>
+                        <tr>
+                            <th>목요일</th>
+                            <td th:if="${OpeningHours.getThuEnd()}" th:text="|${OpeningHours.getThuStart()} ~ ${OpeningHours.getThuEnd()}|"></td>
+                            <td th:unless="${OpeningHours.getThuEnd()}">정기 휴무</td>
+                        </tr>
+                        <tr>
+                            <th>금요일</th>
+                            <td th:if="${OpeningHours.getFriEnd()}" th:text="|${OpeningHours.getFriStart()} ~ ${OpeningHours.getFriEnd()}|"></td>
+                            <td th:unless="${OpeningHours.getFriEnd()}">정기 휴무</td>
+                        </tr>
+                        <tr>
+                            <th>토요일</th>
+                            <td th:if="${OpeningHours.getSatEnd()}" th:text="|${OpeningHours.getSatStart()} ~ ${OpeningHours.getSatEnd()}|"></td>
+                            <td th:unless="${OpeningHours.getSatEnd()}">정기 휴무</td>
+                        </tr>
+                        <tr>
+                            <th>일요일</th>
+                            <td th:if="${OpeningHours.getSunEnd()}" th:text="|${OpeningHours.getSunStart()} ~ ${OpeningHours.getSunEnd()}|"></td>
+                            <td th:unless="${OpeningHours.getSunEnd()}">정기 휴무</td>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            <tr>
+                <th>등록 날짜</th>
+                <td th:text="${#temporals.format(hospital.getCreatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            <tr>
+                <th>수정 날짜</th>
+                <td th:text="${#temporals.format(hospital.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <h4>의사 정보</h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-md-6 col-sm-12 " th:each="doctor, i : ${hospital.getDoctorList()}">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" th:text="${doctor.name}"></h4>
+                            <h6 class="card-subtitle mb-2 text-muted" th:text="${doctor.email}"></h6>
+                            <div>
+                                <label class="col-3">생년월일</label>
+                                <span th:text="${doctor.getBirthday()}"></span>
+                            </div>
+                            <div>
+                                <label class="col-3">전공</label>
+                                <span th:text="${doctor.getMajor()}"></span>
+                            </div>
+                            <div>
+                                <label class="col-3">핸드폰 번호</label>
+                                <span th:text="${doctor.getPhoneNum()}"></span>
+                            </div>
+                            <div>
+                                <label class="col-3">성별</label>
+                                <span th:text="${doctor.getGenderId() == 0 ? '여자' : '남자'}"></span>
+                            </div>
+                            <div>
+                                <label class="col-3">자기 소개</label>
+                                <span th:text="${doctor.getIntroduce()}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--TODO appkey 비밀키 사용  -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aab449394222985513f4f3c83a3da8f4&libraries=services"></script>
+
+        <script>
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+
+            // 지도를 생성합니다
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            var ps = new kakao.maps.services.Places();
+
+            // 주소-좌표 변환 객체를 생성합니다
+            var geocoder = new kakao.maps.services.Geocoder();
+            // 주소로 좌표를 검색합니다
+            updatePlace();
+
+            function updatePlace(){
+                const street = document.getElementById('street').value;
+                console.log('updatePlace');
+                console.log(street);
+                geocoder.addressSearch(street, function(result, status) {
+
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === kakao.maps.services.Status.OK) {
+
+                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                        // 결과값으로 받은 위치를 마커로 표시합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+
+                        // 인포윈도우로 장소에 대한 설명을 표시합니다
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: '<div style="width:150px;text-align:center;padding:6px 0;">병원</div>'
+                        });
+                        infowindow.open(map, marker);
+
+                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                        map.setCenter(coords);
+                    }
+                });
+            }
+        </script>
+    </div>
+</div>
+</html>
