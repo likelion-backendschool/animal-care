@@ -6,9 +6,7 @@
 
 ## ✨기술 스택
 
-| SpringBoot | MariaDB | Docker | webRTC |
-|:----------:|:-------:|:------:|:------:|
-|    svg     |   svg   |    svg    |   svg     |
+![image](https://user-images.githubusercontent.com/28800270/200237746-6dca18c9-2bd2-4d42-9c13-8c11bd9eac1d.png)
 
 ## ✨GIT 규칙
 
