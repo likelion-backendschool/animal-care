@@ -8,6 +8,13 @@
 
 ![image](https://user-images.githubusercontent.com/28800270/200237746-6dca18c9-2bd2-4d42-9c13-8c11bd9eac1d.png)
 
+## ✨아키텍처 & CI/CD 파이프라인
+
+![image](https://user-images.githubusercontent.com/28800270/200238591-9a2416e0-e7f9-4fdf-abc2-59eb851dcded.png)
+
+
+## ✨DB테이블
+
 ## ✨GIT 규칙
 
 ### Branch 전략
@@ -18,7 +25,7 @@
 - release/1.0 : dev브랜치에서 생성한 배포를 위한 임시 작업 브랜치
 - feature/#{이슈번호}-{기능} : 기능 개발하는 브랜치 #뒤에 이슈번호를 명시하고 무슨 기능을 개발하는가 작성
 - refactor/#{이슈번호}-{기능} : 코드 리펙토링을 하는 브랜치 #뒤에 이슈번호를 명시하고 무슨 기능을 수정하는가 작성
-- hotfix : main에서 분기한 브랜치, 긴급하게 수정을 해야 할 필요가 있을 경우 사용
+- hotfix : 긴급하게 수정 필요시 사용
 
 2. PR 규칙 
 - PR명 : 브랜치 명 + 기능
