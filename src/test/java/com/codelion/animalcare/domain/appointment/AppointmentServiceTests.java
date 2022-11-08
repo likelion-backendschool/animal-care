@@ -2,6 +2,8 @@ package com.codelion.animalcare.domain.appointment;
 
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
+import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
+import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +21,12 @@ public class AppointmentServiceTests {
 
     @Autowired
     EntityManager em;
+
+    @Autowired
+    private AppointmentQueryService appointmentQueryService;
+
+    @Autowired
+    private AppointmentCommandService appointmentCommandService;
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -44,7 +52,7 @@ public class AppointmentServiceTests {
         Appointment appointment1 = appointmentRepository.findById(1L).get();
 
         //when
-        appointment1.updateStatus(AppointmentStatus.COMPLETE);
+        appointmentCommandService.updateAppointmentStatus(appointment1.getId(), AppointmentStatus.COMPLETE);
 
         //then
         assertThat(appointment1.getStatus()).isEqualTo(AppointmentStatus.COMPLETE);
@@ -58,7 +66,7 @@ public class AppointmentServiceTests {
         Appointment appointment1 = appointmentRepository.findById(1L).get();
 
         //when
-        appointment1.updateStatus(AppointmentStatus.CANCEL);
+        appointmentCommandService.updateAppointmentStatus(appointment1.getId(), AppointmentStatus.CANCEL);
 
         //then
         assertThat(appointment1.getStatus()).isEqualTo(AppointmentStatus.CANCEL);
