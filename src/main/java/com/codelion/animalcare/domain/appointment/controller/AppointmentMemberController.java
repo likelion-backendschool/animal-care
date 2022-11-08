@@ -27,8 +27,6 @@ import java.util.List;
 @RequestMapping("/usr/member/appointment")
 public class AppointmentMemberController {
     private final MemberService memberService;
-
-//    private final AnimalService animalService;
     private final DoctorService doctorService;
     private final HospitalService hospitalService;
     private final AppointmentCommandService appointmentCommandService;
@@ -53,7 +51,6 @@ public class AppointmentMemberController {
 
             LoadDoctorMyPageHospitalInfoManage.ResponseDto hospitalDto = hospitalService.findById(appointmentFormDto.getHospitalId());
 
-//        List<AnimalDto> animalDtoList = animalService.findByMember(memberDto.getEmail());
             List<AnimalDto> animalDtoList = memberDto.getAnimals();
 
             model.addAttribute("memberDto", memberDto);
