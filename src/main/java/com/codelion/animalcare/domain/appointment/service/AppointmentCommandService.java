@@ -110,7 +110,7 @@ public class AppointmentCommandService {
         }
 
         //에약 취소
-        appointment.updateStatusToCancel(status);
+        appointment.updateStatus(status);
     }
 
     /**
@@ -128,8 +128,8 @@ public class AppointmentCommandService {
                 throw new RuntimeException("의사가 거절할 수 없습니다.");
         }
 
-        // 예약 변경.
-        appointment.updateStatusToRefuse(status);
+        // 예약 변경
+        appointment.updateStatus(status);
     }
 
 

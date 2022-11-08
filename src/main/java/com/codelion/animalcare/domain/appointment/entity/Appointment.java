@@ -36,9 +36,13 @@ public class Appointment extends BaseEntity {
     private String content;
 
 
+    /**
+     * 예약상태 [READY, COMPLETE, CANCEL, REFUSE]
+     * 진료 전, 진료 완료, 고객이 예약진료취소의사가 예약진료 취소
+     */
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private AppointmentStatus status; // 예약상태 [COMPLETE, CANCEL] 완료, 취소
+    private AppointmentStatus status;
 
 
     @ManyToOne(fetch = LAZY)
@@ -67,27 +71,10 @@ public class Appointment extends BaseEntity {
 
 
     /**
-     * 진료 상태 변경: 수의사가 취소
+     * 진료 상태 변경: 수의사가 취소, 멤버가 취소, 수의사가 진단서 작성시 진료상태 완료
      */
-    public void updateStatusToRefuse(AppointmentStatus refuse) {
-        this.status = refuse;
+    public void updateStatus(AppointmentStatus status) {
+        this.status = status;
     }
-
-
-    /**
-     * 진료 상태 변경: 멤버가 취소
-     */
-    public void updateStatusToCancel(AppointmentStatus cancel) {
-        this.status = cancel;
-    }
-
-
-    /**
-     * 진료 상태 변경: 수의사가 진단서 작성시 진료상태 완료
-     */
-    public void updateStatusToComplete(AppointmentStatus complete) {
-        this.status = complete;
-    }
-
 
 }
