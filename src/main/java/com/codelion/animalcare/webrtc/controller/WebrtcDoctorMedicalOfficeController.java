@@ -4,11 +4,9 @@ import com.codelion.animalcare.domain.appointment.AppointmentStatus;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
-import com.codelion.animalcare.domain.appointment.service.AppointmentService;
+import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
-import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.user.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +22,7 @@ import java.util.List;
 public class WebrtcDoctorMedicalOfficeController {
 
     private final AppointmentQueryService appointmentQueryService;
-    private final AppointmentService appointmentService;
+    private final AppointmentCommandService appointmentCommandService;
     private final DiagnosisService diagnosisService;
 
     /**
@@ -50,7 +48,7 @@ public class WebrtcDoctorMedicalOfficeController {
     @GetMapping("/{appointmentId}")
     public String createDiagnosisNewForm(@PathVariable("appointmentId") long appointmentId, Model model) {
 
-        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
+        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentQueryService.findById(appointmentId);
 
         FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointmentDto.getId());
 
@@ -71,7 +69,7 @@ public class WebrtcDoctorMedicalOfficeController {
     public String writeNewDiagnosis(@PathVariable("appointmentId") long appointmentId,
                                     @Valid FindOneDiagnosis writtenDiagnosisForm) {
 
-        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentService.findById(appointmentId);
+        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentQueryService.findById(appointmentId);
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm, AppointmentStatus.COMPLETE);
 
         return "redirect:/usr/doctor/medicalOffice";

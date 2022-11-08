@@ -5,7 +5,7 @@ import com.codelion.animalcare.domain.appointment.dto.AppointmentModifyDto;
 
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
-import com.codelion.animalcare.domain.appointment.service.AppointmentService;
+import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ import java.util.List;
 public class MemberMyPageAppointmentController {
 
     private final AppointmentQueryService appointmentQueryService;
-    private final AppointmentService appointmentService;
+    private final AppointmentCommandService appointmentCommandService;
 
 
     /**
@@ -47,7 +47,7 @@ public class MemberMyPageAppointmentController {
     @PostMapping("/info/{appointmentId}/cancel")
     public String cancelAppointment(@PathVariable("appointmentId") Long appointmentId) {
 
-        appointmentService.cancelAppointment(appointmentId, AppointmentStatus.CANCEL);
+        appointmentCommandService.cancelAppointment(appointmentId, AppointmentStatus.CANCEL);
         return "redirect:/usr/member/mypage/appointment/info";
     }
 
@@ -75,12 +75,12 @@ public class MemberMyPageAppointmentController {
             @PathVariable("appointmentId") Long appointmentId,
             @RequestParam("inputDateId") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime appointmentDate) {
 
-        appointmentService.updateAppointment(appointmentId, appointmentDate);
+        appointmentCommandService.updateAppointment(appointmentId, appointmentDate);
         return "redirect:/usr/member/mypage/appointment/info";
     }
 
     private AppointmentModifyDto findAppointmentModifyDto(Long appointmentId) {
-        return appointmentService.findAppointmentModifyDtoById(appointmentId)
+        return appointmentQueryService.findAppointmentModifyDtoById(appointmentId)
                 .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " was not found."));
     }
 

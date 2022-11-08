@@ -5,14 +5,13 @@ import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointmen
 
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 
-import com.codelion.animalcare.domain.appointment.service.AppointmentService;
+import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
 import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
 import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
@@ -22,14 +21,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
-import java.util.List;
-
 @Controller
 @RequestMapping("usr/doctor/mypage/appointments")
 @RequiredArgsConstructor
 public class AppointmentMyPageDoctorController {
-    private final AppointmentService appointmentService;
+    private final AppointmentCommandService appointmentCommandService;
     private final AppointmentQueryService appointmentQueryService;
     private final DiagnosisService diagnosisService;
 
@@ -57,7 +53,7 @@ public class AppointmentMyPageDoctorController {
     public String refuseAppointment(
             @PathVariable long appointmentId
     ){
-        appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.REFUSE);
+        appointmentCommandService.updateAppointmentStatus(appointmentId, AppointmentStatus.REFUSE);
 
         return String.format("redirect:/usr/doctor/mypage/appointments/%d",appointmentId);
     }
@@ -71,7 +67,7 @@ public class AppointmentMyPageDoctorController {
             @PathVariable long appointmentId
     ){
         LoadMyPageDoctorAppointment.ResponseDto appointment
-                = appointmentService.findById(appointmentId);
+                = appointmentQueryService.findById(appointmentId);
 
         FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
 

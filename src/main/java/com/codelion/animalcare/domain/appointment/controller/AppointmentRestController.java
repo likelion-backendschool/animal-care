@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.appointment.controller;
 
-import com.codelion.animalcare.domain.appointment.service.AppointmentService;
+import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
+import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("usr/appointment")
 public class AppointmentRestController {
-    private final AppointmentService appointmentService;
+    private final AppointmentQueryService appointmentQueryService;
 
     @GetMapping("times")
     public ResponseEntity<List<LocalDateTime>>  findDates(
@@ -24,6 +25,6 @@ public class AppointmentRestController {
             @RequestParam("doctorId") Long doctorId
     ){
         return ResponseEntity
-                .ok(appointmentService.findDateTimesByDateAndDoctor(date, doctorId));
+                .ok(appointmentQueryService.findDateTimesByDateAndDoctor(date, doctorId));
     }
 }

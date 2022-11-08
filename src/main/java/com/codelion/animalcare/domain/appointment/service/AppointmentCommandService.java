@@ -28,9 +28,9 @@ import java.util.Optional;
 
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
-public class AppointmentService {
+public class AppointmentCommandService {
 
     private final AppointmentRepository appointmentRepository;
     private final MemberRepository memberRepository;
@@ -42,7 +42,6 @@ public class AppointmentService {
     /**
      * 예약(메세지 추가)
      */
-    @Transactional
     public Long appointment(MemberDto memberDto, AppointmentFormDto appointmentFormDto) {
         //엔티티 조회
         Member member = memberRepository.findById(memberDto.getId()).get();
@@ -100,7 +99,6 @@ public class AppointmentService {
     /**
      * 예약내역에서 예약취소
      */
-    @Transactional
     public void cancelAppointment(Long appointmentId, AppointmentStatus status) {
         //예약 엔티티 조회
         Appointment appointment = appointmentRepository.findById(appointmentId).get();
@@ -120,7 +118,6 @@ public class AppointmentService {
      * @param appointmentId 예약서id
      * @param status 상태
      */
-    @Transactional
     public void updateAppointmentStatus(Long appointmentId, AppointmentStatus status) {
         // 예약 엔티티 조회
         Appointment appointment = appointmentRepository.getReferenceById(appointmentId);
@@ -140,7 +137,6 @@ public class AppointmentService {
     /**
      * 예약내역에서 예약시간수정
      */
-    @Transactional
     public void updateAppointment(Long appointmentId, LocalDateTime appointmentDate) {
 
         //예약 엔티티 조회
@@ -151,36 +147,9 @@ public class AppointmentService {
     }
 
 
-    public LoadMyPageDoctorAppointment.ResponseDto findById(long appointmentId) {
-        Appointment appointment = appointmentRepository
-                .findByAppointmentId(appointmentId)
-                        .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " is not found."));
-
-        return new LoadMyPageDoctorAppointment.ResponseDto(appointment);
-    }
-
-    public Optional<AppointmentModifyDto> findAppointmentModifyDtoById(Long appointmentId) {
-
-        Optional<Appointment> appointmentOptional = appointmentRepository.findByAppointmentId(appointmentId);
-        Optional<AppointmentModifyDto> appointmentModifyDto = appointmentOptional.map(o -> new AppointmentModifyDto(o));
-
-        return appointmentModifyDto;
-    }
 
 
-    /**
-     * 의사가 해당 날짜에 예약 되어있는 시간을 출력함.
-     * @param date
-     * @param doctorId
-     * @return
-     */
-    public List<LocalDateTime> findDateTimesByDateAndDoctor(LocalDate date, Long doctorId){
-        // UTC로 검색하기 위해 Java.sql.Date 대신 LocalDate 사용
-        LocalDateTime utcDateTimeFront = date.atStartOfDay();
-        LocalDateTime utcDateTimeEnd = date.atStartOfDay().plusDays(1);
-        System.out.println(utcDateTimeFront + " " + utcDateTimeEnd);
-        return appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctorId);
-    }
+
 
 
 }

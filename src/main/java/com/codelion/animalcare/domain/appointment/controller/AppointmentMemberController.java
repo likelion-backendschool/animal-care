@@ -1,9 +1,8 @@
 package com.codelion.animalcare.domain.appointment.controller;
 
 import com.codelion.animalcare.domain.animal.dto.AnimalDto;
-import com.codelion.animalcare.domain.animal.service.AnimalService;
 import com.codelion.animalcare.domain.appointment.dto.AppointmentFormDto;
-import com.codelion.animalcare.domain.appointment.service.AppointmentService;
+import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
 import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
 import com.codelion.animalcare.domain.hospital.dto.LoadDoctorMyPageHospitalInfoManage;
 import com.codelion.animalcare.domain.hospital.service.HospitalService;
@@ -32,7 +31,7 @@ public class AppointmentMemberController {
 //    private final AnimalService animalService;
     private final DoctorService doctorService;
     private final HospitalService hospitalService;
-    private final AppointmentService appointmentService;
+    private final AppointmentCommandService appointmentCommandService;
 
     @GetMapping()
     public String appointment(Model model, Principal principal){
@@ -83,7 +82,7 @@ public class AppointmentMemberController {
             MemberDto memberDto = findMemberDto(principal);
 
         try{
-                appointmentService.appointment(memberDto, appointmentFormDto);
+                appointmentCommandService.appointment(memberDto, appointmentFormDto);
             } catch(RuntimeException e) {
                 model.addAttribute("message", e.getMessage());
                 return "error/error-with-message";
