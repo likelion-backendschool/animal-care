@@ -83,7 +83,7 @@ public class AppointmentCommandServiceTests {
     /* 올바른 date인지 확인.*/
     // 1. 10분 단위로 예약 가능.
     @Test
-    void appointmentCheckRightDate() throws Exception {
+    void appointmentCheckRightDateTest() throws Exception {
 
         //given
         AppointmentFormDto appointmentFormDto = new AppointmentFormDto();
@@ -100,7 +100,7 @@ public class AppointmentCommandServiceTests {
 
     // 2. 병원 시간 안에 있는지, 예약 날짜의 병원 운영시간
     @Test
-    void appointmentCheckHospitalTime() throws Exception {
+    void appointmentCheckHospitalTimeTest() throws Exception {
 
         //given
         AppointmentFormDto appointmentFormDto = new AppointmentFormDto();
@@ -126,7 +126,7 @@ public class AppointmentCommandServiceTests {
 
     // 3. 병원에 예약한 사람이 있을 때
     @Test
-    void appointmentWhenAlreadyAppointment() throws Exception {
+    void appointmentWhenAlreadyAppointmentTest() throws Exception {
 
         //given
         Doctor doctor = doctorRepository.findById(6L).get();
