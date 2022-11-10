@@ -4,19 +4,18 @@ import com.codelion.animalcare.domain.appointment.dto.AppointmentFormDto;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
 import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
-import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
+import com.codelion.animalcare.domain.user.entity.Doctor;
+import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -31,9 +30,11 @@ public class AppointmentCommandServiceTests {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-
     @Autowired
     private HospitalRepository hospitalRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
 
 
     @Test
@@ -122,5 +123,24 @@ public class AppointmentCommandServiceTests {
     }
 
 
+    // 3. 병원에 예약한 사람이 있을 때
+    @Test
+    void appointmentWhenAlreadyAppointment() throws Exception {
+
+        //given
+        Doctor doctor = doctorRepository.findById(6L).get();
+        AppointmentFormDto appointmentFormDto = new AppointmentFormDto();
+        appointmentFormDto.setDate("2022-10-03T10:30:00");
+        String inputDate = appointmentFormDto.getDate();
+        LocalDateTime date = LocalDateTime.parse(inputDate);
+
+
+        //when
+        Optional<Appointment> appointment = appointmentRepository.findOneByDateAndDoctorId(date, doctor.getId());
+
+
+        //then
+        assertThat(appointment.isPresent()).isTrue();
+    }
 
 }
