@@ -1,5 +1,6 @@
 package com.codelion.animalcare.domain.appointment;
 
+import com.codelion.animalcare.domain.appointment.dto.AppointmentFormDto;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
 import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
@@ -11,6 +12,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -65,6 +68,23 @@ public class AppointmentCommandServiceTests {
         //then
         assertThat(appointment1.getStatus()).isEqualTo(AppointmentStatus.CANCEL);
     }
+
+
+    @Test
+    void appointmentCheckRightDate() throws Exception {
+
+        //given
+        AppointmentFormDto appointmentFormDto = new AppointmentFormDto();
+
+        //when
+        appointmentFormDto.setDate("2022-11-10T14:00:00");
+        LocalDateTime date = LocalDateTime.parse(appointmentFormDto.getDate());
+
+
+        //then
+        assertThat(date.getMinute() % 10).isEqualTo(0);
+    }
+
 
 
 }
