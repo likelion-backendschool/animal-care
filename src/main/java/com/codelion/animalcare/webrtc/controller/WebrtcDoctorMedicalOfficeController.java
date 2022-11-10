@@ -48,7 +48,7 @@ public class WebrtcDoctorMedicalOfficeController {
     @GetMapping("/{appointmentId}")
     public String createDiagnosisNewForm(@PathVariable("appointmentId") long appointmentId, Model model) {
 
-        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentQueryService.findById(appointmentId);
+        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentQueryService.findAppointmentById(appointmentId);
 
         FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointmentDto.getId());
 
@@ -69,7 +69,7 @@ public class WebrtcDoctorMedicalOfficeController {
     public String writeNewDiagnosis(@PathVariable("appointmentId") long appointmentId,
                                     @Valid FindOneDiagnosis writtenDiagnosisForm) {
 
-        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentQueryService.findById(appointmentId);
+        LoadMyPageDoctorAppointment.ResponseDto appointmentDto = appointmentQueryService.findAppointmentById(appointmentId);
         diagnosisService.diagnosis(appointmentDto, writtenDiagnosisForm, AppointmentStatus.COMPLETE);
 
         return "redirect:/usr/doctor/medicalOffice";

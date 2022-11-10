@@ -16,6 +16,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -173,4 +174,38 @@ public class AppointmentQueryServiceTests {
         assertThat(result.getContent()).isEqualTo("기침을 많이 합니다");
     }
 
+
+    @Test
+    void findEntityAppointmentByIdTest() throws Exception {
+
+        //given
+        Appointment appointment = appointmentRepository.findByAppointmentId(1L).get();
+
+        //when
+        Appointment appointment1 = appointmentRepository
+                .findByAppointmentId(appointment.getId())
+                .orElseThrow(() -> new RuntimeException("Appointment id " + appointment.getId() + " is not found."));
+
+        //then
+        assertThat(appointment1.getContent()).isEqualTo("기침을 많이 합니다");
+    }
+
+
+    @Test
+    void findDtoAppointmentByIdTest() throws Exception {
+
+        //given
+        Appointment appointment = appointmentRepository.findByAppointmentId(1L).get();
+
+        //when
+        Appointment appointment1 = appointmentRepository
+                .findByAppointmentId(appointment.getId())
+                .orElseThrow(() -> new RuntimeException("Appointment id " + appointment.getId() + " is not found."));
+
+        LoadMyPageDoctorAppointment.ResponseDto result = new LoadMyPageDoctorAppointment.ResponseDto(appointment1);
+
+
+        //then
+        assertThat(result.getContent()).isEqualTo("기침을 많이 합니다");
+    }
 }

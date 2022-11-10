@@ -103,7 +103,7 @@ public class AppointmentQueryService {
     }
 
 
-    public LoadMyPageDoctorAppointment.ResponseDto findById(long appointmentId) {
+    public LoadMyPageDoctorAppointment.ResponseDto findAppointmentById(long appointmentId) {
         Appointment appointment = appointmentRepository
                 .findByAppointmentId(appointmentId)
                 .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " is not found."));

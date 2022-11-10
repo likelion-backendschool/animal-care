@@ -67,7 +67,7 @@ public class AppointmentMyPageDoctorController {
             @PathVariable long appointmentId
     ){
         LoadMyPageDoctorAppointment.ResponseDto appointment
-                = appointmentQueryService.findById(appointmentId);
+                = appointmentQueryService.findAppointmentById(appointmentId);
 
         FindOneDiagnosis diagnosis = diagnosisService.findByAppointmentId(appointment.getId());
 
