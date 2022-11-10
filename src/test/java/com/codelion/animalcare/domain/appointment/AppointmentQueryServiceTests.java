@@ -6,7 +6,9 @@ import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
 import com.codelion.animalcare.domain.user.entity.Doctor;
+import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
+import com.codelion.animalcare.domain.user.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +33,9 @@ public class AppointmentQueryServiceTests {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
 
 
@@ -126,6 +131,19 @@ public class AppointmentQueryServiceTests {
         assertThat(doctor.getName()).isEqualTo("김닥터");
     }
 
+    @Test
+    void findMemberTest() throws Exception {
+
+        //given
+
+
+        //when
+        Member member = memberRepository.findById(1L).get();
+
+
+        //then
+        assertThat(member.getName()).isEqualTo("김멤버");
+    }
 
 
 }
