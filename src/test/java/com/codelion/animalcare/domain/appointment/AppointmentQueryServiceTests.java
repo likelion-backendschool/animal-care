@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.appointment;
 
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
+import com.codelion.animalcare.domain.appointment.dto.AppointmentModifyDto;
 import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
@@ -208,4 +209,22 @@ public class AppointmentQueryServiceTests {
         //then
         assertThat(result.getContent()).isEqualTo("기침을 많이 합니다");
     }
+
+
+
+    @Test
+    void findAppointmentModifyDtoById() throws Exception {
+
+        //given
+        Appointment appointment = appointmentRepository.findByAppointmentId(2L).get();
+
+        //when
+        AppointmentModifyDto appointmentModifyDto = appointmentQueryService.findAppointmentModifyDtoById(appointment.getId());
+
+        //then
+        assertThat(appointmentModifyDto.getDate().getHour()).isEqualTo(1);
+        assertThat(appointmentModifyDto.getDate().getMinute()).isEqualTo(52);
+    }
+
+
 }

@@ -61,6 +61,7 @@ public class AppointmentQueryService {
         return result;
     }
 
+
     /**
      * 의사가 해당 날짜에 예약 되어있는 시간을 출력함.
      * @param date
@@ -74,8 +75,6 @@ public class AppointmentQueryService {
         System.out.println(utcDateTimeFront + " " + utcDateTimeEnd);
         return appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctorId);
     }
-
-
 
 
     public List<AppointmentDto> findAppointmentByEmail(String email) {
@@ -114,8 +113,7 @@ public class AppointmentQueryService {
     public AppointmentModifyDto findAppointmentModifyDtoById(Long appointmentId) {
 
         Optional<Appointment> appointmentOptional = appointmentRepository.findByAppointmentId(appointmentId);
-        return appointmentOptional
-                .map(o -> new AppointmentModifyDto(o))
+        return appointmentOptional.map(o -> new AppointmentModifyDto(o))
                 .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " was not found."));
     }
 }
