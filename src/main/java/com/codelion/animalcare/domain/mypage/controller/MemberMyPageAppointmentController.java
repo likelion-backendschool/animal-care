@@ -60,7 +60,7 @@ public class MemberMyPageAppointmentController {
     @GetMapping("/info/{appointmentId}/modify")
     public String updateAppointmentForm(@PathVariable("appointmentId") Long appointmentId, Model model) {
 
-        AppointmentModifyDto appointmentModifyDto = findAppointmentModifyDto(appointmentId);
+        AppointmentModifyDto appointmentModifyDto = appointmentQueryService.findAppointmentModifyDtoById(appointmentId);
         model.addAttribute("appointmentModifyDto", appointmentModifyDto);
 
         return "appointments/appointmentModifyForm";
@@ -77,11 +77,6 @@ public class MemberMyPageAppointmentController {
 
         appointmentCommandService.updateAppointment(appointmentId, appointmentDate);
         return "redirect:/usr/member/mypage/appointment/info";
-    }
-
-    private AppointmentModifyDto findAppointmentModifyDto(Long appointmentId) {
-        return appointmentQueryService.findAppointmentModifyDtoById(appointmentId)
-                .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " was not found."));
     }
 
 }

@@ -111,11 +111,11 @@ public class AppointmentQueryService {
         return new LoadMyPageDoctorAppointment.ResponseDto(appointment);
     }
 
-    public Optional<AppointmentModifyDto> findAppointmentModifyDtoById(Long appointmentId) {
+    public AppointmentModifyDto findAppointmentModifyDtoById(Long appointmentId) {
 
         Optional<Appointment> appointmentOptional = appointmentRepository.findByAppointmentId(appointmentId);
-        Optional<AppointmentModifyDto> appointmentModifyDto = appointmentOptional.map(o -> new AppointmentModifyDto(o));
-
-        return appointmentModifyDto;
+        return appointmentOptional
+                .map(o -> new AppointmentModifyDto(o))
+                .orElseThrow(() -> new RuntimeException("Appointment id " + appointmentId + " was not found."));
     }
 }
