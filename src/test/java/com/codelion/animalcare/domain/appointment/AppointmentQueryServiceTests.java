@@ -112,4 +112,20 @@ public class AppointmentQueryServiceTests {
     }
 
 
+    @Test
+    void findDoctorTest() throws Exception {
+
+        //given
+
+
+        //when
+        Doctor doctor = doctorRepository.findById(5L).get();
+
+
+        //then
+        assertThat(doctor.getName()).isEqualTo("김닥터");
+    }
+
+
+
 }
