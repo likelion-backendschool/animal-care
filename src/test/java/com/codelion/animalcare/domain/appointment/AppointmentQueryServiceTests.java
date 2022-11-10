@@ -216,7 +216,7 @@ public class AppointmentQueryServiceTests {
 
 
     @Test
-    void findAppointmentModifyDtoById() throws Exception {
+    void findAppointmentModifyDtoByIdTest() throws Exception {
 
         //given
         Appointment appointment = appointmentRepository.findByAppointmentId(2L).get();
@@ -231,7 +231,7 @@ public class AppointmentQueryServiceTests {
 
 
     @Test
-    void findDateTimesByDateAndDoctor1() throws Exception {
+    void findDateTimesByDateAndDoctor1Test() throws Exception {
 
         //given
         Doctor doctor = doctorRepository.findById(6L).get();
@@ -255,7 +255,7 @@ public class AppointmentQueryServiceTests {
 
 
     @Test
-    void findDateTimesByDateAndDoctor() throws Exception {
+    void findDateTimesByDateAndDoctorTest() throws Exception {
 
         //given
         Doctor doctor = doctorRepository.findById(6L).get();
