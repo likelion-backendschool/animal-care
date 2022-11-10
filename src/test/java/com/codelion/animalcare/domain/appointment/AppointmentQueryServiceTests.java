@@ -146,4 +146,31 @@ public class AppointmentQueryServiceTests {
     }
 
 
+    @Test
+    void findAppointmentByIdTest() throws Exception {
+
+        //given
+
+
+        //when
+        Appointment appointment = appointmentRepository.findByAppointmentId(1L).get();
+
+
+        //then
+        assertThat(appointment.getContent()).isEqualTo("기침을 많이 합니다");
+    }
+
+    @Test
+    void findAppointmentDtoByIdTest() throws Exception {
+
+        //given
+        Appointment appointment = appointmentRepository.findByAppointmentId(1L).get();
+
+        //when
+        LoadMyPageDoctorAppointment.ResponseDto result = new LoadMyPageDoctorAppointment.ResponseDto(appointment);
+
+        //then
+        assertThat(result.getContent()).isEqualTo("기침을 많이 합니다");
+    }
+
 }
