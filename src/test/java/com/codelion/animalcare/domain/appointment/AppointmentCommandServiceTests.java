@@ -70,6 +70,8 @@ public class AppointmentCommandServiceTests {
     }
 
 
+    /* 올바른 date인지 확인.*/
+    // 1. 10분 단위로 예약 가능.
     @Test
     void appointmentCheckRightDate() throws Exception {
 
