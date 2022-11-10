@@ -5,6 +5,8 @@ import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
 import com.codelion.animalcare.domain.appointment.service.AppointmentCommandService;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
+import com.codelion.animalcare.domain.hospital.entity.Hospital;
+import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -27,6 +30,11 @@ public class AppointmentCommandServiceTests {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+
+    @Autowired
+    private HospitalRepository hospitalRepository;
+
 
     @Test
     void appointmentTest() throws Exception {
@@ -85,6 +93,32 @@ public class AppointmentCommandServiceTests {
 
         //then
         assertThat(date.getMinute() % 10).isEqualTo(0);
+    }
+
+
+    // 2. 병원 시간 안에 있는지, 예약 날짜의 병원 운영시간
+    @Test
+    void appointmentCheckHospitalTime() throws Exception {
+
+        //given
+        AppointmentFormDto appointmentFormDto = new AppointmentFormDto();
+        appointmentFormDto.setDate("2022-11-07T14:10:00");
+        String inputDate = appointmentFormDto.getDate();
+        LocalDateTime date = LocalDateTime.parse(inputDate);
+
+        Hospital hospital = hospitalRepository.findById(1L).get();
+
+
+        //when
+        String inputDateHourMinute = date.getHour() + ":" + date.getMinute();
+
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        String timeOfHospital = hospital.getOpeningHours().split("/")[dayOfWeek.getValue() -1];
+        String[] times = timeOfHospital.split("~", 2);
+
+
+        //then
+        assertThat(inputDateHourMinute).isBetween(times[0], times[1]);
     }
 
 
