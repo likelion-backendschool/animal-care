@@ -1,6 +1,7 @@
 package com.codelion.animalcare.domain.appointment;
 
 import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
+import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
 import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
 import com.codelion.animalcare.domain.appointment.service.AppointmentQueryService;
@@ -33,6 +34,10 @@ public class AppointmentQueryServiceTests {
 
 
 
+    /**
+     * 비대면 진료
+     * Doctor가 예약내역 확인
+     */
     @Test
     void findAllAppointmentEntityListTest() throws Exception {
 
@@ -47,6 +52,11 @@ public class AppointmentQueryServiceTests {
     }
 
 
+
+    /**
+     * 비대면 진료
+     * Doctor가 예약내역 확인
+     */
     @Test
     void findAllAppointmentDtoListTest() throws Exception {
 
@@ -65,6 +75,11 @@ public class AppointmentQueryServiceTests {
     }
 
 
+
+    /**
+     * 비대면 진료
+     * Doctor가 예약내역 확인
+     */
     @Test
     void findAllAppointmentTest() throws Exception {
 
@@ -78,6 +93,23 @@ public class AppointmentQueryServiceTests {
         assertThat(appointmentDtos.size()).isEqualTo(9);
     }
 
+
+    /**
+     * DoctorMyPage
+     * 환자 예약  관리
+     */
+    @Test
+    void findAllByDoctorEmailTest() throws Exception {
+
+        //given
+        Doctor doctor = doctorRepository.findById(5L).get();
+
+        //when
+        List<LoadMyPageDoctorAppointment.ResponseDto> result = appointmentQueryService.findAllByDoctorEmail(doctor.getEmail());
+
+        //then
+        assertThat(result.size()).isEqualTo(9);
+    }
 
 
 }
