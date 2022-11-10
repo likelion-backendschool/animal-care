@@ -15,6 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -141,6 +142,26 @@ public class AppointmentCommandServiceTests {
 
         //then
         assertThat(appointment.isPresent()).isTrue();
+    }
+
+
+    @Test
+    void updateAppointmentTest() throws Exception {
+
+        //given
+        Appointment appointment = appointmentRepository.findById(4L).get();
+
+        String newDateStr ="2021-11-28 09:40:00.000";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        LocalDateTime newDate = LocalDateTime.parse(newDateStr, formatter);
+
+
+        //when
+        appointment.updateAppointmentDate(newDate);
+
+
+        //then
+        assertThat(appointment.getDate()).isEqualTo(newDate);
     }
 
 }
