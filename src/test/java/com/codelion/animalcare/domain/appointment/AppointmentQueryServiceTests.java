@@ -16,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -226,5 +229,48 @@ public class AppointmentQueryServiceTests {
         assertThat(appointmentModifyDto.getDate().getMinute()).isEqualTo(52);
     }
 
+
+    @Test
+    void findDateTimesByDateAndDoctor1() throws Exception {
+
+        //given
+        Doctor doctor = doctorRepository.findById(6L).get();
+        Appointment appointment = appointmentRepository.findById(1L).get();
+
+        LocalDateTime date = appointment.getDate();
+        LocalDate localDate = date.toLocalDate();
+
+        LocalDateTime utcDateTimeFront = localDate.atStartOfDay();
+        LocalDateTime utcDateTimeEnd = localDate.atStartOfDay().plusDays(1);
+
+
+        //when
+        List<LocalDateTime> result = appointmentRepository.findDateTimesByDateAndDoctor(utcDateTimeFront, utcDateTimeEnd, doctor.getId());
+
+
+        //then
+        assertThat(result.get(0).getHour()).isEqualTo(10);
+        assertThat(result.get(0).getMinute()).isEqualTo(30);
+    }
+
+
+    @Test
+    void findDateTimesByDateAndDoctor() throws Exception {
+
+        //given
+        Doctor doctor = doctorRepository.findById(6L).get();
+        Appointment appointment = appointmentRepository.findById(1L).get();
+        LocalDateTime date = appointment.getDate();
+        LocalDate localDate = date.toLocalDate();
+
+
+        //when
+        List<LocalDateTime> result = appointmentQueryService.findDateTimesByDateAndDoctor(localDate, doctor.getId());
+
+
+        //then
+        assertThat(result.get(0).getHour()).isEqualTo(10);
+        assertThat(result.get(0).getMinute()).isEqualTo(30);
+    }
 
 }
