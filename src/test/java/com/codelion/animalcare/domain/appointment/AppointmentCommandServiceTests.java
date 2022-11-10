@@ -17,13 +17,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 @Transactional
 @WebAppConfiguration
-public class AppointmentServiceTests {
-
-    @Autowired
-    EntityManager em;
-
-    @Autowired
-    private AppointmentQueryService appointmentQueryService;
+public class AppointmentCommandServiceTests {
 
     @Autowired
     private AppointmentCommandService appointmentCommandService;
