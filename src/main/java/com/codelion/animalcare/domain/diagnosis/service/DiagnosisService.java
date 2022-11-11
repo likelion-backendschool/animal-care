@@ -53,7 +53,8 @@ public class DiagnosisService {
             if (appointment.getStatus() != AppointmentStatus.READY)
                 throw new RuntimeException("의사가 진단서 작성할 수 없습니다.");
         }
-        appointment.updateStatusToComplete(status);
+
+        appointment.updateStatus(status);
 
 
         //진단서 생성

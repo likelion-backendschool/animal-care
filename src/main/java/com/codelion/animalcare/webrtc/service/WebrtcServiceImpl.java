@@ -1,19 +1,7 @@
 package com.codelion.animalcare.webrtc.service;
 
 
-import com.codelion.animalcare.domain.appointment.controller.AppointmentMyPageDoctorController;
-import com.codelion.animalcare.domain.appointment.dto.AppointmentDto;
-import com.codelion.animalcare.domain.appointment.dto.LoadMyPageDoctorAppointment;
-import com.codelion.animalcare.domain.appointment.entity.Appointment;
-import com.codelion.animalcare.domain.appointment.service.AppointmentService;
-import com.codelion.animalcare.domain.diagnosis.dto.FindOneDiagnosis;
-import com.codelion.animalcare.domain.diagnosis.service.DiagnosisService;
-
 import com.codelion.animalcare.chat.service.ChatRoomService;
-import com.codelion.animalcare.domain.mypage.dto.LoadDoctorMyPageInfo;
-import com.codelion.animalcare.domain.user.dto.MemberDto;
-import com.codelion.animalcare.domain.user.service.DoctorService;
-import com.codelion.animalcare.domain.user.service.MemberService;
 import com.codelion.animalcare.webrtc.domain.Room;
 import com.codelion.animalcare.webrtc.domain.RoomService;
 import com.codelion.animalcare.webrtc.util.Parser;
@@ -21,15 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
