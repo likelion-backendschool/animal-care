@@ -7,6 +7,7 @@ import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
 import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.diagnosis.repository.DiagnosisRepository;
+import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
@@ -29,7 +30,7 @@ import java.time.LocalDateTime;
 public class TestInitData {
 
     @Bean
-    CommandLineRunner init(MemberRepository memberRepository, AnimalRepository animalRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, AppointmentRepository appointmentRepository, DiagnosisRepository diagnosisRepository) {
+    CommandLineRunner init(MemberRepository memberRepository, AnimalRepository animalRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, AppointmentRepository appointmentRepository, DiagnosisRepository diagnosisRepository, QuestionRepository questionRepository) {
         return args -> {
             /*
             멤버 추가하는 부분입니다.
@@ -385,7 +386,25 @@ public class TestInitData {
                     .build();
             hospitalRepository.save(hospital11);
 
+            Question question1 = Question.builder()
+                    .title("title1")
+                    .content("content1")
+                    .view(0)
+                    .member(member1)
+                    .likeCount(0)
+                    .build();
 
+            questionRepository.save(question1);
+
+            Question question2 = Question.builder()
+                    .title("title2")
+                    .content("content2")
+                    .view(0)
+                    .member(member2)
+                    .likeCount(0)
+                    .build();
+
+            questionRepository.save(question2);
 
             // 예약서
 //            Appointment appointment1 = Appointment.builder()
