@@ -406,6 +406,16 @@ public class TestInitData {
 
             questionRepository.save(question2);
 
+            Question question3 = Question.builder()
+                    .title("How to learn Spring boot?")
+                    .content("go hard.")
+                    .view(0)
+                    .member(member3)
+                    .likeCount(0)
+                    .build();
+
+            questionRepository.save(question3);
+
             // 예약서
 //            Appointment appointment1 = Appointment.builder()
 //                    .createdAt(LocalDateTime.now())
