@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("test")
 @WebAppConfiguration // Spring to load a proper ServletContext with a mocked attribute entry for the ServerContainer.
@@ -86,4 +87,16 @@ public class QuestionCommandServiceTest {
 
 
     }
+
+    @DisplayName("게시물_삭제된다")
+    @Test
+    void t4() {
+        //given --> t1() create
+
+        //when
+        questionCommandService.delete(3L);
+        //given
+        assertThrows(IllegalArgumentException.class, () -> questionQueryService.findQuestionByQuestionId(3L));
+    }
 }
+
