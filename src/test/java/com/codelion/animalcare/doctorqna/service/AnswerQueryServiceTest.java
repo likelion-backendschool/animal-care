@@ -13,6 +13,7 @@ import java.security.Principal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
@@ -62,5 +63,17 @@ public class AnswerQueryServiceTest {
 
         //then
         assertTrue(auth);
+    }
+
+    @DisplayName("없는_답변을_조회하면_에러를_던진다")
+    @Test
+    void t4() {
+
+        //given
+
+        //when
+
+        //then
+        assertThrows(IllegalArgumentException.class, () -> answerQueryService.findAnswerByAnswerId(3L));
     }
 }
