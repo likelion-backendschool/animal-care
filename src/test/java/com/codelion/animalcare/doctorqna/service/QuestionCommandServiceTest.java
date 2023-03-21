@@ -37,10 +37,7 @@ public class QuestionCommandServiceTest {
     @Test
     void t1() {
         //given
-        QuestionSaveRequestDto question = QuestionSaveRequestDto.builder()
-                .title("질문이 있습니다.")
-                .content("테스트 코드는 어떻게 잘 짜나요?")
-                .build();
+        QuestionSaveRequestDto question = new QuestionSaveRequestDto("질문이 있습니다.", "테스트 코드는 어떻게 잘 짜나요?");
         Principal principal = () -> "member1@test.com";
 
         //when
@@ -49,10 +46,9 @@ public class QuestionCommandServiceTest {
         QuestionResponseDto savedQuestion = questionQueryService.findById(4L);
         //then
         System.out.println(savedQuestion);
-       assertEquals(savedQuestion.title(), "질문이 있습니다.");
+        assertEquals(savedQuestion.title(), "질문이 있습니다.");
         assertEquals(savedQuestion.content(), "테스트 코드는 어떻게 잘 짜나요?");
         assertEquals(savedQuestion.member().getEmail(), "member1@test.com");
-
     }
 
     @DisplayName("질문_수정된다")

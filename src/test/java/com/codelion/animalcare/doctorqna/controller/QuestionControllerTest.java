@@ -41,8 +41,8 @@ public class QuestionControllerTest {
 
         mockMvc.perform(post("/usr/doctor-qna/write")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("questionTitle", dto.getTitle())
-                        .param("content", dto.getContent())
+                        .param("questionTitle", dto.title())
+                        .param("content", dto.content())
                         .principal(principal))
                 .andExpect(status().isFound())
                 .andExpect(redirectedUrl("http://localhost/user/login"));
