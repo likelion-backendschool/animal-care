@@ -48,9 +48,10 @@ public class QuestionCommandServiceTest {
         //Testinitdata -> 3 question
         QuestionResponseDto savedQuestion = questionQueryService.findById(4L);
         //then
-        assertEquals(savedQuestion.getTitle(), "질문이 있습니다.");
-        assertEquals(savedQuestion.getContent(), "테스트 코드는 어떻게 잘 짜나요?");
-        assertEquals(savedQuestion.getMember().getEmail(), "member1@test.com");
+        System.out.println(savedQuestion);
+       assertEquals(savedQuestion.title(), "질문이 있습니다.");
+        assertEquals(savedQuestion.content(), "테스트 코드는 어떻게 잘 짜나요?");
+        assertEquals(savedQuestion.member().getEmail(), "member1@test.com");
 
     }
 

@@ -1,13 +1,10 @@
 package com.codelion.animalcare.domain.doctorqna.dto.response;
 
 import com.codelion.animalcare.domain.doctorqna.entity.Question;
-
 import com.codelion.animalcare.domain.user.entity.Member;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
 public class QuestionListResponseDto {
 
     private Long id;

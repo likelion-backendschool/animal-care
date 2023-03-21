@@ -44,7 +44,7 @@ class QuestionQueryServiceTest {
         QuestionResponseDto question = questionQueryService.findById(1L);
 
         //then
-        assertEquals(question.getTitle(), "title1");
+        assertEquals(question.title(), "title1");
     }
 
     @DisplayName("게시물_작성자는_권한을_갖는다")
