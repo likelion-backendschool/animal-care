@@ -2,25 +2,19 @@ package com.codelion.animalcare.domain.doctorqna.dto.response;
 
 import com.codelion.animalcare.domain.doctorqna.entity.Answer;
 import com.codelion.animalcare.domain.doctorqna.entity.Question;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
-public class AnswerResponseDto {
+public record AnswerResponseDto (
 
-    private Long id;
-    private String content;
-    private Question question;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
+    Long id,
+    String content,
+    Question question,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
+) {
     public AnswerResponseDto(Answer entity) {
-        this.id = entity.getId();
-        this.content = entity.getContent();
-        this.question = entity.getQuestion();
-        this.createdAt = entity.getCreatedAt();
-        this.updatedAt = entity.getUpdatedAt();
+        this(entity.getId(), entity.getContent(), entity.getQuestion(), entity.getCreatedAt(), entity.getUpdatedAt());
     }
 
 }

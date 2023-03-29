@@ -2,11 +2,11 @@ package com.codelion.animalcare.global.common;
 
 import com.codelion.animalcare.domain.animal.entity.Animal;
 import com.codelion.animalcare.domain.animal.repository.AnimalRepository;
-import com.codelion.animalcare.domain.appointment.AppointmentStatus;
-import com.codelion.animalcare.domain.appointment.entity.Appointment;
 import com.codelion.animalcare.domain.appointment.repository.AppointmentRepository;
-import com.codelion.animalcare.domain.diagnosis.entity.Diagnosis;
 import com.codelion.animalcare.domain.diagnosis.repository.DiagnosisRepository;
+import com.codelion.animalcare.domain.doctorqna.entity.Answer;
+import com.codelion.animalcare.domain.doctorqna.entity.Question;
+import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
 import com.codelion.animalcare.domain.doctorqna.repository.QuestionRepository;
 import com.codelion.animalcare.domain.hospital.entity.Hospital;
 import com.codelion.animalcare.domain.hospital.repository.HospitalRepository;
@@ -29,7 +29,7 @@ import java.time.LocalDateTime;
 public class TestInitData {
 
     @Bean
-    CommandLineRunner init(MemberRepository memberRepository, AnimalRepository animalRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, AppointmentRepository appointmentRepository, DiagnosisRepository diagnosisRepository) {
+    CommandLineRunner init(MemberRepository memberRepository, AnimalRepository animalRepository, DoctorRepository doctorRepository, HospitalRepository hospitalRepository, AppointmentRepository appointmentRepository, DiagnosisRepository diagnosisRepository, QuestionRepository questionRepository, AnswerRepository answerRepository) {
         return args -> {
             /*
             멤버 추가하는 부분입니다.
@@ -385,7 +385,51 @@ public class TestInitData {
                     .build();
             hospitalRepository.save(hospital11);
 
+            Question question1 = Question.builder()
+                    .title("title1")
+                    .content("content1")
+                    .view(0)
+                    .member(member1)
+                    .likeCount(0)
+                    .build();
 
+            questionRepository.save(question1);
+
+            Question question2 = Question.builder()
+                    .title("title2")
+                    .content("content2")
+                    .view(0)
+                    .member(member2)
+                    .likeCount(0)
+                    .build();
+
+            questionRepository.save(question2);
+
+            Question question3 = Question.builder()
+                    .title("How to learn Spring boot?")
+                    .content("go hard.")
+                    .view(0)
+                    .member(member3)
+                    .likeCount(0)
+                    .build();
+
+            questionRepository.save(question3);
+
+            Answer answer1 = Answer.builder()
+                    .content("answer1")
+                    .question(question1)
+                    .doctor(doctor1)
+                    .build();
+
+            answerRepository.save(answer1);
+
+            Answer answer2 = Answer.builder()
+                    .content("answer2")
+                    .question(question2)
+                    .doctor(doctor2)
+                    .build();
+
+            answerRepository.save(answer2);
 
             // 예약서
 //            Appointment appointment1 = Appointment.builder()
