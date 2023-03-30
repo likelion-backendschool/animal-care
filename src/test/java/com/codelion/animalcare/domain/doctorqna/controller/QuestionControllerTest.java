@@ -1,4 +1,4 @@
-package com.codelion.animalcare.doctorqna.controller;
+package com.codelion.animalcare.domain.doctorqna.controller;
 
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;

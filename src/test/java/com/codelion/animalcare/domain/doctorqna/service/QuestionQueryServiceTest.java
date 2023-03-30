@@ -1,9 +1,7 @@
-package com.codelion.animalcare.doctorqna.service;
+package com.codelion.animalcare.domain.doctorqna.service;
 
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.entity.Question;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
 import com.codelion.animalcare.domain.user.entity.Member;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import org.junit.jupiter.api.DisplayName;

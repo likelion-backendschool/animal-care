@@ -6,7 +6,6 @@ import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import java.time.LocalDateTime;
 
 public record AnswerResponseDto (
-
     Long id,
     String content,
     Question question,
