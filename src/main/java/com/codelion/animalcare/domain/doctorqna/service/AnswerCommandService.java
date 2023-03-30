@@ -4,7 +4,6 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.entity.Answer;
 import com.codelion.animalcare.domain.doctorqna.repository.AnswerRepository;
-import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.user.entity.Doctor;
 import com.codelion.animalcare.domain.user.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +24,6 @@ public class AnswerCommandService {
 
 
     public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
-        Question question = questionQueryService.findQuestionByQuestionId(questionId);
-        answerSaveRequestDto.setQuestion(question);
 
         Doctor doctor = doctorRepository.findByEmail(principal.getName()).orElseThrow(() -> new IllegalArgumentException("의사가 존재하지 않습니다."));
 
@@ -34,14 +31,14 @@ public class AnswerCommandService {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
 //        }
 
-        question.addAnswer(answerSaveRequestDto.toEntity(doctor));
+        answerSaveRequestDto.question().addAnswer(answerSaveRequestDto.toEntity(doctor));
         return answerRepository.save(answerSaveRequestDto.toEntity(doctor)).getId();
     }
 
 
     public Long update(Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto) {
         Answer answer = answerQueryService.findAnswerByAnswerId(answerId);
-        answer.update(answerUpdateRequestDto.getContent());
+        answer.update(answerUpdateRequestDto.content());
 
         return answerId;
     }

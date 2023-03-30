@@ -17,5 +17,5 @@ public record QuestionUpdateRequestDto (
         public QuestionUpdateRequestDto(String title, String content) {
             this.title = title;
             this.content = content;
-            }
+        }
 }

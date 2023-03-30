@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record QuestionResponseDto (
-
     Long id,
     String title,
     String content,
