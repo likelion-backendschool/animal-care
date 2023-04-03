@@ -17,7 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+/*
 
+TODO : SERVICE단에서 QUESTION ENTITY를 직접 반환하지 않고 DTO를 반환하는 것이 요청에 대한 응답만 함으로써
+       성능, 보안적으로 이점을 얻을 수 있다고 생각한다. 하지만, SERVICE단에서 ENTITY가 필요한 경우에 findQuestionByQuestionId를 통해 직접 ENTITY를 얻고 있는데,
+       이는 어찌보면 오버엔지니어링이 아닌가 하는 생각도 있다. 이를 어떻게 해결하는 것이 좋은 방법인지 확신이 서지 않는다.
+       이를 개선하기 위해서 떠올린 방법으로는
+       1. 그냥 service단에서 entity를 반환하기
+       2. modelMapper를 사용하기
+
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
