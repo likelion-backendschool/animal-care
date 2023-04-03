@@ -120,4 +120,5 @@ class QuestionQueryServiceTest {
         assertEquals("DESC", Objects.requireNonNull(questions.getSort().getOrderFor("createdAt")).getDirection().toString());
     }
 
+
 }

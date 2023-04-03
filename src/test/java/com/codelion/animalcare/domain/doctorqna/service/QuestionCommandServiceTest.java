@@ -93,5 +93,6 @@ public class QuestionCommandServiceTest {
         //given
         assertThrows(IllegalArgumentException.class, () -> questionQueryService.findQuestionByQuestionId(3L));
     }
+
 }
 
