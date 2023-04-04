@@ -32,7 +32,6 @@ public class QuestionCommandService {
         return questionRepository.save(questionSaveRequestDto.toEntity(member)).getId();
     }
 
-
     public Long update(Long id, QuestionUpdateRequestDto questionUpdateRequestDto){
         Question question = questionQueryService.findQuestionByQuestionId(id);
         question.update(questionUpdateRequestDto.title(), questionUpdateRequestDto.content());
