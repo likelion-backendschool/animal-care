@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Transactional
@@ -19,11 +18,11 @@ public class QuestionHashtagService {
     private final HashtagService hashtagService;
 
     private final QuestionHashtagRepository questionHashtagRepository;
-    public void saveHashtag(Question question, Set<Hashtag> hashtags) {
-                hashtags.stream()
+    public void saveHashtag(Question question, List<String> tagNames) {
+                tagNames.stream()
                 .map(hashtag ->
-                        hashtagService.findByTagName(hashtag.getTagName())
-                                             .orElseGet(() -> hashtagService.save(hashtag.getTagName())))
+                        hashtagService.findByTagName(hashtag)
+                                             .orElseGet(() -> hashtagService.save(hashtag)))
                                              .forEach(hashtag -> mappedHashtagToQuestion(question, hashtag));
     }
 

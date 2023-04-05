@@ -20,7 +20,7 @@
         </div>
         <div class="mb-3">
             <label for="hashtags" class="form-label">해시태그</label>
-            <input type="text" id="hashtags" class="form-control" placeholder="hashtag를 입력한 후 엔터를 입력해주세요.">
+            <input type="text" id="hashtags" class="form-control">
             <ul id="hashtags-list">
                 <li th:each="tag : ${questionSaveRequestDto.hashtags}" th:text="${tag}" />
             </ul>
@@ -38,11 +38,12 @@
         let hashtags = [];
 
         function addHashtag(tag) {
+            tag = tag.replace(/[\[\]]/g, '');
             const li = document.createElement("li");
             li.innerText = tag;
             hashtagsList.appendChild(li);
             hashtags.push(tag);
-            hiddenHashtagsInput.value = JSON.stringify(hashtags);
+            hiddenHashtagsInput.value = hashtags.join(",");
         }
 
         hashtagsInput.addEventListener("keydown", (event) => {

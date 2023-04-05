@@ -1,12 +1,11 @@
 package com.codelion.animalcare.domain.doctorqna.dto.request;
 
-import com.codelion.animalcare.domain.doctorqna.entity.Hashtag;
 import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.user.entity.Member;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Set;
+import java.util.List;
 
 public record QuestionSaveRequestDto(
         @NotBlank(message = "제목은 필수 입력 사항입니다.")
@@ -16,7 +15,7 @@ public record QuestionSaveRequestDto(
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         String content,
 
-        Set<Hashtag> hashtags
+        List<String> hashtags
 ) {
     public Question toEntity(Member member) {
         return Question.builder()

@@ -35,7 +35,7 @@ public class QuestionCommandService {
     public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
         Member member = memberService.findMemberByEmail(principal.getName());
         Question savedQuestion = questionRepository.save(questionSaveRequestDto.toEntity(member));
-
+        questionSaveRequestDto.hashtags().forEach(System.out::println);
         questionHashtagService.saveHashtag(savedQuestion, questionSaveRequestDto.hashtags());
 
 

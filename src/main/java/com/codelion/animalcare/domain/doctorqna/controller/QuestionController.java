@@ -48,7 +48,6 @@ public class QuestionController {
         if(bindingResult.hasErrors()) {
             return "doctorqna/doctorQnaQuestionForm";
         }
-
         questionCommandService.save(questionSaveRequestDto, principal);
 
         return "redirect:/usr/doctor-qna";

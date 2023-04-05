@@ -3,7 +3,6 @@ package com.codelion.animalcare.domain.doctorqna.service;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
-import com.codelion.animalcare.domain.doctorqna.entity.Hashtag;
 import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.doctorqna.entity.QuestionHashtag;
 import com.codelion.animalcare.domain.user.service.MemberService;
@@ -16,9 +15,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -106,12 +104,9 @@ public class QuestionCommandServiceTest {
     void t5() {
         //given
 
-        Hashtag javaTag = Hashtag.builder().tagName("JAVA").build();
-        Hashtag testTag = Hashtag.builder().tagName("TEST").build();
-        Set<Hashtag> hashtags =new HashSet<>();
-        hashtags.add(javaTag);
-        hashtags.add(testTag);
-        QuestionSaveRequestDto question = new QuestionSaveRequestDto("질문이 있습니다.", "테스트 코드는 어떻게 잘 짜나요?", hashtags);
+
+        List<String> list = Arrays.asList("JAVA", "THYMELEAF");
+        QuestionSaveRequestDto question = new QuestionSaveRequestDto("질문이 있습니다.", "테스트 코드는 어떻게 잘 짜나요?", list);
         Principal principal = () -> "member1@test.com";
 
         //when
