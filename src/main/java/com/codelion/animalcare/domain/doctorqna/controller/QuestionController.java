@@ -4,8 +4,10 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.entity.Question;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
+import com.codelion.animalcare.domain.doctorqna.entity.QuestionHashtag;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionHashtagService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -34,6 +37,7 @@ public class QuestionController {
     private final QuestionCommandService questionCommandService;
     private final QuestionQueryService questionQueryService;
     private final UserService userService;
+    private final QuestionHashtagService questionHashtagService;
 
     //게시글 등록 화면
     @GetMapping("/usr/doctor-qna/write")
@@ -97,7 +101,8 @@ public class QuestionController {
         }
 
         model.addAttribute("like", like);
-
+        List<QuestionHashtag> hashtags = questionHashtagService.findHashtagListByQuestion(questionQueryService.findQuestionByQuestionId(id));
+        model.addAttribute("hashtags", hashtags);
         return "doctorqna/doctorQnaDetail";
     }
     //전체 조회

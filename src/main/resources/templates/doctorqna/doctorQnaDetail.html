@@ -32,7 +32,10 @@
                 <!-- 로그인하지 않은 유저라면 -->
                 <img id="loginCheck" src="/img/doctorQna/like_empty.png" alt="" width="30px"
                      height="30px">
-                <span th:text="${question.likeCount}"></span>
+                <span th:text="${question.likeCount()}"></span>
+            </div>
+            <div>
+                <span th:each="tag : ${hashtags}" th:text="${'#' + tag.getHashtag().getTagName() + ' '}"></span>
             </div>
             <!-- testEnd-->
         </div>
