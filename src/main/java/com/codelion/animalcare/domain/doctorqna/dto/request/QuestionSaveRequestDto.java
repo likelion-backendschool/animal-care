@@ -6,7 +6,7 @@ import com.codelion.animalcare.domain.user.entity.Member;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.Set;
 
 public record QuestionSaveRequestDto(
         @NotBlank(message = "제목은 필수 입력 사항입니다.")
@@ -16,7 +16,7 @@ public record QuestionSaveRequestDto(
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         String content,
 
-        List<Hashtag> hashtags
+        Set<Hashtag> hashtags
 ) {
     public Question toEntity(Member member) {
         return Question.builder()

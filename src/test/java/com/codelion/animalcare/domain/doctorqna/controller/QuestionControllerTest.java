@@ -69,7 +69,7 @@ public class QuestionControllerTest {
     @Test
     void saveForm_Fail() throws Exception {
 
-        String viewName = questionController.saveForm(new QuestionSaveRequestDto("title", "content"));
+        String viewName = questionController.saveForm(new QuestionSaveRequestDto("title", "content", null));
 
         mockMvc.perform(get("/usr/doctor-qna/write"))
                 .andExpect(status().is3xxRedirection());
@@ -82,7 +82,7 @@ public class QuestionControllerTest {
     @Test
     void saveForm_Success() throws Exception {
 
-        String viewName = questionController.saveForm(new QuestionSaveRequestDto("title", "content"));
+        String viewName = questionController.saveForm(new QuestionSaveRequestDto("title", "content", null));
 
         mockMvc.perform(get("/usr/doctor-qna/write"))
                 .andExpect(status().isOk())
@@ -94,7 +94,7 @@ public class QuestionControllerTest {
     @WithMockUser(roles="MEMBER")
     void saveTest_withValidRequestDto() throws Exception {
         // given
-        QuestionSaveRequestDto requestDto = new QuestionSaveRequestDto("title", "content");
+        QuestionSaveRequestDto requestDto = new QuestionSaveRequestDto("title", "content", null);
 
         // when
         mockMvc.perform(post("/usr/doctor-qna/write")
@@ -112,7 +112,7 @@ public class QuestionControllerTest {
     @WithMockUser(roles="MEMBER")
     void saveTest_withInvalidRequestDto() throws Exception {
         // given
-        QuestionSaveRequestDto requestDto = new QuestionSaveRequestDto("", "");
+        QuestionSaveRequestDto requestDto = new QuestionSaveRequestDto("", "", null);
 
         // when
         mockMvc.perform(post("/usr/doctor-qna/write")

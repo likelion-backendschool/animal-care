@@ -21,15 +21,25 @@ import java.security.Principal;
 public class QuestionCommandService {
 
     private final QuestionQueryService questionQueryService;
-    private final QuestionRepository questionRepository;
-    private final QuestionLikeRepository questionLikeRepository;
+
     private final MemberService memberService;
+
+    private final QuestionHashtagQueryService questionHashtagService;
+
+    private final QuestionRepository questionRepository;
+
+    private final QuestionLikeRepository questionLikeRepository;
 
 
 
     public Long save(QuestionSaveRequestDto questionSaveRequestDto, Principal principal) {
         Member member = memberService.findMemberByEmail(principal.getName());
-        return questionRepository.save(questionSaveRequestDto.toEntity(member)).getId();
+        Question savedQuestion = questionRepository.save(questionSaveRequestDto.toEntity(member));
+
+        questionHashtagService.saveHashtag(savedQuestion, questionSaveRequestDto.hashtags());
+
+
+        return savedQuestion.getId();
     }
 
     public Long update(Long id, QuestionUpdateRequestDto questionUpdateRequestDto){
