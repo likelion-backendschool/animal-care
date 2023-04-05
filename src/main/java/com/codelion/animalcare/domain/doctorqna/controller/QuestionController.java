@@ -29,7 +29,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-
+//TODO : 2022/04/06 -> 참조하지 않는 해시태그는? (배치?), 게시물 수정할때 해시태그도 수정 가능하게 하기, 해시태그 누르면 리스트 띄우기, ...
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {
