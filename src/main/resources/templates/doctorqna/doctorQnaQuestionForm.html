@@ -1,4 +1,7 @@
-<html layout:decorate="~{global/layout}">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layout}" >
 
 <div layout:fragment="content" class="container my-5">
 
@@ -15,7 +18,44 @@
             <label for="content" class="form-label">내용</label>
             <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
         </div>
+        <div class="mb-3">
+            <label for="hashtags" class="form-label">해시태그</label>
+            <input type="text" id="hashtags" class="form-control" placeholder="hashtag를 입력한 후 엔터를 입력해주세요.">
+            <ul id="hashtags-list">
+                <li th:each="tag : ${questionSaveRequestDto.hashtags}" th:text="${tag}" />
+            </ul>
+        </div>
+        <input type="hidden" id="hashtags-hidden" th:field="*{hashtags}" />
+
         <input type="submit" value="저장하기" class="btn btn-primary my-2">
     </form>
+
+    <script>
+        const hashtagsInput = document.getElementById("hashtags");
+        const hashtagsList = document.getElementById("hashtags-list");
+        const hiddenHashtagsInput = document.getElementById("hashtags-hidden");
+
+        let hashtags = [];
+
+        function addHashtag(tag) {
+            const li = document.createElement("li");
+            li.innerText = tag;
+            hashtagsList.appendChild(li);
+            hashtags.push(tag);
+            hiddenHashtagsInput.value = JSON.stringify(hashtags);
+        }
+
+        hashtagsInput.addEventListener("keydown", (event) => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                const tag = hashtagsInput.value.trim();
+                if (tag) {
+                    addHashtag(tag);
+                    hashtagsInput.value = "";
+                }
+            }
+        });
+    </script>
+
 </div>
 </html>
