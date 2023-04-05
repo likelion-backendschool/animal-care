@@ -14,16 +14,16 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class QuestionHashtagQueryService {
+public class QuestionHashtagService {
 
-    private final HashtagCommandService hashtagCommandService;
+    private final HashtagService hashtagService;
 
     private final QuestionHashtagRepository questionHashtagRepository;
     public void saveHashtag(Question question, Set<Hashtag> hashtags) {
                 hashtags.stream()
                 .map(hashtag ->
-                        hashtagCommandService.findByTagName(hashtag.getTagName())
-                                             .orElseGet(() -> hashtagCommandService.save(hashtag.getTagName())))
+                        hashtagService.findByTagName(hashtag.getTagName())
+                                             .orElseGet(() -> hashtagService.save(hashtag.getTagName())))
                                              .forEach(hashtag -> mappedHashtagToQuestion(question, hashtag));
     }
 

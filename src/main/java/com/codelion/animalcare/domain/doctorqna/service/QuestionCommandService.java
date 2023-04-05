@@ -24,7 +24,7 @@ public class QuestionCommandService {
 
     private final MemberService memberService;
 
-    private final QuestionHashtagQueryService questionHashtagService;
+    private final QuestionHashtagService questionHashtagService;
 
     private final QuestionRepository questionRepository;
 

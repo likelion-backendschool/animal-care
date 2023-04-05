@@ -11,7 +11,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class HashtagCommandService {
+public class HashtagService {
 
     private final HashtagRepository hashtagRepository;
 

@@ -36,7 +36,7 @@ public class QuestionCommandServiceTest {
     @Autowired
     private MemberService memberService;
     @Autowired
-    private QuestionHashtagQueryService questionHashtagQueryService;
+    private QuestionHashtagService questionHashtagService;
 
     @DisplayName("질문_작성된다")
     @Test
@@ -118,7 +118,7 @@ public class QuestionCommandServiceTest {
         questionCommandService.save(question, principal);
         //Testinitdata -> 3 question
         Question savedQuestion = questionQueryService.findQuestionByQuestionId(4L);
-        List<QuestionHashtag> hashtagList = questionHashtagQueryService.findHashtagListByQuestion(savedQuestion);
+        List<QuestionHashtag> hashtagList = questionHashtagService.findHashtagListByQuestion(savedQuestion);
 
         for(QuestionHashtag questionHashtag : hashtagList) {
             System.out.println(questionHashtag.getHashtag().getTagName());
