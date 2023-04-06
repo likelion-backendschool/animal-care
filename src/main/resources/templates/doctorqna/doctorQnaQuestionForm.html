@@ -21,11 +21,12 @@
         <div class="mb-3">
             <label for="hashtags" class="form-label">해시태그</label>
             <div>
-                <input type="text" id="hashtags" class="form-control">
+                <input type="text" id="hashtags" class="form-control" placeholder="Enter로 추가해보세요.">
                 <div id="hashtags-container"></div>
                 <input type="hidden" id="hashtags-hidden" th:field="*{hashtags}" />
             </div>
         </div>
+        <input type="submit" value="저장하기" class="btn btn-primary my-2">
 
         <script>
             const hashtagsInput = document.getElementById("hashtags");
@@ -36,19 +37,29 @@
 
             function addHashtag(tag) {
                 tag = tag.replace(/[\[\]]/g, '').trim();
-                if(tag) {
+                if(tag && !hashtags.includes(tag)) {
                     const span = document.createElement("span");
                     span.innerText = "#" + tag + " ";
                     span.classList.add("hashtag");
+
+                    const removeButton = document.createElement("button");
+                    removeButton.innerText = "x";
+                    removeButton.classList.add("remove-button");
+                    removeButton.addEventListener("click", () => {
+                        hashtagsContainer.removeChild(span);
+                        hashtags = hashtags.filter((hashtag) => hashtag !== tag);
+                        hiddenHashtagsInput.value = hashtags.join(",");
+                    });
+
+                    span.appendChild(removeButton);
                     hashtagsContainer.appendChild(span);
                     hashtags.push(tag);
                     hiddenHashtagsInput.value = hashtags.join(",");
                 }
-
             }
 
             hashtagsInput.addEventListener("keydown", (event) => {
-                if (event.keyCode === 13) {
+                if (event.key === 'Enter') {
                     event.preventDefault();
                     const tag = hashtagsInput.value.trim();
                     if (tag) {

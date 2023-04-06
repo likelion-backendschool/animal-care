@@ -104,6 +104,7 @@ public class QuestionController {
         }
 
         model.addAttribute("like", like);
+
         List<QuestionHashtag> hashtags = questionHashtagService.findHashtagListByQuestion(
             questionQueryService.findQuestionByQuestionId(id));
         model.addAttribute("hashtags", hashtags);
