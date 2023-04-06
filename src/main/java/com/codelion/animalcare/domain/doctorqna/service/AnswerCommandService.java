@@ -23,9 +23,11 @@ public class AnswerCommandService {
     private final QuestionQueryService questionQueryService;
 
 
-    public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto, Principal principal){
+    public Long save(Long questionId, AnswerSaveRequestDto answerSaveRequestDto,
+        Principal principal) {
 
-        Doctor doctor = doctorRepository.findByEmail(principal.getName()).orElseThrow(() -> new IllegalArgumentException("의사가 존재하지 않습니다."));
+        Doctor doctor = doctorRepository.findByEmail(principal.getName()).orElseThrow(
+            () -> new IllegalArgumentException("의사가 존재하지 않습니다."));
 
 //        if(!member.getAuth().equals("doctor")) {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");

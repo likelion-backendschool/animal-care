@@ -8,20 +8,21 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 public record QuestionSaveRequestDto(
-        @NotBlank(message = "제목은 필수 입력 사항입니다.")
-        @Size(max = 200, message = "제목이 너무 길어요.")
-        String title,
+    @NotBlank(message = "제목은 필수 입력 사항입니다.")
+    @Size(max = 200, message = "제목이 너무 길어요.")
+    String title,
 
-        @NotBlank(message = "내용은 필수 입력 사항입니다.")
-        String content,
+    @NotBlank(message = "내용은 필수 입력 사항입니다.")
+    String content,
 
-        List<String> hashtags
+    List<String> hashtags
 ) {
+
     public Question toEntity(Member member) {
         return Question.builder()
-                .title(title())
-                .content(content())
-                .member(member)
-                .build();
+                       .title(title())
+                       .content(content())
+                       .member(member)
+                       .build();
     }
 }

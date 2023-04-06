@@ -7,7 +7,7 @@ import com.codelion.animalcare.domain.user.entity.Member;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record QuestionResponseDto (
+public record QuestionResponseDto(
     Long id,
     String title,
     String content,
@@ -17,9 +17,11 @@ public record QuestionResponseDto (
     Member member,
     int likeCount
 ) {
-    public QuestionResponseDto(Question entity){
-        this(entity.getId(), entity.getTitle(), entity.getContent(), entity.getCreatedAt(), entity.getView(),
-                entity.getAnswerList(), entity.getMember(), entity.getLikeCount());
+
+    public QuestionResponseDto(Question entity) {
+        this(entity.getId(), entity.getTitle(), entity.getContent(), entity.getCreatedAt(),
+            entity.getView(),
+            entity.getAnswerList(), entity.getMember(), entity.getLikeCount());
     }
 
 }

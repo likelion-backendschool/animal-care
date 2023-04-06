@@ -7,23 +7,24 @@ import lombok.Builder;
 
 import javax.validation.constraints.NotEmpty;
 
-public record AnswerSaveRequestDto (
-        @NotEmpty(message = "내용은 필수 입력 항목입니다.")
-        String content,
+public record AnswerSaveRequestDto(
+    @NotEmpty(message = "내용은 필수 입력 항목입니다.")
+    String content,
 
-        Question question
+    Question question
 ) {
-        @Builder
-        public AnswerSaveRequestDto(String content, Question question){
-            this.content = content;
-            this.question = question;
-        }
 
-        public Answer toEntity(Doctor doctor) {
-            return Answer.builder()
-                    .content(content)
-                    .question(question)
-                    .doctor(doctor)
-                    .build();
-        }
+    @Builder
+    public AnswerSaveRequestDto(String content, Question question) {
+        this.content = content;
+        this.question = question;
+    }
+
+    public Answer toEntity(Doctor doctor) {
+        return Answer.builder()
+                     .content(content)
+                     .question(question)
+                     .doctor(doctor)
+                     .build();
+    }
 }

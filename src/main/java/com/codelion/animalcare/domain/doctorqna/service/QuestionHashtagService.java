@@ -15,24 +15,25 @@ import java.util.List;
 @Service
 public class QuestionHashtagService {
 
-    private final HashtagService hashtagService;
+  private final HashtagService hashtagService;
 
-    private final QuestionHashtagRepository questionHashtagRepository;
-    public void saveHashtag(Question question, List<String> tagNames) {
-                tagNames.stream()
-                .map(hashtag ->
-                        hashtagService.findByTagName(hashtag)
-                                             .orElseGet(() -> hashtagService.save(hashtag)))
-                                             .forEach(hashtag -> mappedHashtagToQuestion(question, hashtag));
-    }
+  private final QuestionHashtagRepository questionHashtagRepository;
 
-    private Long mappedHashtagToQuestion(Question question, Hashtag hashtag) {
+  public void saveHashtag(Question question, List<String> tagNames) {
+    tagNames.stream()
+            .map(hashtag ->
+                hashtagService.findByTagName(hashtag)
+                              .orElseGet(() -> hashtagService.save(hashtag)))
+            .forEach(hashtag -> mappedHashtagToQuestion(question, hashtag));
+  }
 
-        return questionHashtagRepository.save(QuestionHashtag.of(question, hashtag)).getId();
-    }
+  private Long mappedHashtagToQuestion(Question question, Hashtag hashtag) {
 
-    public List<QuestionHashtag> findHashtagListByQuestion(Question question) {
+    return questionHashtagRepository.save(QuestionHashtag.of(question, hashtag)).getId();
+  }
 
-        return questionHashtagRepository.findAllByQuestion(question);
-    }
+  public List<QuestionHashtag> findHashtagListByQuestion(Question question) {
+
+    return questionHashtagRepository.findAllByQuestion(question);
+  }
 }

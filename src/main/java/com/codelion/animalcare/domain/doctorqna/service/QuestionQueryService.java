@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+
 /*
 
 TODO : SERVICE단에서 QUESTION ENTITY를 직접 반환하지 않고 DTO를 반환하는 것이 요청에 대한 응답만 함으로써
@@ -36,15 +37,15 @@ public class QuestionQueryService {
     private final QuestionLikeRepository questionLikeRepository;
 
 
-    public QuestionResponseDto findById(Long id){
+    public QuestionResponseDto findById(Long id) {
         Question entity = findQuestionByQuestionId(id);
         return new QuestionResponseDto(entity);
     }
 
-    public boolean questionAuthorized(Long id, Principal principal){
+    public boolean questionAuthorized(Long id, Principal principal) {
         Question question = findQuestionByQuestionId(id);
 
-        if(question.getMember().getEmail().equals(principal.getName())) {
+        if (question.getMember().getEmail().equals(principal.getName())) {
             return false;
         }
 
@@ -56,7 +57,8 @@ public class QuestionQueryService {
     }
 
     public Question findQuestionByQuestionId(Long id) {
-        return questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
+        return questionRepository.findById(id)
+                                 .orElseThrow(() -> new IllegalArgumentException("질문이 존재하지 않습니다."));
     }
 
     public Page<Question> findAll(int page, String type, String kw) {
