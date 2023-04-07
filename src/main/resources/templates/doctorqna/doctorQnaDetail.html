@@ -35,7 +35,9 @@
                 <span th:text="${question.likeCount()}"></span>
             </div>
             <div>
-                <span th:each="tag : ${hashtags}" th:text="${'#' + tag.getHashtag().getTagName() + ' '}"></span>
+                <a th:each="tag : ${hashtags}"
+                   th:href="@{/usr/doctor-qna(page=0, type=${type}, kw=${kw}, hashtag=${tag.getHashtag().getTagName()})}"
+                   th:text="${'#' + tag.getHashtag().getTagName()}"></a>
             </div>
             <!-- testEnd-->
         </div>

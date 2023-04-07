@@ -114,9 +114,15 @@ public class QuestionController {
     //전체 조회
     @GetMapping("/usr/doctor-qna")
     public String findAll(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
-        String type, String kw) {
+        String type, String kw, String hashtag) {
 
-        Page<Question> paging = questionQueryService.findAll(page, type, kw);
+        Page<Question> paging;
+
+        if(hashtag != null && !hashtag.isEmpty()) {
+            paging = questionHashtagService.findAllByHashtag(page, hashtag);
+        }else {
+            paging = questionQueryService.findAll(page, type, kw);
+        }
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);

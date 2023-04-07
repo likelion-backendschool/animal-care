@@ -40,6 +40,9 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionLike> QuestionLike;
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<QuestionHashtag> questionHashtags;
+
     @Builder
     public Question(String title, String content, int view, int likeCount, Member member) {
         this.title = title;

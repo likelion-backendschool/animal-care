@@ -9,4 +9,6 @@ import java.util.List;
 public interface QuestionHashtagRepository extends JpaRepository<QuestionHashtag, Long> {
 
     List<QuestionHashtag> findAllByQuestion(Question question);
+
+    List<QuestionHashtag> findAllByHashtagTagName(String tagName);
 }
