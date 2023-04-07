@@ -27,10 +27,10 @@ public class QuestionHashtagService {
             .map(hashtag ->
                 hashtagService.findByTagName(hashtag)
                               .orElseGet(() -> hashtagService.save(hashtag)))
-            .forEach(hashtag -> mappedHashtagToQuestion(question, hashtag));
+            .forEach(hashtag -> mapHashtagToQuestion(question, hashtag));
   }
 
-  private Long mappedHashtagToQuestion(Question question, Hashtag hashtag) {
+  private Long mapHashtagToQuestion(Question question, Hashtag hashtag) {
 
     return questionHashtagRepository.save(new QuestionHashtag(question, hashtag)).getId();
   }
