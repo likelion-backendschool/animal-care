@@ -20,6 +20,9 @@ public class QuestionHashtagService {
   private final QuestionHashtagRepository questionHashtagRepository;
 
   public void saveHashtag(Question question, List<String> tagNames) {
+
+    if(tagNames.size() == 0) return;
+
     tagNames.stream()
             .map(hashtag ->
                 hashtagService.findByTagName(hashtag)
@@ -29,7 +32,7 @@ public class QuestionHashtagService {
 
   private Long mappedHashtagToQuestion(Question question, Hashtag hashtag) {
 
-    return questionHashtagRepository.save(QuestionHashtag.of(question, hashtag)).getId();
+    return questionHashtagRepository.save(new QuestionHashtag(question, hashtag)).getId();
   }
 
   public List<QuestionHashtag> findHashtagListByQuestion(Question question) {
