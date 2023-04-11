@@ -1,11 +1,10 @@
-package com.codelion.animalcare.doctorqna.service;
+package com.codelion.animalcare.domain.doctorqna.service;
 
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.response.QuestionResponseDto;
 import com.codelion.animalcare.domain.doctorqna.entity.Question;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
+import com.codelion.animalcare.domain.doctorqna.entity.QuestionHashtag;
 import com.codelion.animalcare.domain.user.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,12 +33,14 @@ public class QuestionCommandServiceTest {
     private QuestionQueryService questionQueryService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private QuestionHashtagService questionHashtagService;
 
     @DisplayName("질문_작성된다")
     @Test
     void t1() {
         //given
-        QuestionSaveRequestDto question = new QuestionSaveRequestDto("질문이 있습니다.", "테스트 코드는 어떻게 잘 짜나요?");
+        QuestionSaveRequestDto question = new QuestionSaveRequestDto("질문이 있습니다.", "테스트 코드는 어떻게 잘 짜나요?", null);
         Principal principal = () -> "member1@test.com";
 
         //when
@@ -95,5 +98,31 @@ public class QuestionCommandServiceTest {
         //given
         assertThrows(IllegalArgumentException.class, () -> questionQueryService.findQuestionByQuestionId(3L));
     }
+
+    @DisplayName("해시태그_저장된다")
+    @Test
+    void t5() {
+        //given
+
+
+        List<String> list = Arrays.asList("JAVA", "THYMELEAF");
+        QuestionSaveRequestDto question = new QuestionSaveRequestDto("질문이 있습니다.", "테스트 코드는 어떻게 잘 짜나요?", list);
+        Principal principal = () -> "member1@test.com";
+
+        //when
+        questionCommandService.save(question, principal);
+        //Testinitdata -> 3 question
+        Question savedQuestion = questionQueryService.findQuestionByQuestionId(4L);
+        List<QuestionHashtag> hashtagList = questionHashtagService.findHashtagListByQuestion(savedQuestion);
+
+        for(QuestionHashtag questionHashtag : hashtagList) {
+            System.out.println(questionHashtag.getHashtag().getTagName());
+        }
+
+        hashtagList.forEach(hashtag -> System.out.println(hashtag.getHashtag().getTagName()));
+
+        assertEquals(hashtagList.size(), 2);
+    }
+
 }
 

@@ -5,7 +5,7 @@ import com.codelion.animalcare.domain.user.entity.Member;
 
 import java.time.LocalDateTime;
 
-public record QuestionListResponseDto (
+public record QuestionListResponseDto(
     Long id,
     String title,
     LocalDateTime createdAt,
@@ -14,7 +14,9 @@ public record QuestionListResponseDto (
     Member member
 
 ) {
+
     public QuestionListResponseDto(Question entity) {
-        this(entity.getId(), entity.getTitle(), entity.getCreatedAt(), entity.getView(), entity.getLikeCount(), entity.getMember());
+        this(entity.getId(), entity.getTitle(), entity.getCreatedAt(), entity.getView(),
+            entity.getLikeCount(), entity.getMember());
     }
 }

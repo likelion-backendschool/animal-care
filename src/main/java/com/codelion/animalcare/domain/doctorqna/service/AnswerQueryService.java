@@ -19,7 +19,7 @@ public class AnswerQueryService {
     public boolean answerAuthorized(Long answerId, Principal principal) {
         Answer answer = findAnswerByAnswerId(answerId);
 
-        if(answer.getDoctor().getEmail().equals(principal.getName())) {
+        if (answer.getDoctor().getEmail().equals(principal.getName())) {
             return false;
         }
 
@@ -27,10 +27,11 @@ public class AnswerQueryService {
     }
 
     public Answer findAnswerByAnswerId(Long answerId) {
-        return answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
+        return answerRepository.findById(answerId)
+                               .orElseThrow(() -> new IllegalArgumentException("답변이 존재하지 않습니다."));
     }
 
-    public AnswerResponseDto findById(Long answerId){
+    public AnswerResponseDto findById(Long answerId) {
         Answer entity = findAnswerByAnswerId(answerId);
 
         return new AnswerResponseDto(entity);

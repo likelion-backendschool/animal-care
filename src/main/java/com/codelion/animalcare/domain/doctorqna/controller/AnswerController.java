@@ -3,10 +3,10 @@ package com.codelion.animalcare.domain.doctorqna.controller;
 
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerUpdateRequestDto;
-import com.codelion.animalcare.domain.doctorqna.service.AnswerQueryService;
+import com.codelion.animalcare.domain.doctorqna.entity.Question;
 import com.codelion.animalcare.domain.doctorqna.service.AnswerCommandService;
+import com.codelion.animalcare.domain.doctorqna.service.AnswerQueryService;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,9 +30,10 @@ public class AnswerController {
 
     //답변 작성
     @PostMapping("/usr/doctor-qna/{questionId}/answers/write")
-    public String save(Model model, @PathVariable Long questionId, @Valid AnswerSaveRequestDto answerSaveRequestDto, BindingResult bindingResult, Principal principal){
+    public String save(Model model, @PathVariable Long questionId,
+        @Valid AnswerSaveRequestDto answerForm, BindingResult bindingResult, Principal principal) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("question", questionQueryService.findById(questionId));
             return "doctorqna/doctorQnaDetail";
         }
@@ -40,15 +41,19 @@ public class AnswerController {
 //        if(!answerService.isDoctor(principal)) {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "의사만 답변을 작성할 수 있습니다.");
 //        }
+        Question question = questionQueryService.findQuestionByQuestionId(questionId);
+        AnswerSaveRequestDto answerSaveRequestDto = new AnswerSaveRequestDto(answerForm.content(),
+            question);
 
         answerCommandService.save(questionId, answerSaveRequestDto, principal);
         return "redirect:/usr/doctor-qna/%d".formatted(questionId);
     }
 
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
-    public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId, AnswerUpdateRequestDto answerUpdateRequestDto, Principal principal){
+    public String modify(Model model, @PathVariable Long questionId, @PathVariable Long answerId,
+        AnswerUpdateRequestDto answerUpdateRequestDto, Principal principal) {
 
-        if(answerQueryService.answerAuthorized(answerId, principal)){
+        if (answerQueryService.answerAuthorized(answerId, principal)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
@@ -58,13 +63,15 @@ public class AnswerController {
     }
 
     @PostMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/modify")
-    public String modify(@PathVariable Long questionId, @PathVariable Long answerId, @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult, Principal principal){
+    public String modify(@PathVariable Long questionId, @PathVariable Long answerId,
+        @Valid AnswerUpdateRequestDto answerUpdateRequestDto, BindingResult bindingResult,
+        Principal principal) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "doctorqna/doctorQnaAnswerModifyForm";
         }
 
-        if(answerQueryService.answerAuthorized(answerId, principal)){
+        if (answerQueryService.answerAuthorized(answerId, principal)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
@@ -74,10 +81,11 @@ public class AnswerController {
 
     //답변 삭제
     @GetMapping("/usr/doctor-qna/{questionId}/answers/{answerId}/delete")
-    public String delete(@PathVariable Long questionId, @PathVariable Long answerId, Principal principal) {
+    public String delete(@PathVariable Long questionId, @PathVariable Long answerId,
+        Principal principal) {
 
-        if(answerQueryService.answerAuthorized(answerId, principal)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        if (answerQueryService.answerAuthorized(answerId, principal)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
 
         answerCommandService.delete(answerId);

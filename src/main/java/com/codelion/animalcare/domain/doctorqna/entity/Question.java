@@ -38,7 +38,11 @@ public class Question extends BaseEntity {
     private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<com.codelion.animalcare.domain.doctorqna.entity.QuestionLike> QuestionLike;
+    private List<QuestionLike> QuestionLike;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<QuestionHashtag> questionHashtags;
+
     @Builder
     public Question(String title, String content, int view, int likeCount, Member member) {
         this.title = title;
@@ -48,10 +52,11 @@ public class Question extends BaseEntity {
         this.likeCount = likeCount;
     }
 
-    public void update(String title, String content){
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }
+
     public void addAnswer(Answer answer) {
         answer.setQuestion(this);
         //getAnswerList().add(answer);

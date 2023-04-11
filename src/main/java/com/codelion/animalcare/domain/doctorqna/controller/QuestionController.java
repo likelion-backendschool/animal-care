@@ -4,8 +4,10 @@ import com.codelion.animalcare.domain.doctorqna.dto.request.AnswerSaveRequestDto
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionSaveRequestDto;
 import com.codelion.animalcare.domain.doctorqna.dto.request.QuestionUpdateRequestDto;
 import com.codelion.animalcare.domain.doctorqna.entity.Question;
-import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
+import com.codelion.animalcare.domain.doctorqna.entity.QuestionHashtag;
 import com.codelion.animalcare.domain.doctorqna.service.QuestionCommandService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionHashtagService;
+import com.codelion.animalcare.domain.doctorqna.service.QuestionQueryService;
 import com.codelion.animalcare.domain.user.entity.UserInfo;
 import com.codelion.animalcare.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
-
+//TODO : 2022/04/06 -> 참조하지 않는 해시태그는? (배치?), 게시물 수정할때 해시태그도 수정 가능하게 하기, 해시태그 누르면 리스트 띄우기, ...
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {
@@ -34,21 +37,22 @@ public class QuestionController {
     private final QuestionCommandService questionCommandService;
     private final QuestionQueryService questionQueryService;
     private final UserService userService;
+    private final QuestionHashtagService questionHashtagService;
 
     //게시글 등록 화면
     @GetMapping("/usr/doctor-qna/write")
-    public String saveForm(QuestionSaveRequestDto questionSaveRequestDto){
+    public String saveForm(QuestionSaveRequestDto questionSaveRequestDto) {
         return "doctorqna/doctorQnaQuestionForm";
     }
 
     //게시글 등록
     @PostMapping("/usr/doctor-qna/write")
-    public String save(@Valid QuestionSaveRequestDto questionSaveRequestDto, BindingResult bindingResult, Principal principal) {
+    public String save(@Valid QuestionSaveRequestDto questionSaveRequestDto,
+        BindingResult bindingResult, Principal principal) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "doctorqna/doctorQnaQuestionForm";
         }
-
         questionCommandService.save(questionSaveRequestDto, principal);
 
         return "redirect:/usr/doctor-qna";
@@ -56,20 +60,22 @@ public class QuestionController {
 
     //개별 조회
     @GetMapping("/usr/doctor-qna/{id}")
-    public String findById(Model model, @PathVariable Long id, AnswerSaveRequestDto answerSaveRequestDto, HttpServletRequest request, HttpServletResponse response, Principal principal){
+    public String findById(Model model, @PathVariable Long id,
+        AnswerSaveRequestDto answerSaveRequestDto, HttpServletRequest request,
+        HttpServletResponse response, Principal principal) {
         // 조회수 쿠키로 중복방지
         Cookie oldCookie = null;
         Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
-            for(var cookie : cookies) {
-                if(cookie.getName().equals("DoctorQnaView")) {
+        if (cookies != null) {
+            for (var cookie : cookies) {
+                if (cookie.getName().equals("DoctorQnaView")) {
                     oldCookie = cookie;
                 }
             }
         }
 
-        if(oldCookie != null) {
-            if(!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
                 questionCommandService.updateView(id);
                 oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
                 oldCookie.setPath("/");
@@ -90,7 +96,7 @@ public class QuestionController {
 
         UserInfo user = userService.getUserInfo(principal.getName()).orElse(null);
 
-        if(user != null) { // 로그인 한 사용자라면
+        if (user != null) { // 로그인 한 사용자라면
             model.addAttribute("login_id", user.getId());
 
             like = questionQueryService.findLike(id, user); // 로그인 유저의 추천 여부 확인
@@ -99,40 +105,54 @@ public class QuestionController {
 
         model.addAttribute("like", like);
 
+        List<QuestionHashtag> hashtags = questionHashtagService.findHashtagListByQuestion(
+            questionQueryService.findQuestionByQuestionId(id));
+        model.addAttribute("hashtags", hashtags);
         return "doctorqna/doctorQnaDetail";
     }
+
     //전체 조회
     @GetMapping("/usr/doctor-qna")
-    public String findAll(Model model, @RequestParam(value="page", defaultValue="0") int page, String type, String kw) {
+    public String findAll(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+        String type, String kw, String hashtag) {
 
-        Page<Question> paging = questionQueryService.findAll(page, type, kw);
+        Page<Question> paging;
+
+        if(hashtag != null && !hashtag.isEmpty()) {
+            paging = questionHashtagService.findAllByHashtag(page, hashtag);
+        }else {
+            paging = questionQueryService.findAll(page, type, kw);
+        }
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         model.addAttribute("type", type);
 
-
         return "doctorqna/doctorQnaList";
     }
 
     @GetMapping("/usr/doctor-qna/{id}/modify")
-    public String update(Model model, @PathVariable Long id, QuestionUpdateRequestDto questionUpdateRequestDto, Principal principal){
+    public String update(Model model, @PathVariable Long id,
+        QuestionUpdateRequestDto questionUpdateRequestDto, Principal principal) {
 
-        if(questionQueryService.questionAuthorized(id, principal)){
+        if (questionQueryService.questionAuthorized(id, principal)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
         model.addAttribute("question", questionQueryService.findById(id));
         return "doctorqna/doctorQnaQuestionModifyForm";
     }
-    @PostMapping("/usr/doctor-qna/{id}/modify")
-    public String update(@PathVariable Long id, @Valid QuestionUpdateRequestDto questionUpdateRequestDto, BindingResult bindingResult, Principal principal){
 
-        if(bindingResult.hasErrors()) {
+    @PostMapping("/usr/doctor-qna/{id}/modify")
+    public String update(@PathVariable Long id,
+        @Valid QuestionUpdateRequestDto questionUpdateRequestDto, BindingResult bindingResult,
+        Principal principal) {
+
+        if (bindingResult.hasErrors()) {
             return "doctorqna/doctorQnaQuestionModifyForm";
         }
 
-        if(questionQueryService.questionAuthorized(id, principal)){
+        if (questionQueryService.questionAuthorized(id, principal)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
@@ -142,9 +162,9 @@ public class QuestionController {
     }
 
     @GetMapping("/usr/doctor-qna/{id}/delete")
-    public String delete(@PathVariable Long id, Principal principal){
+    public String delete(@PathVariable Long id, Principal principal) {
 
-        if(questionQueryService.questionAuthorized(id, principal)){
+        if (questionQueryService.questionAuthorized(id, principal)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
 
